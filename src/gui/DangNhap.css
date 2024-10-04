@@ -1,0 +1,4 @@
+.logo {
+	-fx-background-image:url('../../data/pic/logoxanh.png');
+	-fx-background-size:cover;
+}
