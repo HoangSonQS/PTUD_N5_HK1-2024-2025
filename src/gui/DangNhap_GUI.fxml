@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="DangNhap_Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="845.0" prefWidth="1554.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.DangNhap_Controller">
    <children>
       <Pane prefHeight="130.0" prefWidth="1554.0" style="-fx-background-color: #004AAD;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
@@ -20,8 +20,8 @@
                </font>
             </Label>
          </children></Pane>
-      <Pane layoutY="137.0" prefHeight="750.0" prefWidth="750.0" styleClass="logo" stylesheets="@DangNhap.css" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="135.0" />
-      <Pane layoutX="750.0" layoutY="135.0" prefHeight="750.0" prefWidth="800.0">
+      <Pane layoutY="137.0" prefHeight="711.0" prefWidth="715.0" styleClass="logo" stylesheets="@DangNhap.css" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="135.0" />
+      <Pane layoutX="719.0" layoutY="135.0" prefHeight="711.0" prefWidth="831.0">
          <children>
             <Label layoutX="339.0" layoutY="97.0" prefHeight="71.0" prefWidth="235.0" text="Đăng nhập">
                <font>
@@ -33,7 +33,7 @@
                   <Image url="@../../data/pic/user.png" />
                </image>
             </ImageView>
-            <TextField fx:id="lb_ten" alignment="CENTER" layoutX="256.0" layoutY="200.0" prefHeight="80.0" prefWidth="400.0" promptText="Nhập tài khoản" style="-fx-background-color: #60C9C9;">
+            <TextField fx:id="txt_ten" alignment="CENTER" layoutX="256.0" layoutY="200.0" prefHeight="80.0" prefWidth="400.0" promptText="Nhập tài khoản" style="-fx-background-color: #60C9C9;">
                <font>
                   <Font size="30.0" />
                </font>
@@ -43,7 +43,7 @@
                   <Image url="@../../data/pic/password.png" />
                </image>
             </ImageView>
-            <TextField fx:id="lb_mk" alignment="CENTER" layoutX="256.0" layoutY="306.0" prefHeight="80.0" prefWidth="400.0" promptText="Nhập mật khẩu" style="-fx-background-color: #60C9C9;">
+            <TextField fx:id="txt_mk" alignment="CENTER" layoutX="256.0" layoutY="306.0" prefHeight="80.0" prefWidth="400.0" promptText="Nhập mật khẩu" style="-fx-background-color: #60C9C9;">
                <font>
                   <Font size="30.0" />
                </font>
