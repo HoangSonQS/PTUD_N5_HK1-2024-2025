@@ -11,7 +11,7 @@ public class TestJavaFX extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			Parent root = FXMLLoader.load(getClass().getResource("DangNhap_GUI.fxml"));
+			Parent root = FXMLLoader.load(getClass().getResource("GD_Chinh.fxml"));
 			Scene scene = new Scene(root);
 
 			primaryStage.setTitle("Hello World!");
