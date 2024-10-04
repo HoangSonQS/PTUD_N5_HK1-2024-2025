@@ -14,9 +14,9 @@
    <children>
       <Pane prefHeight="130.0" prefWidth="1554.0" style="-fx-background-color: #004AAD;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <Label layoutX="567.0" layoutY="28.0" text="Quản lý khách sạn" textFill="WHITE">
+            <Label layoutX="554.0" layoutY="20.0" text="Quản lý khách sạn" textFill="WHITE">
                <font>
-                  <Font name="System Italic" size="52.0" />
+                  <Font name="Quicksand Light" size="61.0" />
                </font>
             </Label>
          </children></Pane>
@@ -25,7 +25,7 @@
          <children>
             <Label layoutX="339.0" layoutY="97.0" prefHeight="71.0" prefWidth="235.0" text="Đăng nhập">
                <font>
-                  <Font size="48.0" />
+                  <Font size="46.0" />
                </font>
             </Label>
             <ImageView fitHeight="80.0" fitWidth="80.0" layoutX="151.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true">
@@ -33,7 +33,7 @@
                   <Image url="@../../data/pic/user.png" />
                </image>
             </ImageView>
-            <TextField fx:id="txt_ten" alignment="CENTER" layoutX="256.0" layoutY="200.0" prefHeight="80.0" prefWidth="400.0" promptText="Nhập tài khoản" style="-fx-background-color: #60C9C9;">
+            <TextField fx:id="txt_ten" alignment="CENTER" layoutX="256.0" layoutY="200.0" prefHeight="80.0" prefWidth="400.0" promptText="Nhập tài khoản" style="-fx-background-color: #DDDDDD; -fx-background-radius: 17;" text="Nhập tài khoản">
                <font>
                   <Font size="30.0" />
                </font>
@@ -43,12 +43,12 @@
                   <Image url="@../../data/pic/password.png" />
                </image>
             </ImageView>
-            <TextField fx:id="txt_mk" alignment="CENTER" layoutX="256.0" layoutY="306.0" prefHeight="80.0" prefWidth="400.0" promptText="Nhập mật khẩu" style="-fx-background-color: #60C9C9;">
+            <TextField fx:id="txt_mk" alignment="CENTER" layoutX="256.0" layoutY="306.0" prefHeight="80.0" prefWidth="400.0" promptText="Nhập mật khẩu" style="-fx-background-color: #DDDDDD; -fx-background-radius: 17" text="Nhập mật khẩu">
                <font>
                   <Font size="30.0" />
                </font>
             </TextField>
-            <Button fx:id="btn_LogIn" layoutX="356.0" layoutY="428.0" mnemonicParsing="false" onAction="#LogIn" prefHeight="80.0" prefWidth="200.0" style="-fx-background-color: #60C9C9;" text="Xác nhận" textFill="WHITE">
+            <Button fx:id="btn_LogIn" layoutX="356.0" layoutY="428.0" mnemonicParsing="false" onAction="#LogIn" prefHeight="80.0" prefWidth="200.0" style="-fx-background-color: #0033CC; -fx-background-radius: 17" text="Xác nhận" textFill="whitesmoke">
                <font>
                   <Font size="30.0" />
                </font>
