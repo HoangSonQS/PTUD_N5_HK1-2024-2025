@@ -1,8 +1,10 @@
-@font-face {
-	font-family: 'Quicksand';
-	src: url('../../data/font/Quicksand-VariableFont_wght.ttf'); /* Đường dẫn tới font trong dự án */
-}
+
 .logo {
 	-fx-background-image:url('../../data/pic/logoxanh.png');
 	-fx-background-size:cover;
+}
+.timKiem {
+	-fx-background-image:url('../../data/pic/search.png');
+	-fx-background-size:cover;
+	
 }

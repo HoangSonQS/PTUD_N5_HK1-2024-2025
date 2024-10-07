@@ -13,7 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 
 
-public class QuanLyPhong_Controller implements Initializable{
+public class SoDoPhong_Controller implements Initializable{
     @FXML
     private ComboBox cbb;
     @FXML

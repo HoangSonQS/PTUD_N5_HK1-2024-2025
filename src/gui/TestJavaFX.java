@@ -11,10 +11,9 @@ public class TestJavaFX extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			Parent root = FXMLLoader.load(getClass().getResource("GD_QuanLyPhong.fxml"));
+			Parent root = FXMLLoader.load(getClass().getResource("GD_QLPhong.fxml"));
 			Scene scene = new Scene(root);
 
-			primaryStage.setTitle("Hello World!");
 			primaryStage.setScene(scene);
 			primaryStage.setMaximized(true);
 			primaryStage.show();
