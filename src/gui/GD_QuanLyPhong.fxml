@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.QuanLyPhong_Controller">
+   <children>
+      <Pane prefHeight="775.0" prefWidth="1554.0">
+         <children>
+            <Pane prefHeight="775.0" prefWidth="260.0" style="-fx-background-color: #D9D9D9;">
+               <children>
+                  <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="15.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../data/pic/apartment-building.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="60.0" layoutY="20.0" text="Quản lý phòng">
+                     <font>
+                        <Font name="System Bold Italic" size="20.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="35.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../data/pic/clipboard.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="85.0" layoutY="70.0" text="Sơ đồ phòng">
+                     <font>
+                        <Font name="System Italic" size="18.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="35.0" layoutY="105.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../data/pic/swap.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="85.0" layoutY="110.0" text="Đổi phòng">
+                     <font>
+                        <Font name="System Italic" size="18.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="35.0" layoutY="145.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../data/pic/cancel.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="85.0" layoutY="150.0" text="Hủy phòng">
+                     <font>
+                        <Font name="System Italic" size="18.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="35.0" layoutY="185.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../data/pic/three-oclock.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="85.0" layoutY="190.0" text="Gia hạn phòng">
+                     <font>
+                        <Font name="System Italic" size="18.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="15.0" layoutY="230.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../data/pic/list.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="60.0" layoutY="235.0" text="Danh sách ">
+                     <font>
+                        <Font name="System Bold Italic" size="20.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="35.0" layoutY="280.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../data/pic/apartment-building.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="85.0" layoutY="285.0" text="Phòng">
+                     <font>
+                        <Font name="System Italic" size="18.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="35.0" layoutY="320.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../data/pic/employees.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="85.0" layoutY="325.0" text="Nhân viên">
+                     <font>
+                        <Font name="System Italic" size="18.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="35.0" layoutY="360.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../data/pic/travel.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="85.0" layoutY="365.0" text="Khách hàng">
+                     <font>
+                        <Font name="System Italic" size="18.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="35.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../data/pic/clipboard.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="85.0" layoutY="405.0" text="Hóa đơn">
+                     <font>
+                        <Font name="System Italic" size="18.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="35.0" layoutY="440.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../data/pic/shopping-bag.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="85.0" layoutY="445.0" text="Dịch vụ">
+                     <font>
+                        <Font name="System Italic" size="18.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="35.0" layoutY="480.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../data/pic/account-accepted.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="85.0" layoutY="485.0" text="Tài khoản">
+                     <font>
+                        <Font name="System Italic" size="18.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="35.0" layoutY="520.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../data/pic/discount-label.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="85.0" layoutY="525.0" text="Ưu đãi">
+                     <font>
+                        <Font name="System Italic" size="18.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="15.0" layoutY="565.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../data/pic/pie-chart.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="60.0" layoutY="570.0" text="Thống kê">
+                     <font>
+                        <Font name="System Bold Italic" size="20.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="35.0" layoutY="615.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../data/pic/money-transfer.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="85.0" layoutY="620.0" text="Doanh thu">
+                     <font>
+                        <Font name="System Italic" size="18.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="35.0" layoutY="655.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../data/pic/travel.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="85.0" layoutY="660.0" text="Khách hàng">
+                     <font>
+                        <Font name="System Italic" size="18.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="35.0" layoutY="695.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../data/pic/product-lifecycle.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="85.0" layoutY="700.0" text="Sản phẩm">
+                     <font>
+                        <Font name="System Italic" size="18.0" />
+                     </font>
+                  </Label>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="250.0" layoutY="65.0" stroke="WHITE" strokeType="INSIDE" width="10.0" />
+               </children>
+            </Pane>
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="285.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/pic/clipboard.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="325.0" layoutY="20.0" text="Sơ đồ phòng">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="cbb" layoutX="285.0" layoutY="80.0" onAction="#selectCbb" prefHeight="30.0" prefWidth="200.0" />
+            <Text layoutX="285.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Loại phòng: ">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Text>
+            <Text layoutX="285.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Trạng thái: ">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Text>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="285.0" layoutY="165.0" stroke="BLACK" strokeType="INSIDE" width="100.0" />
+            <Label layoutX="315.0" layoutY="170.0" text="Tất cả">
+               <font>
+                  <Font name="Segoe UI" size="14.0" />
+               </font>
+            </Label>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="400.0" layoutY="165.0" stroke="BLACK" strokeType="INSIDE" width="150.0" />
+            <Label layoutX="430.0" layoutY="170.0" text="Phòng trống">
+               <font>
+                  <Font name="Segoe UI" size="14.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="18.0" fitWidth="18.0" layoutX="405.0" layoutY="170.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/pic/check_black.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="lb_soPhongTrong" contentDisplay="RIGHT" layoutX="520.0" layoutY="170.0" onDragDetected="#setSoPhongTrong" text="(20)">
+               <font>
+                  <Font name="Segoe UI" size="14.0" />
+               </font>
+            </Label>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="565.0" layoutY="165.0" stroke="BLACK" strokeType="INSIDE" width="130.0" />
+            <Label layoutX="595.0" layoutY="170.0" text="Đang ở">
+               <font>
+                  <Font name="Segoe UI" size="14.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="18.0" fitWidth="18.0" layoutX="570.0" layoutY="170.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/pic/team_black.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="lb_soPhongDangO" contentDisplay="RIGHT" layoutX="660.0" layoutY="170.0" onDragDetected="#setSoPhongDangO" text="(30)">
+               <font>
+                  <Font name="Segoe UI" size="14.0" />
+               </font>
+            </Label>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="710.0" layoutY="165.0" stroke="BLACK" strokeType="INSIDE" width="150.0" />
+            <Label layoutX="740.0" layoutY="170.0" text="Sắp check-out">
+               <font>
+                  <Font name="Segoe UI" size="14.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="18.0" fitWidth="18.0" layoutX="715.0" layoutY="170.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/pic/left.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="lb_setCheckout" contentDisplay="RIGHT" layoutX="830.0" layoutY="170.0" onDragDetected="#setSoPhongSapCheckOut" text="(5)">
+               <font>
+                  <Font name="Segoe UI" size="14.0" />
+               </font>
+            </Label>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#ff3131" height="35.0" layoutX="1385.0" layoutY="160.0" stroke="BLACK" strokeType="INSIDE" width="150.0" />
+            <Label layoutX="1395.0" layoutY="170.0" text="Phòng đang sửa">
+               <font>
+                  <Font name="Segoe UI" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lb_PhongDangSua" contentDisplay="RIGHT" layoutX="1505.0" layoutY="170.0" onDragDetected="#setSoPhongDangSua" text="(5)">
+               <font>
+                  <Font name="Segoe UI" size="14.0" />
+               </font>
+            </Label>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#edbf6d" height="35.0" layoutX="1250.0" layoutY="160.0" stroke="BLACK" strokeType="INSIDE" width="120.0" />
+            <Label layoutX="1255.0" layoutY="170.0" text="Phòng  bẩn">
+               <font>
+                  <Font name="Segoe UI" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lb_SoPhongBan" contentDisplay="RIGHT" layoutX="1340.0" layoutY="170.0" onDragDetected="#setSoPhongBan" text="(5)">
+               <font>
+                  <Font name="Segoe UI" size="14.0" />
+               </font>
+            </Label>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#00bf63" height="35.0" layoutX="1115.0" layoutY="160.0" stroke="BLACK" strokeType="INSIDE" width="120.0" />
+            <Label layoutX="1120.0" layoutY="170.0" text="Phòng  sạch">
+               <font>
+                  <Font name="Segoe UI" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lb_soPhongSach" contentDisplay="RIGHT" layoutX="1205.0" layoutY="170.0" onDragDetected="#setSoPhongSach" text="(5)">
+               <font>
+                  <Font name="Segoe UI" size="14.0" />
+               </font>
+            </Label>
+            <Line endX="1194.0" layoutX="360.0" layoutY="220.0" startX="-100.0" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
