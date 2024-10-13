@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="775.0" prefWidth="1554.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.GD_ThongKeDoanhThu_Controller">
+   <children>
+      <Pane prefHeight="775.0" prefWidth="260.0" style="-fx-background-color: #D9D9D9;">
+         <children>
+            <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="15.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/pic/apartment-building.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="60.0" layoutY="20.0" text="Quản lý phòng">
+               <font>
+                  <Font name="System Bold Italic" size="20.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="35.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/pic/clipboard.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="85.0" layoutY="70.0" text="Sơ đồ phòng">
+               <font>
+                  <Font name="System Italic" size="18.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="35.0" layoutY="105.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/pic/swap.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="85.0" layoutY="110.0" text="Đổi phòng">
+               <font>
+                  <Font name="System Italic" size="18.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="35.0" layoutY="145.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/pic/cancel.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="85.0" layoutY="150.0" text="Hủy phòng">
+               <font>
+                  <Font name="System Italic" size="18.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="35.0" layoutY="185.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/pic/three-oclock.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="85.0" layoutY="190.0" text="Gia hạn phòng">
+               <font>
+                  <Font name="System Italic" size="18.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="15.0" layoutY="230.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/pic/list.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="60.0" layoutY="235.0" text="Danh sách ">
+               <font>
+                  <Font name="System Bold Italic" size="20.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="35.0" layoutY="280.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/pic/apartment-building.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="85.0" layoutY="285.0" text="Phòng">
+               <font>
+                  <Font name="System Italic" size="18.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="35.0" layoutY="320.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/pic/employees.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="85.0" layoutY="325.0" text="Nhân viên">
+               <font>
+                  <Font name="System Italic" size="18.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="35.0" layoutY="360.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/pic/travel.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="85.0" layoutY="365.0" text="Khách hàng">
+               <font>
+                  <Font name="System Italic" size="18.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="35.0" layoutY="400.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/pic/clipboard.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="85.0" layoutY="405.0" text="Hóa đơn">
+               <font>
+                  <Font name="System Italic" size="18.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="35.0" layoutY="440.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/pic/shopping-bag.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="85.0" layoutY="445.0" text="Dịch vụ">
+               <font>
+                  <Font name="System Italic" size="18.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="35.0" layoutY="480.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/pic/account-accepted.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="85.0" layoutY="485.0" text="Tài khoản">
+               <font>
+                  <Font name="System Italic" size="18.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="35.0" layoutY="520.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/pic/discount-label.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="85.0" layoutY="525.0" text="Ưu đãi">
+               <font>
+                  <Font name="System Italic" size="18.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="15.0" layoutY="565.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/pic/pie-chart.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="60.0" layoutY="570.0" text="Thống kê">
+               <font>
+                  <Font name="System Bold Italic" size="20.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="35.0" layoutY="615.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/pic/money-transfer.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="85.0" layoutY="620.0" text="Doanh thu">
+               <font>
+                  <Font name="System Italic" size="18.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="35.0" layoutY="655.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/pic/travel.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="85.0" layoutY="660.0" text="Khách hàng">
+               <font>
+                  <Font name="System Italic" size="18.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="35.0" layoutY="695.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/pic/product-lifecycle.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="85.0" layoutY="700.0" text="Sản phẩm">
+               <font>
+                  <Font name="System Italic" size="18.0" />
+               </font>
+            </Label>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="250.0" layoutY="615.0" stroke="WHITE" strokeType="INSIDE" width="10.0" />
+         </children>
+      </Pane>
+      <Pane layoutX="260.0" prefHeight="775.0" prefWidth="1294.0">
+         <children>
+            <Label layoutX="485.0" layoutY="14.0" text="THỐNG KÊ DOANH THU">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <MenuBar layoutX="10.0" layoutY="60.0">
+              <menus>
+                <Menu mnemonicParsing="false" text="Theo ngày" />
+                <Menu mnemonicParsing="false" text="Theo tháng" />
+                <Menu mnemonicParsing="false" text="Theo năm" />
+              </menus>
+            </MenuBar>
+            <Line endX="1194.0" layoutX="100.0" layoutY="85.0" startX="-100.0" />
+            <Label fx:id="lb_Ngay" layoutX="15.0" layoutY="105.0" text="Thống kê doanh thu theo ngày: ">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <DatePicker fx:id="datePicker" layoutX="330.0" layoutY="105.0" />
+            <Label fx:id="lb_HDNgay" layoutX="15.0" layoutY="140.0" text="Tổng số hóa đơn trong ngày:  ">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="lb_SoHoaDon" layoutX="330.0" layoutY="140.0" text="0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="lb_HDNgay1" layoutX="15.0" layoutY="175.0" text="Tổng doanh thu trong ngày:  ">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="lb_Tien" layoutX="330.0" layoutY="175.0" text="0 VND">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <BarChart fx:id="chart_DTTN" layoutX="20.0" layoutY="233.0" prefHeight="500.0" prefWidth="1254.0" title="Thống kê doanh thu theo ngày">
+              <xAxis>
+                <CategoryAxis label="Ngày" side="BOTTOM" fx:id="x" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis fx:id="y" label="Tổng tiền" side="LEFT" />
+              </yAxis>
+            </BarChart>
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
