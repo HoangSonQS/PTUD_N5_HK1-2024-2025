@@ -22,6 +22,9 @@ public class NhanVien {
 		this.cccd = cccd;
 		this.chucVu = chucVu;
 	}
+	public NhanVien(String idnhanvien) {
+		this.idNhanVien = idnhanvien;
+	}
 	public String getIdNhanVien() {
 		return idNhanVien;
 	}
