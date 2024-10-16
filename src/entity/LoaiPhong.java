@@ -3,9 +3,9 @@ package entity;
 public enum LoaiPhong {
 
 
-	PHONGDON,
-	PHONGDOI,
-	PHONGGIADINH;
+	PHONGDON("Phòng đơn"),
+	PHONGDOI("Phòng đôi"),
+	PHONGGIADINH("Phòng gia đình");
 
 	private String loaiPhong;
 

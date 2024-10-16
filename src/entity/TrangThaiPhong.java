@@ -1,11 +1,12 @@
 package entity;
 
 public enum TrangThaiPhong {
-
-	DANGTHUE,
-	TRONG,
-	SAPCHECKIN,
-	SAPCHECKOUT;
+	
+	
+	TRONG("Trống"),
+	DANGTHUE("Đang thuê"),
+	SAPCHECKIN("Sắp checkin"),
+	SAPCHECKOUT("Sắp checkout");
 
 	private String trangThaiPhong;
 

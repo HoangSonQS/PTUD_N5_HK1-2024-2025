@@ -10,7 +10,7 @@ import connectDB.ConnectDB;
 import entity.DichVu;
 
 public class DichVu_Dao {
-	public static ArrayList<DichVu> getAllDichZVu(){
+	public static ArrayList<DichVu> getAllDichVu(){
 		ArrayList<DichVu>dsDV = new ArrayList<DichVu>();
 		Connection conN = ConnectDB.getInstance().getConnection();
 		Statement stm = null;

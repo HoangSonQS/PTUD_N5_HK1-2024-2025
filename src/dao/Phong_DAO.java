@@ -10,40 +10,53 @@ import java.util.ArrayList;
 import connectDB.ConnectDB;
 import entity.LoaiPhong;
 import entity.Phong;
+import entity.TrangThaiPhong;
 
 public class Phong_DAO {
-	public ArrayList<Phong> getAllSanPham() {
+	public static ArrayList<Phong> getAllPhong() {
 		ArrayList<Phong> dsPhong = new ArrayList<Phong>();
-		Connection conN = ConnectDB.getInstance().getConnection();
-		Statement stm = null;
+		Connection con = ConnectDB.getInstance().getConnection();
+		Statement stmt = null;
+		
 		try {
-			stm = conN.createStatement();
-			String sql = "select*from Phong";
-			ResultSet rs = stm.executeQuery(sql);
+			stmt = con.createStatement();
+			String sql = "SELECT * FROM Phong";
+			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
-				String idPhong = rs.getString("IDPhong");
-				String loaiPhong = rs.getString("LoaiPhong");
+				String ma = rs.getString("IDPhong");
+				int loaiPhong = rs.getInt("LoaiPhong");
 				LoaiPhong lp = null;
-				if(loaiPhong.equalsIgnoreCase(LoaiPhong.PHONGDOI.toString())) {
+				if(loaiPhong == 1) {
 					lp = LoaiPhong.PHONGDOI;
 					
-				} else if(loaiPhong.equalsIgnoreCase(LoaiPhong.PHONGDON.toString())) {
+				} else if(loaiPhong == 2) {
 					lp = LoaiPhong.PHONGDON;
 					
-				} else if(loaiPhong.equalsIgnoreCase(LoaiPhong.PHONGGIADINH.toString())) {
+				} else if(loaiPhong == 3) {
 					lp = LoaiPhong.PHONGGIADINH;
-					
 				}
-				
-				Double donGia = rs.getDouble("DonGia");
-				Integer trangThai = rs.getInt("TrangThai");
-				dsPhong.add(new Phong(idPhong, lp, donGia, trangThai));
+				double donGia = rs.getDouble("DonGia");
+				int trangThai = rs.getInt("TrangThai");
+				TrangThaiPhong tt = null;
+				if(trangThai == 1) {
+					tt = TrangThaiPhong.TRONG;
+				} else if(trangThai == 2) {
+					tt = TrangThaiPhong.DANGTHUE;
+				} else if(trangThai == 3) {
+					tt = TrangThaiPhong.SAPCHECKIN;
+				} else {
+					tt = TrangThaiPhong.SAPCHECKOUT;
+				}
+				Phong phong = new Phong(ma, lp, donGia, tt);
+				dsPhong.add(phong);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 		return dsPhong;
+		
 	}
 	
 	public boolean themPhong(Phong phong) {
@@ -55,9 +68,28 @@ public class Phong_DAO {
 			String sql = "INSERT INTO Phong (IDPhong, LoaiPhong, DonGia, TrangThai)values(?,?,?,?)";
 			pstm = con.prepareStatement(sql);
 			pstm.setString(1, phong.getIdPhong());
-			pstm.setString(2, phong.getLoaiPhong().toString());
+			int lp = 0;
+			if(phong.getLoaiPhong().toString().equalsIgnoreCase("Phòng đôi")) {
+				lp = 1;
+			} else if(phong.getTrangThai().toString().equalsIgnoreCase("Phòng đơn")) {
+				lp = 2;
+			} else {
+				lp = 3;
+			}
+			pstm.setInt(2, lp);
 			pstm.setDouble(3, phong.getDonGia());
-			pstm.setInt(4, phong.getTrangThai());
+			int tt = 0;
+			if(phong.getTrangThai().toString().equalsIgnoreCase("Trống")) {
+				tt = 1;
+			} else if(phong.getTrangThai().toString().equalsIgnoreCase("Đang thuê")) {
+				tt = 2;
+			} else if(phong.getTrangThai().toString().equalsIgnoreCase("Sắp checkin")) {
+				tt = 3;
+			} else {
+				tt = 4;
+			}
+			pstm.setInt(4, tt);
+			n = pstm.executeUpdate();
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {
@@ -71,30 +103,37 @@ public class Phong_DAO {
 	}
 	 public Phong getPhongTheoMa(String ma) {
 		Connection con = ConnectDB.getInstance().getConnection();
-		Statement stmt = null;
+		PreparedStatement stmt = null;
 		Phong phong = null;
+		ResultSet rs = null;
 		try {
-			stmt = con.createStatement();
-			String sql = String
-					.format("SELECT * FROM Phong"+ "WHERE Phong.IDPhong = '%s'", ma);
-			ResultSet rs = stmt.executeQuery(sql);
+			String sql = "SELECT * FROM Phong WHERE IDPhong = ?";
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, ma);
+	        rs = stmt.executeQuery();
 			while (rs.next()) {
-				String loaiPhong = rs.getString("LoaiPhong");
+				int loaiPhong = rs.getInt("LoaiPhong");
 				LoaiPhong lp = null;
-				if(loaiPhong.equalsIgnoreCase(LoaiPhong.PHONGDOI.toString())) {
+				if(loaiPhong == 1) {
 					lp = LoaiPhong.PHONGDOI;
-					
-				} else if(loaiPhong.equalsIgnoreCase(LoaiPhong.PHONGDON.toString())) {
+				} else if(loaiPhong == 2) {
 					lp = LoaiPhong.PHONGDON;
-					
-				} else if(loaiPhong.equalsIgnoreCase(LoaiPhong.PHONGGIADINH.toString())) {
+				} else{
 					lp = LoaiPhong.PHONGGIADINH;
-					
 				}
-				
 				Double donGia = rs.getDouble("DonGia");
-				Integer trangThai = rs.getInt("TrangThai");
-				phong = new Phong(ma, lp, donGia, trangThai);
+				int trangThai = rs.getInt("TrangThai");
+				TrangThaiPhong tt = null;
+				if(trangThai == 1) {
+					tt = TrangThaiPhong.TRONG;
+				} else if(trangThai == 1) {
+					tt = TrangThaiPhong.DANGTHUE;
+				} else if(trangThai == 1) {
+					tt = TrangThaiPhong.SAPCHECKIN;
+				} else {
+					tt = TrangThaiPhong.SAPCHECKOUT;
+				}
+				phong = new Phong(ma, lp, donGia, tt);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -107,48 +146,49 @@ public class Phong_DAO {
 				e.printStackTrace();
 			}
 		}
-		 return phong;
+		return phong;
 	 
 	 }
-	 public Phong getPhongTheoLoai(String loai) {
+	 public ArrayList<Phong> getPhongTheoLoai(String loai) {
+		 ArrayList<Phong> dsPhong = new ArrayList<Phong>();
 			Connection con = ConnectDB.getInstance().getConnection();
 			Statement stmt = null;
-			Phong phong = null;
+			
 			try {
 				stmt = con.createStatement();
-				String sql = String
-						.format("SELECT * FROM Phong"+ "WHERE Phong.LoaiPhong = '%s'", loai);
+				String sql = "SELECT * FROM Phong";
 				ResultSet rs = stmt.executeQuery(sql);
 				while (rs.next()) {
-					String idPhong = rs.getString("IDPhong");
-					LoaiPhong lp = null;
-					if(loai.equalsIgnoreCase(LoaiPhong.PHONGDOI.toString())) {
-						lp = LoaiPhong.PHONGDOI;
-						
-					} else if(loai.equalsIgnoreCase(LoaiPhong.PHONGDON.toString())) {
-						lp = LoaiPhong.PHONGDON;
-						
-					} else if(loai.equalsIgnoreCase(LoaiPhong.PHONGGIADINH.toString())) {
-						lp = LoaiPhong.PHONGGIADINH;
-						
+					String IDPhong = rs.getString("IDPhong");
+					int loaiPhong = rs.getInt("LoaiPhong");
+					LoaiPhong lphong = null;
+					if(loaiPhong == 1) {
+						lphong = LoaiPhong.PHONGDOI;
+					} else if(loaiPhong == 2) {
+						lphong = LoaiPhong.PHONGDON;
+					} else{
+						lphong = LoaiPhong.PHONGGIADINH;
 					}
-					
 					Double donGia = rs.getDouble("DonGia");
-					Integer trangThai = rs.getInt("TrangThai");
-					phong = new Phong(idPhong, lp, donGia, trangThai);
+					int trangThai = rs.getInt("TrangThai");
+					TrangThaiPhong tt = null;
+					if(trangThai == 1) {
+						tt = TrangThaiPhong.TRONG;
+					} else if(trangThai == 1) {
+						tt = TrangThaiPhong.DANGTHUE;
+					} else if(trangThai == 1) {
+						tt = TrangThaiPhong.SAPCHECKIN;
+					} else {
+						tt = TrangThaiPhong.SAPCHECKOUT;
+					}
+					Phong phong = new Phong(IDPhong, lphong, donGia, tt);
+					System.out.println(phong);
+					dsPhong.add(phong);
 				}
 			} catch (SQLException e) {
+				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}catch (Exception e) {
-				e.printStackTrace();
-			}finally {
-				try {
-					stmt.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
 			}
-			 return phong;
-		 
+			return dsPhong;
 		 }
 }

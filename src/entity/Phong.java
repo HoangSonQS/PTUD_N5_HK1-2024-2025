@@ -7,13 +7,17 @@ public class Phong {
 	private String idPhong;
 	private LoaiPhong loaiPhong;
 	private double donGia;
-	private int trangThai;
-	public Phong(String idPhong, LoaiPhong loaiPhong, double donGia, int trangThai) {
+	private TrangThaiPhong trangThai;
+	
+	public Phong(String idPhong, LoaiPhong loaiPhong, double donGia, TrangThaiPhong trangThai) {
 		super();
 		this.idPhong = idPhong;
 		this.loaiPhong = loaiPhong;
 		this.donGia = donGia;
 		this.trangThai = trangThai;
+	}
+	public Phong() {
+		this("", LoaiPhong.PHONGDON, 0, TrangThaiPhong.TRONG);
 	}
 	public String getIdPhong() {
 		return idPhong;
@@ -33,10 +37,11 @@ public class Phong {
 	public void setDonGia(double donGia) {
 		this.donGia = donGia;
 	}
-	public int getTrangThai() {
+
+	public TrangThaiPhong getTrangThai() {
 		return trangThai;
 	}
-	public void setTrangThai(int trangThai) {
+	public void setTrangThai(TrangThaiPhong trangThai) {
 		this.trangThai = trangThai;
 	}
 	@Override
