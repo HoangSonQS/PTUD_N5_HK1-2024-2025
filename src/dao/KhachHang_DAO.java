@@ -138,7 +138,39 @@ public class KhachHang_DAO {
 		}
 		 return kh;
 	 }
-	
+	public KhachHang getKhachHangTheoMa(String IDKhachHang) {
+		ArrayList<KhachHang> dsKH = new ArrayList<KhachHang>();
+		Connection con = ConnectDB.getInstance().getConnection();
+		PreparedStatement stmt = null;
+		KhachHang kh = null;
+		ResultSet rs = null;
+		try {
+			String sql = "SELECT * FROM KhachHang WHERE IdKhachHang = ?";
+			stmt = con.prepareStatement(sql);
+	        stmt.setString(1, IDKhachHang);
+	        rs = stmt.executeQuery();
+			while (rs.next()) {
+				String tenKhachHang = rs.getString("TenKhachHang");
+				String soDienThoai = rs.getString("SoDienThoai");
+				LocalDate ngaySinh = rs.getDate("NgaySinh").toLocalDate();
+				String cccd = rs.getString("CCCD");
+				Integer tichDiem = rs.getInt("TichDiem");
+				//KhachHang nv = new KhachHang(idKhachHang, tenKhachHang, soDienThoai, gioiTinh, cccd, cv);
+				dsKH.add(new KhachHang(IDKhachHang, tenKhachHang, soDienThoai, ngaySinh, cccd, tichDiem));
+				}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		 return kh;
+	 }
 	public boolean capNhatKhachHangTheoSDT(KhachHang khachhang) {
 		int n = 0;
 		ConnectDB.getInstance();
