@@ -62,7 +62,7 @@ public class ChiTietHoaDon_Phong {
                 HoaDon hd = dshd.layHoaDonTheoMaHoaDon(maHoaDon);
 				try {
 					Phong_DAO dsp = new Phong_DAO();
-					dsp.getAllSanPham();
+					dsp.getAllPhong();
 					phong = dsp.getPhongTheoMa(IdPhong);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
