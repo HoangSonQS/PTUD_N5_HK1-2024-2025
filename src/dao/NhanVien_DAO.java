@@ -119,4 +119,68 @@ public class NhanVien_DAO {
 		}
 		 return nv;
 	 }
+	public boolean capNhatNhanVien(NhanVien nhanvien) {
+		int n = 0;
+		ConnectDB.getInstance();
+		Connection conN = ConnectDB.getInstance().getConnection();
+		PreparedStatement pstm = null;
+		String sql = "update nhanvien set TenNhanVien=?, SoDienThoai=?, NgaySinh=?, GioiTinh=?, CCCD=?, ChucVu=? where IdNhanVien=? ";
+		try {
+			pstm = conN.prepareStatement(sql);
+			pstm.setString(1, nhanvien.getTenNhanVien());
+			pstm.setString(2, nhanvien.getSoDienThoai());
+			pstm.setDate(3, Date.valueOf(nhanvien.getNgaySinh()));
+			pstm.setBoolean(4, nhanvien.isGioiTinh());
+			pstm.setString(5, nhanvien.getCccd());
+			pstm.setString(6, nhanvien.getChucVu().toString());
+			n = pstm.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				pstm.close();
+			} catch (Exception e2) {
+				// TODO: handle exception
+				e2.printStackTrace();
+			}
+		}
+		return n > 0;
+	}
+	
+	public boolean xoaTheoMaNhanVien(String maNV) {
+		ConnectDB.getInstance();
+		Connection conn = ConnectDB.getInstance().getConnection();
+		PreparedStatement pstm = null;
+		String sql = "delete from NhanVien where IdNhanVien ='" + maNV + "'";
+		try {
+			pstm = conn.prepareStatement(sql);
+			pstm.executeUpdate();
+			return true;
+		} catch (SQLException e) {
+			return false;
+		}
+	}
+//	public static int demSLNhanVien(int ns) throws SQLException {
+//        Connection conn = ConnectDB.getInstance().getConnection();
+//        Statement stmt = null;
+//
+//        try {
+//            stmt = conn.createStatement();
+//            String sql = "SELECT YEAR(NgaySinh) AS NamSinh, COUNT(*) AS SoLuongNhanVien "
+//                    + "FROM NhanVien "
+//                    + "GROUP BY YEAR(NgaySinh)";
+//            ResultSet rs = stmt.executeQuery(sql);
+//            while (rs.next()) {
+//                if (rs.getInt("NamSinh") == ns) {
+//                    return rs.getInt("SoLuongNhanVien");
+//                }
+//            }
+//            return 0;
+//        } finally {
+//            if (stmt != null) {
+//                stmt.close();
+//            }
+//        }
+//    }
 }
