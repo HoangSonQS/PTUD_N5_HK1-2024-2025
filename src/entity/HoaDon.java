@@ -8,6 +8,7 @@ public class HoaDon {
 	private String idHoaDon;
 	private NhanVien nhanVienLap;
 	private KhachHang khachHang;
+	private KhuyenMai khuyenmai;
 	private LocalDate thoiGianTao;
 	private LocalDate thoiGianCheckin;
 
@@ -15,12 +16,13 @@ public class HoaDon {
 	
 	
 
-	public HoaDon(String idHoaDon, NhanVien nhanVienLap, KhachHang khachHang, LocalDate thoiGianTao,
+	public HoaDon(String idHoaDon, NhanVien nhanVienLap, KhachHang khachHang,KhuyenMai khuyenmai, LocalDate thoiGianTao,
 			LocalDate thoiGianCheckin) {
 		super();
 		this.idHoaDon = idHoaDon;
 		this.nhanVienLap = nhanVienLap;
 		this.khachHang = khachHang;
+		this.khuyenmai = khuyenmai;
 		this.thoiGianTao = thoiGianTao;
 		this.thoiGianCheckin = thoiGianCheckin;
 	}
@@ -65,10 +67,20 @@ public class HoaDon {
 		this.thoiGianCheckin = thoiGianCheckin;
 	}
 
+	
+	public KhuyenMai getKhuyenmai() {
+		return khuyenmai;
+	}
+
+	public void setKhuyenmai(KhuyenMai khuyenmai) {
+		this.khuyenmai = khuyenmai;
+	}
+
 	@Override
 	public String toString() {
 		return "HoaDon [idHoaDon=" + idHoaDon + ", nhanVienLap=" + nhanVienLap + ", khachHang=" + khachHang
-				+ ", thoiGianTao=" + thoiGianTao + ", thoiGianCheckin=" + thoiGianCheckin + "]";
+				+ ", khuyenmai=" + khuyenmai + ", thoiGianTao=" + thoiGianTao + ", thoiGianCheckin=" + thoiGianCheckin
+				+ "]";
 	}
 
 	@Override
