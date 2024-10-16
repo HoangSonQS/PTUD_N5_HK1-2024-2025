@@ -4,46 +4,25 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.sql.Statement;
-import connectDB.ConnectDB;
-import entity.DichVu;
+import java.util.ArrayList;
 
-public class DichVu_Dao {
-	public static ArrayList<DichVu> getAllDichVu(){
-		ArrayList<DichVu>dsDV = new ArrayList<DichVu>();
-		Connection conN = ConnectDB.getInstance().getConnection();
-		Statement stm = null;
-		try {
-			stm = conN.createStatement();
-			String sql = "select*from DichVu";
-			ResultSet rs = stm.executeQuery(sql);
-			while (rs.next()) {
-				String idDichvu = rs.getString("IDDichVu");
-				String tenSP = rs.getString("TenSanPham");
-				int sl = rs.getInt("soLuong");
-				double dongia = rs.getDouble("DonGia");
-				DichVu dv = new DichVu(idDichvu, tenSP, sl, dongia);
-				dsDV.add(dv);
-			}
-		}catch (SQLException e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
-		return dsDV;
-	}
-	public boolean themDichVu(DichVu dichvu) {
+import connectDB.ConnectDB;
+
+import entity.KhuyenMai;
+
+public class KhuyenMai_DAO {
+	public boolean themKhuyenMai(KhuyenMai khuyenmai) {
 		int n = 0;
 		ConnectDB.getInstance();
 		Connection conN = ConnectDB.getInstance().getConnection();
 		PreparedStatement pstm = null;
-		String sql = "INSERT INTO DichVu ( IDDichVu, TenSanPham, SoLuong, DonGia) VALUES (?,?,?,?)";
+		String sql = "INSERT INTO KhuyenMai ( IDKhuyenMai, TenKhuyenMai, ChietKhau) VALUES (?,?,?)";
 		try {
 			pstm = conN.prepareStatement(sql);
-			pstm.setString(1, dichvu.getIdDichVu());
-			pstm.setString(2, dichvu.getTenSanPham());
-			pstm.setInt(3, dichvu.getSoLuong());
-			pstm.setDouble(4, dichvu.getDonGia());
+			pstm.setString(1, khuyenmai.getIdKhuyenMai());
+			pstm.setString(2, khuyenmai.getTenKhuyenMai());
+			pstm.setDouble(3, khuyenmai.getChietKhau());
 			n = pstm.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -58,20 +37,18 @@ public class DichVu_Dao {
 		}
 		return n > 0;
 	}
-	public boolean suaDichVu(DichVu dichvu) {
+	public boolean suaKhuyenMai(KhuyenMai khuyenmai) {
 		int n = 0;
 		ConnectDB.getInstance();
 		Connection conN = ConnectDB.getInstance().getConnection();
 		PreparedStatement pstm = null;
-		String sql = "update DichVu set TenSanPham=?, SoLuong=?, DonGia=? where IDDichVu=? ";
+		String sql = "update DichVu set TenKhuyenMai=?, Chietkhau=? where IDKhuyenMai=? ";
 		try {
+			
 			pstm = conN.prepareStatement(sql);
-			
-			pstm.setString(1, dichvu.getTenSanPham());
-			pstm.setInt(2, dichvu.getSoLuong());
-			pstm.setDouble(3, dichvu.getDonGia());
-			pstm.setString(4, dichvu.getIdDichVu());
-			
+			pstm.setString(1, khuyenmai.getTenKhuyenMai());
+			pstm.setDouble(2, khuyenmai.getChietKhau());
+			pstm.setString(3, khuyenmai.getIdKhuyenMai());
 			n = pstm.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -86,11 +63,11 @@ public class DichVu_Dao {
 		}
 		return n > 0;
 	}
-	public boolean xoaDichVu(String idDichVu) {
+	public boolean xoaKhuyenMai(String idKhuyenMai) {
 		ConnectDB.getInstance();
 		Connection conn = ConnectDB.getInstance().getConnection();
 		PreparedStatement pstm = null;
-		String sql = "delete from DichVu where IDDichVu ='" + idDichVu + "'";
+		String sql = "delete from KhuyenMai where IDKhuyenMai ='" + idKhuyenMai + "'";
 		try {
 			pstm = conn.prepareStatement(sql);
 			pstm.executeUpdate();
@@ -99,21 +76,20 @@ public class DichVu_Dao {
 			return false;
 		}
 	}
-	public static DichVu layDichVuTheoMa(String idDichVu) {
-	    DichVu dv = null;
+	public KhuyenMai layKhuyenMaiTheoMa(String idKhuyenMai) {
+	    KhuyenMai km = null;
 	    Connection con = ConnectDB.getInstance().getConnection();
 	    PreparedStatement stmt = null;
 	    ResultSet rs = null;
 	    try {
-	        String sql = "SELECT * FROM DichVu WHERE IDDichVu = ?";
+	        String sql = "SELECT * FROM KhuyenMai WHERE IDKhuyenMai = ?";
 	        stmt = con.prepareStatement(sql);
-	        stmt.setString(1, idDichVu);
+	        stmt.setString(1, idKhuyenMai);
 	        rs = stmt.executeQuery();
 	        while (rs.next()) {
-	        	String tenSP = rs.getString("TenSanPham");
-				int sl = rs.getInt("soLuong");
-				double dongia = rs.getDouble("DonGia");
-	            dv = new DichVu(idDichVu, tenSP, sl, dongia);
+	            String tenKhuyenMai = rs.getString("TenKhuyenMai");
+	            double chietkhau = rs.getDouble("ChietKhau");
+	            km = new KhuyenMai(idKhuyenMai, tenKhuyenMai, chietkhau);
 	        }
 	    } catch (SQLException e) {
 	        e.printStackTrace();
@@ -129,6 +105,27 @@ public class DichVu_Dao {
 	            e.printStackTrace();
 	        }
 	    }
-	    return dv;
+	    return km;
+	}
+	public ArrayList<KhuyenMai> getAllKhuyenMai(){
+		ArrayList<KhuyenMai>dsKM = new ArrayList<KhuyenMai>();
+		Connection conN = ConnectDB.getInstance().getConnection();
+		Statement stm = null;
+		try {
+			stm = conN.createStatement();
+			String sql = "select*from KhuyenMai";
+			ResultSet rs = stm.executeQuery(sql);
+			while (rs.next()) {
+				String idDichvu = rs.getString("IDKhuyenMai");
+				String tenSP = rs.getString("TenKhuyenMai");
+				double chietkhau = rs.getDouble("ChietKhau");
+				KhuyenMai km = new KhuyenMai(idDichvu, tenSP, chietkhau);
+				dsKM.add(km);
+			}
+		}catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return dsKM;
 	}
 }
