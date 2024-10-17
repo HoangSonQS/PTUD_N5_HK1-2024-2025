@@ -7,7 +7,7 @@ public enum Enum_ChucVu {
 	public String getChucVu() {
         switch (this) {
             case NHANVIENLETAN:
-                return "Nhân viên quản lý";
+                return "Nhân viên lễ tân";
             case NGUOIQUANLY:
                 return "Người quản lý";
             default:

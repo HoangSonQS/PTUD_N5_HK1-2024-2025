@@ -18,9 +18,10 @@ public class NhanVien_DAO {
 		ArrayList<NhanVien> dsNV = new ArrayList<NhanVien>();
 		Connection conN = ConnectDB.getInstance().getConnection();
 		Statement stm = null;
+
 		try {
 			stm = conN.createStatement();
-			String sql = "select*from NhanVien";
+			String sql = "select * from NhanVien";
 			ResultSet rs = stm.executeQuery(sql);
 			while (rs.next()) {
 				String idNhanVien = rs.getString("IDNhanVien");
@@ -29,14 +30,22 @@ public class NhanVien_DAO {
 				LocalDate ngaySinh = rs.getDate("NgaySinh").toLocalDate();
 				boolean gioiTinh = rs.getBoolean("GioiTinh");
 				String cccd = rs.getString("CCCD");
-				String chucVu = rs.getString("ChucVu");
+				int chucVu = rs.getInt("ChucVu");
 				ChucVu cv = null;
-				if(chucVu.equalsIgnoreCase(ChucVu.NHANVIENLETAN.toString())) {
+				
+				if(chucVu == 1) {
 					cv = ChucVu.NHANVIENLETAN;
-					
-				} else if(chucVu.equalsIgnoreCase(ChucVu.NGUOIQUANLY.toString())) {
+				} else if (chucVu == 2) {
 					cv = ChucVu.NGUOIQUANLY;
 				}
+				
+//				if(chucVu.equalsIgnoreCase(ChucVu.NHANVIENLETAN.toString())) {
+//					cv = ChucVu.NHANVIENLETAN;
+//					
+//				} else if(chucVu.equalsIgnoreCase(ChucVu.NGUOIQUANLY.toString())) {
+//					cv = ChucVu.NGUOIQUANLY;
+//				}
+				
 				
 				//NhanVien nv = new NhanVien(idNhanVien, tenNhanVien, soDienThoai, gioiTinh, cccd, cv);
 				dsNV.add(new NhanVien(idNhanVien, tenNhanVien, soDienThoai, ngaySinh, gioiTinh, cccd, cv));
@@ -64,6 +73,12 @@ public class NhanVien_DAO {
 			pstm.setInt(5, nhanvien.isGioiTinh()? 1 : 0);
 			pstm.setString(6, nhanvien.getCccd());
 			pstm.setString(7, nhanvien.getChucVu().toString());
+			int cv = 0;
+			if(nhanvien.getChucVu().toString().equalsIgnoreCase("Nhân viên lễ tân")) {
+				cv = 1;
+			} else if (nhanvien.getChucVu().toString().equalsIgnoreCase("Người quản lý")) {
+				cv = 2;
+			} 
 			n = pstm.executeUpdate();
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -78,33 +93,41 @@ public class NhanVien_DAO {
 	}
 	
 	public NhanVien getNhanVienTheoMa(String ma) {
-		ArrayList<NhanVien> dsNV = new ArrayList<NhanVien>();
 		Connection con = ConnectDB.getInstance().getConnection();
 		PreparedStatement stmt = null;
 		NhanVien nv = null;
 		ResultSet rs = null;
 		try {
-			String sql = "SELECT * FROM NhanVien WHERE IdNhanVien = ?";
+			String sql = "SELECT * FROM NhanVien WHERE IDNhanVien = ?";
 			stmt = con.prepareStatement(sql);
 	        stmt.setString(1, ma);
 	        rs = stmt.executeQuery();
 			while (rs.next()) {
+
 				String tenNhanVien = rs.getString("TenNhanVien");
 				String soDienThoai = rs.getString("SoDienThoai");
 				LocalDate ngaySinh = rs.getDate("NgaySinh").toLocalDate();
 				boolean gioiTinh = rs.getBoolean("GioiTinh");
 				String cccd = rs.getString("CCCD");
-				String chucVu = rs.getString("ChucVu");
+//				String chucVu = rs.getString("ChucVu");
+//				ChucVu cv = null;
+//				if(chucVu.equalsIgnoreCase(ChucVu.NHANVIENLETAN.toString())) {
+//					cv = ChucVu.NHANVIENLETAN;
+//					
+//				} else if(chucVu.equalsIgnoreCase(ChucVu.NGUOIQUANLY.toString())) {
+//					cv = ChucVu.NGUOIQUANLY;
+//				}
+				int chucVu = rs.getInt("ChucVu");
 				ChucVu cv = null;
-				if(chucVu.equalsIgnoreCase(ChucVu.NHANVIENLETAN.toString())) {
+				
+				if(chucVu == 1) {
 					cv = ChucVu.NHANVIENLETAN;
-					
-				} else if(chucVu.equalsIgnoreCase(ChucVu.NGUOIQUANLY.toString())) {
+				} else if (chucVu == 2) {
 					cv = ChucVu.NGUOIQUANLY;
 				}
 				
 				//NhanVien nv = new NhanVien(idNhanVien, tenNhanVien, soDienThoai, gioiTinh, cccd, cv);
-				dsNV.add(new NhanVien(ma, tenNhanVien, soDienThoai, ngaySinh, gioiTinh, cccd, cv));
+				nv = new NhanVien(ma, tenNhanVien, soDienThoai, ngaySinh, gioiTinh, cccd, cv);
 				}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -133,6 +156,12 @@ public class NhanVien_DAO {
 			pstm.setBoolean(4, nhanvien.isGioiTinh());
 			pstm.setString(5, nhanvien.getCccd());
 			pstm.setString(6, nhanvien.getChucVu().toString());
+			int cv = 0;
+			if(nhanvien.getChucVu().toString().equalsIgnoreCase("Nhân viên lễ tân")) {
+				cv = 1;
+			} else if (nhanvien.getChucVu().toString().equalsIgnoreCase("Người quản lý")) {
+				cv = 2;
+			} 
 			n = pstm.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

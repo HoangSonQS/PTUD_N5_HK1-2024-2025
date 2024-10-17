@@ -112,7 +112,7 @@ public class PhieuThuePhong_DAO {
 	            dskh.getAllKhachHang();
 	            KhachHang kh = dskh.getKhachHangTheoMa(idkhachhang);
 	            Phong_DAO dsp = new Phong_DAO();
-	            dsp.getAllSanPham();
+	            dsp.getAllPhong();
 	            Phong p = dsp.getPhongTheoMa(idphong);
 	            pt = new PhieuThuePhong(idPhieuThue, kh, p, nv, thoigiancheckin, thoigiancheckout);
 	            
@@ -155,7 +155,7 @@ public class PhieuThuePhong_DAO {
 	            dskh.getAllKhachHang();
 	            KhachHang kh = dskh.getKhachHangTheoMa(idkhachhang);
 	            Phong_DAO dsp = new Phong_DAO();
-	            dsp.getAllSanPham();
+	            dsp.getAllPhong();
 	            Phong p = dsp.getPhongTheoMa(idphong);
 	            PhieuThuePhong pt = new PhieuThuePhong(idphieuthu, kh, p, nv, thoigiancheckin, thoigiancheckout);
 	            dsPT.add(pt);

@@ -3,8 +3,8 @@ package entity;
 public enum ChucVu {
 	
 
-	NHANVIENLETAN,
-	NGUOIQUANLY;
+	NHANVIENLETAN("Nhân viên lễ tân"),
+	NGUOIQUANLY("Người quản lý");
 
 	private String chucVu;
 

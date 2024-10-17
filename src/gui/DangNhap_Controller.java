@@ -19,6 +19,9 @@ public class DangNhap_Controller {
 	// Event Listener on Button[#btn_LogIn].onAction
 	@FXML
 	public void LogIn(ActionEvent event) {
-
+		String userName = txt_ten.getText().trim();
+		String password = txt_mk.getText().trim();
+		
+		
 	}
 }

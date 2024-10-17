@@ -4,13 +4,15 @@ import connectDB.ConnectDB;
 import entity.DichVu;
 import entity.LoaiPhong;
 import entity.Phong;
+import entity.TaiKhoan;
 import entity.TrangThaiPhong;
 
 public class testDao {
 	
 	public static void main(String[] args) {
 		connect();
-		testPhong();
+//		testTaiKhoan();
+		testNhanVien();
 	}
 	
 	//done
@@ -22,6 +24,17 @@ public class testDao {
 //		pdao.themPhong(p);
 //		System.out.println(pdao.getPhongTheoLoai("Phòng đơn"));
 	}
+	
+	public static void testTaiKhoan() {
+		TaiKhoan_DAO tkdao = new TaiKhoan_DAO();
+		System.out.println(tkdao.getAllTaiKhoan());
+	}
+	
+	public static void testNhanVien() {
+		NhanVien_DAO nv = new NhanVien_DAO();
+		System.out.println(nv.getNhanVienTheoMa("NV24100301"));
+	}
+	
 	
 	static void connect() {
 		ConnectDB cn = new ConnectDB();
