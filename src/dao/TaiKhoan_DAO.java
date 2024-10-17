@@ -5,11 +5,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import connectDB.ConnectDB;
+import entity.KhachHang;
 import entity.NhanVien;
+import entity.PhieuThuePhong;
+import entity.Phong;
 import entity.TaiKhoan;
-import entity.TrangThaiPhong;
 
 public class TaiKhoan_DAO {
 	public boolean themTaiKhoan(TaiKhoan taikhoan) {
@@ -18,7 +21,7 @@ public class TaiKhoan_DAO {
 		PreparedStatement pstm = null;
 		int n = 0;
 		try {
-			String sql="INSERT INTO TaiKhoan ( IdTaiKhoan, MatKhau, TrangThai, IDNhanVien) values(?,?,?,?)";
+			String sql="INSERT INTO TaiKhoan ( IDTaiKhoan, MatKhau, TrangThai, IDNhanVien) values(?,?,?,?)";
 			pstm = conn.prepareStatement(sql);
 			pstm.setString(1, taikhoan.getIdTaiKhoan());
 			pstm.setString(2, taikhoan.getMatKhau());
@@ -41,7 +44,7 @@ public class TaiKhoan_DAO {
 		ConnectDB.getInstance();
 		Connection conN = ConnectDB.getInstance().getConnection();
 		PreparedStatement pstm = null;
-		String sql = "update TaiKhoan set MatKhau=?, TrangThai=?, IDNhanVien=? where IdTaiKhoan=? ";
+		String sql = "update TaiKhoan set MatKhau=?, TrangThai=?, IDNhanVien=? where IDTaiKhoan=? ";
 		try {
 			pstm = conN.prepareStatement(sql);
 			pstm.setString(1, taikhoan.getMatKhau());
@@ -66,7 +69,7 @@ public class TaiKhoan_DAO {
 		ConnectDB.getInstance();
 		Connection conn = ConnectDB.getInstance().getConnection();
 		PreparedStatement pstm = null;
-		String sql = "delete from NhanVien where IdTaiKhoan ='" + maTK + "'";
+		String sql = "delete from TaiKhoan where IDTaiKhoan ='" + maTK + "'";
 		try {
 			pstm = conn.prepareStatement(sql);
 			pstm.executeUpdate();
@@ -90,7 +93,6 @@ public class TaiKhoan_DAO {
 				String trangthai = rs.getString("TrangThai");
 				String idnhanvien = rs.getString("IDNhanVien");
 				NhanVien nv = new NhanVien_DAO().getNhanVienTheoMa(idnhanvien);
-				System.out.println(nv);
 				TaiKhoan tk = new TaiKhoan(idtaikhoan, matkhau, trangthai, nv);
 				dsTK.add(tk);
 			}
@@ -99,5 +101,41 @@ public class TaiKhoan_DAO {
 			e.printStackTrace();
 		}
 		return dsTK;
+	}
+	public TaiKhoan layTaiKhoanTheoMa(String idTaiKhoan) {
+	    TaiKhoan tk = null;
+	    Connection con = ConnectDB.getInstance().getConnection();
+	    PreparedStatement stmt = null;
+	    ResultSet rs = null;
+	    try {
+	        String sql = "SELECT * FROM TaiKhoan WHERE IDTaiKhoan = ?";
+	        stmt = con.prepareStatement(sql);
+	        stmt.setString(1, idTaiKhoan);
+	        rs = stmt.executeQuery();
+	        while (rs.next()) {
+	        	String matkhau = rs.getString("MatKhau");
+	            String trangthai = rs.getString("TrangThai");
+	            String idnhanvien = rs.getString("IDNhanVien");
+	            NhanVien_DAO dsnv = new NhanVien_DAO();
+	            dsnv.getAllNhanVien();
+	            NhanVien nv = dsnv.getNhanVienTheoMa(idnhanvien);
+	            tk = new TaiKhoan(idTaiKhoan, matkhau, trangthai, nv);
+	            
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if (rs != null) {
+	                rs.close();
+	            }
+	            if (stmt != null) {
+	                stmt.close();
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	    return tk;
 	}
 }
