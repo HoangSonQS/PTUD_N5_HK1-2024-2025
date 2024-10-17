@@ -1,6 +1,7 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 
 import connectDB.ConnectDB;
 import entity.LoaiPhong;
+import entity.Phong;
 import entity.Phong;
 import entity.TrangThaiPhong;
 
@@ -191,4 +193,50 @@ public class Phong_DAO {
 			}
 			return dsPhong;
 		 }
+	 
+	 public boolean capNhatPhong(Phong phong) {
+			int n = 0;
+			ConnectDB.getInstance();
+			Connection conN = ConnectDB.getInstance().getConnection();
+			PreparedStatement pstm = null;
+			String sql = "update Phong set LoaiPhong=?, DonGia=?, TrangThai=? where IDPhong=? ";
+			try {
+				pstm = conN.prepareStatement(sql);
+				//pstm.setString(1, phong.getIdPhong());
+//				pstm.setString(2, phong.getLoaiPhong());
+				pstm.setString(1, phong.getIdPhong());
+				int lp = 0;
+				if(phong.getLoaiPhong().toString().equalsIgnoreCase("Phòng đôi")) {
+					lp = 1;
+				} else if(phong.getLoaiPhong().toString().equalsIgnoreCase("Phòng đơn")) {
+					lp = 2;
+				} else {
+					lp = 3;
+				}
+				pstm.setInt(2, lp);
+				pstm.setDouble(3, phong.getDonGia());
+				int tt = 0;
+				if(phong.getTrangThai().toString().equalsIgnoreCase("Trống")) {
+					tt = 1;
+				} else if(phong.getTrangThai().toString().equalsIgnoreCase("Đang thuê")) {
+					tt = 2;
+				} else if(phong.getTrangThai().toString().equalsIgnoreCase("Sắp checkin")) {
+					tt = 3;
+				} else {
+					tt = 4;
+				}
+				n = pstm.executeUpdate();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				try {
+					pstm.close();
+				} catch (Exception e2) {
+					// TODO: handle exception
+					e2.printStackTrace();
+				}
+			}
+			return n > 0;
+		}
 }
