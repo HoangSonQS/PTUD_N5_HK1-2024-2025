@@ -144,38 +144,47 @@ public class NhanVien_DAO {
 		 return nv;
 	 }
 	public boolean capNhatNhanVien(NhanVien nhanvien) {
-		int n = 0;
-		ConnectDB.getInstance();
-		Connection conN = ConnectDB.getInstance().getConnection();
-		PreparedStatement pstm = null;
-		String sql = "update NhanVien set TenNhanVien=?, SoDienThoai=?, NgaySinh=?, GioiTinh=?, CCCD=?, ChucVu=? where IDNhanVien=? ";
-		try {
-			pstm.setString(1, nhanvien.getIdNhanVien());
-			pstm.setString(2, nhanvien.getTenNhanVien());
-			pstm.setString(3, nhanvien.getSoDienThoai());
-			pstm.setDate(4, Date.valueOf(nhanvien.getNgaySinh()));
-			pstm.setInt(5, nhanvien.isGioiTinh()? 1 : 0);
-			pstm.setString(6, nhanvien.getCccd());
-			int cv = 0;
-			if(nhanvien.getChucVu().toString().equalsIgnoreCase("Nhân viên lễ tân")) {
-				cv = 1;
-			} else if (nhanvien.getChucVu().toString().equalsIgnoreCase("Người quản lý")) {
-				cv = 2;
-			} 
-			n = pstm.executeUpdate();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			try {
-				pstm.close();
-			} catch (Exception e2) {
-				// TODO: handle exception
-				e2.printStackTrace();
-			}
-		}
-		return n > 0;
+	    int n = 0;
+	    ConnectDB.getInstance();
+	    Connection conN = ConnectDB.getInstance().getConnection();
+	    PreparedStatement pstm = null;
+	    String sql = "update NhanVien set TenNhanVien=?, SoDienThoai=?, NgaySinh=?, GioiTinh=?, CCCD=?, ChucVu=? where IDNhanVien=? ";
+	    try {
+	        // Khởi tạo PreparedStatement
+	        pstm = conN.prepareStatement(sql);
+
+	        // Đặt các giá trị cho các tham số trong câu lệnh SQL
+	        pstm.setString(1, nhanvien.getTenNhanVien());
+	        pstm.setString(2, nhanvien.getSoDienThoai());
+	        pstm.setDate(3, Date.valueOf(nhanvien.getNgaySinh()));
+	        pstm.setInt(4, nhanvien.isGioiTinh() ? 1 : 0);
+	        pstm.setString(5, nhanvien.getCccd());
+
+	        int cv = 0;
+	        if (nhanvien.getChucVu().toString().equalsIgnoreCase("Nhân viên lễ tân")) {
+	            cv = 1;
+	        } else if (nhanvien.getChucVu().toString().equalsIgnoreCase("Người quản lý")) {
+	            cv = 2;
+	        }
+	        pstm.setInt(6, cv);
+	        pstm.setString(7, nhanvien.getIdNhanVien());
+
+	        // Thực thi câu lệnh SQL
+	        n = pstm.executeUpdate();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if (pstm != null) {
+	                pstm.close(); // Đảm bảo PreparedStatement được đóng
+	            }
+	        } catch (Exception e2) {
+	            e2.printStackTrace();
+	        }
+	    }
+	    return n > 0;
 	}
+
 	
 	public boolean xoaTheoMaNhanVien(String maNV) {
 		ConnectDB.getInstance();
