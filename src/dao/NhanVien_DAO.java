@@ -54,7 +54,6 @@ public class NhanVien_DAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(dsNV);
 		return dsNV;
 	}
 	
@@ -72,13 +71,15 @@ public class NhanVien_DAO {
 			pstm.setDate(4, Date.valueOf(nhanvien.getNgaySinh()));
 			pstm.setInt(5, nhanvien.isGioiTinh()? 1 : 0);
 			pstm.setString(6, nhanvien.getCccd());
-			pstm.setString(7, nhanvien.getChucVu().toString());
+
+			System.out.println(1);
 			int cv = 0;
 			if(nhanvien.getChucVu().toString().equalsIgnoreCase("Nhân viên lễ tân")) {
 				cv = 1;
 			} else if (nhanvien.getChucVu().toString().equalsIgnoreCase("Người quản lý")) {
 				cv = 2;
 			} 
+			pstm.setInt(7, cv);
 			n = pstm.executeUpdate();
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -147,15 +148,14 @@ public class NhanVien_DAO {
 		ConnectDB.getInstance();
 		Connection conN = ConnectDB.getInstance().getConnection();
 		PreparedStatement pstm = null;
-		String sql = "update nhanvien set TenNhanVien=?, SoDienThoai=?, NgaySinh=?, GioiTinh=?, CCCD=?, ChucVu=? where IdNhanVien=? ";
+		String sql = "update NhanVien set TenNhanVien=?, SoDienThoai=?, NgaySinh=?, GioiTinh=?, CCCD=?, ChucVu=? where IDNhanVien=? ";
 		try {
-			pstm = conN.prepareStatement(sql);
-			pstm.setString(1, nhanvien.getTenNhanVien());
-			pstm.setString(2, nhanvien.getSoDienThoai());
-			pstm.setDate(3, Date.valueOf(nhanvien.getNgaySinh()));
-			pstm.setBoolean(4, nhanvien.isGioiTinh());
-			pstm.setString(5, nhanvien.getCccd());
-			pstm.setString(6, nhanvien.getChucVu().toString());
+			pstm.setString(1, nhanvien.getIdNhanVien());
+			pstm.setString(2, nhanvien.getTenNhanVien());
+			pstm.setString(3, nhanvien.getSoDienThoai());
+			pstm.setDate(4, Date.valueOf(nhanvien.getNgaySinh()));
+			pstm.setInt(5, nhanvien.isGioiTinh()? 1 : 0);
+			pstm.setString(6, nhanvien.getCccd());
 			int cv = 0;
 			if(nhanvien.getChucVu().toString().equalsIgnoreCase("Nhân viên lễ tân")) {
 				cv = 1;
