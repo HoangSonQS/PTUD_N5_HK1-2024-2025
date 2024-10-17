@@ -18,9 +18,10 @@ public class NhanVien_DAO {
 		ArrayList<NhanVien> dsNV = new ArrayList<NhanVien>();
 		Connection conN = ConnectDB.getInstance().getConnection();
 		Statement stm = null;
+
 		try {
 			stm = conN.createStatement();
-			String sql = "select*from NhanVien";
+			String sql = "select * from NhanVien";
 			ResultSet rs = stm.executeQuery(sql);
 			while (rs.next()) {
 				String idNhanVien = rs.getString("IDNhanVien");
@@ -78,17 +79,17 @@ public class NhanVien_DAO {
 	}
 	
 	public NhanVien getNhanVienTheoMa(String ma) {
-		ArrayList<NhanVien> dsNV = new ArrayList<NhanVien>();
 		Connection con = ConnectDB.getInstance().getConnection();
 		PreparedStatement stmt = null;
 		NhanVien nv = null;
 		ResultSet rs = null;
 		try {
-			String sql = "SELECT * FROM NhanVien WHERE IdNhanVien = ?";
+			String sql = "SELECT * FROM NhanVien WHERE IDNhanVien = ?";
 			stmt = con.prepareStatement(sql);
 	        stmt.setString(1, ma);
 	        rs = stmt.executeQuery();
 			while (rs.next()) {
+
 				String tenNhanVien = rs.getString("TenNhanVien");
 				String soDienThoai = rs.getString("SoDienThoai");
 				LocalDate ngaySinh = rs.getDate("NgaySinh").toLocalDate();
@@ -104,7 +105,7 @@ public class NhanVien_DAO {
 				}
 				
 				//NhanVien nv = new NhanVien(idNhanVien, tenNhanVien, soDienThoai, gioiTinh, cccd, cv);
-				dsNV.add(new NhanVien(ma, tenNhanVien, soDienThoai, ngaySinh, gioiTinh, cccd, cv));
+				nv = new NhanVien(ma, tenNhanVien, soDienThoai, ngaySinh, gioiTinh, cccd, cv);
 				}
 		} catch (SQLException e) {
 			e.printStackTrace();

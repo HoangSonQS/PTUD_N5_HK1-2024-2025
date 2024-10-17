@@ -79,16 +79,18 @@ public class TaiKhoan_DAO {
 		ArrayList<TaiKhoan> dsTK = new ArrayList<TaiKhoan>();
 		Connection conN = ConnectDB.getInstance().getConnection();
 		Statement stm = null;
+		System.out.println(1);
 		try {
 			stm = conN.createStatement();
-			String sql = "select*from TaiKhoan";
+			String sql = "select * from TaiKhoan";
 			ResultSet rs = stm.executeQuery(sql);
 			while (rs.next()) {
 				String idtaikhoan = rs.getString("IDTaiKhoan");
 				String matkhau = rs.getString("MatKhau");
 				String trangthai = rs.getString("TrangThai");
 				String idnhanvien = rs.getString("IDNhanVien");
-				NhanVien nv = new NhanVien(idnhanvien);
+				NhanVien nv = new NhanVien_DAO().getNhanVienTheoMa(idnhanvien);
+				System.out.println(nv);
 				TaiKhoan tk = new TaiKhoan(idtaikhoan, matkhau, trangthai, nv);
 				dsTK.add(tk);
 			}
