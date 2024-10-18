@@ -32,8 +32,8 @@ public class App extends Application{
 //      Open Main GUI
 		primaryScene = new Scene(loadFXML("GD_Chinh"));
 //		Stage stage = new Stage();
-		primaryStage.setTitle("Quản Lý Khách sạn Flower on the sea");
-		primaryStage.setResizable(false);
+//		primaryStage.setTitle("Quản Lý Khách sạn Flower on the sea");
+//		primaryStage.setResizable(false);
 		primaryStage.setScene(primaryScene);
 		primaryStage.setOnCloseRequest(event -> {
 			Platform.exit();
@@ -65,7 +65,7 @@ public class App extends Application{
 		paneChildren.add(child);
 	}
 	public static Parent loadFXML(String fxml) throws IOException {
-		FXMLLoader fxmlFrame = new FXMLLoader(App.class.getResource("/fxml/" + fxml + ".fxml"));
+		FXMLLoader fxmlFrame = new FXMLLoader(App.class.getResource("/gui/" + fxml + ".fxml"));
 		return fxmlFrame.load();
 	}
 	public static void main(String[] args) {
