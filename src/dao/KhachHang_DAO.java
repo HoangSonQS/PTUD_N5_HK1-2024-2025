@@ -112,7 +112,7 @@ public class KhachHang_DAO {
 		KhachHang kh = null;
 		ResultSet rs = null;
 		try {
-			String sql = "SELECT * FROM KhachHang WHERE IdKhachHang = ?";
+			String sql = "SELECT * FROM KhachHang WHERE IDKhachHang = ?";
 			stmt = con.prepareStatement(sql);
 	        stmt.setString(3, sdt);
 	        rs = stmt.executeQuery();
@@ -139,13 +139,13 @@ public class KhachHang_DAO {
 		 return kh;
 	 }
 	public KhachHang getKhachHangTheoMa(String IDKhachHang) {
-		ArrayList<KhachHang> dsKH = new ArrayList<KhachHang>();
+
 		Connection con = ConnectDB.getInstance().getConnection();
 		PreparedStatement stmt = null;
 		KhachHang kh = null;
 		ResultSet rs = null;
 		try {
-			String sql = "SELECT * FROM KhachHang WHERE IdKhachHang = ?";
+			String sql = "SELECT * FROM KhachHang WHERE IDKhachHang = ?";
 			stmt = con.prepareStatement(sql);
 	        stmt.setString(1, IDKhachHang);
 	        rs = stmt.executeQuery();
@@ -156,7 +156,7 @@ public class KhachHang_DAO {
 				String cccd = rs.getString("CCCD");
 				Integer tichDiem = rs.getInt("TichDiem");
 				//KhachHang nv = new KhachHang(idKhachHang, tenKhachHang, soDienThoai, gioiTinh, cccd, cv);
-				dsKH.add(new KhachHang(IDKhachHang, tenKhachHang, soDienThoai, ngaySinh, cccd, tichDiem));
+				kh = new KhachHang(IDKhachHang, tenKhachHang, soDienThoai, ngaySinh, cccd, tichDiem);
 				}
 		} catch (SQLException e) {
 			e.printStackTrace();

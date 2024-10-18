@@ -15,7 +15,7 @@ import entity.KhuyenMai;
 import entity.NhanVien;
 
 public class HoaDon_DAO {
-	public boolean themKhuyenMai(HoaDon hoadon) {
+	public boolean themHoaDon(HoaDon hoadon) {
 		int n = 0;
 		ConnectDB.getInstance();
 		Connection conN = ConnectDB.getInstance().getConnection();
@@ -137,7 +137,7 @@ public class HoaDon_DAO {
 		Statement stm = null;
 		try {
 			stm = conN.createStatement();
-			String sql = "select*from HoaDon";
+			String sql = "select * from HoaDon";
 			ResultSet rs = stm.executeQuery(sql);
 			while (rs.next()) {
 				String idHoaDon = rs.getString("IDHoaDon");
@@ -147,10 +147,8 @@ public class HoaDon_DAO {
 				LocalDate thoigiantao = rs.getDate("ThoiGianTao").toLocalDate();
 	            LocalDate thoigiancheckin = rs.getDate("ThoiGianCheckin").toLocalDate();
 	            NhanVien_DAO dsnv = new NhanVien_DAO();
-	            dsnv.getAllNhanVien();
 	            NhanVien nv = dsnv.getNhanVienTheoMa(idnhanvien);
 	            KhachHang_DAO dskh = new KhachHang_DAO();
-	            dskh.getAllKhachHang();
 	            KhachHang kh = dskh.getKhachHangTheoMa(idKhachHang);
 	            KhuyenMai_DAO dskm = new KhuyenMai_DAO();
 	            dskm.getAllKhuyenMai();

@@ -16,7 +16,9 @@ public class testDao {
 	public static void main(String[] args) {
 		connect();
 //		testTaiKhoan();
-		testNhanVien();
+//		testNhanVien();
+		testHoaDon();
+
 	}
 	
 	//done
@@ -34,6 +36,7 @@ public class testDao {
 		System.out.println(tkdao.getAllTaiKhoan());
 	}
 	
+//	done
 	public static void testNhanVien() {
 		LocalDate ngaySinh = LocalDate.of(2000, 1, 1);
 		NhanVien_DAO nv = new NhanVien_DAO();
@@ -49,6 +52,11 @@ public class testDao {
 		nv.xoaTheoMaNhanVien("NV001");
 	}
 	
+	public static void testHoaDon() {
+		HoaDon_DAO hddao = new HoaDon_DAO();
+		System.out.println(hddao.getAllHoaDon());
+	}
+
 	
 	static void connect() {
 		ConnectDB cn = new ConnectDB();
