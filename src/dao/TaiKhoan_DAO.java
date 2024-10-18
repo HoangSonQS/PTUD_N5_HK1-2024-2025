@@ -138,4 +138,65 @@ public class TaiKhoan_DAO {
 	    }
 	    return tk;
 	}
+	public TaiKhoan getTaiKhoanTheoUserNameAndPassword(String username, String password) {
+		TaiKhoan tk = null;
+	    Connection con = ConnectDB.getInstance().getConnection();
+	    PreparedStatement stmt = null;
+	    ResultSet rs = null;
+	    try {
+	        String sql = "SELECT * FROM TaiKhoan WHERE IDTaiKhoan = ? AND MatKhau = ?";
+	        stmt = con.prepareStatement(sql);
+	        stmt.setString(1, username); 
+	        stmt.setString(2, password); 
+	        rs = stmt.executeQuery();
+	        while (rs.next()) {
+	        	String matkhau = rs.getString("MatKhau");
+	            String trangthai = rs.getString("TrangThai");
+	            String idnhanvien = rs.getString("IDNhanVien");
+	            NhanVien_DAO dsnv = new NhanVien_DAO();
+	            dsnv.getAllNhanVien();
+	            NhanVien nv = dsnv.getNhanVienTheoMa(idnhanvien);
+	            tk = new TaiKhoan(username, password, trangthai, nv);
+	            
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if (rs != null) {
+	                rs.close();
+	            }
+	            if (stmt != null) {
+	                stmt.close();
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	    return tk;
+	}
+	public boolean capNhatDangNhap() {
+		int n = 0;
+		ConnectDB.getInstance();
+		Connection conN = ConnectDB.getInstance().getConnection();
+		PreparedStatement pstm = null;
+		String sql = "update TaiKhoan set TrangThai=?";
+		try {
+			pstm = conN.prepareStatement(sql);
+			String nu = "NULL";
+			pstm.setString(1, nu);
+			n = pstm.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				pstm.close();
+			} catch (Exception e2) {
+				// TODO: handle exception
+				e2.printStackTrace();
+			}
+		}
+		return n > 0;
+	}
 }
