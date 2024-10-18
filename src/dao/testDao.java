@@ -19,6 +19,7 @@ public class testDao {
 //		testTaiKhoan();
 //		testNhanVien();
 //		testPhieuThue();
+//		testKM();
 		testKH();
 	}
 	
@@ -75,6 +76,13 @@ public class testDao {
 //		System.out.println(dsKH.getAllKhachHang());
 	}
 	
+	public static void testKM() {
+//		KhuyenMai_Dao dsKM = new KhuyenMai_Dao();
+//		KhuyenMai km1 = new KhuyenMai("KM241003", "Khuyến mãi 3", 10);
+//		dsKM.themKhuyenMai(km1);
+//		dsKM.layKhuyenMaiTheoMa("KM241003");
+//		System.out.println(dsKM.layKhuyenMaiTheoMa("KM241003"));
+	}
 	public static void testHoaDon() {
 		HoaDon_DAO hddao = new HoaDon_DAO();
 		System.out.println(hddao.getAllHoaDon());
