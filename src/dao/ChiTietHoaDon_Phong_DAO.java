@@ -5,7 +5,9 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,8 +18,8 @@ import entity.DichVu;
 import entity.HoaDon;
 import entity.Phong;
 
-public class ChiTietHoaDon_Phong {
-	public boolean themChiTietHoaDon(ChiTietHD_Phong chiTietHoaDon) {
+public class ChiTietHoaDon_Phong_DAO {
+	public boolean themChiTietHoaDon_Phong(ChiTietHD_Phong chiTietHoaDon) {
         int n = 0;
         ConnectDB.getInstance();
 		Connection conN = ConnectDB.getInstance().getConnection();
@@ -27,7 +29,7 @@ public class ChiTietHoaDon_Phong {
             preparedStatement = conN.prepareStatement(sql);
             preparedStatement.setString(1, chiTietHoaDon.getHoaDon().getIdHoaDon());
             preparedStatement.setString(2, chiTietHoaDon.getPhong().getIdPhong());
-            preparedStatement.setDate(3, Date.valueOf(chiTietHoaDon.getGioCheckout()));
+            preparedStatement.setTimestamp(3, Timestamp.valueOf(chiTietHoaDon.getGioCheckout())); // ThoiGianCheckin là LocalDateTime
             n = preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -48,13 +50,13 @@ public class ChiTietHoaDon_Phong {
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         try {
-            String sql = "SELECT * FROM ChiTietHD_Phong WHERE MaHD = ?";
+            String sql = "SELECT * FROM ChiTietHD_Phong WHERE IDHoaDon = ?";
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, maHoaDon);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 String IdPhong = resultSet.getString("IDPhong");
-                LocalDate soLuongSP = resultSet.getDate("GioCheckout").toLocalDate();
+                LocalDateTime gioCheckout = resultSet.getTimestamp("GioCheckout").toLocalDateTime();
                 // Lấy thông tin của sản phẩm từ cơ sở dữ liệu
                 Phong phong = null;
                 HoaDon_DAO dshd = new HoaDon_DAO();
@@ -69,7 +71,7 @@ public class ChiTietHoaDon_Phong {
 					e.printStackTrace();
 				}
                 // Tạo đối tượng ChiTietHoaDon
-                ChiTietHD_Phong chiTietHoaDon = new ChiTietHD_Phong(hd, phong, soLuongSP);
+                ChiTietHD_Phong chiTietHoaDon = new ChiTietHD_Phong(hd, phong, gioCheckout);
                 danhSachChiTietHoaDon.add(chiTietHoaDon);
             }
         } catch (SQLException e) {

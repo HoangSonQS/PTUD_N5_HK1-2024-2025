@@ -25,6 +25,13 @@ public class HoaDon {
 		this.thoiGianTao = thoiGianTao;
 		this.thoiGianCheckin = thoiGianCheckin;
 	}
+	
+
+	public HoaDon(String idHoaDon) {
+		super();
+		this.idHoaDon = idHoaDon;
+	}
+
 
 	public String getIdHoaDon() {
 		return idHoaDon;

@@ -16,6 +16,12 @@ public class Phong {
 		this.donGia = donGia;
 		this.trangThai = trangThai;
 	}
+	
+	public Phong(String idPhong) {
+		super();
+		this.idPhong = idPhong;
+	}
+
 	public Phong() {
 		this("", LoaiPhong.PHONGDON, 0, TrangThaiPhong.TRONG);
 	}

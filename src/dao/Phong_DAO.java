@@ -19,7 +19,6 @@ public class Phong_DAO {
 		ArrayList<Phong> dsPhong = new ArrayList<Phong>();
 		Connection con = ConnectDB.getInstance().getConnection();
 		Statement stmt = null;
-		System.out.println(1);
 		try {
 			stmt = con.createStatement();
 			String sql = "SELECT * FROM Phong";
@@ -193,7 +192,6 @@ public class Phong_DAO {
 			}
 			return dsPhong;
 		 }
-	 
 	 public boolean capNhatPhong(Phong phong) {
 			int n = 0;
 			ConnectDB.getInstance();
