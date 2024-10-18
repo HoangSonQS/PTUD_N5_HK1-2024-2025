@@ -48,16 +48,11 @@ public class DangNhap_Controller {
 		} else {
 			tkdao.capNhatDangNhap();
 			tkdao.capNhatTaiKhoan(new TaiKhoan(userName, password, "Đang đăng nhập", tk.getNhanVien()));
-			Alert alert = new Alert(AlertType.CONFIRMATION);
-			alert.getDialogPane().setStyle("-fx-font-family: 'sans-serif';");
-            alert.setTitle("Đăng nhập thành công");
-            alert.setHeaderText("Đăng nhập thành công");
-            alert.showAndWait();
-			System.out.println("DangNhapThanhCong");
 			App.user = tk.getNhanVien().getIdNhanVien();
 			Stage stage = (Stage) ((Node) event.getTarget()).getScene().getWindow();
-			App.openMainGUI();
 			stage.close();
+            App.openMainGUI(); // Mở màn hình chính
+            
         }
 	}
 	
