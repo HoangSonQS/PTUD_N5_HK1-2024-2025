@@ -1,10 +1,13 @@
 package dao;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import connectDB.ConnectDB;
 import entity.DichVu;
+import entity.HoaDon;
 import entity.KhachHang;
+import entity.KhuyenMai;
 import entity.LoaiPhong;
 import entity.NhanVien;
 import entity.PhieuThuePhong;
@@ -19,7 +22,8 @@ public class testDao {
 //		testTaiKhoan();
 //		testNhanVien();
 //		testPhieuThue();
-		testKH();
+//		testKH();
+		testHoaDon();
 	}
 	
 	//done
@@ -41,10 +45,10 @@ public class testDao {
 //		
 	}
 	
-//	public static void testNhanVien() {
-//		NhanVien_DAO nv = new NhanVien_DAO();
-//		System.out.println(nv.getNhanVienTheoMa("NV24100301"));
-//	}
+	public static void testNhanVien() {
+		NhanVien_DAO nv = new NhanVien_DAO();
+		System.out.println(nv.getNhanVienTheoMa("NV24100301"));
+	}
 	public static void testPhieuThue() {
 //		PhieuThuePhong_DAO dsPT = new PhieuThuePhong_DAO();
 //		
@@ -73,10 +77,28 @@ public class testDao {
 //		System.out.println(dsKH.getAllKhachHang());
 	}
 	
+	//done
 	public static void testHoaDon() {
-		HoaDon_DAO hddao = new HoaDon_DAO();
-		System.out.println(hddao.getAllHoaDon());
+	    HoaDon_DAO hddao = new HoaDon_DAO();
+//	    LocalDateTime ngayGio = LocalDateTime.now(); // Thời gian hiện tại
+//	    LocalDateTime ngayGio2 = LocalDateTime.of(2024, 10, 20, 14, 30); // Ngày 20/10/2024 lúc 14:30
+//
+//	    NhanVien nv = new NhanVien("NV24100301");
+//	    KhachHang kh = new KhachHang("KH24100301");
+//	    KhuyenMai km = new KhuyenMai("KM241001");
+//
+//	    // Tạo đối tượng HoaDon
+//	    HoaDon hd = new HoaDon("HD002", nv, kh, km, ngayGio, ngayGio2);
+//
+//	    // Thêm hóa đơn vào cơ sở dữ liệu
+//	    hddao.themHoaDon(hd);
+	    
+//	    System.out.println(hddao.layHoaDonTheoMaHoaDon("HD001"));
+//	    System.out.println(hddao.layHoaDonTheoMaKhachHang("KH24100301"));
+	    System.out.println(hddao.getAllHoaDon());
+
 	}
+
 	static void connect() {
 		ConnectDB cn = new ConnectDB();
 		cn.getInstance().connect();

@@ -42,7 +42,7 @@ public class KhuyenMai_DAO {
 		ConnectDB.getInstance();
 		Connection conN = ConnectDB.getInstance().getConnection();
 		PreparedStatement pstm = null;
-		String sql = "update DichVu set TenKhuyenMai=?, Chietkhau=? where IDKhuyenMai=? ";
+		String sql = "update KhuyenMai set TenKhuyenMai=?, Chietkhau=? where IDKhuyenMai=? ";
 		try {
 			
 			pstm = conN.prepareStatement(sql);

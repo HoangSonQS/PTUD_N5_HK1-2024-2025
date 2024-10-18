@@ -23,7 +23,9 @@ public class PhieuThuePhong_DAO {
 		ConnectDB.getInstance();
 		Connection conN = ConnectDB.getInstance().getConnection();
 		PreparedStatement pstm = null;
-		String sql = "INSERT INTO PhieuThue ( IDPhieuThue, IDKhachHang, IDPhong, IDNhanVien, ThoiGianNhanPhong, ThoiHanGiaoPhong) VALUES (?,?,?,?,?,?)";
+		System.out.println(0);
+		
+		String sql = "INSERT INTO PhieuThuePhong ( IDPhieuThue, IDKhachHang, IDPhong, IDNhanVien, ThoiGianNhanPhong, ThoiHanGiaoPhong) VALUES (?,?,?,?,?,?)";
 		try {
 			pstm = conN.prepareStatement(sql);
 			pstm.setString(1, phieuthue.getIdPhieuThue());
@@ -51,7 +53,7 @@ public class PhieuThuePhong_DAO {
 		ConnectDB.getInstance();
 		Connection conN = ConnectDB.getInstance().getConnection();
 		PreparedStatement pstm = null;
-		String sql = "update PhieuThue set IDKhachHang=?, IDPhong=?, IDNhanVien=?, ThoiGianNhanPhong=?, ThoiHanGiaoPhong=? where IDPhieuThue=? ";
+		String sql = "update PhieuThuePhong set IDKhachHang=?, IDPhong=?, IDNhanVien=?, ThoiGianNhanPhong=?, ThoiHanGiaoPhong=? where IDPhieuThue=? ";
 		try {
 			
 			pstm = conN.prepareStatement(sql);
@@ -139,10 +141,10 @@ public class PhieuThuePhong_DAO {
 		Statement stm = null;
 		try {
 			stm = conN.createStatement();
-			String sql = "select*from PhieuThuePhong";
+			String sql = "select * from PhieuThuePhong";
 			ResultSet rs = stm.executeQuery(sql);
 			while (rs.next()) {
-				String idphieuthu = rs.getString("IDPhieuThu");
+				String idphieuthu = rs.getString("IDPhieuThue");
 				String idkhachhang = rs.getString("IDKhachHang");
 	            String idphong = rs.getString("IDPhong");
 	            String idnhanvien = rs.getString("IDNhanVien");

@@ -13,6 +13,10 @@ public class KhuyenMai {
 		this.tenKhuyenMai = tenKhuyenMai;
 		this.chietKhau = chietKhau;
 	}
+	
+	public KhuyenMai(String idKhuyenMai) {
+		this.idKhuyenMai = idKhuyenMai;
+	}
 	public String getIdKhuyenMai() {
 		return idKhuyenMai;
 	}

@@ -58,7 +58,8 @@ public class ChiTietHoaDon_DichVu_DAO {
                 dshd.getAllHoaDon();
                 HoaDon hd = dshd.layHoaDonTheoMaHoaDon(maHoaDon);
 				try {
-					dichvu = DichVu_Dao.layDichVuTheoMa(IdDichVu);
+					DichVu_DAO dsDV = new DichVu_DAO();
+					dichvu = dsDV.layDichVuTheoMa(IdDichVu);
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
