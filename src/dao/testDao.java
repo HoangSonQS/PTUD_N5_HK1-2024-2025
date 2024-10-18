@@ -45,6 +45,8 @@ public class testDao {
 //		NhanVien_DAO nv = new NhanVien_DAO();
 //		System.out.println(nv.getNhanVienTheoMa("NV24100301"));
 //	}
+
+//done
 	public static void testPhieuThue() {
 //		PhieuThuePhong_DAO dsPT = new PhieuThuePhong_DAO();
 //		
