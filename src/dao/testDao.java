@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import connectDB.ConnectDB;
+import entity.ChiTietHD_Phong;
 import entity.DichVu;
 import entity.HoaDon;
 import entity.KhachHang;
@@ -23,9 +24,22 @@ public class testDao {
 //		testNhanVien();
 //		testPhieuThue();
 //		testKH();
-		testHoaDon();
+//		testHoaDon();
+		testCTHD_Phong();
 	}
 	
+	private static void testCTHD_Phong() {
+		// TODO Auto-generated method stub
+		ChiTietHoaDon_Phong_DAO cthd = new ChiTietHoaDon_Phong_DAO();
+		
+//		HoaDon hd = new HoaDon("HD24100301");
+//		Phong p = new Phong("T01P01");
+//		LocalDateTime ngayGio = LocalDateTime.of(2024, 10, 20, 14, 30); // Ngày 20/10/2024 lúc 14:30
+//		
+//		cthd.themChiTietHoaDon_Phong(new ChiTietHD_Phong(hd, p, ngayGio));
+		System.out.println(cthd.layChiTietHoaDon_PhongTheoMaHoaDon("HD24100301"));
+	}
+
 	//done
 	public static void testPhong() {
 //		Phong_DAO pdao = new Phong_DAO();
@@ -45,6 +59,7 @@ public class testDao {
 //		
 	}
 	
+	//done
 	public static void testNhanVien() {
 		NhanVien_DAO nv = new NhanVien_DAO();
 		System.out.println(nv.getNhanVienTheoMa("NV24100301"));

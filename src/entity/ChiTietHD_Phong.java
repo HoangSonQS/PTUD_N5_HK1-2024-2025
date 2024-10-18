@@ -1,22 +1,21 @@
 package entity;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class ChiTietHD_Phong {
 
 	private HoaDon hoaDon;
 	private Phong phong;
-	private LocalDate gioCheckout;
+	private LocalDateTime gioCheckout;
 
-
-	public ChiTietHD_Phong(HoaDon hoaDon, Phong phong, LocalDate gioCheckout) {
+	public ChiTietHD_Phong(HoaDon hoaDon, Phong phong, LocalDateTime gioCheckout) {
 		super();
 		this.hoaDon = hoaDon;
 		this.phong = phong;
 		this.gioCheckout = gioCheckout;
 	}
-
 
 	public HoaDon getHoaDon() {
 		return hoaDon;
@@ -34,17 +33,19 @@ public class ChiTietHD_Phong {
 		this.phong = phong;
 	}
 
-	public LocalDate getGioCheckout() {
+	
+
+	public LocalDateTime getGioCheckout() {
 		return gioCheckout;
 	}
 
-	public void setGioCheckout(LocalDate gioCheckout) {
+	public void setGioCheckout(LocalDateTime gioCheckout) {
 		this.gioCheckout = gioCheckout;
 	}
 
 	@Override
 	public String toString() {
-		return "ChiTietHD_Phong [hoaDon=" + hoaDon + ", phong=" + phong + ", gioCheckout=" + gioCheckout + "]";
+		return "\nChiTietHD_Phong [hoaDon=" + hoaDon + ", phong=" + phong + ", gioCheckout=" + gioCheckout + "]";
 	}
 	
 	
