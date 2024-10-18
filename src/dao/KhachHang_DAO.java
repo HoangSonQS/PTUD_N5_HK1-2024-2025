@@ -23,24 +23,23 @@ public class KhachHang_DAO {
 		Statement stm = null;
 		try {
 			stm = conN.createStatement();
-			String sql = "select*from KhachHang";
+			String sql = "select * from KhachHang";
 			ResultSet rs = stm.executeQuery(sql);
 			while (rs.next()) {
-				String idKhachHang = rs.getString("IDKhachHang");
+				String IDKhachHang = rs.getString("IDKhachHang");
 				String tenKhachHang = rs.getString("TenKhachHang");
 				String soDienThoai = rs.getString("SoDienThoai");
 				LocalDate ngaySinh = rs.getDate("NgaySinh").toLocalDate();
 				String cccd = rs.getString("CCCD");
 				Integer tichDiem = rs.getInt("TichDiem");
 				
-				//KhachHang nv = new KhachHang(idKhachHang, tenKhachHang, soDienThoai, gioiTinh, cccd, cv);
-				dsKH.add(new KhachHang(idKhachHang, tenKhachHang, soDienThoai, ngaySinh, cccd, tichDiem));
+				//KhachHang nv = new KhachHang(IDKhachHang, tenKhachHang, soDienThoai, gioiTinh, cccd, cv);
+				dsKH.add(new KhachHang(IDKhachHang, tenKhachHang, soDienThoai, ngaySinh, cccd, tichDiem));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(dsKH);
 		return dsKH;
 	}
 	
@@ -50,7 +49,7 @@ public class KhachHang_DAO {
 		PreparedStatement pstm = null;
 		int n = 0;
 		try {
-			String sql="INSERT INTO KhachHang ( IdKhachHang, TenKhachHang, SoDienThoai, NgaySinh, CCCD, TichDiem) values(?,?,?,?,?,?,?)";
+			String sql="INSERT INTO KhachHang ( IDKhachHang, TenKhachHang, SoDienThoai, NgaySinh, CCCD, TichDiem) values(?,?,?,?,?,?)";
 			pstm = conn.prepareStatement(sql);
 			pstm.setString(1, khachhang.getIdKhachHang());
 			pstm.setString(2, khachhang.getTenKhachHang());
@@ -72,24 +71,23 @@ public class KhachHang_DAO {
 	}
 	
 	public KhachHang getKhachHangTheoCCCD(String cccd) {
-		ArrayList<KhachHang> dsKH = new ArrayList<KhachHang>();
 		Connection con = ConnectDB.getInstance().getConnection();
 		PreparedStatement stmt = null;
 		KhachHang kh = null;
 		ResultSet rs = null;
 		try {
-			String sql = "SELECT * FROM KhachHang WHERE IdKhachHang = ?";
+			String sql = "SELECT * FROM KhachHang WHERE CCCD = ?";
 			stmt = con.prepareStatement(sql);
-	        stmt.setString(5, cccd);
+	        stmt.setString(1, cccd);
 	        rs = stmt.executeQuery();
 			while (rs.next()) {
-				String idKhachHang = rs.getString("IdKhachHang");
+				String IDKhachHang = rs.getString("IDKhachHang");
 				String tenKhachHang = rs.getString("TenKhachHang");
 				String soDienThoai = rs.getString("SoDienThoai");
 				LocalDate ngaySinh = rs.getDate("NgaySinh").toLocalDate();
 				Integer tichDiem = rs.getInt("TichDiem");
-				//KhachHang nv = new KhachHang(idKhachHang, tenKhachHang, soDienThoai, gioiTinh, cccd, cv);
-				dsKH.add(new KhachHang(idKhachHang, tenKhachHang, soDienThoai, ngaySinh, cccd, tichDiem));
+				//KhachHang nv = new KhachHang(IDKhachHang, tenKhachHang, soDienThoai, gioiTinh, cccd, cv);
+				kh = new KhachHang(IDKhachHang, tenKhachHang, soDienThoai, ngaySinh, cccd, tichDiem);
 				}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -106,24 +104,23 @@ public class KhachHang_DAO {
 	 }
 	
 	public KhachHang getKhachHangTheoSDT(String sdt) {
-		ArrayList<KhachHang> dsKH = new ArrayList<KhachHang>();
 		Connection con = ConnectDB.getInstance().getConnection();
 		PreparedStatement stmt = null;
 		KhachHang kh = null;
 		ResultSet rs = null;
 		try {
-			String sql = "SELECT * FROM KhachHang WHERE IdKhachHang = ?";
+			String sql = "SELECT * FROM KhachHang WHERE SoDienThoai = ?";
 			stmt = con.prepareStatement(sql);
-	        stmt.setString(3, sdt);
+	        stmt.setString(1, sdt);
 	        rs = stmt.executeQuery();
 			while (rs.next()) {
-				String idKhachHang = rs.getString("IdKhachHang");
+				String IDKhachHang = rs.getString("IDKhachHang");
 				String tenKhachHang = rs.getString("TenKhachHang");
 				LocalDate ngaySinh = rs.getDate("NgaySinh").toLocalDate();
 				String cccd = rs.getString("CCCD");
 				Integer tichDiem = rs.getInt("TichDiem");
-				//KhachHang nv = new KhachHang(idKhachHang, tenKhachHang, soDienThoai, gioiTinh, cccd, cv);
-				dsKH.add(new KhachHang(idKhachHang, tenKhachHang, sdt, ngaySinh, cccd, tichDiem));
+				//KhachHang nv = new KhachHang(IDKhachHang, tenKhachHang, soDienThoai, gioiTinh, cccd, cv);
+				kh = new KhachHang(IDKhachHang, tenKhachHang, sdt, ngaySinh, cccd, tichDiem);
 				}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -139,13 +136,12 @@ public class KhachHang_DAO {
 		 return kh;
 	 }
 	public KhachHang getKhachHangTheoMa(String IDKhachHang) {
-		ArrayList<KhachHang> dsKH = new ArrayList<KhachHang>();
 		Connection con = ConnectDB.getInstance().getConnection();
 		PreparedStatement stmt = null;
 		KhachHang kh = null;
 		ResultSet rs = null;
 		try {
-			String sql = "SELECT * FROM KhachHang WHERE IdKhachHang = ?";
+			String sql = "SELECT * FROM KhachHang WHERE IDKhachHang = ?";
 			stmt = con.prepareStatement(sql);
 	        stmt.setString(1, IDKhachHang);
 	        rs = stmt.executeQuery();
@@ -155,8 +151,8 @@ public class KhachHang_DAO {
 				LocalDate ngaySinh = rs.getDate("NgaySinh").toLocalDate();
 				String cccd = rs.getString("CCCD");
 				Integer tichDiem = rs.getInt("TichDiem");
-				//KhachHang nv = new KhachHang(idKhachHang, tenKhachHang, soDienThoai, gioiTinh, cccd, cv);
-				dsKH.add(new KhachHang(IDKhachHang, tenKhachHang, soDienThoai, ngaySinh, cccd, tichDiem));
+				//KhachHang nv = new KhachHang(IDKhachHang, tenKhachHang, soDienThoai, gioiTinh, cccd, cv);
+				kh = new KhachHang(IDKhachHang, tenKhachHang, soDienThoai, ngaySinh, cccd, tichDiem);
 				}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -176,14 +172,14 @@ public class KhachHang_DAO {
 		ConnectDB.getInstance();
 		Connection conN = ConnectDB.getInstance().getConnection();
 		PreparedStatement pstm = null;
-		String sql = "update KhachHang set IdKhachHang=?, TenKhachHang=?, NgaySinh=?, GioiTinh=?, CCCD=?, ChucVu=? where SoDienThoai=? ";
+		String sql = "update KhachHang set TenKhachHang=?, NgaySinh=?, CCCD=?, TichDiem=? where SoDienThoai=? ";
 		try {
 			pstm = conN.prepareStatement(sql);
 			pstm.setString(1, khachhang.getTenKhachHang());
-			pstm.setString(2, khachhang.getSoDienThoai());
-			pstm.setDate(3, Date.valueOf(khachhang.getNgaySinh()));
-			pstm.setString(5, khachhang.getCccd());
-			pstm.setInt(6, khachhang.getTichDiem());
+			pstm.setDate(2, Date.valueOf(khachhang.getNgaySinh()));
+			pstm.setString(3, khachhang.getCccd());
+			pstm.setInt(4, khachhang.getTichDiem());
+			pstm.setString(5, khachhang.getSoDienThoai());
 			n = pstm.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

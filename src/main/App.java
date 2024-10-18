@@ -1,6 +1,7 @@
 package main;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import connectDB.*;
 import javafx.application.Application;
@@ -18,10 +19,12 @@ public class App extends Application{
 	public static Stage primaryStage;
 	public static Scene primaryScene;
 	public static String user;
+	private Stage stage;
 	@Override
 	public void start(Stage arg0) throws Exception {
 		// TODO Auto-generated method stub
 		this.primaryStage = arg0;
+		openDangNhapWindow();
 	}
 	
 	@Override
@@ -29,18 +32,17 @@ public class App extends Application{
 		connectDB.ConnectDB.getInstance().connect();
 	}
 	public static void openMainGUI() throws IOException {
-//      Open Main GUI
-		primaryScene = new Scene(loadFXML("GD_Chinh"));
-//		Stage stage = new Stage();
-//		primaryStage.setTitle("Quản Lý Khách sạn Flower on the sea");
-//		primaryStage.setResizable(false);
-		primaryStage.setScene(primaryScene);
-		primaryStage.setOnCloseRequest(event -> {
-			Platform.exit();
-			System.exit(0);
-		});
-		primaryStage.centerOnScreen();
-		primaryStage.show();
+		try {
+	        Parent root = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("/gui/GD_Chinh.fxml")));
+	        Scene scene = new Scene(root); // Đặt kích thước phù hợp
+	        primaryStage.setScene(scene);
+	        primaryStage.setMaximized(true);
+	        primaryStage.show();
+	    } catch (NullPointerException ex) {
+	        System.err.println("Không tìm thấy file GD_Chinh.fxml: " + ex.getMessage());
+	        ex.printStackTrace();
+	        throw ex; 
+	    }
 	}
 	public static void openModal(String fxml, int width, int height) throws IOException {
 		Scene sceneModal = new Scene(loadFXML(fxml), width, height);
@@ -56,7 +58,19 @@ public class App extends Application{
 		}
 		stageModal.showAndWait();
 	}
-
+	public static void openDangNhapWindow() throws IOException {
+		try {
+            Parent root = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("/gui/GD_DangNhap.fxml"))); // THAY ĐỔI ĐƯỜNG DẪN NẾU CẦN
+            Scene scene = new Scene(root);
+            primaryStage.setMaximized(true);
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        } catch (NullPointerException ex) {
+            System.err.println("Không tìm thấy file DangNhap.fxml: " + ex.getMessage());
+            ex.printStackTrace();
+            throw ex; // Ném ngoại lệ để xử lý ở cấp cao hơn nếu cần
+        }// Hiện màn hình đăng nhập
+    }
 	public static void setRoot(String fxmlNewChild) throws IOException {
 		Parent child = loadFXML(fxmlNewChild);
 		Parent root = primaryScene.getRoot();
@@ -69,7 +83,6 @@ public class App extends Application{
 		return fxmlFrame.load();
 	}
 	public static void main(String[] args) {
-		System.setProperty("javafx.preloader", AppPreloader.class.getName());
 		launch(App.class, args);
 	}
 }
