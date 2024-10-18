@@ -87,6 +87,13 @@ public class testDao {
 		HoaDon_DAO hddao = new HoaDon_DAO();
 		System.out.println(hddao.getAllHoaDon());
 	}
+
+	public static void testDV() {
+//		DichVu_Dao dsDV = new DichVu_Dao();
+//		DichVu dv1 = new DichVu("SP003", "ba con soi", 200, 1000000);
+//		dsDV.themDichVu(dv1);
+//		System.out.println(dsDV.layDichVuTheoMa("SP002"));
+	}
 	static void connect() {
 		ConnectDB cn = new ConnectDB();
 		cn.getInstance().connect();
