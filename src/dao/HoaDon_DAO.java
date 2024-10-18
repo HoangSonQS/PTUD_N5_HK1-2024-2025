@@ -6,7 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import connectDB.ConnectDB;
 import entity.HoaDon;
@@ -16,33 +18,35 @@ import entity.NhanVien;
 
 public class HoaDon_DAO {
 	public boolean themHoaDon(HoaDon hoadon) {
-		int n = 0;
-		ConnectDB.getInstance();
-		Connection conN = ConnectDB.getInstance().getConnection();
-		PreparedStatement pstm = null;
-		String sql = "INSERT INTO HoaDon ( IDHoaDon, IDNhanVien, IDKhachHang, IDKhuyenMai, ThoiGianTao, ThoiGianCheckin) VALUES (?,?,?,?,?,?)";
-		try {
-			pstm = conN.prepareStatement(sql);
-			pstm.setString(1, hoadon.getIdHoaDon());
-			pstm.setString(2, hoadon.getNhanVienLap().getIdNhanVien());
-			pstm.setString(3, hoadon.getKhachHang().getIdKhachHang());
-			pstm.setString(4, hoadon.getKhuyenmai().getIdKhuyenMai());
-			pstm.setDate(5, Date.valueOf(hoadon.getThoiGianTao()));
-			pstm.setDate(6, Date.valueOf(hoadon.getThoiGianCheckin()));
-			n = pstm.executeUpdate();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			try {
-				pstm.close();
-			} catch (Exception e2) {
-				// TODO: handle exception
-				e2.printStackTrace();
-			}
-		}
-		return n > 0;
+	    int n = 0;
+	    ConnectDB.getInstance();
+	    Connection conN = ConnectDB.getInstance().getConnection();
+	    PreparedStatement pstm = null;
+	    String sql = "INSERT INTO HoaDon ( IDHoaDon, IDNhanVien, IDKhachHang, IDKhuyenMai, ThoiGianTao, ThoiGianCheckin) VALUES (?,?,?,?,?,?)";
+	    try {
+	        pstm = conN.prepareStatement(sql);
+	        pstm.setString(1, hoadon.getIdHoaDon());
+	        pstm.setString(2, hoadon.getNhanVienLap().getIdNhanVien());
+	        pstm.setString(3, hoadon.getKhachHang().getIdKhachHang());
+	        pstm.setString(4, hoadon.getKhuyenmai().getIdKhuyenMai());
+
+	        // Chuyển LocalDateTime thành Timestamp
+	        pstm.setTimestamp(5, Timestamp.valueOf(hoadon.getThoiGianTao())); // ThoiGianTao là LocalDateTime
+	        pstm.setTimestamp(6, Timestamp.valueOf(hoadon.getThoiGianCheckin())); // ThoiGianCheckin là LocalDateTime
+
+	        n = pstm.executeUpdate();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            pstm.close();
+	        } catch (Exception e2) {
+	            e2.printStackTrace();
+	        }
+	    }
+	    return n > 0;
 	}
+
 	public HoaDon layHoaDonTheoMaHoaDon(String idHoaDon) {
 	    HoaDon hd = null;
 	    Connection con = ConnectDB.getInstance().getConnection();
@@ -53,21 +57,31 @@ public class HoaDon_DAO {
 	        stmt = con.prepareStatement(sql);
 	        stmt.setString(1, idHoaDon);
 	        rs = stmt.executeQuery();
+	        
 	        while (rs.next()) {
 	            String idnhanvien = rs.getString("IDNhanVien");
 	            String idkhachhang = rs.getString("IDKhachHang");
 	            String idkhuyenmai = rs.getString("IDKhuyenMai");
-	            LocalDate thoigiantao = rs.getDate("ThoiGianTao").toLocalDate();
-	            LocalDate thoigiancheckin = rs.getDate("ThoiGianCheckin").toLocalDate();
+	            
+	            // Lấy thời gian tạo hóa đơn
+	            LocalDateTime thoigiantao = rs.getTimestamp("ThoiGianTao").toLocalDateTime();
+	            
+	            // Lấy thời gian check-in (chỉ ngày)
+	            LocalDateTime thoigiancheckin = rs.getTimestamp("ThoiGianCheckin").toLocalDateTime();
+	            
+	            // Lấy thông tin nhân viên
 	            NhanVien_DAO dsnv = new NhanVien_DAO();
-	            dsnv.getAllNhanVien();
 	            NhanVien nv = dsnv.getNhanVienTheoMa(idnhanvien);
+	            
+	            // Lấy thông tin khách hàng
 	            KhachHang_DAO dskh = new KhachHang_DAO();
-	            dskh.getAllKhachHang();
 	            KhachHang kh = dskh.getKhachHangTheoMa(idkhachhang);
+	            
+	            // Lấy thông tin khuyến mãi
 	            KhuyenMai_DAO dskm = new KhuyenMai_DAO();
-	            dskm.getAllKhuyenMai();
 	            KhuyenMai km = dskm.layKhuyenMaiTheoMa(idkhuyenmai);
+	            
+	            // Tạo đối tượng HoaDon
 	            hd = new HoaDon(idHoaDon, nv, kh, km, thoigiantao, thoigiancheckin);
 	        }
 	    } catch (SQLException e) {
@@ -86,6 +100,7 @@ public class HoaDon_DAO {
 	    }
 	    return hd;
 	}
+
 	public ArrayList<HoaDon> layHoaDonTheoMaKhachHang(String idKhachHang) {
 		ArrayList<HoaDon>dsHD = new ArrayList<HoaDon>();
 	    HoaDon hd = null;
@@ -101,16 +116,22 @@ public class HoaDon_DAO {
 	        	String idhoadon = rs.getString("IDHoaDon");
 	            String idnhanvien = rs.getString("IDNhanVien");
 	            String idkhuyenmai = rs.getString("IDKhuyenMai");
-	            LocalDate thoigiantao = rs.getDate("ThoiGianTao").toLocalDate();
-	            LocalDate thoigiancheckin = rs.getDate("ThoiGianCheckin").toLocalDate();
+	         // Lấy thời gian tạo hóa đơn
+	            LocalDateTime thoigiantao = rs.getTimestamp("ThoiGianTao").toLocalDateTime();
+	            
+	            // Lấy thời gian check-in (chỉ ngày)
+	            LocalDateTime thoigiancheckin = rs.getTimestamp("ThoiGianCheckin").toLocalDateTime();
+	            
+	            // Lấy thông tin nhân viên
 	            NhanVien_DAO dsnv = new NhanVien_DAO();
-	            dsnv.getAllNhanVien();
 	            NhanVien nv = dsnv.getNhanVienTheoMa(idnhanvien);
+	            
+	            // Lấy thông tin khách hàng
 	            KhachHang_DAO dskh = new KhachHang_DAO();
-	            dskh.getAllKhachHang();
 	            KhachHang kh = dskh.getKhachHangTheoMa(idKhachHang);
+	            
+	            // Lấy thông tin khuyến mãi
 	            KhuyenMai_DAO dskm = new KhuyenMai_DAO();
-	            dskm.getAllKhuyenMai();
 	            KhuyenMai km = dskm.layKhuyenMaiTheoMa(idkhuyenmai);
 	            hd = new HoaDon(idhoadon, nv, kh, km, thoigiantao, thoigiancheckin);
 	            dsHD.add(hd);
@@ -144,8 +165,10 @@ public class HoaDon_DAO {
 				String idnhanvien = rs.getString("IDNhanVien");
 				String idKhachHang = rs.getString("IDKhachHang");
 				String idKhuyenmai = rs.getString("IDKhuyenMai");
-				LocalDate thoigiantao = rs.getDate("ThoiGianTao").toLocalDate();
-	            LocalDate thoigiancheckin = rs.getDate("ThoiGianCheckin").toLocalDate();
+				LocalDateTime thoigiantao = rs.getTimestamp("ThoiGianTao").toLocalDateTime();
+	            
+	            // Lấy thời gian check-in (chỉ ngày)
+	            LocalDateTime thoigiancheckin = rs.getTimestamp("ThoiGianCheckin").toLocalDateTime();
 	            NhanVien_DAO dsnv = new NhanVien_DAO();
 	            NhanVien nv = dsnv.getNhanVienTheoMa(idnhanvien);
 	            KhachHang_DAO dskh = new KhachHang_DAO();

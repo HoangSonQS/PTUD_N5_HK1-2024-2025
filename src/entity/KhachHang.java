@@ -21,6 +21,10 @@ public class KhachHang {
 		this.cccd = cccd;
 		this.tichDiem = tichDiem;
 	}
+	
+	public KhachHang(String idKhachHang) {
+		this.idKhachHang = idKhachHang;
+	}
 	public String getIdKhachHang() {
 		return idKhachHang;
 	}

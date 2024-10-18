@@ -1,6 +1,7 @@
 package entity;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class HoaDon {
@@ -9,15 +10,13 @@ public class HoaDon {
 	private NhanVien nhanVienLap;
 	private KhachHang khachHang;
 	private KhuyenMai khuyenmai;
-	private LocalDate thoiGianTao;
-	private LocalDate thoiGianCheckin;
+	private LocalDateTime thoiGianTao;
+	private LocalDateTime thoiGianCheckin;
 
 	
-	
-	
 
-	public HoaDon(String idHoaDon, NhanVien nhanVienLap, KhachHang khachHang,KhuyenMai khuyenmai, LocalDate thoiGianTao,
-			LocalDate thoiGianCheckin) {
+	public HoaDon(String idHoaDon, NhanVien nhanVienLap, KhachHang khachHang, KhuyenMai khuyenmai,
+			LocalDateTime thoiGianTao, LocalDateTime thoiGianCheckin) {
 		super();
 		this.idHoaDon = idHoaDon;
 		this.nhanVienLap = nhanVienLap;
@@ -51,23 +50,23 @@ public class HoaDon {
 		this.khachHang = khachHang;
 	}
 
-	public LocalDate getThoiGianTao() {
+	
+	public LocalDateTime getThoiGianTao() {
 		return thoiGianTao;
 	}
 
-	public void setThoiGianTao(LocalDate thoiGianTao) {
+	public void setThoiGianTao(LocalDateTime thoiGianTao) {
 		this.thoiGianTao = thoiGianTao;
 	}
 
-	public LocalDate getThoiGianCheckin() {
+	public LocalDateTime getThoiGianCheckin() {
 		return thoiGianCheckin;
 	}
 
-	public void setThoiGianCheckin(LocalDate thoiGianCheckin) {
+	public void setThoiGianCheckin(LocalDateTime thoiGianCheckin) {
 		this.thoiGianCheckin = thoiGianCheckin;
 	}
 
-	
 	public KhuyenMai getKhuyenmai() {
 		return khuyenmai;
 	}
@@ -78,7 +77,7 @@ public class HoaDon {
 
 	@Override
 	public String toString() {
-		return "HoaDon [idHoaDon=" + idHoaDon + ", nhanVienLap=" + nhanVienLap + ", khachHang=" + khachHang
+		return "\nHoaDon [idHoaDon=" + idHoaDon + ", nhanVienLap=" + nhanVienLap + ", khachHang=" + khachHang
 				+ ", khuyenmai=" + khuyenmai + ", thoiGianTao=" + thoiGianTao + ", thoiGianCheckin=" + thoiGianCheckin
 				+ "]";
 	}
