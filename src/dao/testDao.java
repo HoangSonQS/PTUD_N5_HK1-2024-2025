@@ -40,7 +40,7 @@ public class testDao {
 //		tkdao.capNhatTaiKhoan(tk1);
 //		
 	}
-	
+	//done
 //	public static void testNhanVien() {
 //		NhanVien_DAO nv = new NhanVien_DAO();
 //		System.out.println(nv.getNhanVienTheoMa("NV24100301"));
