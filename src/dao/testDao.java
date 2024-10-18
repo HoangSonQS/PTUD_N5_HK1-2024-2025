@@ -22,13 +22,8 @@ public class testDao {
 //		testTaiKhoan();
 //		testNhanVien();
 //		testPhieuThue();
-<<<<<<< HEAD
 //		testKH();
 		testHoaDon();
-=======
-//		testKM();
-		testKH();
->>>>>>> e4a64bef3aec7c401af0548ef9aa54a896f1a441
 	}
 	
 	//done
@@ -49,21 +44,11 @@ public class testDao {
 //		tkdao.capNhatTaiKhoan(tk1);
 //		
 	}
-<<<<<<< HEAD
 	
 	public static void testNhanVien() {
 		NhanVien_DAO nv = new NhanVien_DAO();
 		System.out.println(nv.getNhanVienTheoMa("NV24100301"));
 	}
-=======
-	//done
-//	public static void testNhanVien() {
-//		NhanVien_DAO nv = new NhanVien_DAO();
-//		System.out.println(nv.getNhanVienTheoMa("NV24100301"));
-//	}
-
-//done
->>>>>>> e4a64bef3aec7c401af0548ef9aa54a896f1a441
 	public static void testPhieuThue() {
 //		PhieuThuePhong_DAO dsPT = new PhieuThuePhong_DAO();
 //		
@@ -92,17 +77,7 @@ public class testDao {
 //		System.out.println(dsKH.getAllKhachHang());
 	}
 	
-<<<<<<< HEAD
 	//done
-=======
-	public static void testKM() {
-//		KhuyenMai_Dao dsKM = new KhuyenMai_Dao();
-//		KhuyenMai km1 = new KhuyenMai("KM241003", "Khuyến mãi 3", 10);
-//		dsKM.themKhuyenMai(km1);
-//		dsKM.layKhuyenMaiTheoMa("KM241003");
-//		System.out.println(dsKM.layKhuyenMaiTheoMa("KM241003"));
-	}
->>>>>>> e4a64bef3aec7c401af0548ef9aa54a896f1a441
 	public static void testHoaDon() {
 	    HoaDon_DAO hddao = new HoaDon_DAO();
 //	    LocalDateTime ngayGio = LocalDateTime.now(); // Thời gian hiện tại
@@ -124,15 +99,6 @@ public class testDao {
 
 	}
 
-<<<<<<< HEAD
-=======
-	public static void testDV() {
-//		DichVu_Dao dsDV = new DichVu_Dao();
-//		DichVu dv1 = new DichVu("SP003", "ba con soi", 200, 1000000);
-//		dsDV.themDichVu(dv1);
-//		System.out.println(dsDV.layDichVuTheoMa("SP002"));
-	}
->>>>>>> e4a64bef3aec7c401af0548ef9aa54a896f1a441
 	static void connect() {
 		ConnectDB cn = new ConnectDB();
 		cn.getInstance().connect();

@@ -9,7 +9,7 @@ import java.sql.Statement;
 import connectDB.ConnectDB;
 import entity.DichVu;
 
-public class DichVu_Dao {
+public class DichVu_DAO {
 	public ArrayList<DichVu> getAllDichVu(){
 		ArrayList<DichVu>dsDV = new ArrayList<DichVu>();
 		Connection conN = ConnectDB.getInstance().getConnection();
