@@ -1,14 +1,17 @@
 package gui;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeView;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import main.App;
 
 
 public class GD_Chinh_Controller implements Initializable{
@@ -36,20 +39,20 @@ public class GD_Chinh_Controller implements Initializable{
 
     @FXML
     private Label lb_TimKiem;
-
+    
     @FXML
-    void moGiaoDienQuanLy(MouseEvent event) {
-
+    void moGiaoDienQuanLy(MouseEvent event) throws IOException {
+    	App.setRoot("GD_QLPhong");
     }
 
     @FXML
-    void moGiaoDienThongKe(MouseEvent event) {
-
+    void moGiaoDienThongKe(MouseEvent event) throws IOException {
+    	App.setRoot("GD_ThongKeDoanhThu");
     }
 
     @FXML
-    void moGiaoDienThuePhong(MouseEvent event) {
-
+    void moGiaoDienThuePhong(MouseEvent event) throws IOException {
+    	App.setRoot("GD_SoDoPhong");
     }
 
     @FXML
