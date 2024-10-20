@@ -11,7 +11,8 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.GD_SoDoPhong_Controller">
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="775.0" prefWidth="1554.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Pane prefHeight="775.0" prefWidth="1554.0">
          <children>
@@ -68,32 +69,32 @@
                      </font>
                   </Label>
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="250.0" layoutY="65.0" stroke="WHITE" strokeType="INSIDE" width="10.0" />
-                  <ImageView fx:id="icon_QuanLy" fitHeight="40.0" fitWidth="40.0" layoutX="18.0" layoutY="235.0" onMouseClicked="#moGiaoDienQuanLy" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="icon_QuanLy" fitHeight="40.0" fitWidth="40.0" layoutX="18.0" layoutY="235.0"  pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../data/pic/list.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="lb_QuanLy" layoutX="63.0" layoutY="240.0" onMouseClicked="#moGiaoDienQuanLy" text="Quản lý">
+                  <Label fx:id="lb_QuanLy" layoutX="63.0" layoutY="240.0"  text="Quản lý">
                      <font>
                         <Font name="System Bold Italic" size="20.0" />
                      </font>
                   </Label>
-                  <ImageView fx:id="icon_ThongKe" fitHeight="40.0" fitWidth="40.0" layoutX="18.0" layoutY="365.0" onMouseClicked="#moGiaoDienThongKe" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="icon_ThongKe" fitHeight="40.0" fitWidth="40.0" layoutX="18.0" layoutY="365.0"  pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../data/pic/pie-chart.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="lb_ThongKe" layoutX="63.0" layoutY="370.0" onMouseClicked="#moGiaoDienThongKe" text="Thống kê">
+                  <Label fx:id="lb_ThongKe" layoutX="63.0" layoutY="370.0"  text="Thống kê">
                      <font>
                         <Font name="System Bold Italic" size="20.0" />
                      </font>
                   </Label>
-                  <ImageView fx:id="icon_TimKiem" fitHeight="40.0" fitWidth="40.0" layoutX="18.0" layoutY="300.0" onMouseClicked="#moGiaoDienTimKiem" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="icon_TimKiem" fitHeight="40.0" fitWidth="40.0" layoutX="18.0" layoutY="300.0"  pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../data/pic/search.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="lb_TimKiem" layoutX="63.0" layoutY="305.0" onMouseClicked="#moGiaoDienTimKiem" text="Tìm kiếm">
+                  <Label fx:id="lb_TimKiem" layoutX="63.0" layoutY="305.0"  text="Tìm kiếm">
                      <font>
                         <Font name="System Bold Italic" size="20.0" />
                      </font>
@@ -117,7 +118,7 @@
                         <Font size="16.0" />
                      </font>
                   </Text>
-                  <ComboBox fx:id="cbb" layoutX="25.0" layoutY="80.0" onAction="#selectCbb" prefHeight="30.0" prefWidth="200.0" />
+                  <ComboBox fx:id="cbb" layoutX="25.0" layoutY="80.0" prefHeight="30.0" prefWidth="200.0" />
                   <Text layoutX="25.0" layoutY="145.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Trạng thái: ">
                      <font>
                         <Font size="16.0" />
@@ -140,7 +141,7 @@
                         <Image url="@../../data/pic/check_black.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="lb_soPhongTrong" contentDisplay="RIGHT" layoutX="260.0" layoutY="165.0" onDragDetected="#setSoPhongTrong" text="(20)">
+                  <Label fx:id="lb_soPhongTrong" contentDisplay="RIGHT" layoutX="260.0" layoutY="165.0"  text="(20)">
                      <font>
                         <Font name="Segoe UI" size="14.0" />
                      </font>
@@ -156,7 +157,7 @@
                         <Image url="@../../data/pic/team_black.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="lb_soPhongDangO" contentDisplay="RIGHT" layoutX="400.0" layoutY="165.0" onDragDetected="#setSoPhongDangO" text="(30)">
+                  <Label fx:id="lb_soPhongDangO" contentDisplay="RIGHT" layoutX="400.0" layoutY="165.0"  text="(30)">
                      <font>
                         <Font name="Segoe UI" size="14.0" />
                      </font>
@@ -172,7 +173,7 @@
                         <Image url="@../../data/pic/left.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="lb_setCheckin" contentDisplay="RIGHT" layoutX="570.0" layoutY="165.0" onDragDetected="#setSoPhongSapCheckIn" text="(5)">
+                  <Label fx:id="lb_setCheckin" contentDisplay="RIGHT" layoutX="570.0" layoutY="165.0" text="(5)">
                      <font>
                         <Font name="Segoe UI" size="14.0" />
                      </font>
@@ -189,7 +190,7 @@
                         <Image url="@../../data/pic/travel.png" />
                      </image>
                   </ImageView>
-                  <Label fx:id="lb_setCheckout1" contentDisplay="RIGHT" layoutX="735.0" layoutY="165.0" onDragDetected="#setSoPhongSapCheckOut" text="(5)">
+                  <Label fx:id="lb_setCheckout1" contentDisplay="RIGHT" layoutX="735.0" layoutY="165.0" text="(5)">
                      <font>
                         <Font name="Segoe UI" size="14.0" />
                      </font>

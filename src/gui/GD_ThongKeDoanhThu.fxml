@@ -15,7 +15,8 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="775.0" prefWidth="1554.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.GD_ThongKeDoanhThu_Controller">
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="775.0" prefWidth="1554.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Pane prefHeight="775.0" prefWidth="260.0" style="-fx-background-color: #D9D9D9;">
          <children>
@@ -200,11 +201,11 @@
                </font>
             </Label>
             <MenuBar layoutX="10.0" layoutY="60.0">
-              <menus>
-                <Menu mnemonicParsing="false" text="Theo ngày" />
-                <Menu mnemonicParsing="false" text="Theo tháng" />
-                <Menu mnemonicParsing="false" text="Theo năm" />
-              </menus>
+               <menus>
+                  <Menu mnemonicParsing="false" text="Theo ngày" />
+                  <Menu mnemonicParsing="false" text="Theo tháng" />
+                  <Menu mnemonicParsing="false" text="Theo năm" />
+               </menus>
             </MenuBar>
             <Line endX="1194.0" layoutX="100.0" layoutY="85.0" startX="-100.0" />
             <Label fx:id="lb_Ngay" layoutX="15.0" layoutY="105.0" text="Thống kê doanh thu theo ngày: ">
@@ -234,12 +235,12 @@
                </font>
             </Label>
             <BarChart fx:id="chart_DTTN" layoutX="20.0" layoutY="233.0" prefHeight="500.0" prefWidth="1254.0" title="Thống kê doanh thu theo ngày">
-              <xAxis>
-                <CategoryAxis label="Ngày" side="BOTTOM" fx:id="x" />
-              </xAxis>
-              <yAxis>
-                <NumberAxis fx:id="y" label="Tổng tiền" side="LEFT" />
-              </yAxis>
+               <xAxis>
+                  <CategoryAxis label="Ngày" side="BOTTOM" fx:id="x" />
+               </xAxis>
+               <yAxis>
+                  <NumberAxis fx:id="y" label="Tổng tiền" side="LEFT" />
+               </yAxis>
             </BarChart>
          </children>
       </Pane>

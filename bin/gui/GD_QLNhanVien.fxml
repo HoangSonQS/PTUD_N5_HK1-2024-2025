@@ -204,7 +204,7 @@
       </Text>
       <Line endX="1194.0" layoutX="360.0" layoutY="120.0" startX="-100.0" />
       <TextField layoutX="411.0" layoutY="55.0" prefHeight="25.0" prefWidth="150.0" promptText="Nhập mã nhân viên" />
-      <Button fx:id="btn_TimPhong" layoutX="563.0" layoutY="54.0" mnemonicParsing="false" onAction="#timPhong" prefHeight="25.0" prefWidth="25.0" style="-fx-background-color: #BAE7E7;" styleClass="timKiem" stylesheets="@DangNhap.css" textAlignment="JUSTIFY" textFill="WHITE" />
+      <Button fx:id="btn_TimPhong" layoutX="563.0" layoutY="54.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-background-color: #BAE7E7;" styleClass="timKiem" stylesheets="@DangNhap.css" textAlignment="JUSTIFY" textFill="WHITE" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="50.0" layoutX="260.0" layoutY="120.0" stroke="BLACK" strokeType="INSIDE" width="1294.0" />
       <Text fill="WHITE" layoutX="775.0" layoutY="156.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Thông tin nhân viên" textAlignment="CENTER">
          <font>
@@ -257,7 +257,7 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <Button fx:id="btnSua2" contentDisplay="RIGHT" layoutX="270.0" layoutY="519.0" mnemonicParsing="false" onAction="#nhanNutSua" prefHeight="40.0" prefWidth="90.0" style="-fx-background-color: #edbf6d;" text="     Sửa" textAlignment="RIGHT" textFill="WHITE" textOverrun="CLIP">
+      <Button fx:id="btnSua2" contentDisplay="RIGHT" layoutX="270.0" layoutY="519.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="90.0" style="-fx-background-color: #edbf6d;" text="     Sửa" textAlignment="RIGHT" textFill="WHITE" textOverrun="CLIP">
          <font>
             <Font size="16.0" />
          </font>
@@ -267,7 +267,7 @@
             <Image url="@../../data/pic/writing-square.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnXoa2" contentDisplay="RIGHT" layoutX="372.0" layoutY="519.0" mnemonicParsing="false" onAction="#nhanNutXoa" prefHeight="40.0" prefWidth="90.0" style="-fx-background-color: #ff3131;" text="     Xóa" textAlignment="RIGHT" textFill="WHITE" textOverrun="CLIP">
+      <Button fx:id="btnXoa2" contentDisplay="RIGHT" layoutX="372.0" layoutY="519.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="90.0" style="-fx-background-color: #ff3131;" text="     Xóa" textAlignment="RIGHT" textFill="WHITE" textOverrun="CLIP">
          <font>
             <Font size="16.0" />
          </font>
@@ -277,7 +277,7 @@
             <Image url="@../../data/pic/recycle-bin.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnSua1" contentDisplay="RIGHT" layoutX="1240.0" layoutY="60.0" mnemonicParsing="false" onAction="#nhanNutSua" prefHeight="40.0" prefWidth="90.0" style="-fx-background-color: #edbf6d;" text="     Sửa" textAlignment="RIGHT" textFill="WHITE" textOverrun="CLIP">
+      <Button fx:id="btnSua1" contentDisplay="RIGHT" layoutX="1240.0" layoutY="60.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="90.0" style="-fx-background-color: #edbf6d;" text="     Sửa" textAlignment="RIGHT" textFill="WHITE" textOverrun="CLIP">
          <font>
             <Font size="16.0" />
          </font>
@@ -287,7 +287,7 @@
             <Image url="@../../data/pic/writing-square.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnXoa1" contentDisplay="RIGHT" layoutX="1340.0" layoutY="60.0" mnemonicParsing="false" onAction="#nhanNutXoa" prefHeight="40.0" prefWidth="90.0" style="-fx-background-color: #ff3131;" text="     Xóa" textAlignment="RIGHT" textFill="WHITE" textOverrun="CLIP">
+      <Button fx:id="btnXoa1" contentDisplay="RIGHT" layoutX="1340.0" layoutY="60.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="90.0" style="-fx-background-color: #ff3131;" text="     Xóa" textAlignment="RIGHT" textFill="WHITE" textOverrun="CLIP">
          <font>
             <Font size="16.0" />
          </font>
@@ -297,7 +297,7 @@
             <Image url="@../../data/pic/recycle-bin.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnThem" contentDisplay="RIGHT" layoutX="1140.0" layoutY="60.0" mnemonicParsing="false" onAction="#nhanNutThem" prefHeight="40.0" prefWidth="90.0" style="-fx-background-color: #00bf63;" text="     Thêm" textAlignment="RIGHT" textFill="WHITE" textOverrun="CLIP">
+      <Button fx:id="btnThem" contentDisplay="RIGHT" layoutX="1140.0" layoutY="60.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="90.0" style="-fx-background-color: #00bf63;" text="     Thêm" textAlignment="RIGHT" textFill="WHITE" textOverrun="CLIP">
          <font>
             <Font size="16.0" />
          </font>
@@ -307,7 +307,7 @@
             <Image url="@../../data/pic/plus-sign.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnXem" contentDisplay="RIGHT" layoutX="1440.0" layoutY="60.0" mnemonicParsing="false" onAction="#nhanNutXem" prefHeight="40.0" prefWidth="90.0" style="-fx-background-color: #2972d3;" text="     Xem" textAlignment="RIGHT" textFill="WHITE" textOverrun="CLIP">
+      <Button fx:id="btnXem" contentDisplay="RIGHT" layoutX="1440.0" layoutY="60.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="90.0" style="-fx-background-color: #2972d3;" text="     Xem" textAlignment="RIGHT" textFill="WHITE" textOverrun="CLIP">
          <font>
             <Font size="16.0" />
          </font>
