@@ -120,7 +120,7 @@
                   <Font name="System Bold Italic" size="20.0" />
                </font>
             </Label>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="250.0" layoutY="165.0" stroke="WHITE" strokeType="INSIDE" width="10.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="250.0" layoutY="210.0" stroke="WHITE" strokeType="INSIDE" width="10.0" />
             <ImageView fx:id="icon_TimKiem" fitHeight="40.0" fitWidth="40.0" layoutX="15.0" layoutY="410.0" onMouseClicked="#moGiaoDienTimKiem" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../data/pic/search.png" />
@@ -135,13 +135,13 @@
       </Pane>
       <Pane layoutX="223.0" layoutY="57.0" prefHeight="775.0" prefWidth="1294.0">
          <children>
-            <Label layoutX="93.0" layoutY="20.0" text="Quản lý nhân viên">
+            <Label layoutX="93.0" layoutY="20.0" text="Quản lý hoá đơn">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="50.0" layoutX="37.0" layoutY="58.0" stroke="BLACK" strokeType="INSIDE" width="1294.0" />
-            <Text fill="WHITE" layoutX="552.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Thông tin nhân viên" textAlignment="CENTER">
+            <Text fill="WHITE" layoutX="552.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Thông tin hoá đơn" textAlignment="CENTER">
                <font>
                   <Font size="30.0" />
                </font>
@@ -149,11 +149,11 @@
             <TableView fx:id="tableNhanVien" layoutX="357.0" layoutY="108.0" prefHeight="670.0" prefWidth="974.0">
                <columns>
                   <TableColumn prefWidth="100.0" text="STT" />
-                  <TableColumn prefWidth="150.0" text="Mã nhân viên" />
-                  <TableColumn prefWidth="150.0" text="Tên nhân viên" />
-                  <TableColumn prefWidth="150.0" text="Số điện thoại" />
-                  <TableColumn prefWidth="150.0" text="Ngày sinh" />
-                  <TableColumn prefWidth="124.0" text="Giới tính" />
+                  <TableColumn prefWidth="150.0" text="Mã hoá đơn" />
+                  <TableColumn prefWidth="150.0" text="Nhân viên lập" />
+                  <TableColumn prefWidth="150.0" text="Tên khách hàng" />
+                  <TableColumn prefWidth="150.0" text="Mã khuyến mãi" />
+                  <TableColumn prefWidth="124.0" text="Thời gian tạo" />
                   <TableColumn prefWidth="150.0" text="CCCD" />
                </columns>
             </TableView>
@@ -214,7 +214,7 @@
             </ImageView>
             <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="47.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../data/pic/employees.png" />
+                  <Image url="@../../data/pic/clipboard.png" />
                </image>
             </ImageView>
             <Label layoutX="47.0" layoutY="313.0" text="Ngày sinh: ">
