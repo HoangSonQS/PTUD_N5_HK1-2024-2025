@@ -1,18 +1,23 @@
 package gui;
 
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import main.App;
 
+import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
 import connectDB.ConnectDB;
 import dao.NhanVien_DAO;
@@ -22,13 +27,15 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 
-public class DangNhap_Controller {
+public class DangNhap_Controller{
 	@FXML
 	private TextField txt_ten;
 	@FXML
 	private TextField txt_mk;
 	@FXML
 	private Button btn_LogIn;
+	@FXML
+    private ImageView avt;
 	
 	// Event Listener on Button[#btn_LogIn].onAction
 	@FXML
@@ -69,4 +76,7 @@ public class DangNhap_Controller {
 	public static void main(String[] args) {
 		
 	}
+
+	
+
 }

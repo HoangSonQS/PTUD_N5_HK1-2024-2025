@@ -33,11 +33,11 @@ public class App extends Application{
 	}
 	public static void openMainGUI() throws IOException {
 		try {
-	        Parent root = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("/gui/GD_Chinh.fxml")));
-	        Scene scene = new Scene(root); // Đặt kích thước phù hợp
-	        primaryStage.setScene(scene);
-	        primaryStage.setMaximized(true);
-	        primaryStage.show();
+			 FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/gui/GD_Chinh.fxml")); //Đường dẫn chính xác
+	            Parent root = fxmlLoader.load();
+	            primaryScene = new Scene(root);
+	            primaryStage.setScene(primaryScene);
+	            primaryStage.show();
 	    } catch (NullPointerException ex) {
 	        System.err.println("Không tìm thấy file GD_Chinh.fxml: " + ex.getMessage());
 	        ex.printStackTrace();
@@ -71,13 +71,25 @@ public class App extends Application{
             throw ex; // Ném ngoại lệ để xử lý ở cấp cao hơn nếu cần
         }// Hiện màn hình đăng nhập
     }
-	public static void setRoot(String fxmlNewChild) throws IOException {
-		Parent child = loadFXML(fxmlNewChild);
-		Parent root = primaryScene.getRoot();
-		ObservableList<Node> paneChildren = ((Pane) root.getChildrenUnmodifiable().get(0)).getChildren();
-		paneChildren.clear();
-		paneChildren.add(child);
-	}
+	public static void setRoot(String fxml) throws IOException {
+		
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("/gui/" + fxml + ".fxml"));
+        System.out.println("Loading FXML: " + loader.getLocation());
+		try {
+            Parent newRoot = loader.load(); //Đọc giao diện
+			if(primaryScene!=null)
+				primaryScene.setRoot(newRoot); // Thay đổi root
+            primaryStage.setScene(primaryScene); // Cập nhật Scene cho Stage
+			primaryStage.sizeToScene(); // Cập nhật kích thước của Stage
+			primaryStage.show(); // Hiện Stage
+			
+			
+		} catch (IOException ex){
+			System.err.println("Không tìm thấy file: "+fxml);
+			throw ex;
+		}
+
+    }
 	public static Parent loadFXML(String fxml) throws IOException {
 		FXMLLoader fxmlFrame = new FXMLLoader(App.class.getResource("/gui/" + fxml + ".fxml"));
 		return fxmlFrame.load();

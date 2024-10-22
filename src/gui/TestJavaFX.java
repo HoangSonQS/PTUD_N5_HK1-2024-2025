@@ -1,5 +1,6 @@
 package gui;
 	
+import connectDB.ConnectDB;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
@@ -11,11 +12,12 @@ public class TestJavaFX extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
-			Parent root = FXMLLoader.load(getClass().getResource("GD_DangNhap.fxml"));
+			connect();
+			Parent root = FXMLLoader.load(getClass().getResource("GD_DatPhong.fxml"));
 			Scene scene = new Scene(root);
 
 			primaryStage.setScene(scene);
-			primaryStage.setMaximized(true);
+//			primaryStage.setMaximized(true);
 			primaryStage.show();
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -24,5 +26,9 @@ public class TestJavaFX extends Application {
 	
 	public static void main(String[] args) {
 		launch(args);
+	}
+	static void connect() {
+		ConnectDB cn = new ConnectDB();
+		cn.getInstance().connect();
 	}
 }
