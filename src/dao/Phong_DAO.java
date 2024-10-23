@@ -17,7 +17,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 public class Phong_DAO {
-	public static ArrayList<Phong> getAllPhong() {
+	public ArrayList<Phong> getAllPhong() {
 		ArrayList<Phong> dsPhong = new ArrayList<Phong>();
 		Connection con = ConnectDB.getInstance().getConnection();
 		Statement stmt = null;

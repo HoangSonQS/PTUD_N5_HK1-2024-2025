@@ -220,7 +220,7 @@ public class GD_QLNhanVien_Controller implements Initializable{
 	    
 	    @FXML
 	    void moGiaoDienDichVu(MouseEvent event) throws IOException {
-	    	App.setRoot("GD_DichVu");
+	    	App.setRoot("GD_QLDichVu");
 	    }
 
 	    @FXML
@@ -239,8 +239,13 @@ public class GD_QLNhanVien_Controller implements Initializable{
 	    }
 
 	    @FXML
-	    void moGiaoDienQuanLy(MouseEvent event) {
+	    void moGiaoDienQLNV(MouseEvent event) throws IOException {
+	    	App.setRoot("GD_QLNhanVien");
+	    }
 
+	    @FXML
+	    void moGiaoDienQuanLy(MouseEvent event) throws IOException {
+	    	App.setRoot("GD_QLPhong");
 	    }
 
 	    @FXML
@@ -249,18 +254,18 @@ public class GD_QLNhanVien_Controller implements Initializable{
 	    }
 
 	    @FXML
-	    void moGiaoDienThongKe(MouseEvent event) {
-
+	    void moGiaoDienThongKe(MouseEvent event) throws IOException {
+	    	App.setRoot("GD_ThongKeDoanhThu");
 	    }
 
 	    @FXML
 	    void moGiaoDienThuePhong(MouseEvent event) throws IOException {
-	    	App.setRoot("GD_Chinh");
+	    	App.setRoot("GD_SoDoPhong");
 	    }
 
 	    @FXML
-	    void moGiaoDienTimKiem(MouseEvent event) {
-
+	    void moGiaoDienTimKiem(MouseEvent event) throws IOException {
+	    	App.setRoot("GD_TKPhong");
 	    }
 
 	    @FXML
