@@ -18,6 +18,7 @@ import entity.KhachHang;
 
 public class KhachHang_DAO {
 	public ArrayList<KhachHang> getAllKhachHang() {
+		System.out.println(1);
 		ArrayList<KhachHang> dsKH = new ArrayList<KhachHang>();
 		Connection conN = ConnectDB.getInstance().getConnection();
 		Statement stm = null;
@@ -173,14 +174,15 @@ public class KhachHang_DAO {
 		}
 		 return kh;
 	 }
-	public boolean capNhatKhachHangTheoSDT(KhachHang khachhang) {
+	public boolean capNhatKhachHangTheoMa(KhachHang khachhang) {
 		int n = 0;
 		ConnectDB.getInstance();
 		Connection conN = ConnectDB.getInstance().getConnection();
 		PreparedStatement pstm = null;
-		String sql = "update KhachHang set TenKhachHang=?, NgaySinh=?, CCCD=?, TichDiem=? where SoDienThoai=? ";
+		String sql = "update KhachHang set TenKhachHang=?, NgaySinh=?, CCCD=?, TichDiem=?, SoDienThoai=? where  IDKhachHang = ?";
 		try {
 			pstm = conN.prepareStatement(sql);
+			pstm.setString(6, khachhang.getIdKhachHang());
 			pstm.setString(1, khachhang.getTenKhachHang());
 			pstm.setDate(2, Date.valueOf(khachhang.getNgaySinh()));
 			pstm.setString(3, khachhang.getCccd());
@@ -200,4 +202,40 @@ public class KhachHang_DAO {
 		}
 		return n > 0;
 	}
+	public int getCountOfKhachHangInDay(LocalDate date) {
+        Connection conn = ConnectDB.getInstance().getConnection();
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+        int count = 0;
+        
+        try {
+            // SQL để đếm số khách hàng được thêm trong ngày cụ thể
+            String sql = "SELECT COUNT(*) FROM KhachHang WHERE IDKhachHang LIKE ?";
+            pstm = conn.prepareStatement(sql);
+            
+            String pattern = "KH" + 
+                            String.format("%02d", date.getYear() % 100) + 
+                            String.format("%02d", date.getMonthValue()) + 
+                            String.format("%02d", date.getDayOfMonth()) + 
+                            "%";
+            
+            pstm.setString(1, pattern);
+            rs = pstm.executeQuery();
+            
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (pstm != null) pstm.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        
+        return count;
+    }
 }
