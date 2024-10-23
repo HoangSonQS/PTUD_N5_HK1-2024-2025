@@ -50,6 +50,12 @@ public class Phong {
 	public void setTrangThai(TrangThaiPhong trangThai) {
 		this.trangThai = trangThai;
 	}
+	  public String getLoaiPhongString() {
+	        return getLoaiPhong() == null ? "" : getLoaiPhong().toString(); // Handles null
+	    }
+		  public String getTrangThaiString() {
+	        return getTrangThai() == null ? "" : getTrangThai().toString(); //Handles null
+	    }
 	@Override
 	public String toString() {
 		return "Phong [idPhong=" + idPhong + ", loaiPhong=" + loaiPhong + ", donGia=" + donGia + ", trangThai="

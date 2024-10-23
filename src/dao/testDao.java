@@ -1,5 +1,6 @@
 package dao;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -18,14 +19,14 @@ import entity.TrangThaiPhong;
 
 public class testDao {
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException {
 		connect();
 //		testTaiKhoan();
 //		testNhanVien();
 //		testPhieuThue();
 //		testKH();
 //		testHoaDon();
-		testCTHD_Phong();
+		testPhong();
 	}
 	
 	private static void testCTHD_Phong() {
@@ -35,19 +36,22 @@ public class testDao {
 //		HoaDon hd = new HoaDon("HD24100301");
 //		Phong p = new Phong("T01P01");
 //		LocalDateTime ngayGio = LocalDateTime.of(2024, 10, 20, 14, 30); // Ngày 20/10/2024 lúc 14:30
-//		
+		System.out.println();
 //		cthd.themChiTietHoaDon_Phong(new ChiTietHD_Phong(hd, p, ngayGio));
-		System.out.println(cthd.layChiTietHoaDon_PhongTheoMaHoaDon("HD24100301"));
+//		System.out.println(cthd.layChiTietHoaDon_PhongTheoMaHoaDon("HD24100301"));
 	}
 
 	//done
-	public static void testPhong() {
-//		Phong_DAO pdao = new Phong_DAO();
+	public static void testPhong() throws SQLException {
+		Phong_DAO pdao = new Phong_DAO();
 //		System.out.println(pdao.getAllPhong());
-//		System.out.println(pdao.getPhongTheoMa("T01P01"));
-//		Phong p = new Phong("T02P01", LoaiPhong.PHONGDOI, 200000, TrangThaiPhong.SAPCHECKIN);
+
+//		Phong p = new Phong("T03P07", LoaiPhong.PHONGDOI, 200000, TrangThaiPhong.TRONG);
 //		pdao.themPhong(p);
+//		pdao.capNhatTrangThaiPhong(new Phong("T01P01", LoaiPhong.PHONGGIADINH, 2300000, TrangThaiPhong.TRONG));
+//		pdao.xoaPhong("T03P01");
 //		System.out.println(pdao.getPhongTheoLoai("Phòng đơn"));
+		System.out.println(pdao.getPhongTheoLoai(1));
 	}
 //done
 	public static void testTaiKhoan() {

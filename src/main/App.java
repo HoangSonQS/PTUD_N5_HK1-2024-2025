@@ -88,7 +88,23 @@ public class App extends Application{
 			System.err.println("Không tìm thấy file: "+fxml);
 			throw ex;
 		}
-
+    }
+	public static void setRootNho(String fxml) throws IOException {
+		
+        FXMLLoader loader = new FXMLLoader(App.class.getResource("/gui/" + fxml + ".fxml"));
+        System.out.println("Loading FXML: " + loader.getLocation());
+		try {
+            Parent newRoot = loader.load(); //Đọc giao diện
+			if(primaryScene!=null)
+				primaryScene.setRoot(newRoot); // Thay đổi root
+            primaryStage.setScene(primaryScene); // Cập nhật Scene cho Stage
+			primaryStage.show(); // Hiện Stage
+			
+			
+		} catch (IOException ex){
+			System.err.println("Không tìm thấy file: "+fxml);
+			throw ex;
+		}
     }
 	public static Parent loadFXML(String fxml) throws IOException {
 		FXMLLoader fxmlFrame = new FXMLLoader(App.class.getResource("/gui/" + fxml + ".fxml"));

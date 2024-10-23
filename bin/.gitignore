@@ -1,9 +1,5 @@
-<<<<<<< HEAD
-=======
-/gui/
-<<<<<<< HEAD
->>>>>>> c1f9a0fdad7d5b213ac65fa5b4eb373d19e81cff
-/main/
-=======
->>>>>>> 80a5d8d24a3f947b8724539af1badbefcb6fb3c4
 /connectDB/
+/dao/
+/entity/
+/gui/
+/main/

@@ -13,7 +13,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="845.0" prefWidth="1554.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="845.0" prefWidth="1554.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.GD_DoiPhong_Controller">
    <children>
       <Pane layoutY="70.0" prefHeight="775.0" prefWidth="1554.0">
          <children>
@@ -217,7 +217,7 @@
                   </Label>
                   <Line endX="-100.0" layoutX="304.0" layoutY="210.0" startX="-100.0" />
                   <Line endX="1294.0" layoutY="90.0" />
-                  <ScrollPane layoutY="90.0" prefHeight="685.0" prefWidth="645.0">
+                  <ScrollPane fx:id="scrollPane1" layoutY="90.0" prefHeight="685.0" prefWidth="645.0">
                      <content>
                         <GridPane prefHeight="672.0" prefWidth="646.0">
                           <columnConstraints>
@@ -227,7 +227,7 @@
                         </GridPane>
                      </content>
                   </ScrollPane>
-                  <ScrollPane layoutX="645.0" layoutY="90.0" prefHeight="685.0" prefWidth="645.0">
+                  <ScrollPane fx:id="scrollPane2" layoutX="645.0" layoutY="90.0" prefHeight="685.0" prefWidth="645.0">
                      <content>
                         <GridPane prefHeight="672.0" prefWidth="643.0">
                            <columnConstraints>
