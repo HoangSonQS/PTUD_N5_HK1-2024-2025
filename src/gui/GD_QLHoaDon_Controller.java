@@ -243,6 +243,7 @@ public class GD_QLHoaDon_Controller implements Initializable{
     	
     	HoaDon_DAO hddao = new HoaDon_DAO();
     	hddao.themHoaDon(new HoaDon(maHD, new NhanVien_DAO().getNhanVienTheoMa(maNV), new KhachHang_DAO().getKhachHangTheoMa(maKH), new KhuyenMai_DAO().layKhuyenMaiTheoMa(maKM), thoiGianTao, thoiGianCheckin));
+    	loadTableData();
     }
     @FXML
     void xoaTrang(MouseEvent event) {
