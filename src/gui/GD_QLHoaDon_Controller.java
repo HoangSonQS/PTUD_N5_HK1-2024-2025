@@ -139,7 +139,12 @@ public class GD_QLHoaDon_Controller implements Initializable{
     void moGiaoDienUuDai(MouseEvent event) {
 
     }
+    
+    @FXML
+    void moGiaoDienTK(MouseEvent event) {
 
+    }
+    
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		clSTT.setCellFactory(col -> {
@@ -249,8 +254,5 @@ public class GD_QLHoaDon_Controller implements Initializable{
     	lb_tgTao.setText("");
     	tableNhanVien.getSelectionModel().clearSelection();
     }
-    @FXML
-    void moGiaoDienTK(MouseEvent event) {
 
-    }
 }

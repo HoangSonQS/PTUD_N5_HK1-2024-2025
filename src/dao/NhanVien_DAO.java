@@ -82,8 +82,14 @@ public class NhanVien_DAO {
 				pstm.setInt(7, cv);
 				n = pstm.executeUpdate();
 			}
-
-
+			int cv = 0;
+			if(nhanvien.getChucVu() == Enum_ChucVu.NHANVIENLETAN) {
+			    cv = 1;
+			} else if (nhanvien.getChucVu() == Enum_ChucVu.NGUOIQUANLY) {
+			    cv = 2;
+			} 
+			pstm.setInt(7, cv);
+			n = pstm.executeUpdate();
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {

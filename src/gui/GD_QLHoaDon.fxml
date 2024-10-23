@@ -155,7 +155,7 @@
                   <TableColumn fx:id="clTGCI" prefWidth="137.5999755859375" text="Thời gian checkin" />
                </columns>
             </TableView>
-            <Label layoutX="10.0" layoutY="110.0" text="Chi tiết thông tin hóa :">
+            <Label layoutX="10.0" layoutY="108.0" text="Chi tiết thông tin hoá đơn:">
                <font>
                   <Font size="24.0" />
                </font>

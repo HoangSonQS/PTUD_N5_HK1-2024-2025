@@ -14,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="845.0" prefWidth="1554.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.GD_QLHoaDon_Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="845.0" prefWidth="1554.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.GD_QLTaiKhoan_Controller">
    <children>
       <Pane layoutY="70.0" prefHeight="775.0" prefWidth="260.0" style="-fx-background-color: #D9D9D9;">
          <children>
@@ -48,12 +48,12 @@
                   <Font name="System Italic" size="18.0" />
                </font>
             </Label>
-            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="35.0" layoutY="165.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="35.0" layoutY="165.0" onMouseClicked="#moGiaoDienNhanVien" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../data/pic/employees.png" />
                </image>
             </ImageView>
-            <Label layoutX="85.0" layoutY="170.0" text="Nhân viên">
+            <Label layoutX="85.0" layoutY="170.0" onMouseClicked="#moGiaoDienNhanVien" text="Nhân viên">
                <font>
                   <Font name="System Italic" size="18.0" />
                </font>
@@ -88,12 +88,12 @@
                   <Font name="System Italic" size="18.0" />
                </font>
             </Label>
-            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="35.0" layoutY="325.0" onMouseClicked="#moGiaoDienTaiKhoan" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="35.0" layoutY="325.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../data/pic/account-accepted.png" />
                </image>
             </ImageView>
-            <Label layoutX="85.0" layoutY="330.0" onMouseClicked="#moGiaoDienTaiKhoan" text="Tài khoản">
+            <Label layoutX="85.0" layoutY="330.0" text="Tài khoản">
                <font>
                   <Font name="System Italic" size="18.0" />
                </font>
@@ -118,7 +118,7 @@
                   <Font name="System Bold Italic" size="20.0" />
                </font>
             </Label>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="250.0" layoutY="245.0" stroke="WHITE" strokeType="INSIDE" width="10.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="250.0" layoutY="325.0" stroke="WHITE" strokeType="INSIDE" width="10.0" />
             <ImageView fx:id="icon_TimKiem" fitHeight="40.0" fitWidth="40.0" layoutX="15.0" layoutY="410.0" onMouseClicked="#moGiaoDienTimKiem" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../data/pic/search.png" />
@@ -133,99 +133,132 @@
       </Pane>
       <Pane layoutX="260.0" layoutY="70.0" prefHeight="775.0" prefWidth="1294.0">
          <children>
-            <Label layoutX="56.0" layoutY="10.0" text="Quản lý hoá đơn">
+            <Label layoutX="56.0" layoutY="10.0" text="Quản lý tài khoản">
+
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="50.0" layoutY="50.0" stroke="BLACK" strokeType="INSIDE" width="1294.0" />
-            <Text fill="WHITE" layoutX="515.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Thông tin hoá đơn" textAlignment="CENTER">
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="50.0" layoutY="48.0" stroke="BLACK" strokeType="INSIDE" width="1294.0" />
+            <Text fill="WHITE" layoutX="515.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Thông tin tài khoản" textAlignment="CENTER">
                <font>
                   <Font size="30.0" />
                </font>
             </Text>
-            <TableView fx:id="tableNhanVien" layoutX="369.0" layoutY="100.0" prefHeight="670.0" prefWidth="925.0">
+            <TableView fx:id="tableTaiKhoan" layoutX="320.0" layoutY="98.0" onMouseClicked="#chonTK" prefHeight="670.0" prefWidth="974.0">
                <columns>
-                  <TableColumn fx:id="clSTT" prefWidth="102.39996337890625" text="STT" />
-                  <TableColumn fx:id="clMaHD" prefWidth="137.60003662109375" text="Mã hoá đơn" />
-                  <TableColumn fx:id="clMaNV" prefWidth="140.0" text="Nhân viên lập" />
-                  <TableColumn fx:id="clMaKH" prefWidth="140.0" text="Tên khách hàng" />
-                  <TableColumn fx:id="clMaKM" prefWidth="140.0" text="Mã khuyến mãi" />
-                  <TableColumn fx:id="clTGT" prefWidth="138.4000244140625" text="Thời gian tạo" />
-                  <TableColumn fx:id="clTGCI" prefWidth="137.5999755859375" text="Thời gian checkin" />
+                  <TableColumn fx:id="clSTT" prefWidth="66.93328857421875" text="STT" />
+                  <TableColumn fx:id="clIDTK" prefWidth="138.66668701171875" text="Mã tài khoản" />
+                  <TableColumn fx:id="clMKTK" prefWidth="152.0" text="Mật khẩu" />
+                  <TableColumn fx:id="clIDNV" prefWidth="153.33331298828125" text="Mã nhân viên" />
+                  <TableColumn fx:id="clTenNV" prefWidth="245.86669921875" text="Tên nhân viên" />
+                  <TableColumn fx:id="clChucVu" prefWidth="218.4000244140625" text="Chức vụ" />
                </columns>
             </TableView>
-            <Label layoutX="10.0" layoutY="108.0" text="Chi tiết thông tin hoá đơn:">
+            <Label layoutX="10.0" layoutY="108.0" text="Chi tiết thông tin tài khoản:">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
-            <Label layoutX="10.0" layoutY="155.0" text="Mã hoá đơn: ">
+            <Label layoutX="10.0" layoutY="153.0" text="Mã tài khoản: ">
                <font>
-                  <Font size="20.0" />
+                  <Font size="18.0" />
                </font>
             </Label>
-            <Label layoutX="10.0" layoutY="205.0" text="Mã nhân viên:">
+            <Label fx:id="lb_MaTK" layoutX="130.0" layoutY="152.0" prefHeight="30.0" prefWidth="186.0">
                <font>
-                  <Font size="20.0" />
+                  <Font size="18.0" />
                </font>
             </Label>
-            <Label layoutX="10.0" layoutY="255.0" text="Mã khách hàng: ">
+            <Label layoutX="10.0" layoutY="203.0" text="Mật khẩu:">
                <font>
-                  <Font size="20.0" />
+                  <Font size="18.0" />
                </font>
             </Label>
-            <Button fx:id="btnThem" contentDisplay="RIGHT" layoutX="60.0" layoutY="450.0" mnemonicParsing="false" onMouseClicked="#themHD" prefHeight="40.0" prefWidth="90.0" style="-fx-background-color: #00bf63;" text="     Thêm" textAlignment="RIGHT" textFill="WHITE" textOverrun="CLIP">
+            <Label layoutX="10.0" layoutY="253.0" text="Mã nhân viên:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Button fx:id="btnSua" contentDisplay="RIGHT" layoutX="10.0" layoutY="403.0" mnemonicParsing="false" onMouseClicked="#suaTK" prefHeight="40.0" prefWidth="90.0" style="-fx-background-color: #edbf6d;" text="     Sửa" textAlignment="RIGHT" textFill="WHITE" textOverrun="CLIP">
                <font>
                   <Font size="16.0" />
                </font>
             </Button>
-            <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="57.0" layoutY="445.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="409.0" onMouseClicked="#suaTK" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/pic/writing-square.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="btnXoa" contentDisplay="RIGHT" layoutX="112.0" layoutY="403.0" mnemonicParsing="false" onMouseClicked="#xoaTK" prefHeight="40.0" prefWidth="90.0" style="-fx-background-color: #ff3131;" text="     Xóa" textAlignment="RIGHT" textFill="WHITE" textOverrun="CLIP">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="117.0" layoutY="409.0" onMouseClicked="#xoaTK" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/pic/recycle-bin.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="btnThem" contentDisplay="RIGHT" layoutX="217.0" layoutY="404.0" mnemonicParsing="false" onMouseClicked="#themTK" prefHeight="40.0" prefWidth="90.0" style="-fx-background-color: #00bf63;" text="     Thêm" textAlignment="RIGHT" textFill="WHITE" textOverrun="CLIP">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Button>
+            <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="214.0" layoutY="399.0" onMouseClicked="#themTK" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../data/pic/plus-sign.png" />
                </image>
             </ImageView>
             <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="10.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../data/pic/clipboard.png" />
+                  <Image url="@../../data/pic/account-accepted.png" />
                </image>
             </ImageView>
-            <Label layoutX="10.0" layoutY="305.0" text="Mã khuyến mãi: ">
+            <Label layoutX="10.0" layoutY="303.0" text="Tên nhân viên:">
                <font>
-                  <Font size="20.0" />
+                  <Font size="18.0" />
                </font>
             </Label>
-            <Label layoutX="10.0" layoutY="355.0" text="Tạo lúc: ">
+            <TextField fx:id="txtMatKhau" layoutX="130.0" layoutY="201.0" prefHeight="32.0" prefWidth="141.0" promptText="Mật khẩu">
                <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
-            <Button fx:id="btnTim" contentDisplay="RIGHT" layoutX="69.0" layoutY="513.0" mnemonicParsing="false" onMouseClicked="#moGiaoDienTK" prefHeight="40.0" prefWidth="175.0" style="-fx-background-color: #2972d3;" text="      Tìm kiếm hóa đơn" textAlignment="RIGHT" textFill="WHITE" textOverrun="CLIP">
+                  <Font size="14.0" />
+               </font></TextField>
+            <Button fx:id="btnTimKiem" contentDisplay="RIGHT" layoutX="110.0" layoutY="469.0" mnemonicParsing="false" onMouseClicked="#moGiaoDienTimKiem" prefHeight="40.0" prefWidth="198.0" style="-fx-background-color: #2972d3;" text="      Tìm kiếm tài khoản" textAlignment="RIGHT" textFill="WHITE" textOverrun="CLIP">
                <font>
                   <Font size="16.0" />
                </font>
             </Button>
-            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="73.0" layoutY="518.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="118.0" layoutY="474.0" onMouseClicked="#moGiaoDienTimKiem" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../data/pic/search3png.png" />
                </image>
             </ImageView>
-            <Button fx:id="btnXoaTrang" contentDisplay="RIGHT" layoutX="179.0" layoutY="450.0" mnemonicParsing="false" onMouseClicked="#xoaTrang" prefHeight="40.0" prefWidth="90.0" style="-fx-background-color: gray;" text="Xoá trắng" textAlignment="RIGHT" textFill="WHITE" textOverrun="CLIP">
+            <Button fx:id="btnXoaTrang" contentDisplay="RIGHT" layoutX="10.0" layoutY="469.0" mnemonicParsing="false" onMouseClicked="#xoaTrang" prefHeight="40.0" prefWidth="90.0" style="-fx-background-color: gray;" text="Xoá trắng" textAlignment="RIGHT" textFill="WHITE" textOverrun="CLIP">
                <font>
                   <Font size="16.0" />
                </font>
             </Button>
-            <Label layoutX="10.0" layoutY="405.0" text="Check in lúc:">
+            <Label layoutX="11.0" layoutY="352.0" text="Chức vụ:">
                <font>
-                  <Font size="20.0" />
+                  <Font size="18.0" />
                </font>
             </Label>
-            <TextField fx:id="lb_HD" layoutX="160.0" layoutY="158.0" />
-            <TextField fx:id="lb_MaNV" layoutX="160.0" layoutY="205.0" />
-            <TextField fx:id="lb_MaKH" layoutX="160.0" layoutY="257.0" />
-            <TextField fx:id="lb_MaKM" layoutX="160.0" layoutY="304.0" />
-            <TextField fx:id="lb_tgTao" layoutX="160.0" layoutY="363.0" />
-            <TextField fx:id="lb_TgCheckIn" layoutX="160.0" layoutY="410.0" />
+            <Label fx:id="lb_ChucVu" layoutX="129.0" layoutY="351.0" prefHeight="30.0" prefWidth="186.0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="lb_TenNV" layoutX="129.0" layoutY="301.0" prefHeight="30.0" prefWidth="186.0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <TextField fx:id="lb_MaNV" layoutX="130.0" layoutY="251.0" prefHeight="32.0" prefWidth="141.0" promptText="Mã nhân viên">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </TextField>
          </children></Pane>
       <Pane prefHeight="70.0" prefWidth="1554.0" style="-fx-background-color: #004AAD;">
          <children>

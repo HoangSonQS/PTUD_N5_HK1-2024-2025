@@ -169,7 +169,7 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label fx:id="lb_MaNV" layoutX="160.0" layoutY="153.0" text="NVXXXXXX">
+            <Label fx:id="lb_MaNV" layoutX="160.0" layoutY="153.0">
                <font>
                   <Font size="20.0" />
                </font>
