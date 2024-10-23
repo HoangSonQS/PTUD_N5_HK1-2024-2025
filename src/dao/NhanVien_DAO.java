@@ -58,48 +58,54 @@ public class NhanVien_DAO {
 	}
 	
 	public boolean themNhanVien(NhanVien nhanvien) {
-		ConnectDB.getInstance();
-		Connection conn = ConnectDB.getInstance().getConnection();
-		PreparedStatement pstm = null;
-		int n = 0;
-		try {
-			String nv = nhanvien.autoIdNhanVien();
-			String sql="INSERT INTO NhanVien ( IDNhanVien, TenNhanVien, SoDienThoai, NgaySinh, GioiTinh, CCCD, ChucVu) values(?,?,?,?,?,?,?)";
-			pstm = conn.prepareStatement(sql);
-			if ((new NhanVien_DAO().getNhanVienTheoMa(nv)) == null && (new NhanVien_DAO().getNhanVienTheoCCCD(nhanvien.getCccd())) == null) {
-				pstm.setString(1, nv);
-				pstm.setString(2, nhanvien.getTenNhanVien());
-				pstm.setString(3, nhanvien.getSoDienThoai());
-				pstm.setDate(4, Date.valueOf(nhanvien.getNgaySinh()));
-				pstm.setInt(5, nhanvien.isGioiTinh()? 1 : 0);
-				pstm.setString(6, nhanvien.getCccd());
-				int cv = 0;
-				if(nhanvien.getChucVu().toString().equalsIgnoreCase("Nhân viên lễ tân")) {
-					cv = 1;
-				} else if (nhanvien.getChucVu().toString().equalsIgnoreCase("Người quản lý")) {
-					cv = 2;
-				} 
-				pstm.setInt(7, cv);
-				n = pstm.executeUpdate();
-			}
-			int cv = 0;
-			if(nhanvien.getChucVu() == Enum_ChucVu.NHANVIENLETAN) {
-			    cv = 1;
-			} else if (nhanvien.getChucVu() == Enum_ChucVu.NGUOIQUANLY) {
-			    cv = 2;
-			} 
-			pstm.setInt(7, cv);
-			n = pstm.executeUpdate();
-		}catch(Exception e) {
-			e.printStackTrace();
-		}finally {
-			try {
-				pstm.close();
-			} catch (Exception e2) {
-				e2.printStackTrace();
-			}
-		}
-		return n>0;
+	    ConnectDB.getInstance();
+	    Connection conn = ConnectDB.getInstance().getConnection();
+	    PreparedStatement pstm = null;
+	    int n = 0;
+	    try {
+	        String nv = nhanvien.getIdNhanVien(); // Sử dụng mã đã được tạo từ generateMaNV()
+	        String sql = "INSERT INTO NhanVien (IDNhanVien, TenNhanVien, SoDienThoai, NgaySinh, GioiTinh, CCCD, ChucVu) VALUES (?,?,?,?,?,?,?)";
+	        pstm = conn.prepareStatement(sql);
+
+	        // Kiểm tra mã NV và CCCD không trùng
+	        if ((new NhanVien_DAO().getNhanVienTheoMa(nv)) == null && 
+	            (new NhanVien_DAO().getNhanVienTheoCCCD(nhanvien.getCccd())) == null) {
+	            
+	            // Set các giá trị cho PreparedStatement
+	            pstm.setString(1, nv);
+	            pstm.setString(2, nhanvien.getTenNhanVien());
+	            pstm.setString(3, nhanvien.getSoDienThoai());
+	            pstm.setDate(4, Date.valueOf(nhanvien.getNgaySinh()));
+	            pstm.setInt(5, nhanvien.isGioiTinh() ? 1 : 0);
+	            pstm.setString(6, nhanvien.getCccd());
+
+	            // Xử lý chức vụ
+	            int cv = 0;
+	            if(nhanvien.getChucVu() == Enum_ChucVu.NHANVIENLETAN) {
+	                cv = 1;
+	            } else if (nhanvien.getChucVu() == Enum_ChucVu.NGUOIQUANLY) {
+	                cv = 2;
+	            } 
+	            pstm.setInt(7, cv);
+
+	            // Thực hiện câu lệnh SQL
+	            n = pstm.executeUpdate();
+	        } else {
+	            // Thông báo nếu trùng mã NV hoặc CCCD
+	            System.out.println("Mã nhân viên hoặc CCCD đã tồn tại!");
+	        }
+	    } catch(Exception e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if(pstm != null) {
+	                pstm.close();
+	            }
+	        } catch (Exception e2) {
+	            e2.printStackTrace();
+	        }
+	    }
+	    return n > 0;
 	}
 	
 	public NhanVien getNhanVienTheoMa(String ma) {
@@ -167,12 +173,18 @@ public class NhanVien_DAO {
 	        pstm.setInt(4, nhanvien.isGioiTinh() ? 1 : 0);
 	        pstm.setString(5, nhanvien.getCccd());
 
+	        // Sửa phần xử lý chức vụ
 	        int cv = 0;
-	        if (nhanvien.getChucVu().toString().equalsIgnoreCase("Nhân viên lễ tân")) {
+	        if (nhanvien.getChucVu() == Enum_ChucVu.NHANVIENLETAN) {
 	            cv = 1;
-	        } else if (nhanvien.getChucVu().toString().equalsIgnoreCase("Người quản lý")) {
+	        } else if (nhanvien.getChucVu() == Enum_ChucVu.NGUOIQUANLY) {
 	            cv = 2;
 	        }
+	        
+	        // Debug để kiểm tra giá trị
+	        System.out.println("Chức vụ enum: " + nhanvien.getChucVu());
+	        System.out.println("Giá trị cv: " + cv);
+
 	        pstm.setInt(6, cv);
 	        pstm.setString(7, nhanvien.getIdNhanVien());
 
