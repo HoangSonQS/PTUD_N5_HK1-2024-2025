@@ -1,5 +1,6 @@
 package dao;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -18,14 +19,14 @@ import entity.TrangThaiPhong;
 
 public class testDao {
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException {
 		connect();
 //		testTaiKhoan();
 //		testNhanVien();
 //		testPhieuThue();
 //		testKH();
 //		testHoaDon();
-		testCTHD_Phong();
+		testPhong();
 	}
 	
 	private static void testCTHD_Phong() {
@@ -41,12 +42,12 @@ public class testDao {
 	}
 
 	//done
-	public static void testPhong() {
-//		Phong_DAO pdao = new Phong_DAO();
+	public static void testPhong() throws SQLException {
+		Phong_DAO pdao = new Phong_DAO();
 //		System.out.println(pdao.getAllPhong());
 //		System.out.println(pdao.getPhongTheoMa("T01P01"));
-//		Phong p = new Phong("T02P01", LoaiPhong.PHONGDOI, 200000, TrangThaiPhong.SAPCHECKIN);
-//		pdao.themPhong(p);
+//		Phong p = new Phong("T03P01", LoaiPhong.PHONGDOI, 200000, TrangThaiPhong.SAPCHECKIN);
+		pdao.xoaPhong("T03P01");
 //		System.out.println(pdao.getPhongTheoLoai("Phòng đơn"));
 	}
 //done

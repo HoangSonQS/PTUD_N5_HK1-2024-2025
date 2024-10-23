@@ -1,3 +1,10 @@
+<<<<<<< HEAD
 /dao/
 /gui/
 /connectDB/
+=======
+/connectDB/
+/gui/
+/entity/
+/dao/
+>>>>>>> 5ece51ed7e99db93027bbb01220738de867ac3fd
