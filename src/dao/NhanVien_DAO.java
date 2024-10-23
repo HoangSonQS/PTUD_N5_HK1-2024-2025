@@ -31,12 +31,12 @@ public class NhanVien_DAO {
 				boolean gioiTinh = rs.getBoolean("GioiTinh");
 				String cccd = rs.getString("CCCD");
 				int chucVu = rs.getInt("ChucVu");
-				ChucVu cv = null;
+				Enum_ChucVu cv = null;
 				
 				if(chucVu == 1) {
-					cv = ChucVu.NHANVIENLETAN;
+					cv = Enum_ChucVu.NHANVIENLETAN;
 				} else if (chucVu == 2) {
-					cv = ChucVu.NGUOIQUANLY;
+					cv = Enum_ChucVu.NGUOIQUANLY;
 				}
 				
 //				if(chucVu.equalsIgnoreCase(ChucVu.NHANVIENLETAN.toString())) {
@@ -63,7 +63,7 @@ public class NhanVien_DAO {
 		PreparedStatement pstm = null;
 		int n = 0;
 		try {
-			String sql="INSERT INTO NhanVien ( IdNhanVien, TenNhanVien, SoDienThoai, NgaySinh, GioiTinh, CCCD, ChucVu) values(?,?,?,?,?,?,?)";
+			String sql="INSERT INTO NhanVien ( IDNhanVien, TenNhanVien, SoDienThoai, NgaySinh, GioiTinh, CCCD, ChucVu) values(?,?,?,?,?,?,?)";
 			pstm = conn.prepareStatement(sql);
 			pstm.setString(1, nhanvien.getIdNhanVien());
 			pstm.setString(2, nhanvien.getTenNhanVien());
@@ -72,7 +72,6 @@ public class NhanVien_DAO {
 			pstm.setInt(5, nhanvien.isGioiTinh()? 1 : 0);
 			pstm.setString(6, nhanvien.getCccd());
 
-			System.out.println(1);
 			int cv = 0;
 			if(nhanvien.getChucVu().toString().equalsIgnoreCase("Nhân viên lễ tân")) {
 				cv = 1;
@@ -119,12 +118,12 @@ public class NhanVien_DAO {
 //					cv = ChucVu.NGUOIQUANLY;
 //				}
 				int chucVu = rs.getInt("ChucVu");
-				ChucVu cv = null;
+				Enum_ChucVu cv = null;
 				
 				if(chucVu == 1) {
-					cv = ChucVu.NHANVIENLETAN;
+					cv = Enum_ChucVu.NHANVIENLETAN;
 				} else if (chucVu == 2) {
-					cv = ChucVu.NGUOIQUANLY;
+					cv = Enum_ChucVu.NGUOIQUANLY;
 				}
 				
 				//NhanVien nv = new NhanVien(idNhanVien, tenNhanVien, soDienThoai, gioiTinh, cccd, cv);
@@ -150,10 +149,8 @@ public class NhanVien_DAO {
 	    PreparedStatement pstm = null;
 	    String sql = "update NhanVien set TenNhanVien=?, SoDienThoai=?, NgaySinh=?, GioiTinh=?, CCCD=?, ChucVu=? where IDNhanVien=? ";
 	    try {
-	        // Khởi tạo PreparedStatement
 	        pstm = conN.prepareStatement(sql);
 
-	        // Đặt các giá trị cho các tham số trong câu lệnh SQL
 	        pstm.setString(1, nhanvien.getTenNhanVien());
 	        pstm.setString(2, nhanvien.getSoDienThoai());
 	        pstm.setDate(3, Date.valueOf(nhanvien.getNgaySinh()));
@@ -169,14 +166,13 @@ public class NhanVien_DAO {
 	        pstm.setInt(6, cv);
 	        pstm.setString(7, nhanvien.getIdNhanVien());
 
-	        // Thực thi câu lệnh SQL
 	        n = pstm.executeUpdate();
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	    } finally {
 	        try {
 	            if (pstm != null) {
-	                pstm.close(); // Đảm bảo PreparedStatement được đóng
+	                pstm.close(); 
 	            }
 	        } catch (Exception e2) {
 	            e2.printStackTrace();
@@ -199,6 +195,70 @@ public class NhanVien_DAO {
 			return false;
 		}
 	}
+	
+	public boolean isMaNVExists(String maNV) {
+	    Connection conn = null;
+	    PreparedStatement pstm = null;
+	    ResultSet rs = null;
+	    String sql = "SELECT COUNT(*) FROM NhanVien WHERE IDNhanVien = ?";
+	    
+	    try {
+	        conn = ConnectDB.getInstance().getConnection();
+	        pstm = conn.prepareStatement(sql);
+	        pstm.setString(1, maNV);
+	        rs = pstm.executeQuery();
+	        if (rs.next()) {
+	            return rs.getInt(1) > 0;
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if (rs != null) rs.close();
+	            if (pstm != null) pstm.close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	    return false;
+	}
+	
+	public int getCountOfNhanVienInDay(LocalDate date) {
+        Connection conn = ConnectDB.getInstance().getConnection();
+        PreparedStatement pstm = null;
+        ResultSet rs = null;
+        int count = 0;
+        
+        try {
+            // SQL để đếm số nhân viên được thêm trong ngày cụ thể
+            String sql = "SELECT COUNT(*) FROM NhanVien WHERE IDNhanVien LIKE ?";
+            pstm = conn.prepareStatement(sql);
+            
+            String pattern = "NV" + 
+                            String.format("%02d", date.getYear() % 100) + 
+                            String.format("%02d", date.getMonthValue()) + 
+                            String.format("%02d", date.getDayOfMonth()) + 
+                            "%";
+            
+            pstm.setString(1, pattern);
+            rs = pstm.executeQuery();
+            
+            if (rs.next()) {
+                count = rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (pstm != null) pstm.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        
+        return count;
+    }
 //	public static int demSLNhanVien(int ns) throws SQLException {
 //        Connection conn = ConnectDB.getInstance().getConnection();
 //        Statement stmt = null;
