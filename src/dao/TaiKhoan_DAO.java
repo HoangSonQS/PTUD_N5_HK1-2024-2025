@@ -138,6 +138,31 @@ public class TaiKhoan_DAO {
 	    }
 	    return tk;
 	}
+	public TaiKhoan layTaiKhoanTheoMaNV(String maNV) {
+	    TaiKhoan tk = null;
+	    try {
+	    	Connection con = ConnectDB.getInstance().getConnection();
+	        String sql = "SELECT * FROM TaiKhoan WHERE idNhanVien = ?";
+	        PreparedStatement stmt = con.prepareStatement(sql);
+	        stmt.setString(1, maNV);
+	        ResultSet rs = stmt.executeQuery();
+	        
+	        if(rs.next()) {
+	            NhanVien_DAO nvDAO = new NhanVien_DAO();
+	            NhanVien nv = nvDAO.getNhanVienTheoMa(rs.getString("idNhanVien"));
+	            
+	            tk = new TaiKhoan(
+	                rs.getString("idTaiKhoan"),
+	                rs.getString("matKhau"),
+	                rs.getString("trangThai"),
+	                nv
+	            );
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return tk;
+	}
 	public TaiKhoan getTaiKhoanTheoUserNameAndPassword(String username, String password) {
 		TaiKhoan tk = null;
 	    Connection con = ConnectDB.getInstance().getConnection();

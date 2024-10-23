@@ -59,11 +59,4 @@ public class TaiKhoan {
 		TaiKhoan other = (TaiKhoan) obj;
 		return Objects.equals(idTaiKhoan, other.idTaiKhoan);
 	}
-
-	
-	
-	
-
-	
-
 }

@@ -73,10 +73,10 @@ public class NhanVien_DAO {
 			pstm.setString(6, nhanvien.getCccd());
 
 			int cv = 0;
-			if(nhanvien.getChucVu().toString().equalsIgnoreCase("Nhân viên lễ tân")) {
-				cv = 1;
-			} else if (nhanvien.getChucVu().toString().equalsIgnoreCase("Người quản lý")) {
-				cv = 2;
+			if(nhanvien.getChucVu() == Enum_ChucVu.NHANVIENLETAN) {
+			    cv = 1;
+			} else if (nhanvien.getChucVu() == Enum_ChucVu.NGUOIQUANLY) {
+			    cv = 2;
 			} 
 			pstm.setInt(7, cv);
 			n = pstm.executeUpdate();

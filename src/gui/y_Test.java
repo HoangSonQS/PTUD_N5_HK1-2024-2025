@@ -13,11 +13,13 @@ public class y_Test extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			connect();
-			Parent root = FXMLLoader.load(getClass().getResource("GD_QLNhanVien.fxml"));
+			Parent root = FXMLLoader.load(getClass().getResource("GD_QLTaiKhoan.fxml"));
+//			Parent root = FXMLLoader.load(getClass().getResource("GD_QLNhanVien.fxml"));
+
 			Scene scene = new Scene(root);
 
 			primaryStage.setScene(scene);
-//			primaryStage.setMaximized(true);
+			primaryStage.setMaximized(true);
 			primaryStage.show();
 		} catch(Exception e) {
 			e.printStackTrace();

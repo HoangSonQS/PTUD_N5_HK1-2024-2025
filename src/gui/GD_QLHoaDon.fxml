@@ -157,7 +157,7 @@
                   <TableColumn prefWidth="150.0" text="Thời gian checkin" />
                </columns>
             </TableView>
-            <Label layoutX="10.0" layoutY="108.0" text="Chi tiết thông tin nhân viên:">
+            <Label layoutX="10.0" layoutY="108.0" text="Chi tiết thông tin hoá đơn:">
                <font>
                   <Font size="24.0" />
                </font>

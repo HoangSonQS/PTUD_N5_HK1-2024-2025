@@ -7,19 +7,20 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.logging.Logger;
 import dao.Enum_ChucVu;
 import dao.NhanVien_DAO;
-import entity.ChucVu;
 import entity.NhanVien;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -164,31 +165,12 @@ public class GD_QLNhanVien_Controller implements Initializable{
 	        // Format chức vụ
 	        clChucVu.setCellValueFactory(cellData -> {
 	            Enum_ChucVu chucVu = cellData.getValue().getChucVu();
-	            String chucVuString = (chucVu != null) ? chucVu.toString() : "";
+	            String chucVuString = (chucVu != null) ? chucVu.getChucVu() : "";
 	            return new ReadOnlyStringWrapper(chucVuString);
 	        });
 
 	        // Load dữ liệu
 	        loadTableData();
-	        
-	        tableNhanVien.setOnMouseClicked(event -> {
-	            NhanVien selectedNhanVien = tableNhanVien.getSelectionModel().getSelectedItem();
-	            if (selectedNhanVien != null) {
-	                // Cập nhật thông tin vào các trường
-	                lb_MaNV.setText(selectedNhanVien.getIdNhanVien());
-	                txtTenNV.setText(selectedNhanVien.getTenNhanVien());
-	                txtSDT.setText(selectedNhanVien.getSoDienThoai());
-	                txtCCCD.setText(selectedNhanVien.getCccd());
-	                txtNgaySinh.setValue(selectedNhanVien.getNgaySinh()); // Đảm bảo kiểu dữ liệu là LocalDate
-	                cbbGioiTinh.setValue(selectedNhanVien.isGioiTinh() ? "Nam" : "Nữ");
-	                Enum_ChucVu chucVu = selectedNhanVien.getChucVu();
-	                if (chucVu != null) {
-	                    cbbChucVu.setValue(chucVu.toString()); // Hoặc sử dụng giá trị tương ứng nếu cần
-	                } else {
-	                    cbbChucVu.setValue(null); // Hoặc một giá trị mặc định
-	                }
-	            }
-	        });
 	    }
 	    
 	    private void loadTableData() {
@@ -204,13 +186,27 @@ public class GD_QLNhanVien_Controller implements Initializable{
 	            
 	        } catch (Exception e) {
 	            e.printStackTrace();
-	            // Có thể thêm Alert để thông báo lỗi cho người dùng
 	        }
 	    }
 	    
 	    @FXML
 	    void chonNV(MouseEvent event) {
-
+	        NhanVien selectedNhanVien = tableNhanVien.getSelectionModel().getSelectedItem();
+	        if (selectedNhanVien != null) {
+	            // Cập nhật thông tin vào các trường
+	            lb_MaNV.setText(selectedNhanVien.getIdNhanVien());
+	            txtTenNV.setText(selectedNhanVien.getTenNhanVien());
+	            txtSDT.setText(selectedNhanVien.getSoDienThoai());
+	            txtCCCD.setText(selectedNhanVien.getCccd());
+	            txtNgaySinh.setValue(selectedNhanVien.getNgaySinh());
+	            cbbGioiTinh.setValue(selectedNhanVien.isGioiTinh() ? "Nam" : "Nữ");
+	            Enum_ChucVu chucVu = selectedNhanVien.getChucVu();
+	            if (chucVu != null) {
+	                cbbChucVu.setValue(chucVu.getChucVu());
+	            } else {
+	                cbbChucVu.setValue(null);
+	            }
+	        }
 	    }
 	    
 	    @FXML
@@ -219,8 +215,8 @@ public class GD_QLNhanVien_Controller implements Initializable{
 	    }
 
 	    @FXML
-	    void moGiaoDienHoaDon(MouseEvent event) {
-
+	    void moGiaoDienHoaDon(MouseEvent event) throws IOException {
+	    	App.setRoot("GD_QLHoaDon");
 	    }
 
 	    @FXML
@@ -229,8 +225,8 @@ public class GD_QLNhanVien_Controller implements Initializable{
 	    }
 
 	    @FXML
-	    void moGiaoDienPhong(MouseEvent event) {
-
+	    void moGiaoDienPhong(MouseEvent event) throws IOException {
+	    	App.setRoot("GD_QLPhong");
 	    }
 
 	    @FXML
@@ -239,8 +235,8 @@ public class GD_QLNhanVien_Controller implements Initializable{
 	    }
 
 	    @FXML
-	    void moGiaoDienTaiKhoan(MouseEvent event) {
-
+	    void moGiaoDienTaiKhoan(MouseEvent event) throws IOException {
+	    	App.setRoot("GD_QLTaiKhoan");
 	    }
 
 	    @FXML
@@ -259,8 +255,8 @@ public class GD_QLNhanVien_Controller implements Initializable{
 	    }
 
 	    @FXML
-	    void moGiaoDienUuDai(MouseEvent event) {
-
+	    void moGiaoDienUuDai(MouseEvent event) throws IOException {
+	    	App.setRoot("GD_QLUuDai");
 	    }
 	    
 	    @FXML
@@ -327,7 +323,6 @@ public class GD_QLNhanVien_Controller implements Initializable{
 	        try {
 	            NhanVien_DAO nhanVienDAO = new NhanVien_DAO();
 	            nhanVienDAO.themNhanVien(newNhanVien);
-
 	            // Cập nhật bảng
 	            loadTableData();
 	        } catch (Exception e) {
@@ -338,15 +333,83 @@ public class GD_QLNhanVien_Controller implements Initializable{
 
 	    @FXML
 	    void xoaNV(MouseEvent event) {
+	        NhanVien selectedNhanVien = tableNhanVien.getSelectionModel().getSelectedItem();
+	        if (selectedNhanVien != null) {
+	            // Hiển thị hộp thoại xác nhận
+	            Alert alert = new Alert(AlertType.CONFIRMATION);
+	            alert.setTitle("Xác nhận xóa");
+	            alert.setHeaderText(null);
+	            alert.setContentText("Bạn có chắc chắn muốn xóa nhân viên này?");
 
+	            Optional<ButtonType> result = alert.showAndWait();
+	            if (result.get() == ButtonType.OK) {
+	                // Người dùng đã xác nhận xóa
+	                try {
+	                    NhanVien_DAO nvDao = new NhanVien_DAO();
+	                    boolean deleted = nvDao.xoaTheoMaNhanVien(selectedNhanVien.getIdNhanVien());
+	                    
+	                    if (deleted) {
+	                        // Xóa thành công
+	                        Alert successAlert = new Alert(AlertType.INFORMATION);
+	                        successAlert.setTitle("Thông báo");
+	                        successAlert.setHeaderText(null);
+	                        successAlert.setContentText("Đã xóa nhân viên thành công!");
+	                        successAlert.showAndWait();
+
+//	                        // Cập nhật lại TableView
+//	                        dsNhanVien.remove(selectedNhanVien);
+//	                        tableNhanVien.refresh();
+	                        loadTableData();
+	                        
+	                        // Xóa thông tin trên các trường nhập liệu
+	                        clearFields();
+	                        
+	                    } else {
+	                        Alert errorAlert = new Alert(AlertType.ERROR);
+	                        errorAlert.setTitle("Lỗi");
+	                        errorAlert.setHeaderText(null);
+	                        errorAlert.setContentText("Không thể xóa nhân viên!");
+	                        errorAlert.showAndWait();
+	                    }
+	                } catch (Exception e) {
+	                    e.printStackTrace();
+	                    Alert errorAlert = new Alert(AlertType.ERROR);
+	                    errorAlert.setTitle("Lỗi");
+	                    errorAlert.setHeaderText(null);
+	                    errorAlert.setContentText("Đã xảy ra lỗi trong quá trình xóa nhân viên!");
+	                    errorAlert.showAndWait();
+	                }
+	            }
+	        } else {
+	            // Không có nhân viên nào được chọn
+	            Alert alert = new Alert(AlertType.WARNING);
+	            alert.setTitle("Cảnh báo");
+	            alert.setHeaderText(null);
+	            alert.setContentText("Vui lòng chọn nhân viên cần xóa!");
+	            alert.showAndWait();
+	        }
+	    }
+
+	    // Phương thức để xóa thông tin trên các trường nhập liệu
+	    private void clearFields() {
+	        lb_MaNV.setText("");
+	        txtTenNV.setText("");
+	        txtSDT.setText("");
+	        txtCCCD.setText("");
+	        txtNgaySinh.setValue(null);
+	        cbbGioiTinh.setValue(null);
+	        cbbChucVu.setValue(null);
 	    }
 
 	    @FXML
 	    void xoaTrang(MouseEvent event) {
-	    	txtTenNV.setText("");
-	    	txtNgaySinh.setValue(null);
-	    	txtSDT.setText("");
-	    	txtCCCD.setText("");
+	        lb_MaNV.setText("");
+	        txtTenNV.setText("");
+	        txtSDT.setText("");
+	        txtCCCD.setText("");
+	        txtNgaySinh.setValue(null);
+	        cbbGioiTinh.setValue(null);
+	        cbbChucVu.setValue(null);
 	    }
 	    
 	    
