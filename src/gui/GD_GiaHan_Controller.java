@@ -101,6 +101,8 @@ public class GD_GiaHan_Controller implements Initializable{
     public ArrayList<PhieuThuePhong> list;
     public PhieuThuePhong[] pthople;
     public String maphong;
+    LocalDate thoiGianNhan;
+    LocalDate thoiGianTra;
     
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -111,8 +113,9 @@ public class GD_GiaHan_Controller implements Initializable{
 		lbNgayNhan.setText("");
 		dpTra.setValue(null);
 		Phong_DAO dsP = new Phong_DAO();
-		renderArrayPhong(dsP.getPhongTheoTrangThaiDanhSach(3));
-		
+		ArrayList<Phong> dsFull = dsP.getPhongTheoTrangThaiDanhSach(2);
+		dsFull.addAll(dsP.getPhongTheoTrangThaiDanhSach(4));
+		renderArrayPhong(dsFull);
 		btnGiaHan.setOnAction(event ->{
 			PhieuThuePhong PthueMoi = pthople[0];
 			PhieuThuePhong_DAO dsPT = new PhieuThuePhong_DAO();
@@ -120,7 +123,7 @@ public class GD_GiaHan_Controller implements Initializable{
 			PthueMoi.setThoiHanGiaoPhong(thoiGianNhanMoi);
 			dsPT.suaPhieuThue(PthueMoi);
 			new Alert(Alert.AlertType.CONFIRMATION, "Gia hạn thành công!").showAndWait();
-			renderArrayPhong(Phong_DAO.getAllPhong());
+			renderArrayPhong(dsFull);
 			lb_maPhong.setText("");
 			lb_tenKH.setText("");
 			lbSDT.setText("");
@@ -136,11 +139,13 @@ public class GD_GiaHan_Controller implements Initializable{
 	    roomItem.setPrefHeight(250);
 	    roomItem.setPrefWidth(250);
 	    switch (phong.getTrangThai()) {
-		case SAPCHECKOUT:
+		case DANGTHUE:
 			roomItem.setStyle("-fx-background-color: #ff3131; -fx-border-color: #000000; -fx-border-width: 1");
 			break;
-		default:
+		case SAPCHECKOUT:
 			roomItem.setStyle("-fx-background-color: #2972d3; -fx-border-color: #000000; -fx-border-width: 1");
+			break;
+		default:
 			break;
 		}
 	    Label lblMaPhong = new Label(phong.getIdPhong());
