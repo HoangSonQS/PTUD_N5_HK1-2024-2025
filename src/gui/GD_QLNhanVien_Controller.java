@@ -54,6 +54,9 @@ public class GD_QLNhanVien_Controller implements Initializable{
 	    
 	    @FXML
 	    private ComboBox<String> cbbGioiTinh;
+	    
+	    @FXML
+	    private ComboBox<String> cbbChucVu;
 
 	    @FXML
 	    private Label lb_MaNV;
@@ -102,7 +105,12 @@ public class GD_QLNhanVien_Controller implements Initializable{
 	        // Set up ComboBox
 	        ObservableList<String> list = FXCollections.observableArrayList("Nam", "Nữ");
 	        cbbGioiTinh.setItems(list);
-	        cbbGioiTinh.setValue("Nam");
+	        cbbGioiTinh.setValue("");
+	        
+	     // Set up ComboBox
+	        ObservableList<String> list1 = FXCollections.observableArrayList("Nhân viên lễ tân", "Người quản lý");
+	        cbbChucVu.setItems(list1);
+	        cbbChucVu.setValue("");
 	        
 	        clSTT.setCellFactory(col -> {
 	            return new TableCell<NhanVien, String>() {
@@ -155,7 +163,7 @@ public class GD_QLNhanVien_Controller implements Initializable{
 
 	        // Format chức vụ
 	        clChucVu.setCellValueFactory(cellData -> {
-	            ChucVu chucVu = cellData.getValue().getChucVu();
+	            Enum_ChucVu chucVu = cellData.getValue().getChucVu();
 	            String chucVuString = (chucVu != null) ? chucVu.toString() : "";
 	            return new ReadOnlyStringWrapper(chucVuString);
 	        });
@@ -173,6 +181,12 @@ public class GD_QLNhanVien_Controller implements Initializable{
 	                txtCCCD.setText(selectedNhanVien.getCccd());
 	                txtNgaySinh.setValue(selectedNhanVien.getNgaySinh()); // Đảm bảo kiểu dữ liệu là LocalDate
 	                cbbGioiTinh.setValue(selectedNhanVien.isGioiTinh() ? "Nam" : "Nữ");
+	                Enum_ChucVu chucVu = selectedNhanVien.getChucVu();
+	                if (chucVu != null) {
+	                    cbbChucVu.setValue(chucVu.toString()); // Hoặc sử dụng giá trị tương ứng nếu cần
+	                } else {
+	                    cbbChucVu.setValue(null); // Hoặc một giá trị mặc định
+	                }
 	            }
 	        });
 	    }
@@ -253,10 +267,73 @@ public class GD_QLNhanVien_Controller implements Initializable{
 	    void suaTTNV(MouseEvent event) {
 
 	    }
+	    
+	    private String generateMaNV() {
+	        // Lấy ngày hiện tại
+	        LocalDate today = LocalDate.now();
+	        String day = String.format("%02d", today.getDayOfMonth());
+	        String month = String.format("%02d", today.getMonthValue());
+	        String year = String.valueOf(today.getYear()).substring(2); // Lấy 2 chữ số cuối của năm
+
+	        NhanVien_DAO nv = new NhanVien_DAO();
+	        // Đếm số nhân viên đã thêm trong ngày hiện tại
+	        int countToday = nv.getCountOfNhanVienInDay(today);
+	        
+	        // Tạo mã nhân viên với số thứ tự là countToday + 1
+	        String maNV = String.format("NV%s%s%s%02d", year, month, day, countToday + 1);
+	        
+	        return maNV;
+	    }
+
+	    
 
 	    @FXML
 	    void themNV(MouseEvent event) {
+	        // Lấy thông tin từ các trường
+	        String tenNV = txtTenNV.getText();
+	        String sdt = txtSDT.getText();
+	        String cccd = txtCCCD.getText();
+	        LocalDate ngaySinh = txtNgaySinh.getValue();
+	        boolean gioiTinh = cbbGioiTinh.getValue().equals("Nam");
 
+	        // Lấy giá trị chức vụ từ ComboBox
+	        String chucVuString = cbbChucVu.getValue();
+	        Enum_ChucVu chucVu = null;
+
+	        // Chuyển đổi giá trị chức vụ thành Enum_ChucVu
+	        if (chucVuString != null) {
+	            if (chucVuString.equals("Nhân viên lễ tân")) {
+	                chucVu = Enum_ChucVu.NHANVIENLETAN;
+	            } else if (chucVuString.equals("Người quản lý")) {
+	                chucVu = Enum_ChucVu.NGUOIQUANLY;
+	            }
+	        }
+
+	        // Tạo mã nhân viên
+	        String maNV = generateMaNV();
+	        NhanVien_DAO nv = new NhanVien_DAO();
+
+	        // Kiểm tra mã nhân viên đã tồn tại
+	        if (nv.isMaNVExists(maNV)) {
+	            System.out.println("Mã nhân viên đã tồn tại: " + maNV);
+	            // Có thể hiển thị thông báo cho người dùng
+	            return; // Dừng lại nếu mã đã tồn tại
+	        }
+
+	        // Tạo đối tượng NhanVien
+	        NhanVien newNhanVien = new NhanVien(maNV, tenNV, sdt, ngaySinh, gioiTinh, cccd, chucVu);
+
+	        // Thêm nhân viên vào cơ sở dữ liệu
+	        try {
+	            NhanVien_DAO nhanVienDAO = new NhanVien_DAO();
+	            nhanVienDAO.themNhanVien(newNhanVien);
+
+	            // Cập nhật bảng
+	            loadTableData();
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	            // Có thể thêm Alert để thông báo lỗi cho người dùng
+	        }
 	    }
 
 	    @FXML
