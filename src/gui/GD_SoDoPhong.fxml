@@ -10,7 +10,6 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Circle?>
-<?import javafx.scene.shape.Line?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
@@ -181,7 +180,6 @@
                         <Font name="Segoe UI" size="14.0" />
                      </font>
                   </Label>
-                  <Line endX="1194.0" layoutX="100.0" layoutY="205.0" startX="-100.0" />
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#edbf6d" height="30.0" layoutX="615.0" layoutY="160.0" stroke="BLACK" strokeType="INSIDE" width="150.0" />
                   <Label layoutX="645.0" layoutY="165.0" text="Sắp check-in">
                      <font>

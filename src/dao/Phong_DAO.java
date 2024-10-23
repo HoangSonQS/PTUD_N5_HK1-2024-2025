@@ -63,17 +63,13 @@ public class Phong_DAO {
 	}
 	
 	public boolean themPhong(Phong phong) {
-		ConnectDB.getInstance();
-		Connection con = null;
+		Connection con = ConnectDB.getInstance().getConnection();
 		PreparedStatement pstm = null;
 		int n = 0;
 		con = ConnectDB.getInstance().getConnection();
 		String sql = "INSERT INTO Phong (IDPhong, LoaiPhong, DonGia, TrangThai)values(?,?,?,?)";
 		try {
-
-			System.out.println(1);
 			pstm = con.prepareStatement(sql);
-			System.out.println(2);
 			pstm.setString(1, phong.getIdPhong());
 			int lp = 0;
 			if(phong.getLoaiPhong().toString().equalsIgnoreCase("Phòng đôi")) {
@@ -234,6 +230,48 @@ public class Phong_DAO {
 				e.printStackTrace();
 			}
 			return dsPhong.size();
+		 }
+	 public ArrayList<Phong> getPhongTheoTrangThaiDanhSach(int trangthai) {
+		 ArrayList<Phong> dsPhong = new ArrayList<Phong>();
+		 Connection con = ConnectDB.getInstance().getConnection();
+		    PreparedStatement stmt = null;
+		    ResultSet rs = null;
+			
+			try {
+				String sql = "SELECT * FROM Phong WHERE TrangThai = ?";
+				stmt = con.prepareStatement(sql);
+		        stmt.setInt(1, trangthai);
+		        rs = stmt.executeQuery();
+				while (rs.next()) {
+					String IDPhong = rs.getString("IDPhong");
+					LoaiPhong lphong = null;
+					int loai = rs.getInt("LoaiPhong");
+					if(loai == 1) {
+						lphong = LoaiPhong.PHONGDOI;
+					} else if(loai == 2) {
+						lphong = LoaiPhong.PHONGDON;
+					} else{
+						lphong = LoaiPhong.PHONGGIADINH;
+					}
+					Double donGia = rs.getDouble("DonGia");
+					TrangThaiPhong tt = null;
+					if(trangthai == 1) {
+						tt = TrangThaiPhong.TRONG;
+					} else if(trangthai == 2) {
+						tt = TrangThaiPhong.DANGTHUE;
+					} else if(trangthai == 3) {
+						tt = TrangThaiPhong.SAPCHECKIN;
+					} else {
+						tt = TrangThaiPhong.SAPCHECKOUT;
+					}
+					Phong phong = new Phong(IDPhong, lphong, donGia, tt);
+					dsPhong.add(phong);
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return dsPhong;
 		 }
 	 public boolean capNhatPhong(Phong phong) {
 			int n = 0;

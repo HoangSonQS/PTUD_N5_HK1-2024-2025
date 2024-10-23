@@ -3,6 +3,8 @@ package entity;
 import java.time.LocalDate;
 import java.util.Objects;
 
+import dao.Enum_ChucVu;
+
 public class NhanVien {
 
 	private String idNhanVien;
@@ -11,9 +13,12 @@ public class NhanVien {
 	private LocalDate ngaySinh;
 	private boolean gioiTinh;
 	private String cccd;
-	private ChucVu chucVu;
+	private Enum_ChucVu chucVu;
+	
+	
 	public NhanVien(String idNhanVien, String tenNhanVien, String soDienThoai, LocalDate ngaySinh, boolean gioiTinh,
-			String cccd, ChucVu chucVu) {
+			String cccd, Enum_ChucVu chucVu) {
+		super();
 		this.idNhanVien = idNhanVien;
 		this.tenNhanVien = tenNhanVien;
 		this.soDienThoai = soDienThoai;
@@ -61,10 +66,11 @@ public class NhanVien {
 	public void setCccd(String cccd) {
 		this.cccd = cccd;
 	}
-	public ChucVu getChucVu() {
+
+	public Enum_ChucVu getChucVu() {
 		return chucVu;
 	}
-	public void setChucVu(ChucVu chucVu) {
+	public void setChucVu(Enum_ChucVu chucVu) {
 		this.chucVu = chucVu;
 	}
 	@Override

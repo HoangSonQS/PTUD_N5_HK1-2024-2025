@@ -53,7 +53,7 @@ public class GD_DatPhongChoController implements Initializable{
 			LocalDate ngaysinh = dpNgaySinh.getValue();
 			LocalDate ngayNhan = dpNgayNhan.getValue();
 			LocalDate ngayTra = dpTra.getValue();
-			String id = "KH24100317";
+			String id = "KH24100320";
 			String CCCD = txtCCCD.getText();
 			int tichdiem = 0;
 			
@@ -65,7 +65,7 @@ public class GD_DatPhongChoController implements Initializable{
 					p.setTrangThai(TrangThaiPhong.SAPCHECKIN);
 					dsP.capNhatTrangThaiPhong(p);
 					NhanVien nv = new NhanVien("NV24100301");
-					PhieuThuePhong pt = new PhieuThuePhong("PT241003009", kh, p,nv , ngayNhan, ngayTra);
+					PhieuThuePhong pt = new PhieuThuePhong("PT241003014", kh, p,nv , ngayNhan, ngayTra);
 					dsPT.themPhieuThue(pt);
 					new Alert(Alert.AlertType.CONFIRMATION, "Success").showAndWait();
 				}else {

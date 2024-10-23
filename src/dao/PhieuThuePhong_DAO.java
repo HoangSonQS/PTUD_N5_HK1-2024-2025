@@ -135,6 +135,49 @@ public class PhieuThuePhong_DAO {
 	    }
 	    return pt;
 	}
+	public ArrayList<PhieuThuePhong> layPhieuThueTheoMaPhong(String idPhong) {
+		ArrayList<PhieuThuePhong> dsPT = new ArrayList<PhieuThuePhong>();
+	    Connection con = ConnectDB.getInstance().getConnection();
+	    PreparedStatement stmt = null;
+	    ResultSet rs = null;
+	    try {
+	        String sql = "SELECT * FROM PhieuThuePhong WHERE IDPhong = ?";
+	        stmt = con.prepareStatement(sql);
+	        stmt.setString(1, idPhong);
+	        rs = stmt.executeQuery();
+	        while (rs.next()) {
+	        	String idphieuthue = rs.getString("IDPhieuThue");
+	        	String idkhachhang = rs.getString("IDKhachHang");
+	            String idnhanvien = rs.getString("IDNhanVien");
+	            LocalDate thoigiancheckin = rs.getDate("ThoiGianNhanPhong").toLocalDate();
+	            LocalDate thoigiancheckout = rs.getDate("ThoiHanGiaoPhong").toLocalDate();
+	            NhanVien_DAO dsnv = new NhanVien_DAO();
+	            dsnv.getAllNhanVien();
+	            NhanVien nv = dsnv.getNhanVienTheoMa(idnhanvien);
+	            KhachHang_DAO dskh = new KhachHang_DAO();
+	            dskh.getAllKhachHang();
+	            KhachHang kh = dskh.getKhachHangTheoMa(idkhachhang);
+	            Phong_DAO dsp = new Phong_DAO();
+	            Phong p = dsp.getPhongTheoMa(idPhong);
+	            PhieuThuePhong pt = new PhieuThuePhong(idphieuthue, kh, p, nv, thoigiancheckin, thoigiancheckout);
+	            dsPT.add(pt);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if (rs != null) {
+	                rs.close();
+	            }
+	            if (stmt != null) {
+	                stmt.close();
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	    return dsPT;
+	}
 	public ArrayList<PhieuThuePhong> getAllPhieuThue(){
 		ArrayList<PhieuThuePhong>dsPT = new ArrayList<PhieuThuePhong>();
 		Connection conN = ConnectDB.getInstance().getConnection();

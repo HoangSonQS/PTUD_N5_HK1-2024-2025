@@ -167,6 +167,7 @@ public class KhachHang_DAO {
 		}
 		 return kh;
 	 }
+	
 	public boolean capNhatKhachHangTheoSDT(KhachHang khachhang) {
 		int n = 0;
 		ConnectDB.getInstance();

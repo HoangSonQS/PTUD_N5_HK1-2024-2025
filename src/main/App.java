@@ -26,7 +26,7 @@ public class App extends Application{
 		this.primaryStage = arg0;
 		openDangNhapWindow();
 	}
-	
+
 	@Override
 	public void init() throws Exception {
 		connectDB.ConnectDB.getInstance().connect();

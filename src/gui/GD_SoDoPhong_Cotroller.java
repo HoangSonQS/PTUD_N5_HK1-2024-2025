@@ -274,8 +274,14 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 				}
 			}));
 			btnRight.setOnAction((event) -> {
-				roomID = phong.getIdPhong();
-//                moGDThanhToan();
+				try {
+					phong.setTrangThai(TrangThaiPhong.TRONG);
+					dsp.capNhatTrangThaiPhong(phong);
+					renderArrayPhong(Phong_DAO.getAllPhong());
+					loadsoPhong();
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
 			});
 			break;
 		default:

@@ -8,17 +8,16 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 
 
-public class TestJavaFX extends Application {
+public class y_Test extends Application {
 	@Override
 	public void start(Stage primaryStage) {
 		try {
 			connect();
-			Parent root = FXMLLoader.load(getClass().getResource("GD_GiaHanPhong.fxml"));
-
+			Parent root = FXMLLoader.load(getClass().getResource("GD_QLNhanVien.fxml"));
 			Scene scene = new Scene(root);
 
 			primaryStage.setScene(scene);
-			primaryStage.setMaximized(true);
+//			primaryStage.setMaximized(true);
 			primaryStage.show();
 		} catch(Exception e) {
 			e.printStackTrace();
