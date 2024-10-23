@@ -12,19 +12,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Circle?>
-<<<<<<< HEAD
-<?import javafx.scene.shape.Line?>
-=======
->>>>>>> 80a5d8d24a3f947b8724539af1badbefcb6fb3c4
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<<<<<<< HEAD
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="845.0" prefWidth="1554.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1">
-=======
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="845.0" prefWidth="1554.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.GD_QLNhanVien_Controller">
->>>>>>> 80a5d8d24a3f947b8724539af1badbefcb6fb3c4
    <children>
       <Pane layoutY="70.0" prefHeight="775.0" prefWidth="260.0" style="-fx-background-color: #D9D9D9;">
          <children>
@@ -141,43 +133,20 @@
             </Label>
          </children>
       </Pane>
-<<<<<<< HEAD
-      <Pane layoutX="260.0" layoutY="70.0" prefHeight="775.0" prefWidth="1294.0">
-         <children>
-            <Label layoutX="65.0" layoutY="20.0" text="Nhân viên">
-=======
       <Pane layoutX="223.0" layoutY="57.0" prefHeight="775.0" prefWidth="1294.0">
          <children>
             <Label layoutX="93.0" layoutY="20.0" text="Quản lý nhân viên">
->>>>>>> 80a5d8d24a3f947b8724539af1badbefcb6fb3c4
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-<<<<<<< HEAD
-            <Text layoutX="20.0" layoutY="75.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mã nhân viên">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Text>
-            <Line endX="1194.0" layoutX="100.0" layoutY="120.0" startX="-100.0" />
-            <TextField layoutX="151.0" layoutY="55.0" prefHeight="25.0" prefWidth="150.0" promptText="Nhập mã nhân viên" />
-            <Button fx:id="btn_TimPhong" layoutX="303.0" layoutY="54.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="25.0" style="-fx-background-color: #BAE7E7;" styleClass="timKiem" stylesheets="@DangNhap.css" textAlignment="JUSTIFY" textFill="WHITE" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="50.0" layoutY="120.0" stroke="BLACK" strokeType="INSIDE" width="1294.0" />
-            <Text fill="WHITE" layoutX="515.0" layoutY="156.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Thông tin nhân viên" textAlignment="CENTER">
-=======
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="50.0" layoutX="37.0" layoutY="58.0" stroke="BLACK" strokeType="INSIDE" width="1294.0" />
             <Text fill="WHITE" layoutX="552.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Thông tin nhân viên" textAlignment="CENTER">
->>>>>>> 80a5d8d24a3f947b8724539af1badbefcb6fb3c4
                <font>
                   <Font size="30.0" />
                </font>
             </Text>
-<<<<<<< HEAD
-            <TableView fx:id="tableNhanVien" layoutX="320.0" layoutY="170.0" prefHeight="606.0" prefWidth="974.0">
-=======
             <TableView fx:id="tableNhanVien" layoutX="357.0" layoutY="108.0" prefHeight="670.0" prefWidth="974.0">
->>>>>>> 80a5d8d24a3f947b8724539af1badbefcb6fb3c4
                <columns>
                   <TableColumn prefWidth="100.0" text="STT" />
                   <TableColumn prefWidth="150.0" text="Mã nhân viên" />
@@ -188,198 +157,81 @@
                   <TableColumn prefWidth="150.0" text="CCCD" />
                </columns>
             </TableView>
-<<<<<<< HEAD
-            <Label layoutX="10.0" layoutY="180.0" text="Chi tiết thông tin nhân viên:">
-=======
             <Label layoutX="47.0" layoutY="118.0" text="Chi tiết thông tin nhân viên:">
->>>>>>> 80a5d8d24a3f947b8724539af1badbefcb6fb3c4
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
-<<<<<<< HEAD
-            <Label layoutX="10.0" layoutY="225.0" text="Mã nhân viên: ">
-=======
             <Label layoutX="47.0" layoutY="163.0" text="Mã nhân viên: ">
->>>>>>> 80a5d8d24a3f947b8724539af1badbefcb6fb3c4
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-<<<<<<< HEAD
-            <Label fx:id="lb_MaNV" layoutX="160.0" layoutY="225.0" text="NV24101301">
-=======
             <Label fx:id="lb_MaNV" layoutX="197.0" layoutY="163.0" text="NVXXXXXX">
->>>>>>> 80a5d8d24a3f947b8724539af1badbefcb6fb3c4
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-<<<<<<< HEAD
-            <Label layoutX="10.0" layoutY="275.0" text="Tên nhân viên: ">
-=======
             <Label layoutX="47.0" layoutY="213.0" text="Họ và tên: ">
->>>>>>> 80a5d8d24a3f947b8724539af1badbefcb6fb3c4
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-<<<<<<< HEAD
-            <Label fx:id="lb_TenNV" layoutX="160.0" layoutY="275.0" text="Nguyễn Văn A">
-=======
             <Label layoutX="47.0" layoutY="263.0" text="SĐT:">
->>>>>>> 80a5d8d24a3f947b8724539af1badbefcb6fb3c4
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-<<<<<<< HEAD
-            <Label layoutX="10.0" layoutY="325.0" text="Số điện thoại: ">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
-            <Label fx:id="lb_SDT" layoutX="160.0" layoutY="325.0" text="0385412905">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
-            <Button fx:id="btnSua2" contentDisplay="RIGHT" layoutX="10.0" layoutY="519.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="90.0" style="-fx-background-color: #edbf6d;" text="     Sửa" textAlignment="RIGHT" textFill="WHITE" textOverrun="CLIP">
-=======
             <Button fx:id="btnSua2" contentDisplay="RIGHT" layoutX="47.0" layoutY="457.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="90.0" style="-fx-background-color: #edbf6d;" text="     Sửa" textAlignment="RIGHT" textFill="WHITE" textOverrun="CLIP">
->>>>>>> 80a5d8d24a3f947b8724539af1badbefcb6fb3c4
                <font>
                   <Font size="16.0" />
                </font>
             </Button>
-<<<<<<< HEAD
-            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="15.0" layoutY="524.0" pickOnBounds="true" preserveRatio="true">
-=======
             <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="52.0" layoutY="463.0" pickOnBounds="true" preserveRatio="true">
->>>>>>> 80a5d8d24a3f947b8724539af1badbefcb6fb3c4
                <image>
                   <Image url="@../../data/pic/writing-square.png" />
                </image>
             </ImageView>
-<<<<<<< HEAD
-            <Button fx:id="btnXoa2" contentDisplay="RIGHT" layoutX="112.0" layoutY="519.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="90.0" style="-fx-background-color: #ff3131;" text="     Xóa" textAlignment="RIGHT" textFill="WHITE" textOverrun="CLIP">
-=======
             <Button fx:id="btnXoa2" contentDisplay="RIGHT" layoutX="149.0" layoutY="457.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="90.0" style="-fx-background-color: #ff3131;" text="     Xóa" textAlignment="RIGHT" textFill="WHITE" textOverrun="CLIP">
->>>>>>> 80a5d8d24a3f947b8724539af1badbefcb6fb3c4
                <font>
                   <Font size="16.0" />
                </font>
             </Button>
-<<<<<<< HEAD
-            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="117.0" layoutY="524.0" pickOnBounds="true" preserveRatio="true">
-=======
             <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="154.0" layoutY="463.0" pickOnBounds="true" preserveRatio="true">
->>>>>>> 80a5d8d24a3f947b8724539af1badbefcb6fb3c4
                <image>
                   <Image url="@../../data/pic/recycle-bin.png" />
                </image>
             </ImageView>
-<<<<<<< HEAD
-            <Button fx:id="btnSua1" contentDisplay="RIGHT" layoutX="980.0" layoutY="60.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="90.0" style="-fx-background-color: #edbf6d;" text="     Sửa" textAlignment="RIGHT" textFill="WHITE" textOverrun="CLIP">
-=======
             <Button fx:id="btnThem" contentDisplay="RIGHT" layoutX="254.0" layoutY="458.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="90.0" style="-fx-background-color: #00bf63;" text="     Thêm" textAlignment="RIGHT" textFill="WHITE" textOverrun="CLIP">
->>>>>>> 80a5d8d24a3f947b8724539af1badbefcb6fb3c4
                <font>
                   <Font size="16.0" />
                </font>
             </Button>
-<<<<<<< HEAD
-            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="985.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../data/pic/writing-square.png" />
-               </image>
-            </ImageView>
-            <Button fx:id="btnXoa1" contentDisplay="RIGHT" layoutX="1080.0" layoutY="60.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="90.0" style="-fx-background-color: #ff3131;" text="     Xóa" textAlignment="RIGHT" textFill="WHITE" textOverrun="CLIP">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Button>
-            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="1090.0" layoutY="65.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../data/pic/recycle-bin.png" />
-               </image>
-            </ImageView>
-            <Button fx:id="btnThem" contentDisplay="RIGHT" layoutX="880.0" layoutY="60.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="90.0" style="-fx-background-color: #00bf63;" text="     Thêm" textAlignment="RIGHT" textFill="WHITE" textOverrun="CLIP">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Button>
-            <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="875.0" layoutY="55.0" pickOnBounds="true" preserveRatio="true">
-=======
             <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="251.0" layoutY="453.0" pickOnBounds="true" preserveRatio="true">
->>>>>>> 80a5d8d24a3f947b8724539af1badbefcb6fb3c4
                <image>
                   <Image url="@../../data/pic/plus-sign.png" />
                </image>
             </ImageView>
-<<<<<<< HEAD
-            <Button fx:id="btnXem" contentDisplay="RIGHT" layoutX="1180.0" layoutY="60.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="90.0" style="-fx-background-color: #2972d3;" text="     Xem" textAlignment="RIGHT" textFill="WHITE" textOverrun="CLIP">
-               <font>
-                  <Font size="16.0" />
-               </font>
-            </Button>
-            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="1185.0" layoutY="67.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../data/pic/eye-with-thick-outline-variant.png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="25.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
-=======
             <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="47.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
->>>>>>> 80a5d8d24a3f947b8724539af1badbefcb6fb3c4
                <image>
                   <Image url="@../../data/pic/employees.png" />
                </image>
             </ImageView>
-<<<<<<< HEAD
-            <Label layoutX="10.0" layoutY="375.0" text="Ngày sinh: ">
-=======
             <Label layoutX="47.0" layoutY="313.0" text="Ngày sinh: ">
->>>>>>> 80a5d8d24a3f947b8724539af1badbefcb6fb3c4
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-<<<<<<< HEAD
-            <Label fx:id="lb_NgaySinh" layoutX="160.0" layoutY="375.0" text="03/11/2004">
-=======
             <Label layoutX="47.0" layoutY="363.0" text="Giới tính:">
->>>>>>> 80a5d8d24a3f947b8724539af1badbefcb6fb3c4
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-<<<<<<< HEAD
-            <Label layoutX="10.0" layoutY="425.0" text="Giới tính:">
-=======
             <Label layoutX="47.0" layoutY="413.0" text="CCCD:">
->>>>>>> 80a5d8d24a3f947b8724539af1badbefcb6fb3c4
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-<<<<<<< HEAD
-            <Label fx:id="lb_GioiTinh" layoutX="160.0" layoutY="425.0" text="Nam">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
-            <Label layoutX="10.0" layoutY="475.0" text="CCCD:">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
-            <Label fx:id="lb_CCCD" layoutX="160.0" layoutY="475.0" text="XXXXXXXXXX">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
-=======
             <TextField fx:id="txtTenNV" layoutX="144.0" layoutY="213.0" prefHeight="32.0" prefWidth="208.0" promptText="Tên nhân viên" />
             <TextField fx:id="txtSDT" layoutX="144.0" layoutY="262.0" prefHeight="32.0" prefWidth="208.0" promptText="Số điện thoại" />
             <DatePicker fx:id="txtNgaySinh" layoutX="144.0" layoutY="313.0" prefHeight="30.0" prefWidth="208.0" promptText="Ngày sinh" />
@@ -400,7 +252,6 @@
                   <Font size="16.0" />
                </font>
             </Button>
->>>>>>> 80a5d8d24a3f947b8724539af1badbefcb6fb3c4
          </children></Pane>
       <Pane prefHeight="70.0" prefWidth="1554.0" style="-fx-background-color: #004AAD;">
          <children>
