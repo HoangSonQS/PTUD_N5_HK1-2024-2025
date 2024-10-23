@@ -50,12 +50,12 @@
                   <Font name="System Italic" size="18.0" />
                </font>
             </Label>
-            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="35.0" layoutY="165.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="35.0" layoutY="165.0" onMouseClicked="#moGiaoDienQLNV" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../data/pic/employees.png" />
                </image>
             </ImageView>
-            <Label layoutX="85.0" layoutY="170.0" text="Nhân viên">
+            <Label layoutX="85.0" layoutY="170.0" onMouseClicked="#moGiaoDienQLNV" text="Nhân viên">
                <font>
                   <Font name="System Italic" size="18.0" />
                </font>
@@ -169,7 +169,7 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label fx:id="lb_MaNV" layoutX="160.0" layoutY="153.0" text="NVXXXXXX">
+            <Label fx:id="lb_MaNV" layoutX="160.0" layoutY="153.0">
                <font>
                   <Font size="20.0" />
                </font>

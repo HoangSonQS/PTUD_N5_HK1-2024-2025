@@ -1,9 +1,13 @@
 package entity;
 
+import java.text.DecimalFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Objects;
 
 import dao.Enum_ChucVu;
+import dao.NhanVien_DAO;
 
 public class NhanVien {
 
@@ -94,5 +98,42 @@ public class NhanVien {
 		return Objects.equals(idNhanVien, other.idNhanVien);
 	}
 
+	public static String autoIdNhanVien() {
+        NhanVien_DAO nhanVienDAO = new NhanVien_DAO(); // Đối tượng DAO để truy xuất dữ liệu từ database
+        ArrayList<NhanVien> nhanVienList = null;
+
+        try {
+            nhanVienList = nhanVienDAO.getAllNhanVien(); // Lấy danh sách nhân viên từ database
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null; // Hoặc trả về giá trị mặc định nếu lỗi xảy ra
+        }
+
+
+        if (nhanVienList == null || nhanVienList.isEmpty()) {
+            return "NV19010101"; // Hoặc giá trị mặc định khác nếu không có nhân viên nào
+        }
+
+
+        LocalDate currentDate = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMMdd");
+        String dateString = currentDate.format(formatter);
+		
+		int max = 0;
+		for(NhanVien nv : nhanVienList) {
+			String idNV = nv.getIdNhanVien();
+			if (idNV.startsWith("NV" + dateString)) {
+				String suffix = idNV.substring(idNV.length() - 2); // Lấy 2 ký tự cuối
+				int suffixInt = Integer.parseInt(suffix);
+				if (suffixInt > max) {
+					max = suffixInt;
+				}
+			}
+		}
+
+		int nextId = max + 1;
+        String formattedNextId = new DecimalFormat("00").format(nextId); // Định dạng 2 số
+        return "NV" + dateString + formattedNextId;
+    }
 	
 }

@@ -120,9 +120,14 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+<<<<<<< HEAD
 		loadsoPhong();
 		ObservableList<String> list = FXCollections.observableArrayList("Tất cả", "Phòng đơn", "Phòng đôi",
 				"Phòng gia đình");
+=======
+    	renderArrayPhong(new Phong_DAO().getAllPhong());
+		ObservableList<String> list = FXCollections.observableArrayList("Tất cả", "Phòng đơn", "Phòng đôi", "Phòng gia đình");
+>>>>>>> be35bf2d4da0b09b43ed77a144e480bbd89b47c0
 		cbb.setItems(list);
 		cbb.setValue("Tất cả");
 		loadtrangthai();

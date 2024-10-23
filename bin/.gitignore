@@ -1,3 +1,12 @@
 /gui/
 /dao/
+<<<<<<< HEAD
 /main/
+=======
+>>>>>>> 5ece51ed7e99db93027bbb01220738de867ac3fd
+>>>>>>> f013e29f47ffd59f5766bbb9811737e2f4b195b1
+/main/
+/GD_QLKhachHang.fxml
+/GD_QLKhachHang_Controller.class
+/KhachHang_DAO.class
+>>>>>>> be35bf2d4da0b09b43ed77a144e480bbd89b47c0

@@ -2,24 +2,25 @@ package gui;
 
 import java.io.IOException;
 import javafx.beans.property.ReadOnlyStringWrapper;
-
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.logging.Logger;
 import dao.Enum_ChucVu;
 import dao.NhanVien_DAO;
-import entity.ChucVu;
 import entity.NhanVien;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -164,63 +165,67 @@ public class GD_QLNhanVien_Controller implements Initializable{
 	        // Format chức vụ
 	        clChucVu.setCellValueFactory(cellData -> {
 	            Enum_ChucVu chucVu = cellData.getValue().getChucVu();
-	            String chucVuString = (chucVu != null) ? chucVu.toString() : "";
+	            String chucVuString = (chucVu != null) ? chucVu.getChucVu() : "";
 	            return new ReadOnlyStringWrapper(chucVuString);
 	        });
 
 	        // Load dữ liệu
 	        loadTableData();
-	        
-	        tableNhanVien.setOnMouseClicked(event -> {
-	            NhanVien selectedNhanVien = tableNhanVien.getSelectionModel().getSelectedItem();
-	            if (selectedNhanVien != null) {
-	                // Cập nhật thông tin vào các trường
-	                lb_MaNV.setText(selectedNhanVien.getIdNhanVien());
-	                txtTenNV.setText(selectedNhanVien.getTenNhanVien());
-	                txtSDT.setText(selectedNhanVien.getSoDienThoai());
-	                txtCCCD.setText(selectedNhanVien.getCccd());
-	                txtNgaySinh.setValue(selectedNhanVien.getNgaySinh()); // Đảm bảo kiểu dữ liệu là LocalDate
-	                cbbGioiTinh.setValue(selectedNhanVien.isGioiTinh() ? "Nam" : "Nữ");
-	                Enum_ChucVu chucVu = selectedNhanVien.getChucVu();
-	                if (chucVu != null) {
-	                    cbbChucVu.setValue(chucVu.toString()); // Hoặc sử dụng giá trị tương ứng nếu cần
-	                } else {
-	                    cbbChucVu.setValue(null); // Hoặc một giá trị mặc định
-	                }
-	            }
-	        });
 	    }
 	    
 	    private void loadTableData() {
 	        try {
 	            NhanVien_DAO nhanVienDAO = new NhanVien_DAO();
-	            ArrayList<NhanVien> dsNV = nhanVienDAO.getAllNhanVien();
+	            List<NhanVien> danhSachNV = nhanVienDAO.getAllNhanVien();
 	            
-	            // Debug: in ra số lượng nhân viên
-	            System.out.println("Số lượng nhân viên: " + dsNV.size());
+	            // Chuyển danh sách thành ObservableList
+	            ObservableList<NhanVien> data = FXCollections.observableArrayList(danhSachNV);
 	            
-	            ObservableList<NhanVien> observableList = FXCollections.observableArrayList(dsNV);
-	            tableNhanVien.setItems(observableList);
+	            // Xóa dữ liệu cũ và set dữ liệu mới
+	            tableNhanVien.getItems().clear();
+	            tableNhanVien.setItems(data);
+	            
+	            // Refresh table
+	            tableNhanVien.refresh();
 	            
 	        } catch (Exception e) {
 	            e.printStackTrace();
-	            // Có thể thêm Alert để thông báo lỗi cho người dùng
+	            Alert alert = new Alert(AlertType.ERROR);
+	            alert.setTitle("Lỗi");
+	            alert.setHeaderText(null);
+	            alert.setContentText("Không thể tải dữ liệu nhân viên: " + e.getMessage());
+	            alert.showAndWait();
 	        }
 	    }
 	    
 	    @FXML
 	    void chonNV(MouseEvent event) {
-
+	        NhanVien selectedNhanVien = tableNhanVien.getSelectionModel().getSelectedItem();
+	        if (selectedNhanVien != null) {
+	            // Cập nhật thông tin vào các trường
+	            lb_MaNV.setText(selectedNhanVien.getIdNhanVien());
+	            txtTenNV.setText(selectedNhanVien.getTenNhanVien());
+	            txtSDT.setText(selectedNhanVien.getSoDienThoai());
+	            txtCCCD.setText(selectedNhanVien.getCccd());
+	            txtNgaySinh.setValue(selectedNhanVien.getNgaySinh());
+	            cbbGioiTinh.setValue(selectedNhanVien.isGioiTinh() ? "Nam" : "Nữ");
+	            Enum_ChucVu chucVu = selectedNhanVien.getChucVu();
+	            if (chucVu != null) {
+	                cbbChucVu.setValue(chucVu.getChucVu());
+	            } else {
+	                cbbChucVu.setValue(null);
+	            }
+	        }
 	    }
 	    
 	    @FXML
 	    void moGiaoDienDichVu(MouseEvent event) throws IOException {
-	    	App.setRoot("GD_DichVu");
+	    	App.setRoot("GD_QLDichVu");
 	    }
 
 	    @FXML
-	    void moGiaoDienHoaDon(MouseEvent event) {
-
+	    void moGiaoDienHoaDon(MouseEvent event) throws IOException {
+	    	App.setRoot("GD_QLHoaDon");
 	    }
 
 	    @FXML
@@ -229,43 +234,125 @@ public class GD_QLNhanVien_Controller implements Initializable{
 	    }
 
 	    @FXML
-	    void moGiaoDienPhong(MouseEvent event) {
-
+	    void moGiaoDienPhong(MouseEvent event) throws IOException {
+	    	App.setRoot("GD_QLPhong");
 	    }
 
 	    @FXML
-	    void moGiaoDienQuanLy(MouseEvent event) {
-
+	    void moGiaoDienQLNV(MouseEvent event) throws IOException {
+	    	App.setRoot("GD_QLNhanVien");
 	    }
 
 	    @FXML
-	    void moGiaoDienTaiKhoan(MouseEvent event) {
-
+	    void moGiaoDienQuanLy(MouseEvent event) throws IOException {
+	    	App.setRoot("GD_QLPhong");
 	    }
 
 	    @FXML
-	    void moGiaoDienThongKe(MouseEvent event) {
+	    void moGiaoDienTaiKhoan(MouseEvent event) throws IOException {
+	    	App.setRoot("GD_QLTaiKhoan");
+	    }
 
+	    @FXML
+	    void moGiaoDienThongKe(MouseEvent event) throws IOException {
+	    	App.setRoot("GD_ThongKeDoanhThu");
 	    }
 
 	    @FXML
 	    void moGiaoDienThuePhong(MouseEvent event) throws IOException {
-	    	App.setRoot("GD_Chinh");
+	    	App.setRoot("GD_SoDoPhong");
 	    }
 
 	    @FXML
-	    void moGiaoDienTimKiem(MouseEvent event) {
-
+	    void moGiaoDienTimKiem(MouseEvent event) throws IOException {
+	    	App.setRoot("GD_TKPhong");
 	    }
 
 	    @FXML
-	    void moGiaoDienUuDai(MouseEvent event) {
-
+	    void moGiaoDienUuDai(MouseEvent event) throws IOException {
+	    	App.setRoot("GD_QLUuDai");
 	    }
 	    
 	    @FXML
 	    void suaTTNV(MouseEvent event) {
+	        // Kiểm tra xem đã chọn nhân viên chưa
+	        if (lb_MaNV.getText().trim().isEmpty()) {
+	            Alert alert = new Alert(AlertType.WARNING);
+	            alert.setTitle("Cảnh báo");
+	            alert.setHeaderText(null);
+	            alert.setContentText("Vui lòng chọn nhân viên cần sửa!");
+	            alert.showAndWait();
+	            return;
+	        }
 
+	        // Kiểm tra các trường thông tin bắt buộc
+	        if (txtTenNV.getText().trim().isEmpty() || 
+	            txtSDT.getText().trim().isEmpty() || 
+	            txtCCCD.getText().trim().isEmpty() || 
+	            txtNgaySinh.getValue() == null || 
+	            cbbGioiTinh.getValue() == null || 
+	            cbbGioiTinh.getValue().isEmpty() ||
+	            cbbChucVu.getValue() == null || 
+	            cbbChucVu.getValue().isEmpty()) {
+	            
+	            Alert alert = new Alert(AlertType.WARNING);
+	            alert.setTitle("Cảnh báo");
+	            alert.setHeaderText(null);
+	            alert.setContentText("Vui lòng điền đầy đủ thông tin!");
+	            alert.showAndWait();
+	            return;
+	        }
+
+	        // Lấy thông tin từ các trường
+	        String maNV = lb_MaNV.getText();
+	        String tenNV = txtTenNV.getText();
+	        String sdt = txtSDT.getText();
+	        String cccd = txtCCCD.getText();
+	        LocalDate ngaySinh = txtNgaySinh.getValue();
+	        boolean gioiTinh = cbbGioiTinh.getValue().equals("Nam");
+
+	        // Xử lý chức vụ
+	        String chucVuString = cbbChucVu.getValue();
+	        Enum_ChucVu chucVu = null;
+	        
+	        if (chucVuString.equals("Nhân viên lễ tân")) {
+	            chucVu = Enum_ChucVu.NHANVIENLETAN;
+	        } else if (chucVuString.equals("Người quản lý")) {
+	            chucVu = Enum_ChucVu.NGUOIQUANLY;
+	        }
+
+	        // Tạo đối tượng NhanVien với thông tin đã sửa
+	        NhanVien updatedNhanVien = new NhanVien(maNV, tenNV, sdt, ngaySinh, gioiTinh, cccd, chucVu);
+
+	        try {
+	            NhanVien_DAO nhanVienDAO = new NhanVien_DAO();
+	            boolean updated = nhanVienDAO.capNhatNhanVien(updatedNhanVien);
+
+	            if (updated) {
+	                Alert successAlert = new Alert(AlertType.INFORMATION);
+	                successAlert.setTitle("Thành công");
+	                successAlert.setHeaderText(null);
+	                successAlert.setContentText("Cập nhật thông tin nhân viên thành công!");
+	                successAlert.showAndWait();
+
+	                // Cập nhật lại TableView và xóa trắng form
+	                loadTableData();
+	                clearFields();
+	            } else {
+	                Alert errorAlert = new Alert(AlertType.ERROR);
+	                errorAlert.setTitle("Lỗi");
+	                errorAlert.setHeaderText(null);
+	                errorAlert.setContentText("Không thể cập nhật thông tin nhân viên!");
+	                errorAlert.showAndWait();
+	            }
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	            Alert errorAlert = new Alert(AlertType.ERROR);
+	            errorAlert.setTitle("Lỗi");
+	            errorAlert.setHeaderText(null);
+	            errorAlert.setContentText("Đã xảy ra lỗi trong quá trình cập nhật!\n" + e.getMessage());
+	            errorAlert.showAndWait();
+	        }
 	    }
 	    
 	    private String generateMaNV() {
@@ -279,8 +366,18 @@ public class GD_QLNhanVien_Controller implements Initializable{
 	        // Đếm số nhân viên đã thêm trong ngày hiện tại
 	        int countToday = nv.getCountOfNhanVienInDay(today);
 	        
-	        // Tạo mã nhân viên với số thứ tự là countToday + 1
-	        String maNV = String.format("NV%s%s%s%02d", year, month, day, countToday + 1);
+	        String maNV;
+	        boolean exists;
+	        int counter = countToday + 1;
+	        
+	        // Vòng lặp để tìm mã nhân viên chưa tồn tại
+	        do {
+	            maNV = String.format("NV%s%s%s%02d", year, month, day, counter);
+	            exists = nv.isMaNVExists(maNV);
+	            if (exists) {
+	                counter++;
+	            }
+	        } while (exists);
 	        
 	        return maNV;
 	    }
@@ -289,6 +386,24 @@ public class GD_QLNhanVien_Controller implements Initializable{
 
 	    @FXML
 	    void themNV(MouseEvent event) {
+	        // Kiểm tra các trường bắt buộc
+	        if (txtTenNV.getText().trim().isEmpty() || 
+	            txtSDT.getText().trim().isEmpty() || 
+	            txtCCCD.getText().trim().isEmpty() || 
+	            txtNgaySinh.getValue() == null || 
+	            cbbGioiTinh.getValue() == null || 
+	            cbbGioiTinh.getValue().isEmpty() ||
+	            cbbChucVu.getValue() == null || 
+	            cbbChucVu.getValue().isEmpty()) {
+	            
+	            Alert alert = new Alert(AlertType.WARNING);
+	            alert.setTitle("Cảnh báo");
+	            alert.setHeaderText(null);
+	            alert.setContentText("Vui lòng điền đầy đủ thông tin!");
+	            alert.showAndWait();
+	            return;
+	        }
+
 	        // Lấy thông tin từ các trường
 	        String tenNV = txtTenNV.getText();
 	        String sdt = txtSDT.getText();
@@ -296,29 +411,17 @@ public class GD_QLNhanVien_Controller implements Initializable{
 	        LocalDate ngaySinh = txtNgaySinh.getValue();
 	        boolean gioiTinh = cbbGioiTinh.getValue().equals("Nam");
 
-	        // Lấy giá trị chức vụ từ ComboBox
+	        // Lấy giá trị chức vụ từ ComboBox và chuyển đổi
 	        String chucVuString = cbbChucVu.getValue();
 	        Enum_ChucVu chucVu = null;
-
-	        // Chuyển đổi giá trị chức vụ thành Enum_ChucVu
-	        if (chucVuString != null) {
-	            if (chucVuString.equals("Nhân viên lễ tân")) {
-	                chucVu = Enum_ChucVu.NHANVIENLETAN;
-	            } else if (chucVuString.equals("Người quản lý")) {
-	                chucVu = Enum_ChucVu.NGUOIQUANLY;
-	            }
+	        if (chucVuString.equals("Nhân viên lễ tân")) {
+	            chucVu = Enum_ChucVu.NHANVIENLETAN;
+	        } else if (chucVuString.equals("Người quản lý")) {
+	            chucVu = Enum_ChucVu.NGUOIQUANLY;
 	        }
 
 	        // Tạo mã nhân viên
 	        String maNV = generateMaNV();
-	        NhanVien_DAO nv = new NhanVien_DAO();
-
-	        // Kiểm tra mã nhân viên đã tồn tại
-	        if (nv.isMaNVExists(maNV)) {
-	            System.out.println("Mã nhân viên đã tồn tại: " + maNV);
-	            // Có thể hiển thị thông báo cho người dùng
-	            return; // Dừng lại nếu mã đã tồn tại
-	        }
 
 	        // Tạo đối tượng NhanVien
 	        NhanVien newNhanVien = new NhanVien(maNV, tenNV, sdt, ngaySinh, gioiTinh, cccd, chucVu);
@@ -326,27 +429,117 @@ public class GD_QLNhanVien_Controller implements Initializable{
 	        // Thêm nhân viên vào cơ sở dữ liệu
 	        try {
 	            NhanVien_DAO nhanVienDAO = new NhanVien_DAO();
-	            nhanVienDAO.themNhanVien(newNhanVien);
+	            boolean added = nhanVienDAO.themNhanVien(newNhanVien);
+	            
+	            if (added) {
+	                // Thông báo thành công
+	                Alert successAlert = new Alert(AlertType.INFORMATION);
+	                successAlert.setTitle("Thành công");
+	                successAlert.setHeaderText(null);
+	                successAlert.setContentText("Thêm nhân viên mới thành công!\nMã nhân viên: " + maNV);
+	                successAlert.showAndWait();
 
-	            // Cập nhật bảng
-	            loadTableData();
+	                // Cập nhật TableView
+	                loadTableData();
+	                
+	                // Xóa trắng các trường nhập liệu
+	                clearFields();
+	            } else {
+	                Alert errorAlert = new Alert(AlertType.ERROR);
+	                errorAlert.setTitle("Lỗi");
+	                errorAlert.setHeaderText(null);
+	                errorAlert.setContentText("Không thể thêm nhân viên!");
+	                errorAlert.showAndWait();
+	            }
 	        } catch (Exception e) {
 	            e.printStackTrace();
-	            // Có thể thêm Alert để thông báo lỗi cho người dùng
+	            Alert errorAlert = new Alert(AlertType.ERROR);
+	            errorAlert.setTitle("Lỗi");
+	            errorAlert.setHeaderText(null);
+	            errorAlert.setContentText("Đã xảy ra lỗi trong quá trình thêm nhân viên!\n" + e.getMessage());
+	            errorAlert.showAndWait();
 	        }
 	    }
 
 	    @FXML
 	    void xoaNV(MouseEvent event) {
+	        NhanVien selectedNhanVien = tableNhanVien.getSelectionModel().getSelectedItem();
+	        if (selectedNhanVien != null) {
+	            // Hiển thị hộp thoại xác nhận
+	            Alert alert = new Alert(AlertType.CONFIRMATION);
+	            alert.setTitle("Xác nhận xóa");
+	            alert.setHeaderText(null);
+	            alert.setContentText("Bạn có chắc chắn muốn xóa nhân viên này?");
 
+	            Optional<ButtonType> result = alert.showAndWait();
+	            if (result.get() == ButtonType.OK) {
+	                // Người dùng đã xác nhận xóa
+	                try {
+	                    NhanVien_DAO nvDao = new NhanVien_DAO();
+	                    boolean deleted = nvDao.xoaTheoMaNhanVien(selectedNhanVien.getIdNhanVien());
+	                    
+	                    if (deleted) {
+	                        // Xóa thành công
+	                        Alert successAlert = new Alert(AlertType.INFORMATION);
+	                        successAlert.setTitle("Thông báo");
+	                        successAlert.setHeaderText(null);
+	                        successAlert.setContentText("Đã xóa nhân viên thành công!");
+	                        successAlert.showAndWait();
+
+//	                        // Cập nhật lại TableView
+//	                        dsNhanVien.remove(selectedNhanVien);
+//	                        tableNhanVien.refresh();
+	                        loadTableData();
+	                        
+	                        // Xóa thông tin trên các trường nhập liệu
+	                        clearFields();
+	                        
+	                    } else {
+	                        Alert errorAlert = new Alert(AlertType.ERROR);
+	                        errorAlert.setTitle("Lỗi");
+	                        errorAlert.setHeaderText(null);
+	                        errorAlert.setContentText("Không thể xóa nhân viên!");
+	                        errorAlert.showAndWait();
+	                    }
+	                } catch (Exception e) {
+	                    e.printStackTrace();
+	                    Alert errorAlert = new Alert(AlertType.ERROR);
+	                    errorAlert.setTitle("Lỗi");
+	                    errorAlert.setHeaderText(null);
+	                    errorAlert.setContentText("Đã xảy ra lỗi trong quá trình xóa nhân viên!");
+	                    errorAlert.showAndWait();
+	                }
+	            }
+	        } else {
+	            // Không có nhân viên nào được chọn
+	            Alert alert = new Alert(AlertType.WARNING);
+	            alert.setTitle("Cảnh báo");
+	            alert.setHeaderText(null);
+	            alert.setContentText("Vui lòng chọn nhân viên cần xóa!");
+	            alert.showAndWait();
+	        }
+	    }
+
+	    // Phương thức để xóa thông tin trên các trường nhập liệu
+	    private void clearFields() {
+	        lb_MaNV.setText("");
+	        txtTenNV.setText("");
+	        txtSDT.setText("");
+	        txtCCCD.setText("");
+	        txtNgaySinh.setValue(null);
+	        cbbGioiTinh.setValue(null);
+	        cbbChucVu.setValue(null);
 	    }
 
 	    @FXML
 	    void xoaTrang(MouseEvent event) {
-	    	txtTenNV.setText("");
-	    	txtNgaySinh.setValue(null);
-	    	txtSDT.setText("");
-	    	txtCCCD.setText("");
+	        lb_MaNV.setText("");
+	        txtTenNV.setText("");
+	        txtSDT.setText("");
+	        txtCCCD.setText("");
+	        txtNgaySinh.setValue(null);
+	        cbbGioiTinh.setValue(null);
+	        cbbChucVu.setValue(null);
 	    }
 	    
 	    

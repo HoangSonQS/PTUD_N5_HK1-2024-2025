@@ -15,6 +15,8 @@ import entity.HoaDon;
 import entity.KhachHang;
 import entity.KhuyenMai;
 import entity.NhanVien;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class HoaDon_DAO {
 	public boolean themHoaDon(HoaDon hoadon) {
@@ -24,15 +26,18 @@ public class HoaDon_DAO {
 	    PreparedStatement pstm = null;
 	    String sql = "INSERT INTO HoaDon ( IDHoaDon, IDNhanVien, IDKhachHang, IDKhuyenMai, ThoiGianTao, ThoiGianCheckin) VALUES (?,?,?,?,?,?)";
 	    try {
+	    	String hd = hoadon.autoIdHoaDon();
 	        pstm = conN.prepareStatement(sql);
-	        pstm.setString(1, hoadon.getIdHoaDon());
-	        pstm.setString(2, hoadon.getNhanVienLap().getIdNhanVien());
-	        pstm.setString(3, hoadon.getKhachHang().getIdKhachHang());
-	        pstm.setString(4, hoadon.getKhuyenmai().getIdKhuyenMai());
-
+	        if ((new HoaDon_DAO().layHoaDonTheoMaHoaDon(hd)) == null) {
+		        pstm.setString(1, hd);
+		        pstm.setString(2, hoadon.getNhanVienLap().getIdNhanVien());
+		        pstm.setString(3, hoadon.getKhachHang().getIdKhachHang());
+		        pstm.setString(4, hoadon.getKhuyenmai().getIdKhuyenMai());
+		        pstm.setTimestamp(5, Timestamp.valueOf(hoadon.getThoiGianTao())); // ThoiGianTao là LocalDateTime
+		        pstm.setTimestamp(6, Timestamp.valueOf(hoadon.getThoiGianCheckin()));
+		        System.out.println("ok");// ThoiGianCheckin là LocalDateTime
+	        }
 	        // Chuyển LocalDateTime thành Timestamp
-	        pstm.setTimestamp(5, Timestamp.valueOf(hoadon.getThoiGianTao())); // ThoiGianTao là LocalDateTime
-	        pstm.setTimestamp(6, Timestamp.valueOf(hoadon.getThoiGianCheckin())); // ThoiGianCheckin là LocalDateTime
 
 	        n = pstm.executeUpdate();
 	    } catch (SQLException e) {
@@ -185,5 +190,37 @@ public class HoaDon_DAO {
 		}
 		return dsHD;
 	}
-	
+	public ObservableList<HoaDon> getAllHoaDonOb(){
+		ObservableList<HoaDon>dsHD = FXCollections.observableArrayList();
+		Connection conN = ConnectDB.getInstance().getConnection();
+		Statement stm = null;
+		try {
+			stm = conN.createStatement();
+			String sql = "select * from HoaDon";
+			ResultSet rs = stm.executeQuery(sql);
+			while (rs.next()) {
+				String idHoaDon = rs.getString("IDHoaDon");
+				String idnhanvien = rs.getString("IDNhanVien");
+				String idKhachHang = rs.getString("IDKhachHang");
+				String idKhuyenmai = rs.getString("IDKhuyenMai");
+				LocalDateTime thoigiantao = rs.getTimestamp("ThoiGianTao").toLocalDateTime();
+	            
+	            // Lấy thời gian check-in (chỉ ngày)
+	            LocalDateTime thoigiancheckin = rs.getTimestamp("ThoiGianCheckin").toLocalDateTime();
+	            NhanVien_DAO dsnv = new NhanVien_DAO();
+	            NhanVien nv = dsnv.getNhanVienTheoMa(idnhanvien);
+	            KhachHang_DAO dskh = new KhachHang_DAO();
+	            KhachHang kh = dskh.getKhachHangTheoMa(idKhachHang);
+	            KhuyenMai_DAO dskm = new KhuyenMai_DAO();
+	            dskm.getAllKhuyenMai();
+	            KhuyenMai km = dskm.layKhuyenMaiTheoMa(idKhuyenmai);
+	            HoaDon hd = new HoaDon(idHoaDon, nv, kh, km, thoigiantao, thoigiancheckin);
+				dsHD.add(hd);
+			}
+		}catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return dsHD;
+	}
 }
