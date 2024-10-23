@@ -49,15 +49,21 @@ public class KhachHang_DAO {
 		PreparedStatement pstm = null;
 		int n = 0;
 		try {
+			String kh = khachhang.autoIdKhachHang();
 			String sql="INSERT INTO KhachHang ( IDKhachHang, TenKhachHang, SoDienThoai, NgaySinh, CCCD, TichDiem) values(?,?,?,?,?,?)";
 			pstm = conn.prepareStatement(sql);
-			pstm.setString(1, khachhang.getIdKhachHang());
-			pstm.setString(2, khachhang.getTenKhachHang());
-			pstm.setString(3, khachhang.getSoDienThoai());
-			pstm.setDate(4, Date.valueOf(khachhang.getNgaySinh()));
-			pstm.setString(5, khachhang.getCccd());
-			pstm.setInt(6, khachhang.getTichDiem());
-			n = pstm.executeUpdate();
+			if ((new KhachHang_DAO().getKhachHangTheoMa(kh)) == null && new KhachHang_DAO().getKhachHangTheoCCCD(khachhang.getCccd()) == null) {
+				pstm.setString(1, kh);
+				pstm.setString(2, khachhang.getTenKhachHang());
+				pstm.setString(3, khachhang.getSoDienThoai());
+				pstm.setDate(4, Date.valueOf(khachhang.getNgaySinh()));
+				pstm.setString(5, khachhang.getCccd());
+				pstm.setInt(6, khachhang.getTichDiem());
+				System.out.println("chưa tồn tại khách hàng " + khachhang.getTenKhachHang());
+				n = pstm.executeUpdate();
+			}
+
+
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {

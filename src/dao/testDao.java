@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 
 import connectDB.ConnectDB;
 import entity.ChiTietHD_Phong;
+import entity.ChucVu;
 import entity.DichVu;
 import entity.HoaDon;
 import entity.KhachHang;
@@ -24,9 +25,9 @@ public class testDao {
 //		testTaiKhoan();
 //		testNhanVien();
 //		testPhieuThue();
-//		testKH();
+		testKH();
 //		testHoaDon();
-		testPhong();
+//		testPhong();
 	}
 	
 	private static void testCTHD_Phong() {
@@ -64,6 +65,7 @@ public class testDao {
 	public static void testNhanVien() {
 		NhanVien_DAO nv = new NhanVien_DAO();
 		System.out.println(nv.getNhanVienTheoMa("NV24100301"));
+		nv.themNhanVien(new NhanVien(null, "Nguyễn Hoàng Sơn", "0385412905", LocalDate.of(2004, 11, 03), true, "087204012824", Enum_ChucVu.NGUOIQUANLY));
 	}
 	public static void testPhieuThue() {
 //		PhieuThuePhong_DAO dsPT = new PhieuThuePhong_DAO();
@@ -85,10 +87,10 @@ public class testDao {
 	}
 //done
 	public static void testKH() {
-//		KhachHang_DAO dsKH = new KhachHang_DAO();
-//		
-//		KhachHang kh1 = new KhachHang("KH24100305", "Nguyen B", "012345678", LocalDate.of(2019, 6, 24), "1123123", 0);
-//		dsKH.themKhachHang(kh1);
+		KhachHang_DAO dsKH = new KhachHang_DAO();
+		
+		KhachHang kh1 = new KhachHang("KH24100305", "Nguyen B", "012345678", LocalDate.of(2019, 6, 24), "1123123", 0);
+		dsKH.themKhachHang(kh1);
 //		dsKH.capNhatKhachHangTheoSDT(kh1);
 //		System.out.println(dsKH.getAllKhachHang());
 	}
@@ -96,22 +98,22 @@ public class testDao {
 	//done
 	public static void testHoaDon() {
 	    HoaDon_DAO hddao = new HoaDon_DAO();
-//	    LocalDateTime ngayGio = LocalDateTime.now(); // Thời gian hiện tại
-//	    LocalDateTime ngayGio2 = LocalDateTime.of(2024, 10, 20, 14, 30); // Ngày 20/10/2024 lúc 14:30
+	    LocalDateTime ngayGio = LocalDateTime.now(); // Thời gian hiện tại
+	    LocalDateTime ngayGio2 = LocalDateTime.of(2024, 10, 24, 14, 30); // Ngày 20/10/2024 lúc 14:30
 //
-//	    NhanVien nv = new NhanVien("NV24100301");
-//	    KhachHang kh = new KhachHang("KH24100301");
-//	    KhuyenMai km = new KhuyenMai("KM241001");
+	    NhanVien nv = new NhanVien("NV24100301");
+	    KhachHang kh = new KhachHang("KH24100301");
+	    KhuyenMai km = new KhuyenMai("KM241001");
 //
 //	    // Tạo đối tượng HoaDon
-//	    HoaDon hd = new HoaDon("HD002", nv, kh, km, ngayGio, ngayGio2);
+	    HoaDon hd = new HoaDon("HD002", nv, kh, km, ngayGio, ngayGio2);
 //
 //	    // Thêm hóa đơn vào cơ sở dữ liệu
-//	    hddao.themHoaDon(hd);
+	    hddao.themHoaDon(hd);
 	    
 //	    System.out.println(hddao.layHoaDonTheoMaHoaDon("HD001"));
 //	    System.out.println(hddao.layHoaDonTheoMaKhachHang("KH24100301"));
-	    System.out.println(hddao.getAllHoaDon());
+//	    System.out.println(hddao.getAllHoaDon());
 
 	}
 

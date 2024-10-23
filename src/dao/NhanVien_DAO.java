@@ -63,23 +63,27 @@ public class NhanVien_DAO {
 		PreparedStatement pstm = null;
 		int n = 0;
 		try {
+			String nv = nhanvien.autoIdNhanVien();
 			String sql="INSERT INTO NhanVien ( IDNhanVien, TenNhanVien, SoDienThoai, NgaySinh, GioiTinh, CCCD, ChucVu) values(?,?,?,?,?,?,?)";
 			pstm = conn.prepareStatement(sql);
-			pstm.setString(1, nhanvien.getIdNhanVien());
-			pstm.setString(2, nhanvien.getTenNhanVien());
-			pstm.setString(3, nhanvien.getSoDienThoai());
-			pstm.setDate(4, Date.valueOf(nhanvien.getNgaySinh()));
-			pstm.setInt(5, nhanvien.isGioiTinh()? 1 : 0);
-			pstm.setString(6, nhanvien.getCccd());
+			if ((new NhanVien_DAO().getNhanVienTheoMa(nv)) == null && (new NhanVien_DAO().getNhanVienTheoCCCD(nhanvien.getCccd())) == null) {
+				pstm.setString(1, nv);
+				pstm.setString(2, nhanvien.getTenNhanVien());
+				pstm.setString(3, nhanvien.getSoDienThoai());
+				pstm.setDate(4, Date.valueOf(nhanvien.getNgaySinh()));
+				pstm.setInt(5, nhanvien.isGioiTinh()? 1 : 0);
+				pstm.setString(6, nhanvien.getCccd());
+				int cv = 0;
+				if(nhanvien.getChucVu().toString().equalsIgnoreCase("Nhân viên lễ tân")) {
+					cv = 1;
+				} else if (nhanvien.getChucVu().toString().equalsIgnoreCase("Người quản lý")) {
+					cv = 2;
+				} 
+				pstm.setInt(7, cv);
+				n = pstm.executeUpdate();
+			}
 
-			int cv = 0;
-			if(nhanvien.getChucVu().toString().equalsIgnoreCase("Nhân viên lễ tân")) {
-				cv = 1;
-			} else if (nhanvien.getChucVu().toString().equalsIgnoreCase("Người quản lý")) {
-				cv = 2;
-			} 
-			pstm.setInt(7, cv);
-			n = pstm.executeUpdate();
+
 		}catch(Exception e) {
 			e.printStackTrace();
 		}finally {
@@ -281,4 +285,54 @@ public class NhanVien_DAO {
 //            }
 //        }
 //    }
+	
+	public NhanVien getNhanVienTheoCCCD(String ma) {
+		Connection con = ConnectDB.getInstance().getConnection();
+		PreparedStatement stmt = null;
+		NhanVien nv = null;
+		ResultSet rs = null;
+		try {
+			String sql = "SELECT * FROM NhanVien WHERE CCCD = ?";
+			stmt = con.prepareStatement(sql);
+	        stmt.setString(1, ma);
+	        rs = stmt.executeQuery();
+			while (rs.next()) {
+				String maNhanVien = rs.getString("IDNhanVien");
+				String tenNhanVien = rs.getString("TenNhanVien");
+				String soDienThoai = rs.getString("SoDienThoai");
+				LocalDate ngaySinh = rs.getDate("NgaySinh").toLocalDate();
+				boolean gioiTinh = rs.getBoolean("GioiTinh");
+//				String chucVu = rs.getString("ChucVu");
+//				ChucVu cv = null;
+//				if(chucVu.equalsIgnoreCase(ChucVu.NHANVIENLETAN.toString())) {
+//					cv = ChucVu.NHANVIENLETAN;
+//					
+//				} else if(chucVu.equalsIgnoreCase(ChucVu.NGUOIQUANLY.toString())) {
+//					cv = ChucVu.NGUOIQUANLY;
+//				}
+				int chucVu = rs.getInt("ChucVu");
+				Enum_ChucVu cv = null;
+				
+				if(chucVu == 1) {
+					cv = Enum_ChucVu.NHANVIENLETAN;
+				} else if (chucVu == 2) {
+					cv = Enum_ChucVu.NGUOIQUANLY;
+				}
+				
+				//NhanVien nv = new NhanVien(idNhanVien, tenNhanVien, soDienThoai, gioiTinh, cccd, cv);
+				nv = new NhanVien(maNhanVien, tenNhanVien, soDienThoai, ngaySinh, gioiTinh, ma, cv);
+				}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		 return nv;
+	 }
 }
