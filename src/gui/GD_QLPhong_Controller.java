@@ -206,31 +206,105 @@ public class GD_QLPhong_Controller implements Initializable{
 
 	    @FXML
 	    void themPhong(MouseEvent event) {
-	    	String maP = txt_Phong1.getText();
-	    	String lp = (String) cbb.getValue();
-	    	LoaiPhong loaiPhong = null;
-	    	if (lp.equalsIgnoreCase(LoaiPhong.PHONGDOI.toString())) {
-	    		loaiPhong = LoaiPhong.PHONGDOI;
-	    	} else if (lp.equalsIgnoreCase(LoaiPhong.PHONGDON.toString())) {
-	    		loaiPhong = LoaiPhong.PHONGDON;
-	    	} else {
-	    		loaiPhong = LoaiPhong.PHONGGIADINH;
-	    	}
-	    	double donGia = Double.parseDouble(txt_GiaPhong.getText()) ;
-	    	String tt = (String) cbb2.getValue();
-	    	TrangThaiPhong trangthai = null;
-	    	if (tt.equalsIgnoreCase(TrangThaiPhong.TRONG.toString())) {
-	    		trangthai = TrangThaiPhong.TRONG;
-	    	} else if (tt.equalsIgnoreCase(TrangThaiPhong.DANGTHUE.toString())) {
-	    		trangthai = TrangThaiPhong.DANGTHUE;
-	    	} else if (tt.equalsIgnoreCase(TrangThaiPhong.SAPCHECKIN.toString())) {
-	    		trangthai = TrangThaiPhong.SAPCHECKIN;
-	    	} else {
-	    		trangthai = TrangThaiPhong.SAPCHECKOUT;
-	    	}
-	    	Phong_DAO pdao = new Phong_DAO();
-	    	pdao.themPhong(new Phong(maP, loaiPhong, donGia, trangthai));
-	    	loadTableData();
+	        try {
+	            // Kiểm tra dữ liệu đầu vào
+	            if (txt_Phong1.getText().trim().isEmpty()) {
+	                Alert alert = new Alert(AlertType.ERROR);
+	                alert.setTitle("Lỗi");
+	                alert.setHeaderText(null);
+	                alert.setContentText("Vui lòng nhập mã phòng!");
+	                alert.showAndWait();
+	                return;
+	            }
+
+	            if (txt_GiaPhong.getText().trim().isEmpty()) {
+	                Alert alert = new Alert(AlertType.ERROR);
+	                alert.setTitle("Lỗi");
+	                alert.setHeaderText(null);
+	                alert.setContentText("Vui lòng nhập giá phòng!");
+	                alert.showAndWait();
+	                return;
+	            }
+
+	            String maP = txt_Phong1.getText();
+	            String lp = cbb.getValue();
+	            LoaiPhong loaiPhong = null;
+	            if (lp.equalsIgnoreCase("Phòng đôi")) {
+	                loaiPhong = LoaiPhong.PHONGDOI;
+	            } else if (lp.equalsIgnoreCase("Phòng đơn")) {
+	                loaiPhong = LoaiPhong.PHONGDON;
+	            } else {
+	                loaiPhong = LoaiPhong.PHONGGIADINH;
+	            }
+
+	            double donGia;
+	            try {
+	                donGia = Double.parseDouble(txt_GiaPhong.getText());
+	                if (donGia <= 0) {
+	                    Alert alert = new Alert(AlertType.ERROR);
+	                    alert.setTitle("Lỗi");
+	                    alert.setHeaderText(null);
+	                    alert.setContentText("Giá phòng phải lớn hơn 0!");
+	                    alert.showAndWait();
+	                    return;
+	                }
+	            } catch (NumberFormatException e) {
+	                Alert alert = new Alert(AlertType.ERROR);
+	                alert.setTitle("Lỗi");
+	                alert.setHeaderText(null);
+	                alert.setContentText("Giá phòng không hợp lệ!");
+	                alert.showAndWait();
+	                return;
+	            }
+
+	            String tt = cbb2.getValue();
+	            TrangThaiPhong trangthai = null;
+	            if (tt.equalsIgnoreCase("Trống")) {
+	                trangthai = TrangThaiPhong.TRONG;
+	            } else if (tt.equalsIgnoreCase("Đang thuê")) {
+	                trangthai = TrangThaiPhong.DANGTHUE;
+	            } else if (tt.equalsIgnoreCase("Sắp checkin")) {
+	                trangthai = TrangThaiPhong.SAPCHECKIN;
+	            } else {
+	                trangthai = TrangThaiPhong.SAPCHECKOUT;
+	            }
+
+	            // Kiểm tra xem phòng đã tồn tại chưa
+	            if (pdao.getPhongTheoMa(maP) != null) {
+	                Alert alert = new Alert(AlertType.ERROR);
+	                alert.setTitle("Lỗi");
+	                alert.setHeaderText(null);
+	                alert.setContentText("Mã phòng đã tồn tại!");
+	                alert.showAndWait();
+	                return;
+	            }
+
+	            Phong phong = new Phong(maP, loaiPhong, donGia, trangthai);
+	            boolean result = pdao.themPhong(phong);
+	            
+	            if (result) {
+	                Alert alert = new Alert(AlertType.INFORMATION);
+	                alert.setTitle("Thành công");
+	                alert.setHeaderText(null);
+	                alert.setContentText("Thêm phòng thành công!");
+	                alert.showAndWait();
+	                loadTableData();
+	                clearFields(); // Xóa các trường nhập liệu
+	            } else {
+	                Alert alert = new Alert(AlertType.ERROR);
+	                alert.setTitle("Lỗi");
+	                alert.setHeaderText(null);
+	                alert.setContentText("Thêm phòng thất bại!");
+	                alert.showAndWait();
+	            }
+	        } catch (Exception e) {
+	            Alert alert = new Alert(AlertType.ERROR);
+	            alert.setTitle("Lỗi");
+	            alert.setHeaderText(null);
+	            alert.setContentText("Đã xảy ra lỗi trong quá trình thêm phòng!");
+	            alert.showAndWait();
+	            e.printStackTrace();
+	        }
 	    }
 
 	    @FXML
@@ -240,49 +314,60 @@ public class GD_QLPhong_Controller implements Initializable{
 
 	    @FXML
 	    void xoaPhong(MouseEvent event) {
-	    	Phong selectedPhong = tablePhong.getSelectionModel().getSelectedItem();
-	    	if (selectedPhong != null) {
-	            Alert alert = new Alert(AlertType.CONFIRMATION);
-	            alert.setTitle("Xác nhận xóa");
-	            alert.setHeaderText(null);
-	            alert.setContentText("Bạn có chắc chắn muốn xóa nhân viên này?");
-
-	            Optional<ButtonType> result = alert.showAndWait();
-	            if (result.get() == ButtonType.OK) {
-	            	try {
-	            		Phong_DAO pdao = new Phong_DAO();
-	            		boolean deleteP = pdao.xoaPhong(selectedPhong.getIdPhong());
-	            		if (deleteP) {
-	                        Alert successAlert = new Alert(AlertType.INFORMATION);
-	                        successAlert.setTitle("Thông báo");
-	                        successAlert.setHeaderText(null);
-	                        successAlert.setContentText("Đã xóa phòng thành công!");
-	                        successAlert.showAndWait();
-	                        loadTableData();
-	                        clearFields();
-	                        
-	            		} else {
-	                        Alert errorAlert = new Alert(AlertType.ERROR);
-	                        errorAlert.setTitle("Lỗi");
-	                        errorAlert.setHeaderText(null);
-	                        errorAlert.setContentText("Không thể xóa phòng!");
-	                        errorAlert.showAndWait();
-	            		}
-	            	} catch (Exception e) {
-	                    e.printStackTrace();
-	                    Alert errorAlert = new Alert(AlertType.ERROR);
-	                    errorAlert.setTitle("Lỗi");
-	                    errorAlert.setHeaderText(null);
-	                    errorAlert.setContentText("Đã xảy ra lỗi trong quá trình xóa phòng!");
-	                    errorAlert.showAndWait();
-					}
-	            }
-	    	} else {
+	        Phong selectedPhong = tablePhong.getSelectionModel().getSelectedItem();
+	        if (selectedPhong == null) {
 	            Alert alert = new Alert(AlertType.WARNING);
 	            alert.setTitle("Cảnh báo");
 	            alert.setHeaderText(null);
 	            alert.setContentText("Vui lòng chọn phòng cần xóa!");
 	            alert.showAndWait();
+	            return;
+	        }
+
+	        // Kiểm tra trạng thái phòng
+	        if (selectedPhong.getTrangThai() == TrangThaiPhong.DANGTHUE) {
+	            Alert alert = new Alert(AlertType.ERROR);
+	            alert.setTitle("Lỗi");
+	            alert.setHeaderText(null);
+	            alert.setContentText("Không thể xóa phòng đang được thuê!");
+	            alert.showAndWait();
+	            return;
+	        }
+
+	        Alert confirmAlert = new Alert(AlertType.CONFIRMATION);
+	        confirmAlert.setTitle("Xác nhận xóa");
+	        confirmAlert.setHeaderText(null);
+	        confirmAlert.setContentText("Bạn có chắc chắn muốn xóa phòng " + selectedPhong.getIdPhong() + "?");
+
+	        Optional<ButtonType> result = confirmAlert.showAndWait();
+	        if (result.isPresent() && result.get() == ButtonType.OK) {
+	            try {
+	                boolean deleted = pdao.xoaPhong(selectedPhong.getIdPhong());
+	                if (deleted) {
+	                    Alert successAlert = new Alert(AlertType.INFORMATION);
+	                    successAlert.setTitle("Thành công");
+	                    successAlert.setHeaderText(null);
+	                    successAlert.setContentText("Đã xóa phòng thành công!");
+	                    successAlert.showAndWait();
+	                    
+	                    // Cập nhật lại bảng
+	                    loadTableData();
+	                    clearFields();
+	                } else {
+	                    Alert errorAlert = new Alert(AlertType.ERROR);
+	                    errorAlert.setTitle("Lỗi");
+	                    errorAlert.setHeaderText(null);
+	                    errorAlert.setContentText("Không thể xóa phòng. Vui lòng thử lại!");
+	                    errorAlert.showAndWait();
+	                }
+	            } catch (Exception e) {
+	                Alert errorAlert = new Alert(AlertType.ERROR);
+	                errorAlert.setTitle("Lỗi");
+	                errorAlert.setHeaderText(null);
+	                errorAlert.setContentText("Đã xảy ra lỗi trong quá trình xóa phòng!");
+	                errorAlert.showAndWait();
+	                e.printStackTrace();
+	            }
 	        }
 	    }
 	    private void clearFields() {

@@ -289,29 +289,27 @@ public class Phong_DAO {
 				default: return null;  // Handle invalid values
 	        }
 	    }
-	    public boolean xoaPhong(String idPhong) throws SQLException {
+	    public boolean xoaPhong(String idPhong) {
 	        Connection con = null;
 	        PreparedStatement pstm = null;
-	        int affectedRows = 0;
 	        try {
 	            con = ConnectDB.getInstance().getConnection();
-	            String sql = "DELETE FROM Phong WHERE IDPhong = '" + idPhong + "'";
-	            System.out.println(sql);
-	            affectedRows = con.prepareStatement(sql).executeUpdate();
-	            return affectedRows > 0;
+	            String sql = "DELETE FROM Phong WHERE IDPhong = ?";
+	            pstm = con.prepareStatement(sql);
+	            pstm.setString(1, idPhong);
+	            int n = pstm.executeUpdate();
+	            return n > 0;
 	        } catch (SQLException e) {
-	            System.err.println("Lỗi SQL: " + e.getMessage());
-	            e.printStackTrace(); // In ra traceback lỗi để tìm hiểu thêm
-	            // Xử lý lỗi thích hợp, có thể ném lại hoặc thông báo cho người dùng
+	            e.printStackTrace();
+	            return false;
 	        } finally {
 	            try {
-	                if (pstm != null) pstm.close();
-	                if (con != null) con.close(); // Đóng Connection
-	            } catch (SQLException ex) {
-	                System.err.println("Lỗi đóng kết nối: " + ex.getMessage());
-	                ex.printStackTrace(); // In ra traceback lỗi
+	                if (pstm != null) {
+	                    pstm.close();
+	                }
+	            } catch (SQLException e) {
+	                e.printStackTrace();
 	            }
 	        }
-			return false;
 	    }
 }
