@@ -13,6 +13,8 @@ import entity.LoaiPhong;
 import entity.Phong;
 import entity.Phong;
 import entity.TrangThaiPhong;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 public class Phong_DAO {
 	public static ArrayList<Phong> getAllPhong() {
@@ -62,12 +64,16 @@ public class Phong_DAO {
 	
 	public boolean themPhong(Phong phong) {
 		ConnectDB.getInstance();
-		Connection con = ConnectDB.getInstance().getConnection();
+		Connection con = null;
 		PreparedStatement pstm = null;
 		int n = 0;
+		con = ConnectDB.getInstance().getConnection();
+		String sql = "INSERT INTO Phong (IDPhong, LoaiPhong, DonGia, TrangThai)values(?,?,?,?)";
 		try {
-			String sql = "INSERT INTO Phong (IDPhong, LoaiPhong, DonGia, TrangThai)values(?,?,?,?)";
+
+			System.out.println(1);
 			pstm = con.prepareStatement(sql);
+			System.out.println(2);
 			pstm.setString(1, phong.getIdPhong());
 			int lp = 0;
 			if(phong.getLoaiPhong().toString().equalsIgnoreCase("Phòng đôi")) {
@@ -91,14 +97,9 @@ public class Phong_DAO {
 			}
 			pstm.setInt(4, tt);
 			n = pstm.executeUpdate();
+			System.out.println("Thêm thành công");
 		}catch(Exception e) {
 			e.printStackTrace();
-		}finally {
-			try {
-				pstm.close();
-			} catch (Exception e2) {
-				e2.printStackTrace();
-			}
 		}
 		return n>0;
 	}
@@ -237,4 +238,84 @@ public class Phong_DAO {
 			}
 			return n > 0;
 		}
+	 public ObservableList<Phong> getAllPhongOb() {
+	        ObservableList<Phong> phongList = FXCollections.observableArrayList();
+	        Connection con = ConnectDB.getInstance().getConnection();
+	        Statement stmt = null;
+
+	        try {
+	            stmt = con.createStatement();
+	            String sql = "SELECT * FROM Phong";
+	            ResultSet rs = stmt.executeQuery(sql);
+
+	            while (rs.next()) {
+	                String idPhong = rs.getString("IDPhong");
+	                int loaiPhong = rs.getInt("LoaiPhong");
+	                int trangThai = rs.getInt("TrangThai");
+	                double donGia = rs.getDouble("DonGia");
+
+	                LoaiPhong loaiPhongEnum = getLoaiPhongEnum(loaiPhong);
+	                TrangThaiPhong trangThaiEnum = getTrangThaiEnum(trangThai);
+
+	                if(loaiPhongEnum != null && trangThaiEnum != null){
+	                    Phong phong = new Phong(idPhong, loaiPhongEnum, donGia, trangThaiEnum);
+	                    phongList.add(phong);
+	                }
+
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        } finally {
+	            try {
+	                if (stmt != null) stmt.close();
+	                // Important: Close the connection too!
+					if (con != null) con.close();
+	            } catch (SQLException e) {
+	                e.printStackTrace();
+	            }
+	        }
+	        return phongList;
+	    }
+	 private LoaiPhong getLoaiPhongEnum(int loaiPhong) {
+	        switch (loaiPhong) {
+	            case 1: return LoaiPhong.PHONGDOI;
+	            case 2: return LoaiPhong.PHONGDON;
+	            case 3: return LoaiPhong.PHONGGIADINH;
+				default: return null; // Handle invalid values
+	        }
+	    }
+	    private TrangThaiPhong getTrangThaiEnum(int trangThai) {
+	        switch (trangThai) {
+	            case 1: return TrangThaiPhong.TRONG;
+	            case 2: return TrangThaiPhong.DANGTHUE;
+	            case 3: return TrangThaiPhong.SAPCHECKIN;
+	            case 4: return TrangThaiPhong.SAPCHECKOUT;
+				default: return null;  // Handle invalid values
+	        }
+	    }
+	    public boolean xoaPhong(String idPhong) throws SQLException {
+	        Connection con = null;
+	        PreparedStatement pstm = null;
+	        int affectedRows = 0;
+	        try {
+	            con = ConnectDB.getInstance().getConnection();
+	            String sql = "DELETE FROM Phong WHERE IDPhong = '" + idPhong + "'";
+	            System.out.println(sql);
+	            affectedRows = con.prepareStatement(sql).executeUpdate();
+	            return affectedRows > 0;
+	        } catch (SQLException e) {
+	            System.err.println("Lỗi SQL: " + e.getMessage());
+	            e.printStackTrace(); // In ra traceback lỗi để tìm hiểu thêm
+	            // Xử lý lỗi thích hợp, có thể ném lại hoặc thông báo cho người dùng
+	        } finally {
+	            try {
+	                if (pstm != null) pstm.close();
+	                if (con != null) con.close(); // Đóng Connection
+	            } catch (SQLException ex) {
+	                System.err.println("Lỗi đóng kết nối: " + ex.getMessage());
+	                ex.printStackTrace(); // In ra traceback lỗi
+	            }
+	        }
+			return false;
+	    }
 }
