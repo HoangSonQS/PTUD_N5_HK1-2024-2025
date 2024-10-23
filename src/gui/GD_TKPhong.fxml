@@ -138,37 +138,37 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="50.0" layoutY="117.0" stroke="BLACK" strokeType="INSIDE" width="1294.0" />
-            <Text fill="WHITE" layoutX="515.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Thông tin phòng" textAlignment="CENTER">
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="50.0" layoutY="110.0" stroke="BLACK" strokeType="INSIDE" width="1294.0" />
+            <Text fill="WHITE" layoutX="515.0" layoutY="147.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Thông tin phòng" textAlignment="CENTER">
                <font>
                   <Font size="30.0" />
                </font>
             </Text>
-            <TableView fx:id="tableNhanVien" layoutX="320.0" layoutY="167.0" prefHeight="600.0" prefWidth="974.0">
+            <TableView fx:id="tablePhong" layoutX="320.0" layoutY="160.0" prefHeight="581.0" prefWidth="974.0">
                <columns>
-                  <TableColumn prefWidth="100.0" text="STT" />
-                  <TableColumn prefWidth="247.20001220703125" text="Mã phòng" />
-                  <TableColumn prefWidth="188.800048828125" text="Loại phòng" />
-                  <TableColumn prefWidth="178.40008544921875" text="Đơn giá" />
-                  <TableColumn prefWidth="259.2000732421875" text="Trạng thái" />
+                  <TableColumn fx:id="clSTT" prefWidth="100.0" text="STT" />
+                  <TableColumn fx:id="clMaP" prefWidth="247.20001220703125" text="Mã phòng" />
+                  <TableColumn fx:id="clLP" prefWidth="188.800048828125" text="Loại phòng" />
+                  <TableColumn fx:id="clDG" prefWidth="178.40008544921875" text="Đơn giá" />
+                  <TableColumn fx:id="clTT" prefWidth="259.2000732421875" text="Trạng thái" />
                </columns>
             </TableView>
-            <Label layoutX="10.0" layoutY="177.0" text="Chi tiết thông tin phòng:">
+            <Label layoutX="10.0" layoutY="170.0" text="Chi tiết thông tin phòng:">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
-            <Label layoutX="10.0" layoutY="222.0" text="Mã phòng">
+            <Label layoutX="10.0" layoutY="215.0" text="Mã phòng">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label fx:id="lb_maPhong" layoutX="160.0" layoutY="222.0" text="T1P1">
+            <Label fx:id="lb_maPhong" layoutX="160.0" layoutY="215.0" text="T1P1">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Button fx:id="btnXoa2" contentDisplay="RIGHT" layoutX="110.0" layoutY="424.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="90.0" style="-fx-background-color: #ff3131;" text="   Hủy" textAlignment="RIGHT" textFill="WHITE" textOverrun="CLIP">
+            <Button fx:id="btnQLP" contentDisplay="RIGHT" layoutX="80.0" layoutY="420.0" mnemonicParsing="false" onMouseClicked="#denGDQLPhong" prefHeight="40.0" prefWidth="161.0" style="-fx-background-color: #1e90ff;" text="Đến quản lý phòng" textAlignment="RIGHT" textFill="WHITE" textOverrun="CLIP">
                <font>
                   <Font size="16.0" />
                </font>
@@ -179,42 +179,37 @@
                </image>
             </ImageView>
             <TextField fx:id="txt_MaPhong" layoutX="56.0" layoutY="55.0" prefHeight="40.0" prefWidth="322.0" promptText="Nhập mã phòng" />
-            <ImageView fx:id="icon_TimKiem1" fitHeight="40.0" fitWidth="20.0" layoutX="343.0" layoutY="65.0" onMouseClicked="#moGiaoDienTimKiem" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="iconFind" fitHeight="40.0" fitWidth="20.0" layoutX="343.0" layoutY="65.0" onMouseClicked="#timKiem" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../data/pic/search.png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="30.0" fitWidth="20.0" layoutX="120.0" layoutY="434.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../data/pic/x-mark.png" />
-               </image>
-            </ImageView>
-            <Label layoutX="10.0" layoutY="272.0" text="Loại phòng">
+            <Label layoutX="10.0" layoutY="265.0" text="Loại phòng">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label fx:id="lb_loaiPhong" layoutX="160.0" layoutY="272.0" text="2NG">
+            <Label fx:id="lb_loaiPhong" layoutX="160.0" layoutY="265.0" text="2NG">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label layoutX="10.0" layoutY="322.0" text="Đơn giá">
+            <Label layoutX="10.0" layoutY="315.0" text="Đơn giá">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label fx:id="lb_donGia" layoutX="160.0" layoutY="322.0" text="xxxxxxxx">
+            <Label fx:id="lb_donGia" layoutX="160.0" layoutY="315.0" text="xxxxxxxx">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label layoutX="10.0" layoutY="372.0" text="Trạng thái">
+            <Label layoutX="10.0" layoutY="365.0" text="Trạng thái">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label fx:id="lb_trangThai" layoutX="160.0" layoutY="372.0" text="Đang thuê">
+            <Label fx:id="lb_trangThai" layoutX="160.0" layoutY="365.0" text="Đang thuê">
                <font>
                   <Font size="20.0" />
                </font>
