@@ -63,17 +63,13 @@ public class Phong_DAO {
 	}
 	
 	public boolean themPhong(Phong phong) {
-		ConnectDB.getInstance();
-		Connection con = null;
+		Connection con = ConnectDB.getInstance().getConnection();
 		PreparedStatement pstm = null;
 		int n = 0;
 		con = ConnectDB.getInstance().getConnection();
 		String sql = "INSERT INTO Phong (IDPhong, LoaiPhong, DonGia, TrangThai)values(?,?,?,?)";
 		try {
-
-			System.out.println(1);
 			pstm = con.prepareStatement(sql);
-			System.out.println(2);
 			pstm.setString(1, phong.getIdPhong());
 			int lp = 0;
 			if(phong.getLoaiPhong().toString().equalsIgnoreCase("Phòng đôi")) {

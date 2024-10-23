@@ -1,6 +1,10 @@
 package entity;
 
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Objects;
+
+import dao.Phong_DAO;
 
 public class Phong {
 
@@ -76,7 +80,7 @@ public class Phong {
 		Phong other = (Phong) obj;
 		return Objects.equals(idPhong, other.idPhong);
 	}
-
+	
 	
 	
 }

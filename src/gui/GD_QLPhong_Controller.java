@@ -3,8 +3,9 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import connectDB.ConnectDB;
 import dao.Phong_DAO;
 import entity.LoaiPhong;
 import entity.Phong;
@@ -19,7 +20,6 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -117,66 +117,112 @@ public class GD_QLPhong_Controller implements Initializable{
 	            }
 	        });
 	        
-	        btnThem.setOnAction(event -> {
-	        	String idPhong = txt_Phong1.getText();
-				double giaTien = Double.parseDouble(txt_GiaPhong.getText());
-				String loaiPhongStr = (String) cbb.getValue();
-				LoaiPhong loaiPhong;
-				if (loaiPhongStr.equalsIgnoreCase(LoaiPhong.PHONGDON.toString())) {
-					loaiPhong = LoaiPhong.PHONGDON;
-				} else if (loaiPhongStr.equalsIgnoreCase(LoaiPhong.PHONGDOI.toString())) {
-					loaiPhong = LoaiPhong.PHONGDOI;
-				} else {
-					loaiPhong = LoaiPhong.PHONGGIADINH;
-				}
-				Phong newPhong = new Phong(idPhong, loaiPhong, giaTien, TrangThaiPhong.TRONG);
-				System.out.print(newPhong);
-				try {
-	                pdao.themPhong(newPhong);
-	            	txt_Phong1.clear();
-					txt_GiaPhong.clear();
-					cbb.setValue("Phòng đơn");
-					cbb2.setValue("Trống");
-					
-					tablePhong.setItems(null);
-				}catch (IllegalArgumentException ex) {
-					System.err.println("Lỗiiiiiiiiiiii.");
-					// Handle the error appropriately, e.g., show an error dialog.
-				}
-	        });
 	        
-	        btnXoa.setOnAction(event -> {
-	        	Phong selectedPhong = tablePhong.getSelectionModel().getSelectedItem();
-
-	            if (selectedPhong != null) {
-	                Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
-	                confirmationAlert.setTitle("Xác nhận xóa");
-	                confirmationAlert.setHeaderText("Bạn có chắc chắn muốn xóa phòng " + selectedPhong.getIdPhong() + "?");
-	                confirmationAlert.setContentText("Các dữ liệu liên quan sẽ bị mất.");
-
-	                Optional<ButtonType> result = confirmationAlert.showAndWait();
-
-	                if (result.get() == ButtonType.OK) {
-	                    try {
-	                        if (pdao.xoaPhong(selectedPhong.getIdPhong())) {
-	                            tablePhong.getItems().remove(selectedPhong); // Xóa trực tiếp từ ObservableList
-	                            System.out.println("Xóa phòng thành công!");
-	                        } else {
-	                            System.err.println("Xóa phòng thất bại!");
-	                            new Alert(Alert.AlertType.ERROR, "Lỗi khi xóa phòng.").showAndWait();
-	                        }
-	                    } catch (SQLException e) {
-	                        e.printStackTrace();
-	                        new Alert(Alert.AlertType.ERROR, "Lỗi SQL khi xóa phòng: " + e.getMessage()).showAndWait();
-	                    }
-	                }
+	        btnThem.setOnAction(this::handleThemPhongButtonAction);
+	        btnXoa.setOnAction(this::handleXoaPhongButtonAction);
+	    }
+	    public void handleThemPhongButtonAction(ActionEvent event) {
+	        try {
+	            if (themPhong()) {
+	                showAlert("Thông báo", "Thêm phòng thành công");
 	            } else {
-	                new Alert(Alert.AlertType.WARNING, "Vui lòng chọn phòng cần xóa.").showAndWait();
+	                showAlertLoi("Thông báo", "Thêm phòng không thành công");
 	            }
-	        });
-	        
+	        } catch (Exception ex) {
+	            Logger.getLogger(GD_QLPhong_Controller.class.getName()).log(Level.SEVERE, null, ex);
+	            showAlertLoi("Lỗi", "Có lỗi khi thêm phòng: " + ex.getMessage());
+	        }
 	    }
 
+	    public void handleXoaPhongButtonAction(ActionEvent event) {
+	        try {
+	            if (xoaPhong()) {
+	                showAlert("Thông báo", "Xóa phòng thành công");
+	            } else {
+	                showAlertLoi("Thông báo", "Xóa phòng không thành công");
+	            }
+	        } catch (Exception ex) {
+	            Logger.getLogger(GD_QLPhong_Controller.class.getName()).log(Level.SEVERE, null, ex);
+	            showAlertLoi("Lỗi", "Có lỗi khi xóa phòng: " + ex.getMessage());
+	        }
+	    }
+	    
+	    public boolean themPhong() {
+	    	pdao.themPhong(new Phong("P10T10", LoaiPhong.PHONGDOI, 200000, TrangThaiPhong.TRONG));
+	    	return true;
+//	    	String idPhong = txt_Phong1.getText();
+//			double giaTien = Double.parseDouble(txt_GiaPhong.getText());
+//			String loaiPhongStr = (String) cbb.getValue();
+//			LoaiPhong loaiPhong;
+//			if (loaiPhongStr.equalsIgnoreCase(LoaiPhong.PHONGDON.toString())) {
+//				loaiPhong = LoaiPhong.PHONGDON;
+//			} else if (loaiPhongStr.equalsIgnoreCase(LoaiPhong.PHONGDOI.toString())) {
+//				loaiPhong = LoaiPhong.PHONGDOI;
+//			} else {
+//				loaiPhong = LoaiPhong.PHONGGIADINH;
+//			}
+//			Phong newPhong = new Phong(idPhong, loaiPhong, giaTien, TrangThaiPhong.TRONG);
+//			try {
+//                if (pdao.themPhong(newPhong)) {
+//                	txt_Phong1.clear();
+//    				txt_GiaPhong.clear();
+//    				cbb.setValue("Phòng đơn");
+//    				cbb2.setValue("Trống");
+//    				tablePhong.setItems(null);
+//    				tablePhong.setItems(new Phong_DAO().getAllPhongOb());
+//                } else {
+//                	return false;
+//                }
+//			}catch (IllegalArgumentException ex) {
+//				System.err.println("Lỗiiiiiiiiiiii");
+//				return false;
+//				// Handle the error appropriately, e.g., show an error dialog.
+//			}
+//			return true;
+		}
+	    
+	    public boolean xoaPhong() {
+	    	Phong selectedPhong = tablePhong.getSelectionModel().getSelectedItem();
+
+            if (selectedPhong != null) {
+                Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
+                confirmationAlert.setTitle("Xác nhận xóa");
+                confirmationAlert.setHeaderText("Bạn có chắc chắn muốn xóa phòng " + selectedPhong.getIdPhong() + "?");
+                confirmationAlert.setContentText("Các dữ liệu liên quan sẽ bị mất.");
+
+                Optional<ButtonType> result = confirmationAlert.showAndWait();
+
+                if (result.get() == ButtonType.OK) {
+                    try {
+                        if (pdao.xoaPhong(selectedPhong.getIdPhong())) {
+                            tablePhong.getItems().remove(selectedPhong); // Xóa trực tiếp từ ObservableList
+                            System.out.println("Xóa phòng thành công!");
+                        } else {
+                            System.err.println("Xóa phòng thất bại!");
+                            new Alert(Alert.AlertType.ERROR, "Lỗi khi xóa phòng.").showAndWait();
+                            return false;
+                        }
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                        new Alert(Alert.AlertType.ERROR, "Lỗi SQL khi xóa phòng: " + e.getMessage()).showAndWait();
+                        return false;
+                    }
+                }
+            } else {
+                new Alert(Alert.AlertType.WARNING, "Vui lòng chọn phòng cần xóa.").showAndWait();
+            }
+            return true;
+		}
+	    private void showAlert(String title, String message) {
+	        Alert alert = new Alert(Alert.AlertType.INFORMATION, message, ButtonType.OK);
+	        alert.setTitle(title);
+	        alert.showAndWait();
+	    }
+	    private void showAlertLoi(String title, String message) {
+	        Alert alert = new Alert(Alert.AlertType.ERROR, message, ButtonType.OK);
+	        alert.setTitle(title);
+	        alert.showAndWait();
+	    }
 	    
 	    @FXML
 	    void moGiaoDienDichVu(MouseEvent event) {
