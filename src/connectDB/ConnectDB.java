@@ -16,14 +16,9 @@ public class ConnectDB {
 		String url = "jdbc:sqlserver://localhost:1433;databasename=PTUD";
 		String username = "sa";
 //		String password = "sa123";
-<<<<<<< HEAD
 		String password = "sapassword";
 //		String password = "Kkkkkkk@6";
-=======
-//		String password = "sapassword";
-		String password = "Kkkkkkk@6";
-//		String password = "sapassword";
->>>>>>> 5ece51ed7e99db93027bbb01220738de867ac3fd
+
 
 //		String password = "sa123";
 //		String url = "jdbc:sqlserver://localhost:1433;databasename=QLBH;integratedSecurity=true;";
