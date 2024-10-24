@@ -265,9 +265,12 @@ public class GD_QLNhanVien_Controller implements Initializable{
 
 	    @FXML
 	    void moGiaoDienTimKiem(MouseEvent event) throws IOException {
-	    	App.setRoot("GD_TKPhong");
+	    	App.setRoot("GD_TKNhanVien");
 	    }
-
+	    @FXML
+	    void moGiaoDienTimKiemNV(MouseEvent event) throws IOException {
+	    	App.setRoot("GD_TKNhanVien");
+	    }
 	    @FXML
 	    void moGiaoDienUuDai(MouseEvent event) throws IOException {
 	    	App.setRoot("GD_QLUuDai");

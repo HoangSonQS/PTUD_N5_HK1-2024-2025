@@ -165,7 +165,7 @@ public class GD_QLKhachHang_Controller implements Initializable{
     }
     
     @FXML
-    void moGiaoDienTimKiem(MouseEvent event) throws IOException {
+    void moGiaoDienTimKiemKH(MouseEvent event) throws IOException {
     	App.setRoot("GD_TKKhachHang");
     }
 
@@ -348,5 +348,58 @@ public class GD_QLKhachHang_Controller implements Initializable{
         }
 		return false;
     }
-    
+    @FXML
+    void moGiaoDienDichVu(MouseEvent event) throws IOException {
+    	App.setRoot("GD_QLDichVu");
+    }
+
+    @FXML
+    void moGiaoDienHoaDon(MouseEvent event) throws IOException {
+    	App.setRoot("GD_QLHoaDon");
+    }
+
+    @FXML
+    void moGiaoDienKhachHang(MouseEvent event) throws IOException {
+    	App.setRoot("GD_QLKhachHang");
+    }
+
+    @FXML
+    void moGiaoDienPhong(MouseEvent event) throws IOException {
+    	App.setRoot("GD_QLPhong");
+    }
+
+    @FXML
+    void moGiaoDienQLNV(MouseEvent event) throws IOException {
+    	App.setRoot("GD_QLNhanVien");
+    }
+
+    @FXML
+    void moGiaoDienQuanLy(MouseEvent event) throws IOException {
+    	App.setRoot("GD_QLPhong");
+    }
+
+    @FXML
+    void moGiaoDienTaiKhoan(MouseEvent event) throws IOException {
+    	App.setRoot("GD_QLTaiKhoan");
+    }
+
+    @FXML
+    void moGiaoDienThongKe(MouseEvent event) throws IOException {
+    	App.setRoot("GD_ThongKeDoanhThu");
+    }
+
+    @FXML
+    void moGiaoDienThuePhong(MouseEvent event) throws IOException {
+    	App.setRoot("GD_SoDoPhong");
+    }
+
+    @FXML
+    void moGiaoDienTimKiem(MouseEvent event) throws IOException {
+    	App.setRoot("GD_TKKhachHang");
+    }
+
+    @FXML
+    void moGiaoDienUuDai(MouseEvent event) throws IOException {
+    	App.setRoot("GD_QLUuDai");
+    }
 }

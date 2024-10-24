@@ -1,5 +1,6 @@
 package gui;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -20,10 +21,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import main.App;
 
 public class GD_GiaHan_Controller implements Initializable{
 	@FXML
@@ -227,5 +230,43 @@ public class GD_GiaHan_Controller implements Initializable{
 	    } else {
 	        System.out.println("scrollPane_GDDOi không phải là GridPane.");
 	    }
+	}
+    @FXML
+    void moGiaoDienGiaHanPhong(MouseEvent event) throws IOException {
+		App.setRoot("GD_GiaHanPhong");
+    }
+
+    @FXML
+    void moGiaoDienHuyPhong(MouseEvent event) throws IOException {
+		App.setRoot("GD_HuyPhong");
+    }
+
+    @FXML
+    void moGiaoDienQuanLy(MouseEvent event) throws IOException {
+		App.setRoot("GD_QLPhong");
+    }
+
+    @FXML
+    void moGiaoDienSoDoPhong(MouseEvent event) throws IOException {
+		App.setRoot("GD_SoDoPhong");
+    }
+
+    @FXML
+    void moGiaoDienThongKe(MouseEvent event) throws IOException {
+		App.setRoot("GD_ThongKeDoanhThu");
+    }
+
+    @FXML
+    void moGiaoDienTimKiem(MouseEvent event) throws IOException {
+		App.setRoot("GD_TKPhong");
+    }
+	@FXML
+	private void moGDDoiPhong() throws IOException {
+		App.setRoot("GD_DoiPhong");
+	}
+
+	@FXML
+	private void moGDDatPhong() throws IOException {
+		App.openModal("GD_DatPhong", 800, 684);
 	}
 }

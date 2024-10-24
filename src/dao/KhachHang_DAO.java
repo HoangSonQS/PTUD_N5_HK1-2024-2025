@@ -174,12 +174,8 @@ public class KhachHang_DAO {
 		}
 		 return kh;
 	 }
-<<<<<<< HEAD
-	
-	public boolean capNhatKhachHangTheoSDT(KhachHang khachhang) {
-=======
+
 	public boolean capNhatKhachHangTheoMa(KhachHang khachhang) {
->>>>>>> be35bf2d4da0b09b43ed77a144e480bbd89b47c0
 		int n = 0;
 		ConnectDB.getInstance();
 		Connection conN = ConnectDB.getInstance().getConnection();

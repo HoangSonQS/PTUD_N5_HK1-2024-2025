@@ -1,12 +1,14 @@
 package gui;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
-
+import javafx.scene.input.MouseEvent;
+import main.App;
 import javafx.scene.chart.CategoryAxis;
 
 import javafx.scene.chart.BarChart;
@@ -45,5 +47,38 @@ public class GD_ThongKeDoanhThu_Controller implements Initializable{
 		chart.getData().add(new XYChart.Data("14/10/2024", 8000));
 		chart_DTTN.getData().addAll(chart);
 	}
+	 @FXML
+	    void moGDQL(MouseEvent event) throws IOException {
+		 App.setRoot("GD_QLPhong");
+	    }
 
+	    @FXML
+	    void moGDQLTP(MouseEvent event) throws IOException {
+			 App.setRoot("GD_SoDoPhong");
+	    }
+
+	    @FXML
+	    void moGDTK(MouseEvent event) throws IOException {
+			 App.setRoot("GD_TKPhong");
+	    }
+
+	    @FXML
+	    void moGDTKDT(MouseEvent event) throws IOException {
+			 App.setRoot("GD_ThongKeDoanhThu");
+	    }
+
+	    @FXML
+	    void moGDTKKH(MouseEvent event) throws IOException {
+			 App.setRoot("GD_ThongKeKhachHang");
+	    }
+
+	    @FXML
+	    void moGDTKSP(MouseEvent event) throws IOException {
+			 App.setRoot("GD_ThongKeSanPham");
+	    }
+
+	    @FXML
+	    void moGDTKe(MouseEvent event) throws IOException {
+			 App.setRoot("GD_ThongKeDoanhThu");
+	    }
 }

@@ -83,57 +83,49 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 	private GridPane gridPane;
 	@FXML
     private Label lb_tongSoPhong;
-	@FXML
-	void moGiaoDIenDoiPhong(MouseEvent event) {
 
-	}
+	    @FXML
+	    void moGiaoDienGiaHanPhong(MouseEvent event) throws IOException {
+			App.setRoot("GD_GiaHanPhong");
+	    }
 
-	@FXML
-	void moGiaoDIenGiaHanPhong(MouseEvent event) {
+	    @FXML
+	    void moGiaoDienHuyPhong(MouseEvent event) throws IOException {
+			App.setRoot("GD_HuyPhong");
+	    }
 
-	}
+	    @FXML
+	    void moGiaoDienQuanLy(MouseEvent event) throws IOException {
+			App.setRoot("GD_QLPhong");
+	    }
 
-	@FXML
-	void moGiaoDIenHuyPhong(MouseEvent event) {
+	    @FXML
+	    void moGiaoDienSoDoPhong(MouseEvent event) throws IOException {
+			App.setRoot("GD_SoDoPhong");
+	    }
 
-	}
+	    @FXML
+	    void moGiaoDienThongKe(MouseEvent event) throws IOException {
+			App.setRoot("GD_ThongKeDoanhThu");
+	    }
 
-	@FXML
-	void moGiaoDIenQuanLy(MouseEvent event) {
-
-	}
-
-	@FXML
-	void moGiaoDIenThongKe(MouseEvent event) {
-
-	}
-
-	@FXML
-	void moGiaoDIenTimKiem(MouseEvent event) {
-
-	}
-
-	@FXML
-	void moGiaoDienSoDoPhong(MouseEvent event) {
-
-	}
+	    @FXML
+	    void moGiaoDienTimKiem(MouseEvent event) throws IOException {
+			App.setRoot("GD_TKPhong");
+	    }
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-<<<<<<< HEAD
 		loadsoPhong();
 		ObservableList<String> list = FXCollections.observableArrayList("Tất cả", "Phòng đơn", "Phòng đôi",
 				"Phòng gia đình");
-=======
     	renderArrayPhong(new Phong_DAO().getAllPhong());
-		ObservableList<String> list = FXCollections.observableArrayList("Tất cả", "Phòng đơn", "Phòng đôi", "Phòng gia đình");
->>>>>>> be35bf2d4da0b09b43ed77a144e480bbd89b47c0
 		cbb.setItems(list);
 		cbb.setValue("Tất cả");
 		loadtrangthai();
 	}
 	public void loadtrangthai() {
-		renderArrayPhong(Phong_DAO.getAllPhong());
+		renderArrayPhong(new Phong_DAO().getAllPhong());
 		
 		cbb.setOnAction(event -> {
 		    String selectedItem = (String) cbb.getSelectionModel().getSelectedItem();
@@ -148,7 +140,7 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 		    } else if (selectedItem.equals("Phòng gia đình")) {
 		        dsP = new Phong_DAO().getPhongTheoLoai(3);
 		    } else if (selectedItem.equals("Tất cả")) {
-		        dsP = Phong_DAO.getAllPhong(); // Lấy tất cả các phòng
+		        dsP = new Phong_DAO().getAllPhong(); // Lấy tất cả các phòng
 		    }
 		    renderArrayPhong(dsP);
 		});
@@ -159,7 +151,7 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 	    String sophongdango = String.valueOf(dsp1.getPhongTheoTrangThai(2));
 	    String sophongsapCheckIn = String.valueOf(dsp1.getPhongTheoTrangThai(4));
 	    String sophongsapCheckOut = String.valueOf(dsp1.getPhongTheoTrangThai(3));
-	    String tongsophong = String.valueOf(Phong_DAO.getAllPhong().size());
+	    String tongsophong = String.valueOf(new Phong_DAO().getAllPhong().size());
 	    lb_soPhongTrong.setText("("+sophongtrong+")");
 	    lb_soPhongDangO.setText("("+sophongdango+")");
 	    lb_setCheckin.setText("("+sophongsapCheckIn+")");
@@ -234,7 +226,7 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 				GD_DatPhongChoController.MaPhong = phong.getIdPhong();
 				try {
 					moGDDatPhong();
-					renderArrayPhong(Phong_DAO.getAllPhong());
+					renderArrayPhong(new Phong_DAO().getAllPhong());
 					loadsoPhong();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
@@ -249,7 +241,7 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 				try {
 					phong.setTrangThai(TrangThaiPhong.TRONG);
 					dsp.capNhatTrangThaiPhong(phong);
-					renderArrayPhong(Phong_DAO.getAllPhong());
+					renderArrayPhong(new Phong_DAO().getAllPhong());
 					loadsoPhong();
 				} catch (Exception e) {
 					// TODO: handle exception
@@ -260,7 +252,7 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 				try {
 					phong.setTrangThai(TrangThaiPhong.DANGTHUE);
 					dsp.capNhatTrangThaiPhong(phong);
-					renderArrayPhong(Phong_DAO.getAllPhong());
+					renderArrayPhong(new Phong_DAO().getAllPhong());
 					loadsoPhong();
 				} catch (Exception e) {
 					// TODO: handle exception
@@ -282,7 +274,7 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 				try {
 					phong.setTrangThai(TrangThaiPhong.TRONG);
 					dsp.capNhatTrangThaiPhong(phong);
-					renderArrayPhong(Phong_DAO.getAllPhong());
+					renderArrayPhong(new Phong_DAO().getAllPhong());
 					loadsoPhong();
 				} catch (Exception e) {
 					// TODO: handle exception

@@ -14,123 +14,8 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="845.0" prefWidth="1554.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.GD_TKKhachHang_Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="845.0" prefWidth="1554.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.GD_TKKhachHang_Controller">
    <children>
-      <Pane layoutY="70.0" prefHeight="775.0" prefWidth="260.0" style="-fx-background-color: #D9D9D9;">
-         <children>
-            <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="15.0" layoutY="15.0" onMouseClicked="#moGiaoDienThuePhong" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../data/pic/apartment-building.png" />
-               </image>
-            </ImageView>
-            <Label layoutX="60.0" layoutY="20.0" onMouseClicked="#moGiaoDienThuePhong" text="Quản lý thuê phòng">
-               <font>
-                  <Font name="System Bold Italic" size="20.0" />
-               </font>
-            </Label>
-            <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="15.0" layoutY="75.0" onMouseClicked="#moGiaoDienQuanLy" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../data/pic/list.png" />
-               </image>
-            </ImageView>
-            <Label layoutX="60.0" layoutY="80.0" onMouseClicked="#moGiaoDienQuanLy" text="Quản lý">
-               <font>
-                  <Font name="System Bold Italic" size="20.0" />
-               </font>
-            </Label>
-            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="35.0" layoutY="125.0" onMouseClicked="#moGiaoDienPhong" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../data/pic/apartment-building.png" />
-               </image>
-            </ImageView>
-            <Label layoutX="85.0" layoutY="130.0" onMouseClicked="#moGiaoDienPhong" text="Phòng">
-               <font>
-                  <Font name="System Italic" size="18.0" />
-               </font>
-            </Label>
-            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="35.0" layoutY="165.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../data/pic/employees.png" />
-               </image>
-            </ImageView>
-            <Label layoutX="85.0" layoutY="170.0" text="Nhân viên">
-               <font>
-                  <Font name="System Italic" size="18.0" />
-               </font>
-            </Label>
-            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="35.0" layoutY="205.0" onMouseClicked="#moGiaoDienKhachHang" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../data/pic/travel.png" />
-               </image>
-            </ImageView>
-            <Label layoutX="85.0" layoutY="210.0" onMouseClicked="#moGiaoDienKhachHang" text="Khách hàng">
-               <font>
-                  <Font name="System Italic" size="18.0" />
-               </font>
-            </Label>
-            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="35.0" layoutY="245.0" onMouseClicked="#moGiaoDienHoaDon" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../data/pic/clipboard.png" />
-               </image>
-            </ImageView>
-            <Label layoutX="85.0" layoutY="250.0" onMouseClicked="#moGiaoDienHoaDon" text="Hóa đơn">
-               <font>
-                  <Font name="System Italic" size="18.0" />
-               </font>
-            </Label>
-            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="35.0" layoutY="285.0" onMouseClicked="#moGiaoDienDichVu" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../data/pic/shopping-bag.png" />
-               </image>
-            </ImageView>
-            <Label layoutX="85.0" layoutY="290.0" onMouseClicked="#moGiaoDienDichVu" text="Dịch vụ">
-               <font>
-                  <Font name="System Italic" size="18.0" />
-               </font>
-            </Label>
-            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="35.0" layoutY="325.0" onMouseClicked="#moGiaoDienTaiKhoan" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../data/pic/account-accepted.png" />
-               </image>
-            </ImageView>
-            <Label layoutX="85.0" layoutY="330.0" onMouseClicked="#moGiaoDienTaiKhoan" text="Tài khoản">
-               <font>
-                  <Font name="System Italic" size="18.0" />
-               </font>
-            </Label>
-            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="35.0" layoutY="365.0" onMouseClicked="#moGiaoDienUuDai" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../data/pic/discount-label.png" />
-               </image>
-            </ImageView>
-            <Label layoutX="85.0" layoutY="370.0" onMouseClicked="#moGiaoDienUuDai" text="Ưu đãi">
-               <font>
-                  <Font name="System Italic" size="18.0" />
-               </font>
-            </Label>
-            <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="15.0" layoutY="460.0" onMouseClicked="#moGiaoDienThongKe" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../data/pic/pie-chart.png" />
-               </image>
-            </ImageView>
-            <Label layoutX="60.0" layoutY="465.0" onMouseClicked="#moGiaoDienThongKe" text="Thống kê">
-               <font>
-                  <Font name="System Bold Italic" size="20.0" />
-               </font>
-            </Label>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="250.0" layoutY="210.0" stroke="WHITE" strokeType="INSIDE" width="10.0" />
-            <ImageView fx:id="icon_TimKiem" fitHeight="40.0" fitWidth="40.0" layoutX="15.0" layoutY="410.0" onMouseClicked="#moGiaoDienTimKiem" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../data/pic/search.png" />
-               </image>
-            </ImageView>
-            <Label fx:id="lb_TimKiem" layoutX="60.0" layoutY="415.0" onMouseClicked="#moGiaoDienTimKiem" text="Tìm kiếm">
-               <font>
-                  <Font name="System Bold Italic" size="20.0" />
-               </font>
-            </Label>
-         </children>
-      </Pane>
       <Pane layoutX="260.0" layoutY="70.0" prefHeight="775.0" prefWidth="1294.0">
          <children>
             <Label layoutX="56.0" layoutY="16.0" text="Khách hàng">
@@ -286,6 +171,121 @@
                   <Image url="@../../data/pic/user.png" />
                </image>
             </ImageView>
+         </children>
+      </Pane>
+      <Pane layoutY="70.0" prefHeight="775.0" prefWidth="260.0" style="-fx-background-color: #D9D9D9;">
+         <children>
+            <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="15.0" layoutY="15.0" onMouseClicked="#moGiaoDienThuePhong" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/pic/apartment-building.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="60.0" layoutY="20.0" onMouseClicked="#moGiaoDienThuePhong" text="Quản lý thuê phòng">
+               <font>
+                  <Font name="System Bold Italic" size="20.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="15.0" layoutY="75.0" onMouseClicked="#moGiaoDienQuanLy" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/pic/list.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="60.0" layoutY="80.0" onMouseClicked="#moGiaoDienQuanLy" text="Quản lý">
+               <font>
+                  <Font name="System Bold Italic" size="20.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="15.0" layoutY="460.0" onMouseClicked="#moGiaoDienThongKe" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/pic/pie-chart.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="60.0" layoutY="465.0" onMouseClicked="#moGiaoDienThongKe" text="Thống kê">
+               <font>
+                  <Font name="System Bold Italic" size="20.0" />
+               </font>
+            </Label>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="250.0" layoutY="265.0" stroke="WHITE" strokeType="INSIDE" width="10.0" />
+            <ImageView fx:id="icon_TimKiem" fitHeight="40.0" fitWidth="40.0" layoutX="15.0" layoutY="135.0" onMouseClicked="#moGiaoDienTimKiem" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/pic/search.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="lb_TimKiem" layoutX="59.0" layoutY="140.0" onMouseClicked="#moGiaoDienTimKiem" text="Tìm kiếm">
+               <font>
+                  <Font name="System Bold Italic" size="20.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="35.0" layoutY="185.0" onMouseClicked="#moGiaoDienPhong" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/pic/apartment-building.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="85.0" layoutY="190.0" onMouseClicked="#moGiaoDienPhong" text="Phòng">
+               <font>
+                  <Font name="System Italic" size="18.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="35.0" layoutY="225.0" onMouseClicked="#moGiaoDienNhanVien" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/pic/employees.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="85.0" layoutY="230.0" onMouseClicked="#moGiaoDienNhanVien" text="Nhân viên">
+               <font>
+                  <Font name="System Italic" size="18.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="35.0" layoutY="265.0" onMouseClicked="#moGiaoDienKhachHang" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/pic/travel.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="85.0" layoutY="270.0" onMouseClicked="#moGiaoDienKhachHang" text="Khách hàng">
+               <font>
+                  <Font name="System Italic" size="18.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="35.0" layoutY="305.0" onMouseClicked="#moGiaoDienHoaDon" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/pic/clipboard.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="85.0" layoutY="310.0" onMouseClicked="#moGiaoDienHoaDon" text="Hóa đơn">
+               <font>
+                  <Font name="System Italic" size="18.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="35.0" layoutY="345.0" onMouseClicked="#moGiaoDienDichVu" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/pic/shopping-bag.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="85.0" layoutY="350.0" onMouseClicked="#moGiaoDienDichVu" text="Dịch vụ">
+               <font>
+                  <Font name="System Italic" size="18.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="35.0" layoutY="385.0" onMouseClicked="#moGiaoDienTaiKhoan" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/pic/account-accepted.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="85.0" layoutY="390.0" onMouseClicked="#moGiaoDienTaiKhoan" text="Tài khoản">
+               <font>
+                  <Font name="System Italic" size="18.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="35.0" layoutY="425.0" onMouseClicked="#moGiaoDienUuDai" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/pic/discount-label.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="85.0" layoutY="430.0" onMouseClicked="#moGiaoDienUuDai" text="Ưu đãi">
+               <font>
+                  <Font name="System Italic" size="18.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
    </children>

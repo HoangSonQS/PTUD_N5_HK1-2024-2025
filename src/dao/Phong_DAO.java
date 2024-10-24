@@ -415,19 +415,11 @@ public class Phong_DAO {
 	        PreparedStatement pstm = null;
 	        try {
 	            con = ConnectDB.getInstance().getConnection();
-<<<<<<< HEAD
-	            String sql = "DELETE FROM Phong WHERE IDPhong = '" + idPhong + "'";
-	            System.out.println(sql);
-	            pstm = con.prepareStatement(sql);
-	            affectedRows = pstm.executeUpdate();
-	            return affectedRows > 0;
-=======
 	            String sql = "DELETE FROM Phong WHERE IDPhong = ?";
 	            pstm = con.prepareStatement(sql);
 	            pstm.setString(1, idPhong);
 	            int n = pstm.executeUpdate();
 	            return n > 0;
->>>>>>> be35bf2d4da0b09b43ed77a144e480bbd89b47c0
 	        } catch (SQLException e) {
 	            e.printStackTrace();
 	            return false;

@@ -308,8 +308,8 @@ public class GD_QLPhong_Controller implements Initializable{
 	    }
 
 	    @FXML
-	    void timKiemPhong(MouseEvent event) {
-
+	    void timKiemPhong(MouseEvent event) throws IOException {
+	    	App.setRoot("GD_TKPhong");
 	    }
 
 	    @FXML
