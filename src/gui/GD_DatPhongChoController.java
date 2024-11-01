@@ -5,7 +5,6 @@ package gui;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
-
 import dao.KhachHang_DAO;
 import dao.PhieuThuePhong_DAO;
 import dao.Phong_DAO;
@@ -20,14 +19,14 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 public class GD_DatPhongChoController implements Initializable{
+	@FXML
+    private Button btnBookWaitingRoom;
     @FXML
-    private TextField txtMaPhong;
+    private Button btnClose;
     @FXML
-    private TextField txtSDT;
+    private Button btnRefresh;
     @FXML
-    private TextField txtKH;
-    @FXML
-    private TextField txtCCCD;
+    private Button btn_TimCCCD;
     @FXML
     private DatePicker dpNgayNhan;
     @FXML
@@ -35,11 +34,15 @@ public class GD_DatPhongChoController implements Initializable{
     @FXML
     private DatePicker dpTra;
     @FXML
-    private Button btnClose;
+    private TextField txtCCCD;
     @FXML
-    private Button btnRefresh;
+    private TextField txtKH;
     @FXML
-    private Button btnBookWaitingRoom;
+    private TextField txtMaPhong;
+    @FXML
+    private TextField txtSDT;
+    
+    
     public static String MaPhong;
     KhachHang_DAO dsKH = new KhachHang_DAO();
     PhieuThuePhong_DAO dsPT = new PhieuThuePhong_DAO();
@@ -58,31 +61,48 @@ public class GD_DatPhongChoController implements Initializable{
 			int tichdiem = 0;
 			
 			try {
-				if(dsKH.getKhachHangTheoMa(id)== null) {
+				if(dsKH.getKhachHangTheoMa(id) == null) {
 					KhachHang kh = new KhachHang(id, tenKH, sdt, ngaysinh, CCCD, tichdiem);
 					dsKH.themKhachHang(kh);
 					Phong p = dsP.getPhongTheoMa(MaPhong);
-					p.setTrangThai(TrangThaiPhong.SAPCHECKIN);
-					dsP.capNhatTrangThaiPhong(p);
 					NhanVien nv = new NhanVien("NV24100301");
-					PhieuThuePhong pt = new PhieuThuePhong("PT241003014", kh, p,nv , ngayNhan, ngayTra);
-					dsPT.themPhieuThue(pt);
-					new Alert(Alert.AlertType.CONFIRMATION, "Success").showAndWait();
-				}else {
+					PhieuThuePhong pt = new PhieuThuePhong("PT241003014", dsKH.getKhachHangTheoCCCD(CCCD), p,nv , ngayNhan, ngayTra);
+					Boolean them = dsPT.themPhieuThue(pt);
+					if (them == true) {
+						new Alert(Alert.AlertType.CONFIRMATION, "Thêm thành công").showAndWait();
+						p.setTrangThai(TrangThaiPhong.SAPCHECKIN);
+						dsP.capNhatTrangThaiPhong(p);
+		            	txtKH.clear();
+						txtSDT.clear();
+						txtCCCD.clear();
+						dpNgayNhan.setValue(null);
+						dpNgaySinh.setValue(null);
+						dpTra.setValue(null);
+					} else {
+						new Alert(Alert.AlertType.ERROR, "Thêm thất bại").showAndWait();
+					}
+				} else {
 					new Alert(Alert.AlertType.ERROR, "Fail").showAndWait();
 				}
-                
-            	txtKH.clear();
-				txtSDT.clear();
-				txtCCCD.clear();
-				dpNgayNhan.setValue(null);
-				dpNgaySinh.setValue(null);
-				dpTra.setValue(null);
 			}catch (IllegalArgumentException ex) {
 				System.err.println("Lỗiiiiiiiiiiii.");
 			}
 			Stage stage = (Stage) btnClose.getScene().getWindow();
 		    stage.close();
+		});
+		btn_TimCCCD.setOnAction(event -> {
+			String CCCD = txtCCCD.getText();
+			KhachHang khachHangTonTai = new KhachHang_DAO().getKhachHangTheoCCCD(CCCD);
+			try {
+				if (khachHangTonTai != null) {
+					txtKH.setText(khachHangTonTai.getTenKhachHang());
+					txtSDT.setText(khachHangTonTai.getSoDienThoai());
+					dpNgaySinh.setValue(khachHangTonTai.getNgaySinh());
+				} else {
+					new Alert(Alert.AlertType.CONFIRMATION, "Khách hàng không tồn tại").showAndWait();
+				}
+			} catch (Exception e) {
+			}
 		});
 		btnClose.setOnAction(even ->{
 			 Stage stage = (Stage) btnClose.getScene().getWindow();
@@ -97,5 +117,4 @@ public class GD_DatPhongChoController implements Initializable{
 			dpTra.setValue(null);
 		});
 	}
-	
 }
