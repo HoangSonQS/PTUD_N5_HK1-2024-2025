@@ -4,57 +4,72 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import main.App;
 import javafx.scene.chart.CategoryAxis;
-
 import javafx.scene.chart.BarChart;
-
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
-import javafx.scene.chart.XYChart.Series;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 
 public class GD_ThongKeDoanhThu_Controller implements Initializable{
 	@FXML
-	private Label lb_Ngay;
-	@FXML
-	private DatePicker datePicker;
-	@FXML
-	private Label lb_HDNgay;
-	@FXML
-	private Label lb_SoHoaDon;
-	@FXML
-	private Label lb_HDNgay1;
-	@FXML
-	private Label lb_Tien;
-	@FXML
-	private BarChart<String, Double> chart_DTTN;
-	@FXML
-	private CategoryAxis x;
-	@FXML
-	private NumberAxis y;
+    private ImageView avt;
+
+    @FXML
+    private ComboBox<String> cbb;
+    @FXML
+    private BarChart<String, Double> chart_DTTN;
+    @FXML
+    private DatePicker datePicker;
+    @FXML
+    private ImageView icon_TimKiem;
+    @FXML
+    private Label lb_DT;
+    @FXML
+    private Label lb_DTSS;
+    @FXML
+    private Label lb_Ngay;
+    @FXML
+    private Label lb_SoHD;
+    @FXML
+    private Label lb_SoHoaDon;
+    @FXML
+    private Label lb_Tien;
+    @FXML
+    private Label lb_Tienss;
+    @FXML
+    private Label lb_TimKiem;
+    @FXML
+    private CategoryAxis x;
+    @FXML
+    private NumberAxis y;
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		XYChart.Series<String, Double> chart = new XYChart.Series();
-		chart.getData().add(new XYChart.Data("10/10/2024", 11000));
-		chart.getData().add(new XYChart.Data("11/10/2024", 10000));
-		chart.getData().add(new XYChart.Data("12/10/2024", 20000));
-		chart.getData().add(new XYChart.Data("13/10/2024", 9000));
-		chart.getData().add(new XYChart.Data("14/10/2024", 8000));
-		chart_DTTN.getData().addAll(chart);
+		createCBB();
 	}
-	 @FXML
+	
+	public void createCBB() {
+		ObservableList<String> list = FXCollections.observableArrayList("Theo ngày", "Theo tháng", "Theo năm");
+		cbb.setItems(list);
+		cbb.setValue("Theo ngày");
+	}
+	    
+	    @FXML
 	    void moGDQL(MouseEvent event) throws IOException {
-		 App.setRoot("GD_QLPhong");
+	    	App.setRoot("GD_QLPhong");
 	    }
 
 	    @FXML
 	    void moGDQLTP(MouseEvent event) throws IOException {
-			 App.setRoot("GD_SoDoPhong");
+	    	App.setRoot("GD_SoDoPhong");
 	    }
 
 	    @FXML
@@ -69,7 +84,7 @@ public class GD_ThongKeDoanhThu_Controller implements Initializable{
 
 	    @FXML
 	    void moGDTKKH(MouseEvent event) throws IOException {
-			 App.setRoot("GD_ThongKeKhachHang");
+	    	App.setRoot("GD_ThongKeKhachHang");
 	    }
 
 	    @FXML

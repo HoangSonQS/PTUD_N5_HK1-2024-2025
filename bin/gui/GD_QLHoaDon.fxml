@@ -111,7 +111,8 @@
             <TextField fx:id="lb_MaKM" layoutX="160.0" layoutY="304.0" />
             <TextField fx:id="lb_tgTao" layoutX="160.0" layoutY="363.0" />
             <TextField fx:id="lb_TgCheckIn" layoutX="160.0" layoutY="410.0" />
-         </children></Pane>
+         </children>
+      </Pane>
       <Pane prefHeight="70.0" prefWidth="1554.0" style="-fx-background-color: #004AAD;">
          <children>
             <ImageView fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">

@@ -11,6 +11,7 @@ public class PhieuThuePhong {
 	private NhanVien nhanVienLap;
 	private LocalDate thoiGianNhanPhong;
 	private LocalDate thoiHanGiaoPhong;
+	private Boolean HieuLuc;
 	public PhieuThuePhong(String idPhieuThue, KhachHang khachHang, Phong phong, NhanVien nhanVienLap,
 			LocalDate thoiGianNhanPhong, LocalDate thoiHanGiaoPhong) {
 		super();
@@ -21,6 +22,23 @@ public class PhieuThuePhong {
 		this.thoiGianNhanPhong = thoiGianNhanPhong;
 		this.thoiHanGiaoPhong = thoiHanGiaoPhong;
 	}
+	
+	public PhieuThuePhong(String idPhieuThue, KhachHang khachHang, Phong phong, NhanVien nhanVienLap,
+			LocalDate thoiGianNhanPhong, LocalDate thoiHanGiaoPhong, Boolean hieuLuc) {
+		super();
+		this.idPhieuThue = idPhieuThue;
+		this.khachHang = khachHang;
+		this.phong = phong;
+		this.nhanVienLap = nhanVienLap;
+		this.thoiGianNhanPhong = thoiGianNhanPhong;
+		this.thoiHanGiaoPhong = thoiHanGiaoPhong;
+		HieuLuc = hieuLuc;
+	}
+
+	public PhieuThuePhong() {
+		super();
+	}
+
 	public String getIdPhieuThue() {
 		return idPhieuThue;
 	}
@@ -56,6 +74,13 @@ public class PhieuThuePhong {
 	}
 	public void setThoiHanGiaoPhong(LocalDate thoiHanGiaoPhong) {
 		this.thoiHanGiaoPhong = thoiHanGiaoPhong;
+	}
+	
+	public Boolean getHieuLuc() {
+		return HieuLuc;
+	}
+	public void setHieuLuc(Boolean hieuLuc) {
+		HieuLuc = hieuLuc;
 	}
 	@Override
 	public String toString() {

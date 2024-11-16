@@ -25,7 +25,7 @@ public class PhieuThuePhong_DAO {
 		PreparedStatement pstm = null;
 		System.out.println(0);
 		
-		String sql = "INSERT INTO PhieuThuePhong ( IDPhieuThue, IDKhachHang, IDPhong, IDNhanVien, ThoiGianNhanPhong, ThoiHanGiaoPhong) VALUES (?,?,?,?,?,?)";
+		String sql = "INSERT INTO PhieuThuePhong ( IDPhieuThue, IDKhachHang, IDPhong, IDNhanVien, ThoiGianNhanPhong, ThoiHanGiaoPhong, HieuLuc) VALUES (?,?,?,?,?,?,?)";
 		try {
 			pstm = conN.prepareStatement(sql);
 			pstm.setString(1, phieuthue.getIdPhieuThue());
@@ -34,6 +34,7 @@ public class PhieuThuePhong_DAO {
 			pstm.setString(4, phieuthue.getNhanVienLap().getIdNhanVien());
 			pstm.setDate(5, Date.valueOf(phieuthue.getThoiGianNhanPhong()));
 			pstm.setDate(6, Date.valueOf(phieuthue.getThoiHanGiaoPhong()));
+			pstm.setBoolean(7, phieuthue.getHieuLuc());
 			n = pstm.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -116,7 +117,8 @@ public class PhieuThuePhong_DAO {
 	            Phong_DAO dsp = new Phong_DAO();
 	            dsp.getAllPhong();
 	            Phong p = dsp.getPhongTheoMa(idphong);
-	            pt = new PhieuThuePhong(idPhieuThue, kh, p, nv, thoigiancheckin, thoigiancheckout);
+	            Boolean hieuLuc = rs.getBoolean("HieuLuc");
+	            pt = new PhieuThuePhong(idPhieuThue, kh, p, nv, thoigiancheckin, thoigiancheckout, hieuLuc);
 	            
 	        }
 	    } catch (SQLException e) {
@@ -159,7 +161,8 @@ public class PhieuThuePhong_DAO {
 	            KhachHang kh = dskh.getKhachHangTheoMa(idkhachhang);
 	            Phong_DAO dsp = new Phong_DAO();
 	            Phong p = dsp.getPhongTheoMa(idPhong);
-	            PhieuThuePhong pt = new PhieuThuePhong(idphieuthue, kh, p, nv, thoigiancheckin, thoigiancheckout);
+	            Boolean hieuLuc = rs.getBoolean("HieuLuc");
+	            PhieuThuePhong pt = new PhieuThuePhong(idphieuthue, kh, p, nv, thoigiancheckin, thoigiancheckout, hieuLuc);
 	            dsPT.add(pt);
 	        }
 	    } catch (SQLException e) {
@@ -202,7 +205,8 @@ public class PhieuThuePhong_DAO {
 	            Phong_DAO dsp = new Phong_DAO();
 	            dsp.getAllPhong();
 	            Phong p = dsp.getPhongTheoMa(idphong);
-	            PhieuThuePhong pt = new PhieuThuePhong(idphieuthu, kh, p, nv, thoigiancheckin, thoigiancheckout);
+	            Boolean hieuLuc = rs.getBoolean("HieuLuc");
+	            PhieuThuePhong pt = new PhieuThuePhong(idphieuthu, kh, p, nv, thoigiancheckin, thoigiancheckout, hieuLuc);
 	            dsPT.add(pt);
 			}
 		}catch (SQLException e) {
