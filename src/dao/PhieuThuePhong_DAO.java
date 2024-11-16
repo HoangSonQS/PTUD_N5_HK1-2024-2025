@@ -215,4 +215,46 @@ public class PhieuThuePhong_DAO {
 		}
 		return dsPT;
 	}
+	
+	
+	
+	// lọc hiệu lực
+	public ArrayList<PhieuThuePhong> layPhieuThueTheoMaKH(String maKH){
+		ArrayList<PhieuThuePhong> dsPT = new ArrayList<PhieuThuePhong>();
+	    Connection con = ConnectDB.getInstance().getConnection();
+	    PreparedStatement stmt = null;
+	    ResultSet rs = null;
+		try {
+			String sql = "select * from PhieuThuePhong where IDKhachHang = ?";
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, maKH);
+			rs = stmt.executeQuery();
+			while (rs.next()) {
+				String idphieuthu = rs.getString("IDPhieuThue");
+				String idkhachhang = rs.getString("IDKhachHang");
+	            String idphong = rs.getString("IDPhong");
+	            String idnhanvien = rs.getString("IDNhanVien");
+	            LocalDate thoigiancheckin = rs.getDate("ThoiGianNhanPhong").toLocalDate();
+	            LocalDate thoigiancheckout = rs.getDate("ThoiHanGiaoPhong").toLocalDate();
+	            NhanVien_DAO dsnv = new NhanVien_DAO();
+	            dsnv.getAllNhanVien();
+	            NhanVien nv = dsnv.getNhanVienTheoMa(idnhanvien);
+	            KhachHang_DAO dskh = new KhachHang_DAO();
+	            dskh.getAllKhachHang();
+	            KhachHang kh = dskh.getKhachHangTheoMa(idkhachhang);
+	            Phong_DAO dsp = new Phong_DAO();
+	            dsp.getAllPhong();
+	            Phong p = dsp.getPhongTheoMa(idphong);
+	            Boolean hieuLuc = rs.getBoolean("HieuLuc");
+	            PhieuThuePhong pt = new PhieuThuePhong(idphieuthu, kh, p, nv, thoigiancheckin, thoigiancheckout, hieuLuc);
+	            if (hieuLuc == true) {
+		            dsPT.add(pt);
+	            }
+			}
+		}catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return dsPT;
+	}
 }

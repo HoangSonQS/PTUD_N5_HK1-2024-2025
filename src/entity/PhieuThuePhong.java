@@ -82,12 +82,14 @@ public class PhieuThuePhong {
 	public void setHieuLuc(Boolean hieuLuc) {
 		HieuLuc = hieuLuc;
 	}
+
 	@Override
 	public String toString() {
 		return "PhieuThuePhong [idPhieuThue=" + idPhieuThue + ", khachHang=" + khachHang + ", phong=" + phong
 				+ ", nhanVienLap=" + nhanVienLap + ", thoiGianNhanPhong=" + thoiGianNhanPhong + ", thoiHanGiaoPhong="
-				+ thoiHanGiaoPhong + "]";
+				+ thoiHanGiaoPhong + ", HieuLuc=" + HieuLuc + "]\n";
 	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(idPhieuThue);

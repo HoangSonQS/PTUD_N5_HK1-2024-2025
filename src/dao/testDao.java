@@ -24,8 +24,8 @@ public class testDao {
 		connect();
 //		testTaiKhoan();
 //		testNhanVien();
-//		testPhieuThue();
-		testKH();
+		testPhieuThue();
+//		testKH();
 //		testHoaDon();
 //		testPhong();
 	}
@@ -71,10 +71,11 @@ public class testDao {
 		nv.themNhanVien(new NhanVien(null, "Nguyễn Hoàng Sơn", "0385412905", LocalDate.of(2004, 11, 03), true, "087204012824", Enum_ChucVu.NGUOIQUANLY));
 	}
 	public static void testPhieuThue() {
-//		PhieuThuePhong_DAO dsPT = new PhieuThuePhong_DAO();
-//		
-//		KhachHang_DAO dsKH = new KhachHang_DAO();
-//		KhachHang kh1 = dsKH.getKhachHangTheoMa("KH24100301");
+		PhieuThuePhong_DAO dsPT = new PhieuThuePhong_DAO();
+		
+		KhachHang_DAO dsKH = new KhachHang_DAO();
+		KhachHang kh1 = dsKH.getKhachHangTheoMa("KH24100301");
+		System.out.println(dsPT.layPhieuThueTheoMaKH("KH24100301"));
 //		
 //		Phong_DAO dsP = new Phong_DAO();
 //		Phong p1 = dsP.getPhongTheoMa("T0P04");
