@@ -26,9 +26,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import main.App;
 
@@ -181,67 +184,98 @@ public class GD_DoiPhong_Controller implements Initializable{
 			lb_Ngaytra.setText("");
 		});
 	}
+	public void renderArrayPhong(ArrayList<Phong> dsPhong) {
+	    if (scrollPane_GDDOi instanceof GridPane) {
+	        GridPane grid = (GridPane) scrollPane_GDDOi;
+	        grid.getChildren().clear();
+	        
+	        // Thiết lập khoảng cách giữa các ô
+	        grid.setHgap(20); 
+	        grid.setVgap(20); 
+	        grid.setPadding(new Insets(20));
+	        
+	        // Lấy kích thước của ScrollPane
+	        double availableWidth = scrollPane_GDDOi.getWidth() - 60; // Trừ đi padding và scrollbar
+	        double columnWidth = (availableWidth - 40) / 3; // Trừ đi khoảng cách giữa các cột (20*2)
+	        
+	        // Thêm ColumnConstraints để đặt khoảng cách giữa các cột
+	        grid.getColumnConstraints().clear();
+	        for (int i = 0; i < 3; i++) {
+	            ColumnConstraints column = new ColumnConstraints();
+	            column.setHgrow(Priority.SOMETIMES);
+	            column.setMinWidth(columnWidth);
+	            column.setPrefWidth(columnWidth);
+	            grid.getColumnConstraints().add(column);
+	        }
+	        
+	        // Số cột tối đa trong grid
+	        int maxColumns = 3;
+	        
+	        // Render từng phòng
+	        for (int i = 0; i < dsPhong.size(); i++) {
+	            Phong phong = dsPhong.get(i);
+	            Pane phongPane = taoGiaoDienPhong(phong);
+	            
+	            // Tính toán vị trí của phòng trong grid
+	            int column = i % maxColumns;
+	            int row = i / maxColumns;
+	            
+	            // Thêm phòng vào grid tại vị trí tính toán
+	            grid.add(phongPane, column, row);
+	        }
+	    }
+	}
+
 	public Pane taoGiaoDienPhong(Phong phong) {
-	    VBox roomItem = new VBox();
-	    roomItem.setCursor(Cursor.HAND);
-	    roomItem.setPrefHeight(250);
-	    roomItem.setPrefWidth(250);
-	    roomItem.setStyle("-fx-background-color: #31c57e; -fx-border-color: #000000; -fx-border-width: 1"); // Viền đen để dễ nhận diện
-
-	    Label lblMaPhong = new Label(phong.getIdPhong());
-	    lblMaPhong.setStyle("-fx-font-size: 18; -fx-font-weight: 700");
-	    lblMaPhong.setPadding(new Insets(0, 0, 8, 0));
-	    roomItem.getChildren().add(lblMaPhong);
-
-	    Label lblLoaiPhong = new Label(phong.getLoaiPhong().toString());
-	    lblLoaiPhong.setStyle("-fx-font-size: 18; -fx-font-weight: 600");
-	    lblLoaiPhong.setPadding(new Insets(0, 0, 8, 0));
-	    roomItem.getChildren().add(lblLoaiPhong);
-
-	    String strBtnLeft = phong.getTrangThai() == TrangThaiPhong.SAPCHECKOUT ? "Chọn Phòng" : "";
-
-	    Button btnLeft = new Button(strBtnLeft);
-	    btnLeft.setStyle("-fx-background-color: #2972d3; -fx-font-size: 16");
-	    btnLeft.setOnAction((event) -> {
-	    	maPhongDoi = phong.getIdPhong();
-	    });
-
-	    HBox hbox = new HBox(btnLeft);
-	    hbox.setPadding(new Insets(0, 0, 8, 0));
-	    hbox.setAlignment(Pos.CENTER);
-	    hbox.setVisible(false);
-	    roomItem.getChildren().add(hbox);
-
+	    // Tạo VBox chứa thông tin phòng với kích thước cố định
+	    VBox roomItem = new VBox(10);
+	    
+	    // Để VBox có thể mở rộng theo không gian có sẵn
+	    roomItem.setPrefWidth(Region.USE_COMPUTED_SIZE);
+	    roomItem.setPrefHeight(180);
+	    roomItem.setMinHeight(180);
+	    roomItem.setMaxHeight(180);
+	    
+	    roomItem.setStyle("-fx-background-color: #31c57e; -fx-border-color: #000000; -fx-border-width: 1; -fx-padding: 10;");
 	    roomItem.setAlignment(Pos.CENTER);
 
-	    roomItem.hoverProperty().addListener((obs, oldVal, newVal) -> {
-	        if (newVal) {
-	            hbox.setVisible(true);
-	        } else {
-	            hbox.setVisible(false);
-	        }
+	    // Mã phòng
+	    Label lblMaPhong = new Label(phong.getIdPhong());
+	    lblMaPhong.setStyle("-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: white;");
+	    lblMaPhong.setWrapText(true);
+	    lblMaPhong.setAlignment(Pos.CENTER);
+
+	    // Loại phòng
+	    Label lblLoaiPhong = new Label(phong.getLoaiPhong().toString());
+	    lblLoaiPhong.setStyle("-fx-font-size: 16; -fx-font-weight: normal; -fx-text-fill: white;");
+	    lblLoaiPhong.setWrapText(true);
+	    lblLoaiPhong.setAlignment(Pos.CENTER);
+
+	    // Nút đổi phòng
+	    Button btnDoi = new Button("Đổi phòng");
+	    btnDoi.setPrefWidth(120);
+	    btnDoi.setPrefHeight(35);
+	    btnDoi.setStyle("-fx-background-color: #2972d3; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-cursor: hand;");
+	    
+	    btnDoi.setOnAction((event) -> {
+	        maPhongDoi = phong.getIdPhong();
+	    });
+
+	    roomItem.getChildren().addAll(lblMaPhong, lblLoaiPhong, btnDoi);
+
+	    // Thêm hiệu ứng hover
+	    roomItem.setOnMouseEntered(e -> {
+	        roomItem.setStyle("-fx-background-color: #28a66a; -fx-border-color: #000000; -fx-border-width: 1; -fx-padding: 10;");
+	    });
+	    
+	    roomItem.setOnMouseExited(e -> {
+	        roomItem.setStyle("-fx-background-color: #31c57e; -fx-border-color: #000000; -fx-border-width: 1; -fx-padding: 10;");
 	    });
 
 	    return roomItem;
 	}
 
-	public void renderArrayPhong(ArrayList<Phong> dsPhong) {
-	    // Kiểm tra xem scrollPane_GDDOi có phải là GridPane không
-	    if (scrollPane_GDDOi instanceof GridPane) {
-	        GridPane grid = (GridPane) scrollPane_GDDOi;
-	        grid.getChildren().clear(); // Xóa hết các phần tử trước đó
-	        grid.setHgap(20); // Khoảng cách giữa các cột
-	        grid.setVgap(20); // Khoảng cách giữa các hàng
 
-	        for (int i = 0; i < dsPhong.size(); i++) {
-	            Phong phong = dsPhong.get(i);
-	            Pane phongPane = taoGiaoDienPhong(phong);
-	            grid.add(phongPane, i % 4, i / 4); 
-	        }
-	    } else {
-	        System.out.println("scrollPane_GDDOi không phải là GridPane.");
-	    }
-	}
 
     @FXML
     void moGiaoDienGiaHanPhong(MouseEvent event) throws IOException {
