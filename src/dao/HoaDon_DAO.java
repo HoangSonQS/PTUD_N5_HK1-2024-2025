@@ -10,6 +10,8 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Map;
+
 import connectDB.ConnectDB;
 import entity.HoaDon;
 import entity.KhachHang;
@@ -223,4 +225,29 @@ public class HoaDon_DAO {
 		}
 		return dsHD;
 	}
+	
+	
+	//Thong ke
+//	public ObservableList<LocalDateTime> TheoNgay(LocalDate date){
+//		ObservableList<LocalDate> dsHD = FXCollections.observableArrayList(); 
+//		Connection conN = ConnectDB.getInstance().getConnection();
+//		Statement stm = null;
+//		try {
+//			stm = conN.createStatement();
+//			String sql = String.format("SELECT DAY(ThoiGianTao) AS Ngay"
+//                    + "FROM HoaDon WHERE YEAR(ThoiGianTao) = %d AND MONTH(ThoiGianTao) = %d "
+//                    + "GROUP BY DAY(ThoiGianTao)", date.getYear(), date.getMonthValue());
+//			ResultSet rs = stm.executeQuery(sql);
+//			while (rs.next()) {
+//				LocalDateTime ngayLap = rs.getTimestamp("Ngay").toLocalDateTime();
+//				int ngay = ngayLap.getDayOfMonth();
+//				
+//				
+//			}
+//		}catch (SQLException e) {
+//			// TODO: handle exception
+//			e.printStackTrace();
+//		}
+//		return dsHD;
+//	}
 }
