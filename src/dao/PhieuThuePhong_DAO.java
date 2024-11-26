@@ -54,7 +54,7 @@ public class PhieuThuePhong_DAO {
 		ConnectDB.getInstance();
 		Connection conN = ConnectDB.getInstance().getConnection();
 		PreparedStatement pstm = null;
-		String sql = "update PhieuThuePhong set IDKhachHang=?, IDPhong=?, IDNhanVien=?, ThoiGianNhanPhong=?, ThoiHanGiaoPhong=? where IDPhieuThue=? ";
+		String sql = "update PhieuThuePhong set IDKhachHang=?, IDPhong=?, IDNhanVien=?, ThoiGianNhanPhong=?, ThoiHanGiaoPhong=?, HieuLuc=? where IDPhieuThue=? ";
 		try {
 			
 			pstm = conN.prepareStatement(sql);
@@ -64,7 +64,8 @@ public class PhieuThuePhong_DAO {
 			pstm.setString(3, phieuthue.getNhanVienLap().getIdNhanVien());
 			pstm.setDate(4, Date.valueOf(phieuthue.getThoiGianNhanPhong()));
 			pstm.setDate(5, Date.valueOf(phieuthue.getThoiHanGiaoPhong()));
-			pstm.setString(6, phieuthue.getIdPhieuThue());
+			pstm.setBoolean(6, phieuthue.getHieuLuc());
+			pstm.setString(7, phieuthue.getIdPhieuThue());
 			n = pstm.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

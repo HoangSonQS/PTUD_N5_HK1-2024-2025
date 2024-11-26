@@ -1,9 +1,15 @@
 package main;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Objects;
 
 import connectDB.*;
+import dao.PhieuThuePhong_DAO;
+import entity.PhieuThuePhong;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
@@ -24,7 +30,9 @@ public class App extends Application{
 	public void start(Stage arg0) throws Exception {
 		// TODO Auto-generated method stub
 		this.primaryStage = arg0;
+		checkPhong();
 		openDangNhapWindow();
+
 	}
 
 	@Override
@@ -112,5 +120,18 @@ public class App extends Application{
 	}
 	public static void main(String[] args) {
 		launch(App.class, args);
+	}
+	
+	
+	private void checkPhong() {
+		PhieuThuePhong_DAO ptdao = new PhieuThuePhong_DAO();
+		ArrayList<PhieuThuePhong> listAll = ptdao.getAllPhieuThue();
+		LocalDate now = LocalDate.now();
+		for (PhieuThuePhong pt : listAll) {
+			if (pt.getThoiHanGiaoPhong().isBefore(now)) {
+				pt.setHieuLuc(Boolean.FALSE);
+				ptdao.suaPhieuThue(pt);
+			}
+		}
 	}
 }
