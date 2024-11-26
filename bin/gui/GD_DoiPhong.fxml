@@ -56,51 +56,46 @@
                         <Font size="20.0" />
                      </font>
                   </Label>
-                  <Label layoutX="33.0" layoutY="262.0" text="Tên khách hàng:">
+                  <Label layoutX="33.0" layoutY="296.0" text="Tên khách hàng:">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lb_tenKH" layoutX="247.0" layoutY="262.0" text="2NG">
+                  <Label fx:id="lb_tenKH" layoutX="247.0" layoutY="296.0" text="2NG">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </Label>
-                  <Label layoutX="33.0" layoutY="312.0" text="Số điện thoại:">
+                  <Label layoutX="33.0" layoutY="344.0" text="Số điện thoại:">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lb_SDT" layoutX="247.0" layoutY="312.0" text="xxxxxxxx">
+                  <Label fx:id="lb_SDT" layoutX="247.0" layoutY="344.0" text="xxxxxxxx">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </Label>
-                  <Label layoutX="33.0" layoutY="362.0" text="Ngày nhận phòng:">
+                  <Label layoutX="33.0" layoutY="391.0" text="Ngày nhận phòng:">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lb_NgayNhan" layoutX="247.0" layoutY="362.0" text="10/10/2024">
+                  <Label fx:id="lb_NgayNhan" layoutX="247.0" layoutY="391.0" text="10/10/2024">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </Label>
-                  <Label layoutX="35.0" layoutY="417.0" text="Ngày trả phòng:">
+                  <Label layoutX="33.0" layoutY="442.0" text="Ngày trả phòng:">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lb_Ngaytra" layoutX="249.0" layoutY="417.0" text="10/10/2024">
+                  <Label fx:id="lb_Ngaytra" layoutX="249.0" layoutY="442.0" text="10/10/2024">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </Label>
-                  <Button fx:id="btnDoi" contentDisplay="RIGHT" layoutX="210.0" layoutY="479.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="117.0" style="-fx-background-color: #2972d3;" text="Đổi phòng" textAlignment="RIGHT" textFill="WHITE" textOverrun="CLIP">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Button>
                   <Text fill="WHITE" layoutX="137.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Phòng đang thuê" textAlignment="CENTER">
                      <font>
                         <Font size="30.0" />
@@ -111,6 +106,11 @@
                         <Font size="30.0" />
                      </font>
                   </Text>
+                  <Label layoutX="33.0" layoutY="253.0" text="Tiêu chí:">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
                   <ScrollPane layoutX="534.0" layoutY="102.0" prefHeight="670.0" prefWidth="741.0">
                      <content>
                         <GridPane fx:id="scrollPane_GDDOi" prefHeight="666.0" prefWidth="759.0">
@@ -126,6 +126,11 @@
                         <Font size="16.0" />
                      </font>
                   </Button>
+                  <Label fx:id="lb_tieuChi" layoutX="247.0" layoutY="253.0" text="View">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
                </children>
             </Pane>
          </children>

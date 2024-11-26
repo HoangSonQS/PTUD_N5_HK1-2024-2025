@@ -204,108 +204,108 @@ public class GD_QLPhong_Controller implements Initializable{
 
 	    }
 
-	    @FXML
-	    void themPhong(MouseEvent event) {
-	        try {
-	            // Kiểm tra dữ liệu đầu vào
-	            if (txt_Phong1.getText().trim().isEmpty()) {
-	                Alert alert = new Alert(AlertType.ERROR);
-	                alert.setTitle("Lỗi");
-	                alert.setHeaderText(null);
-	                alert.setContentText("Vui lòng nhập mã phòng!");
-	                alert.showAndWait();
-	                return;
-	            }
-
-	            if (txt_GiaPhong.getText().trim().isEmpty()) {
-	                Alert alert = new Alert(AlertType.ERROR);
-	                alert.setTitle("Lỗi");
-	                alert.setHeaderText(null);
-	                alert.setContentText("Vui lòng nhập giá phòng!");
-	                alert.showAndWait();
-	                return;
-	            }
-
-	            String maP = txt_Phong1.getText();
-	            String lp = cbb.getValue();
-	            LoaiPhong loaiPhong = null;
-	            if (lp.equalsIgnoreCase("Phòng đôi")) {
-	                loaiPhong = LoaiPhong.PHONGDOI;
-	            } else if (lp.equalsIgnoreCase("Phòng đơn")) {
-	                loaiPhong = LoaiPhong.PHONGDON;
-	            } else {
-	                loaiPhong = LoaiPhong.PHONGGIADINH;
-	            }
-
-	            double donGia;
-	            try {
-	                donGia = Double.parseDouble(txt_GiaPhong.getText());
-	                if (donGia <= 0) {
-	                    Alert alert = new Alert(AlertType.ERROR);
-	                    alert.setTitle("Lỗi");
-	                    alert.setHeaderText(null);
-	                    alert.setContentText("Giá phòng phải lớn hơn 0!");
-	                    alert.showAndWait();
-	                    return;
-	                }
-	            } catch (NumberFormatException e) {
-	                Alert alert = new Alert(AlertType.ERROR);
-	                alert.setTitle("Lỗi");
-	                alert.setHeaderText(null);
-	                alert.setContentText("Giá phòng không hợp lệ!");
-	                alert.showAndWait();
-	                return;
-	            }
-
-	            String tt = cbb2.getValue();
-	            TrangThaiPhong trangthai = null;
-	            if (tt.equalsIgnoreCase("Trống")) {
-	                trangthai = TrangThaiPhong.TRONG;
-	            } else if (tt.equalsIgnoreCase("Đang thuê")) {
-	                trangthai = TrangThaiPhong.DANGTHUE;
-	            } else if (tt.equalsIgnoreCase("Sắp checkin")) {
-	                trangthai = TrangThaiPhong.SAPCHECKIN;
-	            } else {
-	                trangthai = TrangThaiPhong.SAPCHECKOUT;
-	            }
-
-	            // Kiểm tra xem phòng đã tồn tại chưa
-	            if (pdao.getPhongTheoMa(maP) != null) {
-	                Alert alert = new Alert(AlertType.ERROR);
-	                alert.setTitle("Lỗi");
-	                alert.setHeaderText(null);
-	                alert.setContentText("Mã phòng đã tồn tại!");
-	                alert.showAndWait();
-	                return;
-	            }
-
-	            Phong phong = new Phong(maP, loaiPhong, donGia, trangthai);
-	            boolean result = pdao.themPhong(phong);
-	            
-	            if (result) {
-	                Alert alert = new Alert(AlertType.INFORMATION);
-	                alert.setTitle("Thành công");
-	                alert.setHeaderText(null);
-	                alert.setContentText("Thêm phòng thành công!");
-	                alert.showAndWait();
-	                loadTableData();
-	                clearFields(); // Xóa các trường nhập liệu
-	            } else {
-	                Alert alert = new Alert(AlertType.ERROR);
-	                alert.setTitle("Lỗi");
-	                alert.setHeaderText(null);
-	                alert.setContentText("Thêm phòng thất bại!");
-	                alert.showAndWait();
-	            }
-	        } catch (Exception e) {
-	            Alert alert = new Alert(AlertType.ERROR);
-	            alert.setTitle("Lỗi");
-	            alert.setHeaderText(null);
-	            alert.setContentText("Đã xảy ra lỗi trong quá trình thêm phòng!");
-	            alert.showAndWait();
-	            e.printStackTrace();
-	        }
-	    }
+//	    @FXML
+//	    void themPhong(MouseEvent event) {
+//	        try {
+//	            // Kiểm tra dữ liệu đầu vào
+//	            if (txt_Phong1.getText().trim().isEmpty()) {
+//	                Alert alert = new Alert(AlertType.ERROR);
+//	                alert.setTitle("Lỗi");
+//	                alert.setHeaderText(null);
+//	                alert.setContentText("Vui lòng nhập mã phòng!");
+//	                alert.showAndWait();
+//	                return;
+//	            }
+//
+//	            if (txt_GiaPhong.getText().trim().isEmpty()) {
+//	                Alert alert = new Alert(AlertType.ERROR);
+//	                alert.setTitle("Lỗi");
+//	                alert.setHeaderText(null);
+//	                alert.setContentText("Vui lòng nhập giá phòng!");
+//	                alert.showAndWait();
+//	                return;
+//	            }
+//
+//	            String maP = txt_Phong1.getText();
+//	            String lp = cbb.getValue();
+//	            LoaiPhong loaiPhong = null;
+//	            if (lp.equalsIgnoreCase("Phòng đôi")) {
+//	                loaiPhong = LoaiPhong.PHONGDOI;
+//	            } else if (lp.equalsIgnoreCase("Phòng đơn")) {
+//	                loaiPhong = LoaiPhong.PHONGDON;
+//	            } else {
+//	                loaiPhong = LoaiPhong.PHONGGIADINH;
+//	            }
+//
+//	            double donGia;
+//	            try {
+//	                donGia = Double.parseDouble(txt_GiaPhong.getText());
+//	                if (donGia <= 0) {
+//	                    Alert alert = new Alert(AlertType.ERROR);
+//	                    alert.setTitle("Lỗi");
+//	                    alert.setHeaderText(null);
+//	                    alert.setContentText("Giá phòng phải lớn hơn 0!");
+//	                    alert.showAndWait();
+//	                    return;
+//	                }
+//	            } catch (NumberFormatException e) {
+//	                Alert alert = new Alert(AlertType.ERROR);
+//	                alert.setTitle("Lỗi");
+//	                alert.setHeaderText(null);
+//	                alert.setContentText("Giá phòng không hợp lệ!");
+//	                alert.showAndWait();
+//	                return;
+//	            }
+//
+//	            String tt = cbb2.getValue();
+//	            TrangThaiPhong trangthai = null;
+//	            if (tt.equalsIgnoreCase("Trống")) {
+//	                trangthai = TrangThaiPhong.TRONG;
+//	            } else if (tt.equalsIgnoreCase("Đang thuê")) {
+//	                trangthai = TrangThaiPhong.DANGTHUE;
+//	            } else if (tt.equalsIgnoreCase("Sắp checkin")) {
+//	                trangthai = TrangThaiPhong.SAPCHECKIN;
+//	            } else {
+//	                trangthai = TrangThaiPhong.SAPCHECKOUT;
+//	            }
+//
+//	            // Kiểm tra xem phòng đã tồn tại chưa
+//	            if (pdao.getPhongTheoMa(maP) != null) {
+//	                Alert alert = new Alert(AlertType.ERROR);
+//	                alert.setTitle("Lỗi");
+//	                alert.setHeaderText(null);
+//	                alert.setContentText("Mã phòng đã tồn tại!");
+//	                alert.showAndWait();
+//	                return;
+//	            }
+//
+//	            Phong phong = new Phong(maP, loaiPhong, donGia, trangthai);
+//	            boolean result = pdao.themPhong(phong);
+//	            
+//	            if (result) {
+//	                Alert alert = new Alert(AlertType.INFORMATION);
+//	                alert.setTitle("Thành công");
+//	                alert.setHeaderText(null);
+//	                alert.setContentText("Thêm phòng thành công!");
+//	                alert.showAndWait();
+//	                loadTableData();
+//	                clearFields(); // Xóa các trường nhập liệu
+//	            } else {
+//	                Alert alert = new Alert(AlertType.ERROR);
+//	                alert.setTitle("Lỗi");
+//	                alert.setHeaderText(null);
+//	                alert.setContentText("Thêm phòng thất bại!");
+//	                alert.showAndWait();
+//	            }
+//	        } catch (Exception e) {
+//	            Alert alert = new Alert(AlertType.ERROR);
+//	            alert.setTitle("Lỗi");
+//	            alert.setHeaderText(null);
+//	            alert.setContentText("Đã xảy ra lỗi trong quá trình thêm phòng!");
+//	            alert.showAndWait();
+//	            e.printStackTrace();
+//	        }
+//	    }
 
 	    @FXML
 	    void timKiemPhong(MouseEvent event) throws IOException {

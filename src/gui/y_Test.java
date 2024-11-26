@@ -16,7 +16,7 @@ public class y_Test extends Application {
 //			Parent root = FXMLLoader.load(getClass().getResource("GD_QLTaiKhoan.fxml"));
 //			Parent root = FXMLLoader.load(getClass().getResource("GD_QLNhanVien.fxml"));
 //			Parent root = FXMLLoader.load(getClass().getResource("GD_QLUuDai.fxml"));
-			Parent root = FXMLLoader.load(getClass().getResource("GD_QLPhong.fxml"));
+			Parent root = FXMLLoader.load(getClass().getResource("GD_DoiPhong.fxml"));
 
 
 			Scene scene = new Scene(root);

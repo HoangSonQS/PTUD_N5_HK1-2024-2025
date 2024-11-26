@@ -12,22 +12,24 @@ public class Phong {
 	private LoaiPhong loaiPhong;
 	private double donGia;
 	private TrangThaiPhong trangThai;
+	private String tieuChi;
 	
-	public Phong(String idPhong, LoaiPhong loaiPhong, double donGia, TrangThaiPhong trangThai) {
+	public Phong(String idPhong, LoaiPhong loaiPhong, double donGia, TrangThaiPhong trangThai, String tieuChi) {
 		super();
 		this.idPhong = idPhong;
 		this.loaiPhong = loaiPhong;
 		this.donGia = donGia;
 		this.trangThai = trangThai;
+		this.tieuChi = tieuChi;
 	}
-	
+
 	public Phong(String idPhong) {
 		super();
 		this.idPhong = idPhong;
 	}
 
 	public Phong() {
-		this("", LoaiPhong.PHONGDON, 0, TrangThaiPhong.TRONG);
+		this("", LoaiPhong.PHONGDON, 0, TrangThaiPhong.TRONG, "");
 	}
 	public String getIdPhong() {
 		return idPhong;
@@ -54,17 +56,28 @@ public class Phong {
 	public void setTrangThai(TrangThaiPhong trangThai) {
 		this.trangThai = trangThai;
 	}
-	  public String getLoaiPhongString() {
+
+	  public String getTieuChi() {
+		return tieuChi;
+	}
+
+	public void setTieuChi(String tieuChi) {
+		this.tieuChi = tieuChi;
+	}
+
+	public String getLoaiPhongString() {
 	        return getLoaiPhong() == null ? "" : getLoaiPhong().toString(); // Handles null
 	    }
 		  public String getTrangThaiString() {
 	        return getTrangThai() == null ? "" : getTrangThai().toString(); //Handles null
 	    }
+	
 	@Override
-	public String toString() {
-		return "Phong [idPhong=" + idPhong + ", loaiPhong=" + loaiPhong + ", donGia=" + donGia + ", trangThai="
-				+ trangThai + "]";
-	}
+		public String toString() {
+			return "Phong [idPhong=" + idPhong + ", loaiPhong=" + loaiPhong + ", donGia=" + donGia + ", trangThai="
+					+ trangThai + ", tieuChi=" + tieuChi + "]";
+		}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(idPhong);

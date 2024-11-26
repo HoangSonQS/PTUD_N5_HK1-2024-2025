@@ -1,7 +1,6 @@
 package dao;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,7 +9,6 @@ import java.util.ArrayList;
 
 import connectDB.ConnectDB;
 import entity.LoaiPhong;
-import entity.Phong;
 import entity.Phong;
 import entity.TrangThaiPhong;
 import javafx.collections.FXCollections;
@@ -50,7 +48,10 @@ public class Phong_DAO {
 				} else {
 					tt = TrangThaiPhong.SAPCHECKOUT;
 				}
-				Phong phong = new Phong(ma, lp, donGia, tt);
+				
+				String tc = rs.getString("TieuChi");
+				
+				Phong phong = new Phong(ma, lp, donGia, tt, tc);
 				dsPhong.add(phong);
 			}
 		} catch (SQLException e) {
@@ -131,7 +132,10 @@ public class Phong_DAO {
 				} else {
 					tt = TrangThaiPhong.SAPCHECKOUT;
 				}
-				phong = new Phong(ma, lp, donGia, tt);
+				
+				String tc = rs.getString("TieuChi");
+				
+				phong = new Phong(ma, lp, donGia, tt, tc);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -180,7 +184,10 @@ public class Phong_DAO {
 					} else {
 						tt = TrangThaiPhong.SAPCHECKOUT;
 					}
-					Phong phong = new Phong(IDPhong, lphong, donGia, tt);
+					
+					String tc = rs.getString("TieuChi");
+				
+					Phong phong = new Phong(IDPhong, lphong, donGia, tt, tc);
 					dsPhong.add(phong);
 				}
 			} catch (SQLException e) {
@@ -222,7 +229,10 @@ public class Phong_DAO {
 					} else {
 						tt = TrangThaiPhong.SAPCHECKOUT;
 					}
-					Phong phong = new Phong(IDPhong, lphong, donGia, tt);
+					
+					String tc = rs.getString("TieuChi");
+					
+					Phong phong = new Phong(IDPhong, lphong, donGia, tt, tc);
 					dsPhong.add(phong);
 				}
 			} catch (SQLException e) {
@@ -264,7 +274,10 @@ public class Phong_DAO {
 					} else {
 						tt = TrangThaiPhong.SAPCHECKOUT;
 					}
-					Phong phong = new Phong(IDPhong, lphong, donGia, tt);
+					
+					String tc = rs.getString("TieuChi");
+					
+					Phong phong = new Phong(IDPhong, lphong, donGia, tt, tc);
 					dsPhong.add(phong);
 				}
 			} catch (SQLException e) {
@@ -370,12 +383,13 @@ public class Phong_DAO {
 	                int loaiPhong = rs.getInt("LoaiPhong");
 	                int trangThai = rs.getInt("TrangThai");
 	                double donGia = rs.getDouble("DonGia");
+	                String tieuChi = rs.getString("TieuChi");
 
 	                LoaiPhong loaiPhongEnum = getLoaiPhongEnum(loaiPhong);
 	                TrangThaiPhong trangThaiEnum = getTrangThaiEnum(trangThai);
 
 	                if(loaiPhongEnum != null && trangThaiEnum != null){
-	                    Phong phong = new Phong(idPhong, loaiPhongEnum, donGia, trangThaiEnum);
+	                    Phong phong = new Phong(idPhong, loaiPhongEnum, donGia, trangThaiEnum, tieuChi);
 	                    phongList.add(phong);
 	                }
 
