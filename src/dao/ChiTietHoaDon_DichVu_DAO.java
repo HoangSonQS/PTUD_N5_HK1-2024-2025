@@ -10,8 +10,7 @@ import java.util.List;
 import connectDB.ConnectDB;
 import entity.ChiTietHD_DichVu;
 import entity.DichVu;
-import entity.HoaDon;
-import dao.DichVu_DAO;
+
 
 
 public class ChiTietHoaDon_DichVu_DAO {
@@ -58,8 +57,13 @@ public class ChiTietHoaDon_DichVu_DAO {
                 HoaDon_DAO dshd = new HoaDon_DAO();
                 dshd.getAllHoaDon();
                 HoaDon hd = dshd.layHoaDonTheoMaHoaDon(maHoaDon);
-                DichVu_DAO dsDV = new DichVu_DAO();
-				dichvu = dsDV.layDichVuTheoMa(IdDichVu);
+				try {
+					DichVu_DAO dsDV = new DichVu_DAO();
+					dichvu = dsDV.layDichVuTheoMa(IdDichVu);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
                 // Tạo đối tượng ChiTietHoaDon
                 ChiTietHD_DichVu chiTietHoaDon = new ChiTietHD_DichVu(hd, dichvu, soLuongSP);
                 danhSachChiTietHoaDon.add(chiTietHoaDon);
