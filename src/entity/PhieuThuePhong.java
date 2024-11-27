@@ -115,7 +115,11 @@ public class PhieuThuePhong {
 	    ArrayList<PhieuThuePhong> PhieuThueList = null;
 	    PhieuThuePhong_DAO ptdao = new PhieuThuePhong_DAO();
 	    try {
+<<<<<<< HEAD
 	        PhieuThueList = ptdao.getAllPhieuThue();  // Lấy danh sách Phiếu thuê từ database
+=======
+	        PhieuThueList = ptdao.getAllPhieuThue(); // Lấy danh sách Phiếu thuê từ database
+>>>>>>> d647ed70c9549cdca0f60a27fc838a983de02d53
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	        return null; // Trả về null nếu lỗi xảy ra
