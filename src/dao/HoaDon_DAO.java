@@ -228,7 +228,7 @@ public class HoaDon_DAO {
 	
 	
 	//Thong ke
-	public ObservableList<LocalDateTime> TheoNgay(LocalDate date){
+	public ObservableList<LocalDateTime> TheoNgayob(LocalDate date){
 		ObservableList<LocalDateTime> dsHD = FXCollections.observableArrayList(); 
 		Connection conN = ConnectDB.getInstance().getConnection();
 		Statement stm = null;
@@ -248,15 +248,35 @@ public class HoaDon_DAO {
 		}
 		return dsHD;
 	}
-	public ArrayList<HoaDon> layTheoNgay(LocalDateTime date) {
-		System.out.println(date);
+	public ArrayList<LocalDate> TheoNgay(LocalDate date){
+		ArrayList<LocalDate> dsHD = new ArrayList<LocalDate>();
+		Connection conN = ConnectDB.getInstance().getConnection();
+		Statement stm = null;
+		try {
+			stm = conN.createStatement();
+			String sql = String.format("SELECT CAST(ThoiGianTao AS DATE) AS Ngay FROM HoaDon "
+					+ "WHERE YEAR(ThoiGianTao) = %d AND MONTH(ThoiGianTao) = %d "
+					+ "GROUP BY CAST(ThoiGianTao AS DATE)", date.getYear(), date.getMonthValue());
+			System.out.println(sql);
+			ResultSet rs = stm.executeQuery(sql);
+			while (rs.next()) {
+				LocalDate ngayLap = rs.getDate("Ngay").toLocalDate();
+				dsHD.add(ngayLap);
+			}
+		}catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return dsHD;
+	}
+	public ArrayList<HoaDon> layTheoNgay(LocalDate date) {
 		ArrayList<HoaDon>dsHD = new ArrayList<HoaDon>();
 		Connection conN = ConnectDB.getInstance().getConnection();
 		PreparedStatement stm = null;
 		try {
-			String sql = "select * from HoaDon where ThoiGianTao = ?";
+			String sql = "select * from HoaDon where CAST(ThoiGianTao AS DATE) = ?";
 			stm = conN.prepareStatement(sql);
-			stm.setTimestamp(1, Timestamp.valueOf(date));
+			stm.setDate(1, Date.valueOf(date));
 			ResultSet rs = stm.executeQuery();
 			while (rs.next()) {
 				String idHoaDon = rs.getString("IDHoaDon");

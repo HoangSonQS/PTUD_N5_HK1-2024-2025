@@ -66,7 +66,7 @@ public class GD_DatPhongChoController implements Initializable{
 					dsKH.themKhachHang(kh);
 					Phong p = dsP.getPhongTheoMa(MaPhong);
 					NhanVien nv = new NhanVien("NV24100301");
-					PhieuThuePhong pt = new PhieuThuePhong("PT241003014", dsKH.getKhachHangTheoCCCD(CCCD), p,nv , ngayNhan, ngayTra);
+					PhieuThuePhong pt = new PhieuThuePhong(PhieuThuePhong.autoIdPhieuThue(), dsKH.getKhachHangTheoCCCD(CCCD), p,nv , ngayNhan, ngayTra);
 					Boolean them = dsPT.themPhieuThue(pt);
 					if (them == true) {
 						new Alert(Alert.AlertType.CONFIRMATION, "Thêm thành công").showAndWait();

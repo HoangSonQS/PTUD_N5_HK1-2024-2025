@@ -113,8 +113,9 @@ public class PhieuThuePhong {
 	
 	public static String autoIdPhieuThue() {
 	    ArrayList<PhieuThuePhong> PhieuThueList = null;
+	    PhieuThuePhong_DAO ptdao = new PhieuThuePhong_DAO();
 	    try {
-	        PhieuThueList = PhieuThuePhong_DAO.getAllPhieuThue(); // Lấy danh sách Phiếu thuê từ database
+	        PhieuThueList = ptdao.getAllPhieuThue();  // Lấy danh sách Phiếu thuê từ database
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	        return null; // Trả về null nếu lỗi xảy ra

@@ -103,7 +103,13 @@ public class testDao {
 	//done
 	public static void testHoaDon() {
 	    HoaDon_DAO hddao = new HoaDon_DAO();
-	    System.out.print(hddao.layTheoNgay(LocalDateTime.of(2024, 10, 3, 12, 0, 0)));
+	    LocalDate a = LocalDate.of(2024, 10, 12);
+	    System.out.printf("%d,%d,%d\n",a.getYear(),a.getMonthValue(),a.getDayOfMonth());
+	    System.out.println(hddao.TheoNgay(a));
+	    
+	    
+	    
+//	    System.out.print(hddao.layTheoNgay(LocalDate.of(2024, 10, 12)));
 //	    LocalDateTime ngayGio = LocalDateTime.now(); // Thời gian hiện tại
 //	    LocalDateTime ngayGio2 = LocalDateTime.of(2024, 10, 24, 14, 30); // Ngày 20/10/2024 lúc 14:30
 //
