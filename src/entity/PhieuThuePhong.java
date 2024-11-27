@@ -1,7 +1,12 @@
 package entity;
 
+import java.text.DecimalFormat;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Objects;
+
+import dao.PhieuThuePhong_DAO;
 
 public class PhieuThuePhong {
 
@@ -104,6 +109,49 @@ public class PhieuThuePhong {
 			return false;
 		PhieuThuePhong other = (PhieuThuePhong) obj;
 		return Objects.equals(idPhieuThue, other.idPhieuThue);
+	}
+	
+	public static String autoIdPhieuThue() {
+	    ArrayList<PhieuThuePhong> PhieuThueList = null;
+	    try {
+	        PhieuThueList = PhieuThuePhong_DAO.getAllPhieuThue(); // Lấy danh sách Phiếu thuê từ database
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return null; // Trả về null nếu lỗi xảy ra
+	    }
+
+	    // Trường hợp không có phiếu thuê nào
+	    if (PhieuThueList == null || PhieuThueList.isEmpty()) {
+	        LocalDate currentDate = LocalDate.now();
+	        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMMdd");
+	        String dateString = currentDate.format(formatter);
+	        return "PT" + dateString + "001";
+	    }
+
+	    LocalDate currentDate = LocalDate.now();
+	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyMMdd");
+	    String dateString = currentDate.format(formatter);
+
+	    int max = 0;
+	    for (PhieuThuePhong pt : PhieuThueList) {
+	        String idPT = pt.getIdPhieuThue();
+	        if (idPT.startsWith("PT" + dateString) && idPT.length() > 3) {
+	            String suffix = idPT.substring(idPT.length() - 3); // Lấy 3 ký tự cuối
+	            try {
+	                int suffixInt = Integer.parseInt(suffix);
+	                if (suffixInt > max) {
+	                    max = suffixInt;
+	                }
+	            } catch (NumberFormatException e) {
+	                System.err.println("Lỗi định dạng ID phiếu thuê: " + suffix);
+	                return null;
+	            }
+	        }
+	    }
+
+	    int nextId = max + 1;
+	    String formattedNextId = new DecimalFormat("000").format(nextId); // Định dạng 3 số
+	    return "PT" + dateString + formattedNextId;
 	}
 
 	
