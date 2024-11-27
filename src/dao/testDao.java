@@ -3,6 +3,7 @@ package dao;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import connectDB.ConnectDB;
 import entity.ChiTietHD_Phong;
@@ -102,7 +103,7 @@ public class testDao {
 	//done
 	public static void testHoaDon() {
 	    HoaDon_DAO hddao = new HoaDon_DAO();
-	    System.out.print(hddao.layHoaDonTheoMaHoaDon("HD24100301").tongTien());
+	    System.out.print(hddao.layTheoNgay(LocalDateTime.of(2024, 10, 3, 12, 0, 0)));
 //	    LocalDateTime ngayGio = LocalDateTime.now(); // Thời gian hiện tại
 //	    LocalDateTime ngayGio2 = LocalDateTime.of(2024, 10, 24, 14, 30); // Ngày 20/10/2024 lúc 14:30
 //

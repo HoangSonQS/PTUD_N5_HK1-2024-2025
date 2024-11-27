@@ -34,7 +34,7 @@ public class PhieuThuePhong_DAO {
 			pstm.setString(4, phieuthue.getNhanVienLap().getIdNhanVien());
 			pstm.setDate(5, Date.valueOf(phieuthue.getThoiGianNhanPhong()));
 			pstm.setDate(6, Date.valueOf(phieuthue.getThoiHanGiaoPhong()));
-			pstm.setBoolean(7, phieuthue.getHieuLuc());
+			pstm.setBoolean(7, Boolean.TRUE);
 			n = pstm.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

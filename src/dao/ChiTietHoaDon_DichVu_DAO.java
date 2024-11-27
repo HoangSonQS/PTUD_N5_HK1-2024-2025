@@ -10,7 +10,7 @@ import java.util.List;
 import connectDB.ConnectDB;
 import entity.ChiTietHD_DichVu;
 import entity.DichVu;
-
+import entity.HoaDon;
 
 
 public class ChiTietHoaDon_DichVu_DAO {
