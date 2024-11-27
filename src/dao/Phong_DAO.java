@@ -40,9 +40,9 @@ public class Phong_DAO {
 				int trangThai = rs.getInt("TrangThai");
 				TrangThaiPhong tt = null;
 				if(trangThai == 1) {
-					tt = TrangThaiPhong.TRONG;
-				} else if(trangThai == 2) {
 					tt = TrangThaiPhong.DANGTHUE;
+				} else if(trangThai == 2) {
+					tt = TrangThaiPhong.TRONG;
 				} else if(trangThai == 3) {
 					tt = TrangThaiPhong.SAPCHECKIN;
 				} else {
@@ -124,10 +124,10 @@ public class Phong_DAO {
 				int trangThai = rs.getInt("TrangThai");
 				TrangThaiPhong tt = null;
 				if(trangThai == 1) {
-					tt = TrangThaiPhong.TRONG;
-				} else if(trangThai == 1) {
 					tt = TrangThaiPhong.DANGTHUE;
-				} else if(trangThai == 1) {
+				} else if(trangThai == 2) {
+					tt = TrangThaiPhong.TRONG;
+				} else if(trangThai == 3) {
 					tt = TrangThaiPhong.SAPCHECKIN;
 				} else {
 					tt = TrangThaiPhong.SAPCHECKOUT;
@@ -176,9 +176,9 @@ public class Phong_DAO {
 					int trangThai = rs.getInt("TrangThai");
 					TrangThaiPhong tt = null;
 					if(trangThai == 1) {
-						tt = TrangThaiPhong.TRONG;
-					} else if(trangThai == 2) {
 						tt = TrangThaiPhong.DANGTHUE;
+					} else if(trangThai == 2) {
+						tt = TrangThaiPhong.TRONG;
 					} else if(trangThai == 3) {
 						tt = TrangThaiPhong.SAPCHECKIN;
 					} else {
@@ -221,9 +221,9 @@ public class Phong_DAO {
 					Double donGia = rs.getDouble("DonGia");
 					TrangThaiPhong tt = null;
 					if(trangthai == 1) {
-						tt = TrangThaiPhong.TRONG;
-					} else if(trangthai == 2) {
 						tt = TrangThaiPhong.DANGTHUE;
+					} else if(trangthai == 2) {
+						tt = TrangThaiPhong.TRONG;
 					} else if(trangthai == 3) {
 						tt = TrangThaiPhong.SAPCHECKIN;
 					} else {
@@ -266,9 +266,9 @@ public class Phong_DAO {
 					Double donGia = rs.getDouble("DonGia");
 					TrangThaiPhong tt = null;
 					if(trangthai == 1) {
-						tt = TrangThaiPhong.TRONG;
-					} else if(trangthai == 2) {
 						tt = TrangThaiPhong.DANGTHUE;
+					} else if(trangthai == 2) {
+						tt = TrangThaiPhong.TRONG;
 					} else if(trangthai == 3) {
 						tt = TrangThaiPhong.SAPCHECKIN;
 					} else {
@@ -287,87 +287,97 @@ public class Phong_DAO {
 			return dsPhong;
 		 }
 	 public boolean capNhatPhong(Phong phong) {
-			int n = 0;
-			ConnectDB.getInstance();
-			Connection conN = ConnectDB.getInstance().getConnection();
-			PreparedStatement pstm = null;
-			String sql = "update Phong set LoaiPhong=?, DonGia=?, TrangThai=? where IDPhong=? ";
-			try {
-				pstm = conN.prepareStatement(sql);
-				//pstm.setString(1, phong.getIdPhong());
-//				pstm.setString(2, phong.getLoaiPhong());
-				int lp = 0;
-				if(phong.getLoaiPhong().toString().equalsIgnoreCase("Phòng đôi")) {
-					lp = 1;
-				} else if(phong.getLoaiPhong().toString().equalsIgnoreCase("Phòng đơn")) {
-					lp = 2;
-				} else {
-					lp = 3;
-				}
-				pstm.setInt(1, lp);
-				pstm.setDouble(2, phong.getDonGia());
-				int tt = 0;
-				if(phong.getTrangThai().toString().equalsIgnoreCase("Trống")) {
-					tt = 1;
-				} else if(phong.getTrangThai().toString().equalsIgnoreCase("Đang thuê")) {
-					tt = 2;
-				} else if(phong.getTrangThai().toString().equalsIgnoreCase("Sắp checkin")) {
-					tt = 3;
-				} else {
-					tt = 4;
-				}
-				pstm.setInt(3, tt);
-				pstm.setString(4, phong.getIdPhong());
-				n = pstm.executeUpdate();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} finally {
-				try {
-					pstm.close();
-				} catch (Exception e2) {
-					// TODO: handle exception
-					e2.printStackTrace();
-				}
-			}
-			return n > 0;
+		    int n = 0;
+		    Connection conN = null;
+		    PreparedStatement pstm = null;
+		    String sql = "UPDATE Phong SET LoaiPhong=?, DonGia=?, TrangThai=? WHERE IDPhong=?";
+		    
+		    try {
+		        conN = ConnectDB.getInstance().getConnection();
+		        pstm = conN.prepareStatement(sql);
+		        
+		        // Chuyển đổi loại phòng
+		        int lp = switch(phong.getLoaiPhong()) {
+		            case PHONGDOI -> 1;
+		            case PHONGDON -> 2;
+		            case PHONGGIADINH -> 3;
+		        };
+		        pstm.setInt(1, lp);
+		        
+		        pstm.setDouble(2, phong.getDonGia());
+		        
+		        // Chuyển đổi trạng thái
+		        int tt = switch(phong.getTrangThai()) {
+		            case DANGTHUE -> 1;  // Đang thuê
+		            case TRONG -> 2;      // Trống
+		            case SAPCHECKIN -> 3; // Sắp checkin
+		            case SAPCHECKOUT -> 4; // Sắp checkout
+		        };
+		        pstm.setInt(3, tt);
+		        
+		        pstm.setString(4, phong.getIdPhong());
+		        
+		        n = pstm.executeUpdate();
+		        
+		        // Log thông tin cập nhật
+		        System.out.println("Cập nhật phòng: " + phong.getIdPhong() 
+		                           + ", Trạng thái: " + phong.getTrangThai() 
+		                           + ", Số dòng cập nhật: " + n);
+		        
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    } finally {
+		        try {
+		            if (pstm != null) pstm.close();
+		        } catch (SQLException e2) {
+		            e2.printStackTrace();
+		        }
+		    }
+		    
+		    return n > 0;
 		}
+
+	 
 	 public boolean capNhatTrangThaiPhong(Phong phong) {
-			int n = 0;
-			ConnectDB.getInstance();
-			Connection conN = ConnectDB.getInstance().getConnection();
-			PreparedStatement pstm = null;
-			String sql = "update Phong set TrangThai=? where IDPhong=? ";
-			try {
-				pstm = conN.prepareStatement(sql);
-				//pstm.setString(1, phong.getIdPhong());
-//				pstm.setString(2, phong.getLoaiPhong());
-				int tt = 0;
-				if(phong.getTrangThai().toString().equalsIgnoreCase("Trống")) {
-					tt = 1;
-				} else if(phong.getTrangThai().toString().equalsIgnoreCase("Đang thuê")) {
-					tt = 2;
-				} else if(phong.getTrangThai().toString().equalsIgnoreCase("Sắp checkin")) {
-					tt = 3;
-				} else {
-					tt = 4;
-				}
-				pstm.setInt(1, tt);
-				pstm.setString(2, phong.getIdPhong());
-				n = pstm.executeUpdate();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} finally {
-				try {
-					pstm.close();
-				} catch (Exception e2) {
-					// TODO: handle exception
-					e2.printStackTrace();
-				}
-			}
-			return n > 0;
+		    int n = 0;
+		    Connection conN = null;
+		    PreparedStatement pstm = null;
+		    String sql = "UPDATE Phong SET TrangThai=? WHERE IDPhong=?";
+		    
+		    try {
+		        conN = ConnectDB.getInstance().getConnection();
+		        pstm = conN.prepareStatement(sql);
+		        
+		        // Chuyển đổi trạng thái
+		        int tt = switch(phong.getTrangThai()) {
+		            case DANGTHUE -> 1;  // Đang thuê
+		            case TRONG -> 2;      // Trống
+		            case SAPCHECKIN -> 3; // Sắp checkin
+		            case SAPCHECKOUT -> 4; // Sắp checkout
+		        };
+		        pstm.setInt(1, tt);
+		        pstm.setString(2, phong.getIdPhong());
+		        
+		        n = pstm.executeUpdate();
+		        
+		        // Log thông tin cập nhật
+		        System.out.println("Cập nhật trạng thái phòng: " + phong.getIdPhong() 
+		                           + ", Trạng thái: " + phong.getTrangThai() 
+		                           + ", Số dòng cập nhật: " + n);
+		        
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    } finally {
+		        try {
+		            if (pstm != null) pstm.close();
+		        } catch (SQLException e2) {
+		            e2.printStackTrace();
+		        }
+		    }
+		    
+		    return n > 0;
 		}
+	 
 	 public ObservableList<Phong> getAllPhongOb() {
 	        ObservableList<Phong> phongList = FXCollections.observableArrayList();
 	        Connection con = ConnectDB.getInstance().getConnection();
@@ -417,8 +427,8 @@ public class Phong_DAO {
 	    }
 	    private TrangThaiPhong getTrangThaiEnum(int trangThai) {
 	        switch (trangThai) {
-	            case 1: return TrangThaiPhong.TRONG;
-	            case 2: return TrangThaiPhong.DANGTHUE;
+	            case 1: return TrangThaiPhong.DANGTHUE;
+	            case 2: return TrangThaiPhong.TRONG;
 	            case 3: return TrangThaiPhong.SAPCHECKIN;
 	            case 4: return TrangThaiPhong.SAPCHECKOUT;
 				default: return null;  // Handle invalid values
