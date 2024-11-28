@@ -239,6 +239,7 @@ public class GD_TKPhong_Controller implements Initializable{
         	TrangThaiPhong tt = cellData.getValue().getTrangThai();
         	return new ReadOnlyStringWrapper(tt.toString());
         });
+        
         loadTableData();
         tablePhong.setOnMouseClicked(event -> {
         	Phong selectedPhong = tablePhong.getSelectionModel().getSelectedItem();
@@ -254,7 +255,6 @@ public class GD_TKPhong_Controller implements Initializable{
         try {
             Phong_DAO pdao = new Phong_DAO();
             ArrayList<Phong> dsp = pdao.getAllPhong();
-
             ObservableList<Phong> observableList = FXCollections.observableArrayList(dsp);
             tablePhong.setItems(observableList);
             
