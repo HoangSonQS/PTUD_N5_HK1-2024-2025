@@ -43,7 +43,7 @@
                   </ImageView>
                   <Label layoutX="33.0" layoutY="167.0" text="Chi tiết thông tin phòng:">
                      <font>
-                        <Font size="24.0" />
+                        <Font name="System Bold" size="24.0" />
                      </font>
                   </Label>
                   <Label layoutX="33.0" layoutY="212.0" text="Mã phòng:">

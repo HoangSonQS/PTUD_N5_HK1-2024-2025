@@ -114,6 +114,7 @@ public class GD_DoiPhong_Controller implements Initializable{
     public ArrayList<PhieuThuePhong> list;
     public PhieuThuePhong[] pthople;
     public String maphong;
+    
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		lb_maPhong.setText("");

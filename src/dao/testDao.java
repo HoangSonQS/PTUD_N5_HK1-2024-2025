@@ -25,8 +25,8 @@ public class testDao {
 //		testTaiKhoan();
 //		testNhanVien();
 //		testPhieuThue();
-//		testKH();
-		testHoaDon();
+		testKH();
+//		testHoaDon();
 //		testPhong();
 	}
 	
