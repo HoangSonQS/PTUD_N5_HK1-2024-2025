@@ -19,6 +19,7 @@ public class App extends Application{
 	public static Stage primaryStage;
 	public static Scene primaryScene;
 	public static String user;
+	public static String ma;
 	private Stage stage;
 	@Override
 	public void start(Stage arg0) throws Exception {

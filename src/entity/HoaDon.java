@@ -53,6 +53,10 @@ public class HoaDon {
 	public void setNhanVienLap(NhanVien nhanVienLap) {
 		this.nhanVienLap = nhanVienLap;
 	}
+	
+	public String getNhanVienString() {
+		return getNhanVienLap() == null ? "" : getNhanVienLap().toString();
+	}
 
 	public KhachHang getKhachHang() {
 		return khachHang;
@@ -62,6 +66,9 @@ public class HoaDon {
 		this.khachHang = khachHang;
 	}
 
+	public String getKhachHangString() {
+		return getKhachHang() == null ? "" : getKhachHang().toString();
+	}
 	
 	public LocalDateTime getThoiGianTao() {
 		return thoiGianTao;
@@ -85,6 +92,10 @@ public class HoaDon {
 
 	public void setKhuyenmai(KhuyenMai khuyenmai) {
 		this.khuyenmai = khuyenmai;
+	}
+	
+	public String getKhuyenMaiString() {
+		return getKhuyenmai() == null ? "" : getKhuyenmai().toString();
 	}
 
 	@Override

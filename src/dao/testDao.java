@@ -68,7 +68,7 @@ public class testDao {
 	public static void testNhanVien() {
 		NhanVien_DAO nv = new NhanVien_DAO();
 		System.out.println(nv.getNhanVienTheoMa("NV24100301"));
-		nv.themNhanVien(new NhanVien(null, "Nguyễn Hoàng Sơn", "0385412905", LocalDate.of(2004, 11, 03), true, "087204012824", Enum_ChucVu.NGUOIQUANLY));
+		nv.themNhanVien(new NhanVien(null, "Nguyễn Hoàng Sơn", "0385412905", LocalDate.of(2004, 11, 03), true, "087204012824", ChucVu.NGUOIQUANLY));
 	}
 	public static void testPhieuThue() {
 //		PhieuThuePhong_DAO dsPT = new PhieuThuePhong_DAO();
