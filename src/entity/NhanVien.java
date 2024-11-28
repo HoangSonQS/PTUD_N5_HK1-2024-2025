@@ -17,11 +17,11 @@ public class NhanVien {
 	private LocalDate ngaySinh;
 	private boolean gioiTinh;
 	private String cccd;
-	private Enum_ChucVu chucVu;
+	private ChucVu chucVu;
 	
 	
 	public NhanVien(String idNhanVien, String tenNhanVien, String soDienThoai, LocalDate ngaySinh, boolean gioiTinh,
-			String cccd, Enum_ChucVu chucVu) {
+			String cccd, ChucVu cv) {
 		super();
 		this.idNhanVien = idNhanVien;
 		this.tenNhanVien = tenNhanVien;
@@ -29,7 +29,7 @@ public class NhanVien {
 		this.ngaySinh = ngaySinh;
 		this.gioiTinh = gioiTinh;
 		this.cccd = cccd;
-		this.chucVu = chucVu;
+		this.chucVu = cv;
 	}
 	public NhanVien(String idnhanvien) {
 		this.idNhanVien = idnhanvien;
@@ -71,11 +71,14 @@ public class NhanVien {
 		this.cccd = cccd;
 	}
 
-	public Enum_ChucVu getChucVu() {
+	public ChucVu getChucVu() {
 		return chucVu;
 	}
-	public void setChucVu(Enum_ChucVu chucVu) {
+	public void setChucVu(ChucVu chucVu) {
 		this.chucVu = chucVu;
+	}
+	public String getChucVuString() {
+		return getChucVu() == null ? "" : getChucVu().toString();
 	}
 	@Override
 	public String toString() {

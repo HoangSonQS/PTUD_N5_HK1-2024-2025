@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 import dao.Enum_ChucVu;
 import dao.NhanVien_DAO;
 import dao.TaiKhoan_DAO;
+import entity.ChucVu;
 import entity.NhanVien;
 import entity.TaiKhoan;
 import javafx.beans.property.ReadOnlyStringWrapper;
@@ -158,7 +159,7 @@ public class GD_QLTaiKhoan_Controller implements Initializable{
             String maNV = nv.getIdNhanVien();
             
             // Lấy chức vụ của nhân viên
-            Enum_ChucVu chucVu = nv.getChucVu();
+            ChucVu chucVu = nv.getChucVu();
             
             // Tiền tố mã tài khoản dựa vào chức vụ
             String prefix = "";
@@ -431,7 +432,7 @@ public class GD_QLTaiKhoan_Controller implements Initializable{
             new ReadOnlyStringWrapper(cellData.getValue().getNhanVien().getTenNhanVien()));
         
         clChucVu.setCellValueFactory(cellData -> 
-            new ReadOnlyStringWrapper(cellData.getValue().getNhanVien().getChucVu().getChucVu()));
+            new ReadOnlyStringWrapper(cellData.getValue().getNhanVien().getChucVu().getchucVu()));
         
         loadTableData();
 		
@@ -469,7 +470,7 @@ public class GD_QLTaiKhoan_Controller implements Initializable{
 	        if (nv != null) {
 	            lb_MaNV.setText(nv.getIdNhanVien());
 	            lb_TenNV.setText(nv.getTenNhanVien());
-	            lb_ChucVu.setText(nv.getChucVu().getChucVu());
+	            lb_ChucVu.setText(nv.getChucVu().getchucVu());
 	        } else {
 	            // Xóa thông tin nếu không có nhân viên liên kết
 	            lb_MaNV.setText("");

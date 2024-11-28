@@ -11,6 +11,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import dao.Enum_ChucVu;
 import dao.NhanVien_DAO;
+import entity.ChucVu;
 import entity.NhanVien;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
@@ -164,8 +165,8 @@ public class GD_QLNhanVien_Controller implements Initializable{
 
 	        // Format chức vụ
 	        clChucVu.setCellValueFactory(cellData -> {
-	            Enum_ChucVu chucVu = cellData.getValue().getChucVu();
-	            String chucVuString = (chucVu != null) ? chucVu.getChucVu() : "";
+	            ChucVu chucVu = cellData.getValue().getChucVu();
+	            String chucVuString = (chucVu != null) ? chucVu.getchucVu() : "";
 	            return new ReadOnlyStringWrapper(chucVuString);
 	        });
 
@@ -209,9 +210,9 @@ public class GD_QLNhanVien_Controller implements Initializable{
 	            txtCCCD.setText(selectedNhanVien.getCccd());
 	            txtNgaySinh.setValue(selectedNhanVien.getNgaySinh());
 	            cbbGioiTinh.setValue(selectedNhanVien.isGioiTinh() ? "Nam" : "Nữ");
-	            Enum_ChucVu chucVu = selectedNhanVien.getChucVu();
+	            ChucVu chucVu = selectedNhanVien.getChucVu();
 	            if (chucVu != null) {
-	                cbbChucVu.setValue(chucVu.getChucVu());
+	                cbbChucVu.setValue(chucVu.getchucVu());
 	            } else {
 	                cbbChucVu.setValue(null);
 	            }
@@ -316,12 +317,12 @@ public class GD_QLNhanVien_Controller implements Initializable{
 
 	        // Xử lý chức vụ
 	        String chucVuString = cbbChucVu.getValue();
-	        Enum_ChucVu chucVu = null;
+	        ChucVu chucVu = null;
 	        
 	        if (chucVuString.equals("Nhân viên lễ tân")) {
-	            chucVu = Enum_ChucVu.NHANVIENLETAN;
+	            chucVu = ChucVu.NHANVIENLETAN;
 	        } else if (chucVuString.equals("Người quản lý")) {
-	            chucVu = Enum_ChucVu.NGUOIQUANLY;
+	            chucVu = ChucVu.NGUOIQUANLY;
 	        }
 
 	        // Tạo đối tượng NhanVien với thông tin đã sửa
@@ -416,11 +417,11 @@ public class GD_QLNhanVien_Controller implements Initializable{
 
 	        // Lấy giá trị chức vụ từ ComboBox và chuyển đổi
 	        String chucVuString = cbbChucVu.getValue();
-	        Enum_ChucVu chucVu = null;
+	        ChucVu chucVu = null;
 	        if (chucVuString.equals("Nhân viên lễ tân")) {
-	            chucVu = Enum_ChucVu.NHANVIENLETAN;
+	            chucVu = ChucVu.NHANVIENLETAN;
 	        } else if (chucVuString.equals("Người quản lý")) {
-	            chucVu = Enum_ChucVu.NGUOIQUANLY;
+	            chucVu = ChucVu.NGUOIQUANLY;
 	        }
 
 	        // Tạo mã nhân viên

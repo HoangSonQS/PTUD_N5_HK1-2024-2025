@@ -16,7 +16,6 @@ import entity.TrangThaiPhong;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -24,7 +23,6 @@ import javafx.scene.Cursor;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -65,24 +63,22 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 	@FXML
 	private Label lb_ThongKe;
 
-	@FXML
-	private Label lb_TimKiem;
+	 @FXML
+	private Button btn_DangO;
 
-	@FXML
-	private Label lb_setCheckin;
+	    @FXML
+	    private Button btn_PhongTrong;
 
-	@FXML
-	private Label lb_setCheckout1;
+	    @FXML
+	    private Button btn_SapCheckIn;
 
-	@FXML
-	private Label lb_soPhongDangO;
+	    @FXML
+	    private Button btn_SapCheckOut;
 
-	@FXML
-	private Label lb_soPhongTrong;
+	    @FXML
+	    private Button btn_TatCa;
 	@FXML
 	private GridPane gridPane;
-	@FXML
-    private Label lb_tongSoPhong;
 
 	    @FXML
 	    void moGiaoDienGiaHanPhong(MouseEvent event) throws IOException {
@@ -122,45 +118,112 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
     	renderArrayPhong(new Phong_DAO().getAllPhong());
 		cbb.setItems(list);
 		cbb.setValue("Tất cả");
-		loadtrangthai();
+		loadLoaiPhong();
+		loadTrangThaiPhong();
 	}
-	public void loadtrangthai() {
+	
+	public void loadLoaiPhong() {
 		renderArrayPhong(new Phong_DAO().getAllPhong());
-		
 		cbb.setOnAction(event -> {
-		    String selectedItem = (String) cbb.getSelectionModel().getSelectedItem();
-		    gridPane.getChildren().clear(); // Xóa các thành phần trong GridPane trước khi thêm mới
-
-		    ArrayList<Phong> dsP = null; // Khởi tạo danh sách phòng
-
-		    if (selectedItem.equals("Phòng đơn")) {
-		        dsP = new Phong_DAO().getPhongTheoLoai(2);
-		    } else if (selectedItem.equals("Phòng đôi")) {
-		        dsP = new Phong_DAO().getPhongTheoLoai(1);
-		    } else if (selectedItem.equals("Phòng gia đình")) {
-		        dsP = new Phong_DAO().getPhongTheoLoai(3);
-		    } else if (selectedItem.equals("Tất cả")) {
-		        dsP = new Phong_DAO().getAllPhong(); // Lấy tất cả các phòng
-		    }
+			gridPane.getChildren().clear(); // Xóa các thành phần trong GridPane trước khi thêm mới
+		    ArrayList<Phong> dsP = kiemTraLoaiPhong(); // Khởi tạo danh sách phòng
 		    renderArrayPhong(dsP);
 		});
 	}
 	public void loadsoPhong() {
 		Phong_DAO dsp1 = new Phong_DAO();
-	    String sophongtrong = String.valueOf(dsp1.getPhongTheoTrangThai(1));
-	    String sophongdango = String.valueOf(dsp1.getPhongTheoTrangThai(2));
-	    String sophongsapCheckIn = String.valueOf(dsp1.getPhongTheoTrangThai(4));
-	    String sophongsapCheckOut = String.valueOf(dsp1.getPhongTheoTrangThai(3));
-	    String tongsophong = String.valueOf(new Phong_DAO().getAllPhong().size());
-	    lb_soPhongTrong.setText("("+sophongtrong+")");
-	    lb_soPhongDangO.setText("("+sophongdango+")");
-	    lb_setCheckin.setText("("+sophongsapCheckIn+")");
-	    lb_setCheckout1.setText("("+sophongsapCheckOut+")");
-	    lb_tongSoPhong.setText("("+tongsophong+")");
+	    btn_PhongTrong.setText("Phòng trống ("+String.valueOf(dsp1.getPhongTheoTrangThai(1))+")");
+	    btn_DangO.setText("Đang ở ("+String.valueOf(dsp1.getPhongTheoTrangThai(2))+")");
+	    btn_SapCheckIn.setText("Sắp Check-in ("+String.valueOf(dsp1.getPhongTheoTrangThai(4))+")");
+	    btn_SapCheckOut.setText("Sắp Check-out ("+String.valueOf(dsp1.getPhongTheoTrangThai(3))+")");
+	    btn_TatCa.setText("Tất cả ("+String.valueOf(new Phong_DAO().getAllPhong().size())+")");
 	}
+	
+	public ArrayList<Phong> kiemTraLoaiPhong() {
+		String selectedItem = (String) cbb.getSelectionModel().getSelectedItem();
+
+	    ArrayList<Phong> dsP = new ArrayList<Phong>(); // Khởi tạo danh sách phòng
+
+	    if (selectedItem.equals("Phòng đơn")) {
+	        dsP = new Phong_DAO().getPhongTheoLoai(2);
+	    } else if (selectedItem.equals("Phòng đôi")) {
+	        dsP = new Phong_DAO().getPhongTheoLoai(1);
+	    } else if (selectedItem.equals("Phòng gia đình")) {
+	        dsP = new Phong_DAO().getPhongTheoLoai(3);
+	    } else if (selectedItem.equals("Tất cả")) {
+	        dsP = new Phong_DAO().getAllPhong(); // Lấy tất cả các phòng
+	    }
+	    return dsP;
+	}
+	public void loadTrangThaiPhong() {
+		btn_PhongTrong.setOnAction(event ->{
+			gridPane.getChildren().clear();
+			ArrayList<Phong> dsPKiemTra =  kiemTraLoaiPhong();
+			ArrayList<Phong> dsKiemTraTT = new Phong_DAO().getPhongTheoTrangThaiDanhSach(1);
+			ArrayList<Phong> dsHoanCHinh = new ArrayList<Phong>();
+			for (Phong phongTT : dsPKiemTra) {
+			    // Kiểm tra nếu dsPKiemTra chứa phần tử này
+			    if (dsKiemTraTT.contains(phongTT)) {
+			        // Thêm phần tử vào dsHoanCHinh
+			        dsHoanCHinh.add(phongTT);
+			    }
+			}
+			renderArrayPhong(dsHoanCHinh);
+		});
+		btn_DangO.setOnAction(event ->{
+			gridPane.getChildren().clear();
+			ArrayList<Phong> dsPKiemTra =  kiemTraLoaiPhong();
+			ArrayList<Phong> dsKiemTraTT = new Phong_DAO().getPhongTheoTrangThaiDanhSach(2);
+			ArrayList<Phong> dsHoanCHinh = new ArrayList<Phong>();
+			for (Phong phongTT : dsKiemTraTT) {
+			    // Kiểm tra nếu dsPKiemTra chứa phần tử này
+			    if (dsPKiemTra.contains(phongTT)) {
+			        // Thêm phần tử vào dsHoanCHinh
+			        dsHoanCHinh.add(phongTT);
+			    }
+			}
+			renderArrayPhong(dsHoanCHinh);
+		});
+		btn_SapCheckIn.setOnAction(event ->{
+			gridPane.getChildren().clear();
+			ArrayList<Phong> dsPKiemTra =  kiemTraLoaiPhong();
+			ArrayList<Phong> dsKiemTraTT = new Phong_DAO().getPhongTheoTrangThaiDanhSach(3);
+			ArrayList<Phong> dsHoanCHinh = new ArrayList<Phong>();
+			for (Phong phongTT : dsKiemTraTT) {
+			    // Kiểm tra nếu dsPKiemTra chứa phần tử này
+			    if (dsPKiemTra.contains(phongTT)) {
+			        // Thêm phần tử vào dsHoanCHinh
+			        dsHoanCHinh.add(phongTT);
+			    }
+			}
+			renderArrayPhong(dsHoanCHinh);
+		});
+		btn_SapCheckOut.setOnAction(event ->{
+			gridPane.getChildren().clear();
+			ArrayList<Phong> dsPKiemTra =  kiemTraLoaiPhong();
+			ArrayList<Phong> dsKiemTraTT = new Phong_DAO().getPhongTheoTrangThaiDanhSach(4);
+			ArrayList<Phong> dsHoanCHinh = new ArrayList<Phong>();
+			for (Phong phongTT : dsKiemTraTT) {
+			    // Kiểm tra nếu dsPKiemTra chứa phần tử này
+			    if (dsPKiemTra.contains(phongTT)) {
+			        // Thêm phần tử vào dsHoanCHinh
+			        dsHoanCHinh.add(phongTT);
+			    }
+			}
+			renderArrayPhong(dsHoanCHinh);
+		});
+		btn_TatCa.setOnAction(event->{
+			gridPane.getChildren().clear();
+			ArrayList<Phong> dsPKiemTra =  kiemTraLoaiPhong();
+			renderArrayPhong(dsPKiemTra);
+		});
+	}
+	
 	public void renderArrayPhong(ArrayList<Phong> dsPhong) {
 		for (int i = 0; i < dsPhong.size(); i++) {
 			Phong phong = dsPhong.get(i);
+			gridPane.setHgap(10); // Khoảng cách giữa các cột
+	        gridPane.setVgap(10); // Khoảng cách giữa các hàng
 			gridPane.add(taoGiaoDienPhong(phong), i % 5, i / 5);
 		}
 	}
@@ -168,8 +231,8 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 	public Pane taoGiaoDienPhong(Phong phong) {
 		VBox roomItem = new VBox();
 		roomItem.setCursor(Cursor.HAND);
-		roomItem.setPrefHeight(200);
-		roomItem.setPrefWidth(100);
+		roomItem.setPrefHeight(250);
+		roomItem.setPrefWidth(250);
 
 		switch (phong.getTrangThai()) {
 		case TRONG:
@@ -194,6 +257,12 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 		lblLoaiPhong.setStyle("-fx-font-size: 18; -fx-font-weight: 600");
 		lblLoaiPhong.setPadding(new Insets(0, 0, 8, 0));
 		roomItem.getChildren().add(lblLoaiPhong);
+		
+		String dongia = String.valueOf(phong.getDonGia());
+		Label lbGiaPhong = new Label(dongia + " VND");
+		lbGiaPhong.setStyle("-fx-font-size: 18; -fx-font-weight: 700");
+		lbGiaPhong.setPadding(new Insets(0, 0, 8, 0));
+		roomItem.getChildren().add(lbGiaPhong);
 
 		if (phong.getTrangThai() == TrangThaiPhong.SAPCHECKIN) {
 			try {
@@ -208,7 +277,7 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 				Logger.getLogger(GD_SoDoPhong_Cotroller.class.getName()).log(Level.SEVERE, null, ex);
 			}
 		}
-		String strBtnLeft = phong.getTrangThai() == TrangThaiPhong.TRONG ? "Trả Phòng"
+		String strBtnLeft = phong.getTrangThai() == TrangThaiPhong.TRONG ? "Chọn phòng"
 				: phong.getTrangThai() == TrangThaiPhong.SAPCHECKIN ? "Hủy phòng"
 						: phong.getTrangThai() == TrangThaiPhong.DANGTHUE ? "Đổi phòng" : "Gia Hạn Phòng";
 		
@@ -220,11 +289,27 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 
 		switch (phong.getTrangThai()) {
 		case TRONG:
-			btnLeft.setStyle("-fx-background-color: #31c57e; -fx-font-size: 16");
-			btnLeft.setVisible(false);
-			btnRight.setOnAction((event) -> {
-				GD_DatPhongChoController.MaPhong = phong.getIdPhong();
+			btnLeft.setStyle("-fx-background-color: #edbf6d; -fx-text-fill: #fff; -fx-font-size: 16");
+			btnLeft.setOnAction(((event) -> {
 				try {
+					String maChon = phong.getIdPhong();
+					GD_DatPhongChoController.dsMaPhong.add(maChon);
+				} catch (Exception e) {
+					// TODO: handle exception
+					e.printStackTrace();
+				}
+				
+			}));
+			btnRight.setOnAction((event) -> {
+				try {
+					String maChon = phong.getIdPhong();
+					if(GD_DatPhongChoController.dsMaPhong.isEmpty()) {
+						GD_DatPhongChoController.dsMaPhong.add(maChon);
+					}else {
+						if (!GD_DatPhongChoController.dsMaPhong.contains(maChon)) {
+						    GD_DatPhongChoController.dsMaPhong.add(maChon);
+						}
+					}
 					moGDDatPhong();
 					renderArrayPhong(new Phong_DAO().getAllPhong());
 					loadsoPhong();

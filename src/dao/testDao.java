@@ -3,6 +3,7 @@ package dao;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import connectDB.ConnectDB;
 import entity.ChiTietHD_Phong;
@@ -68,7 +69,7 @@ public class testDao {
 	public static void testNhanVien() {
 		NhanVien_DAO nv = new NhanVien_DAO();
 		System.out.println(nv.getNhanVienTheoMa("NV24100301"));
-		nv.themNhanVien(new NhanVien(null, "Nguyễn Hoàng Sơn", "0385412905", LocalDate.of(2004, 11, 03), true, "087204012824", Enum_ChucVu.NGUOIQUANLY));
+		nv.themNhanVien(new NhanVien(null, "Nguyễn Hoàng Sơn", "0385412905", LocalDate.of(2004, 11, 03), true, "087204012824", ChucVu.NGUOIQUANLY));
 	}
 	public static void testPhieuThue() {
 		PhieuThuePhong_DAO dsPT = new PhieuThuePhong_DAO();
@@ -102,7 +103,13 @@ public class testDao {
 	//done
 	public static void testHoaDon() {
 	    HoaDon_DAO hddao = new HoaDon_DAO();
-	    System.out.print(hddao.layHoaDonTheoMaHoaDon("HD24100301").tongTien());
+	    LocalDate a = LocalDate.of(2024, 10, 12);
+	    System.out.printf("%d,%d,%d\n",a.getYear(),a.getMonthValue(),a.getDayOfMonth());
+	    System.out.println(hddao.TheoNgay(a));
+	    
+	    
+	    
+//	    System.out.print(hddao.layTheoNgay(LocalDate.of(2024, 10, 12)));
 //	    LocalDateTime ngayGio = LocalDateTime.now(); // Thời gian hiện tại
 //	    LocalDateTime ngayGio2 = LocalDateTime.of(2024, 10, 24, 14, 30); // Ngày 20/10/2024 lúc 14:30
 //

@@ -78,7 +78,7 @@ public class GD_Chinh_Controller implements Initializable{
 
     @FXML
     void moGiaoDienTimKiem(MouseEvent event) throws IOException {
-    	App.setRoot("GD_ThongKeDoanhThu");
+    	App.setRoot("GD_TKPhong");
     }
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
