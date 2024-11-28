@@ -3,6 +3,7 @@ package dao;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import connectDB.ConnectDB;
 import entity.ChiTietHD_Phong;
@@ -25,8 +26,8 @@ public class testDao {
 //		testTaiKhoan();
 //		testNhanVien();
 //		testPhieuThue();
-		testKH();
-//		testHoaDon();
+//		testKH();
+		testHoaDon();
 //		testPhong();
 	}
 	
@@ -71,10 +72,11 @@ public class testDao {
 		nv.themNhanVien(new NhanVien(null, "Nguyễn Hoàng Sơn", "0385412905", LocalDate.of(2004, 11, 03), true, "087204012824", ChucVu.NGUOIQUANLY));
 	}
 	public static void testPhieuThue() {
-//		PhieuThuePhong_DAO dsPT = new PhieuThuePhong_DAO();
-//		
-//		KhachHang_DAO dsKH = new KhachHang_DAO();
-//		KhachHang kh1 = dsKH.getKhachHangTheoMa("KH24100301");
+		PhieuThuePhong_DAO dsPT = new PhieuThuePhong_DAO();
+		
+		KhachHang_DAO dsKH = new KhachHang_DAO();
+		KhachHang kh1 = dsKH.getKhachHangTheoMa("KH24100301");
+		System.out.println(dsPT.layPhieuThueTheoMaPhong("T01P02"));
 //		
 //		Phong_DAO dsP = new Phong_DAO();
 //		Phong p1 = dsP.getPhongTheoMa("T0P04");
@@ -101,18 +103,25 @@ public class testDao {
 	//done
 	public static void testHoaDon() {
 	    HoaDon_DAO hddao = new HoaDon_DAO();
-	    LocalDateTime ngayGio = LocalDateTime.now(); // Thời gian hiện tại
-	    LocalDateTime ngayGio2 = LocalDateTime.of(2024, 10, 24, 14, 30); // Ngày 20/10/2024 lúc 14:30
+	    LocalDate a = LocalDate.of(2024, 10, 12);
+	    System.out.printf("%d,%d,%d\n",a.getYear(),a.getMonthValue(),a.getDayOfMonth());
+	    System.out.println(hddao.TheoNgay(a));
+	    
+	    
+	    
+//	    System.out.print(hddao.layTheoNgay(LocalDate.of(2024, 10, 12)));
+//	    LocalDateTime ngayGio = LocalDateTime.now(); // Thời gian hiện tại
+//	    LocalDateTime ngayGio2 = LocalDateTime.of(2024, 10, 24, 14, 30); // Ngày 20/10/2024 lúc 14:30
 //
-	    NhanVien nv = new NhanVien("NV24100301");
-	    KhachHang kh = new KhachHang("KH24100301");
-	    KhuyenMai km = new KhuyenMai("KM241001");
+//	    NhanVien nv = new NhanVien("NV24100301");
+//	    KhachHang kh = new KhachHang("KH24100301");
+//	    KhuyenMai km = new KhuyenMai("KM241001");
 //
 //	    // Tạo đối tượng HoaDon
-	    HoaDon hd = new HoaDon("HD002", nv, kh, km, ngayGio, ngayGio2);
+//	    HoaDon hd = new HoaDon("HD002", nv, kh, km, ngayGio, ngayGio2);
 //
 //	    // Thêm hóa đơn vào cơ sở dữ liệu
-	    hddao.themHoaDon(hd);
+//	    hddao.themHoaDon(hd);
 	    
 //	    System.out.println(hddao.layHoaDonTheoMaHoaDon("HD001"));
 //	    System.out.println(hddao.layHoaDonTheoMaKhachHang("KH24100301"));

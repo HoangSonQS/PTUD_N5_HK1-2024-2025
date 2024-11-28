@@ -10,6 +10,8 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Map;
+
 import connectDB.ConnectDB;
 import entity.HoaDon;
 import entity.KhachHang;
@@ -222,5 +224,84 @@ public class HoaDon_DAO {
 			e.printStackTrace();
 		}
 		return dsHD;
+	}
+	
+	
+	//Thong ke
+	public ObservableList<LocalDateTime> TheoNgayob(LocalDate date){
+		ObservableList<LocalDateTime> dsHD = FXCollections.observableArrayList(); 
+		Connection conN = ConnectDB.getInstance().getConnection();
+		Statement stm = null;
+		try {
+			stm = conN.createStatement();
+			String sql = String.format("SELECT ThoiGianTao AS Ngay"
+                    + "FROM HoaDon WHERE YEAR(ThoiGianTao) = %d AND MONTH(ThoiGianTao) = %d "
+                    + "GROUP BY ThoiGianTao", date.getYear(), date.getMonthValue());
+			ResultSet rs = stm.executeQuery(sql);
+			while (rs.next()) {
+				LocalDateTime ngayLap = rs.getTimestamp("Ngay").toLocalDateTime();
+				dsHD.add(ngayLap);
+			}
+		}catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return dsHD;
+	}
+	public ArrayList<LocalDate> TheoNgay(LocalDate date){
+		ArrayList<LocalDate> dsHD = new ArrayList<LocalDate>();
+		Connection conN = ConnectDB.getInstance().getConnection();
+		Statement stm = null;
+		try {
+			stm = conN.createStatement();
+			String sql = String.format("SELECT CAST(ThoiGianTao AS DATE) AS Ngay FROM HoaDon "
+					+ "WHERE YEAR(ThoiGianTao) = %d AND MONTH(ThoiGianTao) = %d "
+					+ "GROUP BY CAST(ThoiGianTao AS DATE)", date.getYear(), date.getMonthValue());
+			System.out.println(sql);
+			ResultSet rs = stm.executeQuery(sql);
+			while (rs.next()) {
+				LocalDate ngayLap = rs.getDate("Ngay").toLocalDate();
+				dsHD.add(ngayLap);
+			}
+		}catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return dsHD;
+	}
+	public ArrayList<HoaDon> layTheoNgay(LocalDate date) {
+		ArrayList<HoaDon>dsHD = new ArrayList<HoaDon>();
+		Connection conN = ConnectDB.getInstance().getConnection();
+		PreparedStatement stm = null;
+		try {
+			String sql = "select * from HoaDon where CAST(ThoiGianTao AS DATE) = ?";
+			stm = conN.prepareStatement(sql);
+			stm.setDate(1, Date.valueOf(date));
+			ResultSet rs = stm.executeQuery();
+			while (rs.next()) {
+				String idHoaDon = rs.getString("IDHoaDon");
+				String idnhanvien = rs.getString("IDNhanVien");
+				String idKhachHang = rs.getString("IDKhachHang");
+				String idKhuyenmai = rs.getString("IDKhuyenMai");
+				LocalDateTime thoigiantao = rs.getTimestamp("ThoiGianTao").toLocalDateTime();
+	       
+	            // Lấy thời gian check-in (chỉ ngày)
+	            LocalDateTime thoigiancheckin = rs.getTimestamp("ThoiGianCheckin").toLocalDateTime();
+	            NhanVien_DAO dsnv = new NhanVien_DAO();
+	            NhanVien nv = dsnv.getNhanVienTheoMa(idnhanvien);
+	            KhachHang_DAO dskh = new KhachHang_DAO();
+	            KhachHang kh = dskh.getKhachHangTheoMa(idKhachHang);
+	            KhuyenMai_DAO dskm = new KhuyenMai_DAO();
+	            dskm.getAllKhuyenMai();
+	            KhuyenMai km = dskm.layKhuyenMaiTheoMa(idKhuyenmai);
+	            HoaDon hd = new HoaDon(idHoaDon, nv, kh, km, thoigiantao, thoigiancheckin);
+				dsHD.add(hd);
+			}
+		}catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return dsHD;
+		
 	}
 }

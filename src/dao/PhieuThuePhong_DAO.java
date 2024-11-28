@@ -34,7 +34,7 @@ public class PhieuThuePhong_DAO {
 			pstm.setString(4, phieuthue.getNhanVienLap().getIdNhanVien());
 			pstm.setDate(5, Date.valueOf(phieuthue.getThoiGianNhanPhong()));
 			pstm.setDate(6, Date.valueOf(phieuthue.getThoiHanGiaoPhong()));
-			pstm.setBoolean(7, phieuthue.getHieuLuc());
+			pstm.setBoolean(7, Boolean.TRUE);
 			n = pstm.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -54,7 +54,7 @@ public class PhieuThuePhong_DAO {
 		ConnectDB.getInstance();
 		Connection conN = ConnectDB.getInstance().getConnection();
 		PreparedStatement pstm = null;
-		String sql = "update PhieuThuePhong set IDKhachHang=?, IDPhong=?, IDNhanVien=?, ThoiGianNhanPhong=?, ThoiHanGiaoPhong=? where IDPhieuThue=? ";
+		String sql = "update PhieuThuePhong set IDKhachHang=?, IDPhong=?, IDNhanVien=?, ThoiGianNhanPhong=?, ThoiHanGiaoPhong=?, HieuLuc=? where IDPhieuThue=? ";
 		try {
 			
 			pstm = conN.prepareStatement(sql);
@@ -64,7 +64,8 @@ public class PhieuThuePhong_DAO {
 			pstm.setString(3, phieuthue.getNhanVienLap().getIdNhanVien());
 			pstm.setDate(4, Date.valueOf(phieuthue.getThoiGianNhanPhong()));
 			pstm.setDate(5, Date.valueOf(phieuthue.getThoiHanGiaoPhong()));
-			pstm.setString(6, phieuthue.getIdPhieuThue());
+			pstm.setBoolean(6, phieuthue.getHieuLuc());
+			pstm.setString(7, phieuthue.getIdPhieuThue());
 			n = pstm.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -208,6 +209,48 @@ public class PhieuThuePhong_DAO {
 	            Boolean hieuLuc = rs.getBoolean("HieuLuc");
 	            PhieuThuePhong pt = new PhieuThuePhong(idphieuthu, kh, p, nv, thoigiancheckin, thoigiancheckout, hieuLuc);
 	            dsPT.add(pt);
+			}
+		}catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return dsPT;
+	}
+	
+	
+	
+	// lọc hiệu lực
+	public ArrayList<PhieuThuePhong> layPhieuThueTheoMaKH(String maKH){
+		ArrayList<PhieuThuePhong> dsPT = new ArrayList<PhieuThuePhong>();
+	    Connection con = ConnectDB.getInstance().getConnection();
+	    PreparedStatement stmt = null;
+	    ResultSet rs = null;
+		try {
+			String sql = "select * from PhieuThuePhong where IDKhachHang = ?";
+			stmt = con.prepareStatement(sql);
+			stmt.setString(1, maKH);
+			rs = stmt.executeQuery();
+			while (rs.next()) {
+				String idphieuthu = rs.getString("IDPhieuThue");
+				String idkhachhang = rs.getString("IDKhachHang");
+	            String idphong = rs.getString("IDPhong");
+	            String idnhanvien = rs.getString("IDNhanVien");
+	            LocalDate thoigiancheckin = rs.getDate("ThoiGianNhanPhong").toLocalDate();
+	            LocalDate thoigiancheckout = rs.getDate("ThoiHanGiaoPhong").toLocalDate();
+	            NhanVien_DAO dsnv = new NhanVien_DAO();
+	            dsnv.getAllNhanVien();
+	            NhanVien nv = dsnv.getNhanVienTheoMa(idnhanvien);
+	            KhachHang_DAO dskh = new KhachHang_DAO();
+	            dskh.getAllKhachHang();
+	            KhachHang kh = dskh.getKhachHangTheoMa(idkhachhang);
+	            Phong_DAO dsp = new Phong_DAO();
+	            dsp.getAllPhong();
+	            Phong p = dsp.getPhongTheoMa(idphong);
+	            Boolean hieuLuc = rs.getBoolean("HieuLuc");
+	            PhieuThuePhong pt = new PhieuThuePhong(idphieuthu, kh, p, nv, thoigiancheckin, thoigiancheckout, hieuLuc);
+	            if (hieuLuc == true) {
+		            dsPT.add(pt);
+	            }
 			}
 		}catch (SQLException e) {
 			// TODO: handle exception

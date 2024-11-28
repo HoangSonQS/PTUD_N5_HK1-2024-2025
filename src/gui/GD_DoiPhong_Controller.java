@@ -4,11 +4,11 @@ package gui;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
-
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-
+import dao.Enum_TrangThaiPhong;
 import dao.PhieuThuePhong_DAO;
 import dao.Phong_DAO;
 import entity.PhieuThuePhong;
@@ -18,7 +18,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Cursor;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -26,9 +25,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import main.App;
 
@@ -36,9 +37,6 @@ import main.App;
 public class GD_DoiPhong_Controller implements Initializable{
 	@FXML
     private ImageView avt;
-
-    @FXML
-    private Button btnDoi;
 
     @FXML
     private ImageView icon_TimKiem1;
@@ -99,13 +97,19 @@ public class GD_DoiPhong_Controller implements Initializable{
 
     @FXML
     private Label lb_tenKH;
+    
+    @FXML
+    private Label lb_tieuChi;
 
     @FXML
     private GridPane scrollPane_GDDOi;
+    
     @FXML
     private Button btnTim;
+    
     @FXML
     private TextField txt_MaPhong;
+    
     public String maPhongDoi;
     public ArrayList<PhieuThuePhong> list;
     public PhieuThuePhong[] pthople;
@@ -118,130 +122,207 @@ public class GD_DoiPhong_Controller implements Initializable{
 		lb_NgayNhan.setText("");
 		lb_Ngaytra.setText("");
 		Phong_DAO dsP = new Phong_DAO();
-		renderArrayPhong(dsP.getPhongTheoTrangThaiDanhSach(1));
-		btnTim.setOnAction(even ->{
-			maphong = txt_MaPhong.getText();
-			
-			PhieuThuePhong_DAO dsPT = new PhieuThuePhong_DAO();
-			pthople = new PhieuThuePhong[1];
-			LocalDate GioHienTai = LocalDate.now();
-			list = dsPT.layPhieuThueTheoMaPhong(maphong);
-			list.forEach(phieuThue -> {
-			    LocalDate thoiGianNhan = phieuThue.getThoiGianNhanPhong(); 
-			    LocalDate thoiGianTra = phieuThue.getThoiHanGiaoPhong(); 
-			    if (GioHienTai.isBefore(thoiGianTra)&& GioHienTai.isAfter(thoiGianNhan)) {
-			    	pthople[0] = phieuThue;
-			    } 
-			});
-			if (pthople[0] != null) {
-		        lb_maPhong.setText(pthople[0].getPhong().getIdPhong());
-		        String tenKH = pthople[0].getKhachHang().getTenKhachHang();
-		        lb_tenKH.setText(tenKH);
-		        String sdt = pthople[0].getKhachHang().getSoDienThoai();
-		        lb_SDT.setText(sdt);
-		        lb_NgayNhan.setText(pthople[0].getThoiGianNhanPhong().toString());
-		        lb_Ngaytra.setText(pthople[0].getThoiHanGiaoPhong().toString());
-		    } else {
-		        System.out.println("Không có phiếu thuê hợp lệ nào.");
-		    }
-		});
-		btnDoi.setOnAction(event -> {
-		    if (pthople[0] != null && maPhongDoi != null) {
-		        PhieuThuePhong pthuemoi = pthople[0];
-		        Phong pmoi = dsP.getPhongTheoMa(maPhongDoi);
+		renderArrayPhong(dsP.getPhongTheoTrangThaiDanhSach(2));
+		
+		btnTim.setOnAction(even -> {
+		    maphong = txt_MaPhong.getText();
 
-		        if (pmoi != null && pmoi.getTrangThai() == TrangThaiPhong.TRONG) {
-		            // Cập nhật phiếu thuê với phòng mới
-		            pthuemoi.setPhong(pmoi);
-		            PhieuThuePhong_DAO dsPTMoi = new PhieuThuePhong_DAO();
-		            dsPTMoi.suaPhieuThue(pthuemoi);
+		    PhieuThuePhong_DAO dsPT = new PhieuThuePhong_DAO();
+//		    Phong_DAO dsp = new Phong_DAO();
+		    pthople = new PhieuThuePhong[1];
+		    LocalDate gioHienTai = LocalDate.now();
+		    list = dsPT.layPhieuThueTheoMaPhong(maphong);
 
-		            // Cập nhật trạng thái phòng mới
-		            pmoi.setTrangThai(TrangThaiPhong.DANGTHUE);
-		            dsP.capNhatTrangThaiPhong(pmoi);
+		    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-		            // Cập nhật trạng thái phòng cũ
-		            Phong pCu = dsP.getPhongTheoMa(lb_maPhong.getText());
-		            pCu.setTrangThai(TrangThaiPhong.TRONG);
-		            dsP.capNhatTrangThaiPhong(pCu);
+		    list.forEach(phieuThue -> {
+		        LocalDate thoiGianNhan = phieuThue.getThoiGianNhanPhong();
+		        LocalDate thoiGianTra = phieuThue.getThoiHanGiaoPhong();
 
-		            new Alert(Alert.AlertType.CONFIRMATION, "Đổi phòng thành công!").showAndWait();
-		            renderArrayPhong(dsP.getPhongTheoTrangThaiDanhSach(1));
-		        } else {
-		            new Alert(Alert.AlertType.WARNING, "Phòng được chọn không khả dụng để đổi.").showAndWait();
+		        if (gioHienTai.isBefore(thoiGianTra) && gioHienTai.isAfter(thoiGianNhan)) {
+		            pthople[0] = phieuThue;
 		        }
+		    });
+
+		    if (pthople[0] != null) {
+		        lb_maPhong.setText(pthople[0].getPhong().getIdPhong());
+		        lb_tieuChi.setText(pthople[0].getPhong().getTieuChi());
+		        lb_tenKH.setText(pthople[0].getKhachHang().getTenKhachHang());
+		        lb_SDT.setText(pthople[0].getKhachHang().getSoDienThoai());
+		        lb_NgayNhan.setText(pthople[0].getThoiGianNhanPhong().format(formatter));
+		        lb_Ngaytra.setText(pthople[0].getThoiHanGiaoPhong().format(formatter));
 		    } else {
-		        new Alert(Alert.AlertType.WARNING, "Không có phiếu thuê hợp lệ hoặc phòng đổi không được chọn.").showAndWait();
+		        new Alert(Alert.AlertType.WARNING, "Không tìm thấy phiếu thuê hợp lệ.").showAndWait();
 		    }
-		    txt_MaPhong.setText("");
-		    lb_maPhong.setText("");
-			lb_tenKH.setText("");
-			lb_SDT.setText("");
-			lb_NgayNhan.setText("");
-			lb_Ngaytra.setText("");
 		});
+		
 	}
+	public void renderArrayPhong(ArrayList<Phong> dsPhong) {
+	    if (scrollPane_GDDOi instanceof GridPane) {
+	        GridPane grid = (GridPane) scrollPane_GDDOi;
+	        grid.getChildren().clear();
+	        
+	        // Thiết lập khoảng cách giữa các ô
+	        grid.setHgap(20); 
+	        grid.setVgap(20); 
+	        grid.setPadding(new Insets(20));
+	        
+	        // Lấy kích thước của ScrollPane
+	        double availableWidth = scrollPane_GDDOi.getWidth() - 60; // Trừ đi padding và scrollbar
+	        double columnWidth = (availableWidth - 40) / 3; // Trừ đi khoảng cách giữa các cột (20*2)
+	        
+	        // Thêm ColumnConstraints để đặt khoảng cách giữa các cột
+	        grid.getColumnConstraints().clear();
+	        for (int i = 0; i < 3; i++) {
+	            ColumnConstraints column = new ColumnConstraints();
+	            column.setHgrow(Priority.SOMETIMES);
+	            column.setMinWidth(columnWidth);
+	            column.setPrefWidth(columnWidth);
+	            grid.getColumnConstraints().add(column);
+	        }
+	        
+	        // Số cột tối đa trong grid
+	        int maxColumns = 3;
+	        
+	        // Render từng phòng
+	        for (int i = 0; i < dsPhong.size(); i++) {
+	            Phong phong = dsPhong.get(i);
+	            Pane phongPane = taoGiaoDienPhong(phong);
+	            
+	            // Tính toán vị trí của phòng trong grid
+	            int column = i % maxColumns;
+	            int row = i / maxColumns;
+	            
+	            // Thêm phòng vào grid tại vị trí tính toán
+	            grid.add(phongPane, column, row);
+	        }
+	    }
+	}
+	private VBox selectedRoomItem = null;
+
 	public Pane taoGiaoDienPhong(Phong phong) {
-	    VBox roomItem = new VBox();
-	    roomItem.setCursor(Cursor.HAND);
-	    roomItem.setPrefHeight(250);
-	    roomItem.setPrefWidth(250);
-	    roomItem.setStyle("-fx-background-color: #31c57e; -fx-border-color: #000000; -fx-border-width: 1"); // Viền đen để dễ nhận diện
-
-	    Label lblMaPhong = new Label(phong.getIdPhong());
-	    lblMaPhong.setStyle("-fx-font-size: 18; -fx-font-weight: 700");
-	    lblMaPhong.setPadding(new Insets(0, 0, 8, 0));
-	    roomItem.getChildren().add(lblMaPhong);
-
-	    Label lblLoaiPhong = new Label(phong.getLoaiPhong().toString());
-	    lblLoaiPhong.setStyle("-fx-font-size: 18; -fx-font-weight: 600");
-	    lblLoaiPhong.setPadding(new Insets(0, 0, 8, 0));
-	    roomItem.getChildren().add(lblLoaiPhong);
-
-	    String strBtnLeft = phong.getTrangThai() == TrangThaiPhong.SAPCHECKOUT ? "Chọn Phòng" : "";
-
-	    Button btnLeft = new Button(strBtnLeft);
-	    btnLeft.setStyle("-fx-background-color: #2972d3; -fx-font-size: 16");
-	    btnLeft.setOnAction((event) -> {
-	    	maPhongDoi = phong.getIdPhong();
-	    });
-
-	    HBox hbox = new HBox(btnLeft);
-	    hbox.setPadding(new Insets(0, 0, 8, 0));
-	    hbox.setAlignment(Pos.CENTER);
-	    hbox.setVisible(false);
-	    roomItem.getChildren().add(hbox);
-
+	    // Tạo VBox chứa thông tin phòng với kích thước cố định
+	    VBox roomItem = new VBox(10);
+	    
+	    // Để VBox có thể mở rộng theo không gian có sẵn
+	    roomItem.setPrefWidth(Region.USE_COMPUTED_SIZE);
+	    roomItem.setPrefHeight(180);
+	    roomItem.setMinHeight(180);
+	    roomItem.setMaxHeight(180);
+	    
+	    roomItem.setStyle("-fx-background-color: #31c57e; -fx-border-color: #000000; -fx-border-width: 1; -fx-padding: 10;");
 	    roomItem.setAlignment(Pos.CENTER);
 
-	    roomItem.hoverProperty().addListener((obs, oldVal, newVal) -> {
-	        if (newVal) {
-	            hbox.setVisible(true);
-	        } else {
-	            hbox.setVisible(false);
+	    // Mã phòng
+	    Label lblMaPhong = new Label(phong.getIdPhong());
+	    lblMaPhong.setStyle("-fx-font-size: 20; -fx-font-weight: bold; -fx-text-fill: white;");
+	    lblMaPhong.setWrapText(true);
+	    lblMaPhong.setAlignment(Pos.CENTER);
+
+	    // Loại phòng
+	    Label lblLoaiPhong = new Label(phong.getLoaiPhong().toString());
+	    lblLoaiPhong.setStyle("-fx-font-size: 16; -fx-font-weight: normal; -fx-text-fill: white;");
+	    lblLoaiPhong.setWrapText(true);
+	    lblLoaiPhong.setAlignment(Pos.CENTER);
+	    
+	    // Tiêu chí
+	    Label lblTieuChi = new Label(phong.getTieuChi().toString());
+	    lblTieuChi.setStyle("-fx-font-size: 16; -fx-font-weight: normal; -fx-text-fill: white;");
+	    lblTieuChi.setWrapText(true);
+	    lblTieuChi.setAlignment(Pos.CENTER);
+
+	    // Nút đổi phòng
+	    Button btnDoi = new Button("Đổi phòng");
+	    btnDoi.setPrefWidth(120);
+	    btnDoi.setPrefHeight(35);
+	    btnDoi.setStyle("-fx-background-color: #2972d3; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-cursor: hand;");
+	    
+	    // Sự kiện khi nhấn vào phòng
+	    roomItem.setOnMouseClicked(e -> {
+	        // Đổi màu nền roomItem đã chọn
+	        if (selectedRoomItem != null) {
+	            // Reset style của roomItem trước đó
+	            selectedRoomItem.setStyle("-fx-background-color: #31c57e; -fx-border-color: #000000; -fx-border-width: 1; -fx-padding: 10;");
+	        }
+	        // Cập nhật roomItem mới được chọn
+	        selectedRoomItem = roomItem;
+	        roomItem.setStyle("-fx-background-color: #2E8B57; -fx-border-color: #000000; -fx-border-width: 1; -fx-padding: 10;");
+	        
+	        // Lấy mã phòng khi click
+	        maPhongDoi = phong.getIdPhong();
+	        txt_MaPhong.setText(maPhongDoi);
+	    });
+	    
+
+	    btnDoi.setOnAction((event) -> {
+	        if (pthople[0] != null && maPhongDoi != null) {
+	            Phong phongMoi = new Phong_DAO().getPhongTheoMa(maPhongDoi);
+	            System.out.println("Trạng thái phòng mới trước khi đổi: " + phongMoi.getTrangThai());
+	            System.out.println("Mã phòng mới: " + phongMoi.getIdPhong());
+	            
+	            if (phongMoi.getTrangThai() == TrangThaiPhong.TRONG) {
+	                // Lưu trữ phòng cũ trước khi thay đổi
+	                Phong pCu = pthople[0].getPhong(); // Lấy phòng cũ từ phiếu thuê ban đầu
+	                
+	                // Thực hiện đổi phòng
+	                // Cập nhật phiếu thuê với phòng mới
+	                PhieuThuePhong pthuemoi = pthople[0];
+	                pthuemoi.setPhong(phongMoi);
+	                boolean suaPhieuThue = new PhieuThuePhong_DAO().suaPhieuThue(pthuemoi);
+	                System.out.println("Sửa phiếu thuê: " + suaPhieuThue);
+
+	                // Cập nhật trạng thái phòng mới
+	                phongMoi.setTrangThai(TrangThaiPhong.DANGTHUE);
+	                boolean capNhatPhongMoi = new Phong_DAO().capNhatTrangThaiPhong(phongMoi);
+	                System.out.println("Cập nhật phòng mới: " + capNhatPhongMoi);
+
+	                // Cập nhật trạng thái phòng cũ
+	                pCu.setTrangThai(TrangThaiPhong.TRONG);
+	                boolean capNhatPhongCu = new Phong_DAO().capNhatTrangThaiPhong(pCu);
+	                System.out.println("Cập nhật phòng cũ: " + capNhatPhongCu);
+
+	                // Kiểm tra lại trạng thái phòng mới sau khi cập nhật
+	                Phong phongMoiSauCapNhat = new Phong_DAO().getPhongTheoMa(maPhongDoi);
+	                System.out.println("Trạng thái phòng mới sau khi đổi: " + phongMoiSauCapNhat.getTrangThai());
+
+	                new Alert(Alert.AlertType.CONFIRMATION, "Đổi phòng thành công!").showAndWait();
+
+	                // Làm mới giao diện
+	                renderArrayPhong(new Phong_DAO().getPhongTheoTrangThaiDanhSach(2));
+
+	                // Làm mới các label
+	                lb_maPhong.setText("");
+	                lb_tieuChi.setText("");
+	                lb_tenKH.setText("");
+	                lb_SDT.setText("");
+	                lb_NgayNhan.setText("");
+	                lb_Ngaytra.setText("");
+	                txt_MaPhong.setText("");
+	                pthople[0] = null;
+	                maPhongDoi = null;
+	            } else {
+	                new Alert(Alert.AlertType.WARNING, "Phòng được chọn không khả dụng để đổi.").showAndWait();
+	            }
+	        }
+	    });
+	    
+	    roomItem.getChildren().addAll(lblMaPhong, lblLoaiPhong, lblTieuChi, btnDoi);
+
+	 // Thêm hiệu ứng hover
+	    roomItem.setOnMouseEntered(e -> {
+	        roomItem.setStyle("-fx-background-color: #28a66a; -fx-border-color: #000000; -fx-border-width: 1; -fx-padding: 10;");
+	    });
+
+	    roomItem.setOnMouseExited(e -> {
+	        // Kiểm tra nếu roomItem không phải là selectedRoomItem
+	        if (roomItem != selectedRoomItem) {
+	            roomItem.setStyle("-fx-background-color: #31c57e; -fx-border-color: #000000; -fx-border-width: 1; -fx-padding: 10;");
 	        }
 	    });
 
 	    return roomItem;
 	}
 
-	public void renderArrayPhong(ArrayList<Phong> dsPhong) {
-	    // Kiểm tra xem scrollPane_GDDOi có phải là GridPane không
-	    if (scrollPane_GDDOi instanceof GridPane) {
-	        GridPane grid = (GridPane) scrollPane_GDDOi;
-	        grid.getChildren().clear(); // Xóa hết các phần tử trước đó
-	        grid.setHgap(20); // Khoảng cách giữa các cột
-	        grid.setVgap(20); // Khoảng cách giữa các hàng
-
-	        for (int i = 0; i < dsPhong.size(); i++) {
-	            Phong phong = dsPhong.get(i);
-	            Pane phongPane = taoGiaoDienPhong(phong);
-	            grid.add(phongPane, i % 4, i / 4); 
-	        }
-	    } else {
-	        System.out.println("scrollPane_GDDOi không phải là GridPane.");
-	    }
-	}
 
     @FXML
     void moGiaoDienGiaHanPhong(MouseEvent event) throws IOException {
@@ -281,5 +362,4 @@ public class GD_DoiPhong_Controller implements Initializable{
 	private void moGDDatPhong() throws IOException {
 		App.openModal("GD_DatPhong", 800, 684);
 	}
-
 }
