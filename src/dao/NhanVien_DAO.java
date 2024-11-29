@@ -31,12 +31,12 @@ public class NhanVien_DAO {
 				boolean gioiTinh = rs.getBoolean("GioiTinh");
 				String cccd = rs.getString("CCCD");
 				int chucVu = rs.getInt("ChucVu");
-				Enum_ChucVu cv = null;
+				ChucVu cv = null;
 				
 				if(chucVu == 1) {
-					cv = Enum_ChucVu.NHANVIENLETAN;
+					cv = ChucVu.NHANVIENLETAN;
 				} else if (chucVu == 2) {
-					cv = Enum_ChucVu.NGUOIQUANLY;
+					cv = ChucVu.NGUOIQUANLY;
 				}
 				
 //				if(chucVu.equalsIgnoreCase(ChucVu.NHANVIENLETAN.toString())) {
@@ -81,9 +81,9 @@ public class NhanVien_DAO {
 
 	            // Xử lý chức vụ
 	            int cv = 0;
-	            if(nhanvien.getChucVu() == Enum_ChucVu.NHANVIENLETAN) {
+	            if(nhanvien.getChucVu().toString().equalsIgnoreCase("Nhân viên lễ tân")) {
 	                cv = 1;
-	            } else if (nhanvien.getChucVu() == Enum_ChucVu.NGUOIQUANLY) {
+	            } else if (nhanvien.getChucVu().toString().equalsIgnoreCase("Người quản lý")) {
 	                cv = 2;
 	            } 
 	            pstm.setInt(7, cv);
@@ -134,12 +134,12 @@ public class NhanVien_DAO {
 //					cv = ChucVu.NGUOIQUANLY;
 //				}
 				int chucVu = rs.getInt("ChucVu");
-				Enum_ChucVu cv = null;
+				ChucVu cv = null;
 				
 				if(chucVu == 1) {
-					cv = Enum_ChucVu.NHANVIENLETAN;
+					cv = ChucVu.NHANVIENLETAN;
 				} else if (chucVu == 2) {
-					cv = Enum_ChucVu.NGUOIQUANLY;
+					cv = ChucVu.NGUOIQUANLY;
 				}
 				
 				//NhanVien nv = new NhanVien(idNhanVien, tenNhanVien, soDienThoai, gioiTinh, cccd, cv);
@@ -175,9 +175,9 @@ public class NhanVien_DAO {
 
 	        // Sửa phần xử lý chức vụ
 	        int cv = 0;
-	        if (nhanvien.getChucVu() == Enum_ChucVu.NHANVIENLETAN) {
+	        if (nhanvien.getChucVu().toString().equalsIgnoreCase("Nhân viên lễ tân")) {
 	            cv = 1;
-	        } else if (nhanvien.getChucVu() == Enum_ChucVu.NGUOIQUANLY) {
+	        } else if (nhanvien.getChucVu().toString().equalsIgnoreCase("Người quản lý")) {
 	            cv = 2;
 	        }
 	        
@@ -329,12 +329,12 @@ public class NhanVien_DAO {
 //					cv = ChucVu.NGUOIQUANLY;
 //				}
 				int chucVu = rs.getInt("ChucVu");
-				Enum_ChucVu cv = null;
+				ChucVu cv = null;
 				
 				if(chucVu == 1) {
-					cv = Enum_ChucVu.NHANVIENLETAN;
+					cv = ChucVu.NHANVIENLETAN;
 				} else if (chucVu == 2) {
-					cv = Enum_ChucVu.NGUOIQUANLY;
+					cv = ChucVu.NGUOIQUANLY;
 				}
 				
 				//NhanVien nv = new NhanVien(idNhanVien, tenNhanVien, soDienThoai, gioiTinh, cccd, cv);

@@ -15,6 +15,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -58,6 +59,11 @@ public class GD_TKPhong_Controller implements Initializable{
     @FXML
     private TableView<Phong> tablePhong;
     
+    @FXML
+    private Button btnTraCuu;
+
+    @FXML
+    private ComboBox<String> cbbGiaoDien;
 
     @FXML
     private TableColumn<Phong, String> clDG;
@@ -77,38 +83,8 @@ public class GD_TKPhong_Controller implements Initializable{
     private TextField txt_MaPhong;
 
     @FXML
-    void moGiaoDienDichVu(MouseEvent event) throws IOException {
-    	App.setRoot("GD_TKDichVu");
-    }
-
-    @FXML
-    void moGiaoDienHoaDon(MouseEvent event) throws IOException {
-    	App.setRoot("GD_TKHoaDon");
-    }
-
-    @FXML
-    void moGiaoDienKhachHang(MouseEvent event) throws IOException {
-    	App.setRoot("GD_TKKhachHang");
-    }
-
-    @FXML
-    void moGiaoDienNhanVien(MouseEvent event) throws IOException {
-    	App.setRoot("GD_TKNhanVien");
-    }
-
-    @FXML
-    void moGiaoDienPhong(MouseEvent event) throws IOException {
-    	App.setRoot("GD_TKPhong");
-    }
-
-    @FXML
     void moGiaoDienQuanLy(MouseEvent event) throws IOException {
     	App.setRoot("GD_QLPhong");
-    }
-
-    @FXML
-    void moGiaoDienTaiKhoan(MouseEvent event) throws IOException {
-    	App.setRoot("GD_TKTaiKhoan");
     }
 
     @FXML
@@ -136,11 +112,13 @@ public class GD_TKPhong_Controller implements Initializable{
     void denGDQLPhong(MouseEvent event) throws IOException {
     	App.setRoot("GD_QLPhong");
     }
-    
+   
 
     @FXML
     void timKiem(MouseEvent event) {
+   
     	String maPhong = txt_MaPhong.getText();
+    	App.ma = maPhong;
     	Phong p = new Phong_DAO().getPhongTheoMa(maPhong);
 		lb_maPhong.setText(p.getIdPhong());
 		lb_loaiPhong.setText(p.getLoaiPhongString());
@@ -166,6 +144,75 @@ public class GD_TKPhong_Controller implements Initializable{
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		ObservableList<String> list = FXCollections.observableArrayList("Phòng", "Hoá đơn", "Nhân viên", "Khách hàng",
+				"Dịch vụ", "Tài khoản", "Ưu đãi");
+		cbbGiaoDien.setItems(list);
+		cbbGiaoDien.setValue("Phòng");
+		 // Xử lý sự kiện chọn ComboBox để chuyển giao diện
+        cbbGiaoDien.setOnAction(event -> {
+            String selectedValue = cbbGiaoDien.getValue();
+            switch (selectedValue) {
+            case "Phòng":
+				try {
+					App.setRoot("GD_TKPhong");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+                    break;
+                case "Tài khoản":
+				try {
+					App.setRoot("GD_TKTaiKhoan");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+                    break;
+                case "Hoá đơn":
+				try {
+					App.setRoot("GD_TKHoaDon");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+                    break;
+                case "Nhân viên":
+				try {
+					App.setRoot("GD_TKNhanVien");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+                    break;
+                case "Khách hàng":
+				try {
+					App.setRoot("GD_TKKhachHang");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+                    break;
+                case "Dịch vụ":
+				try {
+					App.setRoot("GD_TKDichVu");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+                    break;
+                case "Ưu đãi":
+				try {
+					App.setRoot("GD_TKUuDai");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+                    break;
+                default:
+                    System.out.println("Không tìm thấy giao diện phù hợp!");
+                    break;
+            }
+        });
 		clSTT.setCellFactory(col -> {
             return new TableCell<Phong, String>() {
                 @Override
@@ -192,6 +239,7 @@ public class GD_TKPhong_Controller implements Initializable{
         	TrangThaiPhong tt = cellData.getValue().getTrangThai();
         	return new ReadOnlyStringWrapper(tt.toString());
         });
+        
         loadTableData();
         tablePhong.setOnMouseClicked(event -> {
         	Phong selectedPhong = tablePhong.getSelectionModel().getSelectedItem();
@@ -207,7 +255,6 @@ public class GD_TKPhong_Controller implements Initializable{
         try {
             Phong_DAO pdao = new Phong_DAO();
             ArrayList<Phong> dsp = pdao.getAllPhong();
-
             ObservableList<Phong> observableList = FXCollections.observableArrayList(dsp);
             tablePhong.setItems(observableList);
             

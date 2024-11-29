@@ -1,4 +1,4 @@
-package entity;
+	package entity;
 
 import java.text.DecimalFormat;
 import java.time.LocalDate;
@@ -123,7 +123,7 @@ public class KhachHang {
 
 		int nextId = max + 1;
         String formattedNextId = new DecimalFormat("00").format(nextId); // Định dạng 2 số
-        return "NV" + dateString + formattedNextId;
+        return "KH" + dateString + formattedNextId;
     }
 
 
