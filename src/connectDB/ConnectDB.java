@@ -17,8 +17,13 @@ public class ConnectDB {
 		String username = "sa";
 
 //		String password = "sa1234";
+<<<<<<< HEAD
 		String password = "sapassword";
 //		String password = "Kkkkkkk@6";
+=======
+//		String password = "sapassword";
+		String password = "Kkkkkkk@6";
+>>>>>>> 50dc3673d8c24e5ae41badd1a5e09c5ac3133f63
 
 
 //		String password = "sa123";

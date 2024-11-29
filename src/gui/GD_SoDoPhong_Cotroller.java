@@ -123,7 +123,7 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 		cbb.setValue("Tất cả");
 		loadLoaiPhong();
 		loadTrangThaiPhong();
-		locSoPhong();
+		LoadSoPhongTheoLoai();
 	}
 	
 	public void loadLoaiPhong() {
@@ -137,19 +137,19 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 	}
 	
 
-	public void LoadSoPhongTheoLoai() {
+	public void LoadSoPhongTheoLoai(){
 	    String selectedItem = (String) cbb.getSelectionModel().getSelectedItem();
 	    if (selectedItem.equals("Phòng đơn")) {
-	        loc(2);
+	        locSoPhong(2);
 	    } else if (selectedItem.equals("Phòng đôi")) {
-	    	loc(1);
+	    	locSoPhong(1);
 	    } else if (selectedItem.equals("Phòng gia đình")) {
-	    	loc(3);
+	    	locSoPhong(3);
 	    } else if (selectedItem.equals("Tất cả")) {
-	    	locSoPhong();
+	    	locSoPhong_TatCa();
 	    }
 	}
-	public void locSoPhong() {
+	public void locSoPhong_TatCa() {
 		Phong_DAO dsp1 = new Phong_DAO();
 	    btn_PhongTrong.setText("Phòng trống ("+String.valueOf(dsp1.getPhongTheoTrangThai(2))+")");
 	    btn_DangO.setText("Đang ở ("+String.valueOf(dsp1.getPhongTheoTrangThai(1))+")");
@@ -157,52 +157,28 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 	    btn_SapCheckOut.setText("Sắp Check-out ("+String.valueOf(dsp1.getPhongTheoTrangThai(4))+")");
 	    btn_TatCa.setText("Tất cả ("+String.valueOf(new Phong_DAO().getAllPhong().size())+")");
 	}
-	public void loc (int sott) {
-		ArrayList<Phong> dsP = new ArrayList<Phong>();
-		dsP = new Phong_DAO().getPhongTheoLoai(sott);
-        ArrayList<Phong> dsP2 = new ArrayList<Phong>();
-        dsP2 = new Phong_DAO().getPhongTheoTrangThaiDanhSach(2);
-        ArrayList<Phong> dsP3 = new ArrayList<Phong>();
-        for(Phong p : dsP) {
-        	if(dsP2.contains(p)) {
-        		dsP3.add(p);
-        	}
-        }
-        
-        ArrayList<Phong> dsP4 = new ArrayList<Phong>();
-        dsP4 = new Phong_DAO().getPhongTheoTrangThaiDanhSach(1);
-        ArrayList<Phong> dsP5 = new ArrayList<Phong>();
-        for(Phong p : dsP) {
-        	if(dsP4.contains(p)) {
-        		dsP5.add(p);
-        	}
-        }
-        ArrayList<Phong> dsP6 = new ArrayList<Phong>();
-        dsP6 = new Phong_DAO().getPhongTheoTrangThaiDanhSach(3);
-        ArrayList<Phong> dsP7 = new ArrayList<Phong>();
-        for(Phong p : dsP) {
-        	if(dsP6.contains(p)) {
-        		dsP7.add(p);
-        	}
-        }
-        ArrayList<Phong> dsP8 = new ArrayList<Phong>();
-        dsP8 = new Phong_DAO().getPhongTheoTrangThaiDanhSach(4);
-        ArrayList<Phong> dsP9 = new ArrayList<Phong>();
-        for(Phong p : dsP) {
-        	if(dsP8.contains(p)) {
-        		dsP9.add(p);
-        	}
-        }
-        int kq1 = dsP3.size();
-        int kq2 = dsP5.size();
-        int kq3 = dsP7.size();
-        int kq4 = dsP9.size();
-        int kq5 = dsP.size();
-        btn_PhongTrong.setText("Phòng trống (" +  kq1+ ")");
-        btn_DangO.setText("Đang ở (" +kq2  + ")");
-        btn_SapCheckIn.setText("Sắp Check-in (" + kq3 + ")");
-        btn_SapCheckOut.setText("Sắp Check-out (" + kq4+ ")");
-        btn_TatCa.setText("Tất cả (" + kq5 + ")");
+	
+	public ArrayList<Phong> KiemtraTrung(ArrayList<Phong>dsP1, int TrangThai){
+		ArrayList<Phong>dsP_CuoiCung = new ArrayList<Phong>();
+		ArrayList<Phong>dsP2 = new ArrayList<Phong>();
+		dsP2 = new Phong_DAO().getPhongTheoTrangThaiDanhSach(TrangThai);
+		for(Phong p: dsP1) {
+			if(dsP2.contains(p)) {
+				dsP_CuoiCung.add(p);
+			}
+		}
+		return dsP_CuoiCung;
+	}
+	
+	public void locSoPhong(int sott) {
+		ArrayList<Phong> dsP_TheoLoai = new ArrayList<Phong>();
+		dsP_TheoLoai = new Phong_DAO().getPhongTheoLoai(sott);
+		
+        btn_PhongTrong.setText("Phòng trống (" +  KiemtraTrung(dsP_TheoLoai,2).size()+ ")");
+        btn_DangO.setText("Đang ở (" +KiemtraTrung(dsP_TheoLoai,1).size()  + ")");
+        btn_SapCheckIn.setText("Sắp Check-in (" + KiemtraTrung(dsP_TheoLoai,3).size() + ")");
+        btn_SapCheckOut.setText("Sắp Check-out (" + KiemtraTrung(dsP_TheoLoai,4).size()+ ")");
+        btn_TatCa.setText("Tất cả (" + dsP_TheoLoai.size()	 + ")");
 	}
 	public ArrayList<Phong> kiemTraLoaiPhong() {
 		String selectedItem = (String) cbb.getSelectionModel().getSelectedItem();
@@ -383,7 +359,10 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 			btnLeft.setOnAction(((event) -> {
 				try {
 					String maChon = phong.getIdPhong();
-					GD_DatPhongChoController.dsMaPhong.add(maChon);
+					if (!GD_DatPhongChoController.dsMaPhong.contains(maChon)) {
+					    GD_DatPhongChoController.dsMaPhong.add(maChon);
+					}
+					
 				} catch (Exception e) {
 					// TODO: handle exception
 					e.printStackTrace();
@@ -413,8 +392,10 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 			btnLeft.setStyle("-fx-background-color: #ff3131; -fx-text-fill: #fff; -fx-font-size: 16");
 			btnLeft.setOnAction(((event) -> {
 				try {
+					
 					phong.setTrangThai(TrangThaiPhong.TRONG);
 					dsp.capNhatTrangThaiPhong(phong);
+					LoadSoPhongTheoLoai();
 					renderArrayPhong(new Phong_DAO().getAllPhong());
 				} catch (Exception e) {
 					// TODO: handle exception

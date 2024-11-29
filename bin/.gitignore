@@ -1,5 +1,14 @@
+<<<<<<< HEAD
+=======
+/gui/
+>>>>>>> 50dc3673d8c24e5ae41badd1a5e09c5ac3133f63
 /dao/
+/connectDB/
 /entity/
+<<<<<<< HEAD
 /gui/
 /main/
 /connectDB/
+=======
+/main/
+>>>>>>> 50dc3673d8c24e5ae41badd1a5e09c5ac3133f63

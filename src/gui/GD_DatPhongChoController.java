@@ -5,6 +5,7 @@ package gui;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -52,6 +53,7 @@ public class GD_DatPhongChoController implements Initializable{
     Phong_DAO dsP = new Phong_DAO();
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		Collections.sort(dsMaPhong);
 		for(String maPhongDuocChon : dsMaPhong) {
 			txtMaPhong.appendText(maPhongDuocChon +" ");
 		}
@@ -109,8 +111,8 @@ public class GD_DatPhongChoController implements Initializable{
 		        dpTra.setValue(null);
 
 		        // Đóng cửa sổ hiện tại
-		        dsMaPhong.clear(); // Xóa danh sách phòng đã chọn
 		        Stage stage = (Stage) btnClose.getScene().getWindow();
+		        dsMaPhong.clear(); // Xóa danh sách phòng đã chọn
 		        stage.close();
 
 		    } catch (Exception ex) {

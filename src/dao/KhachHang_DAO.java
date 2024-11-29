@@ -18,7 +18,6 @@ import entity.KhachHang;
 
 public class KhachHang_DAO {
 	public ArrayList<KhachHang> getAllKhachHang() {
-		System.out.println(1);
 		ArrayList<KhachHang> dsKH = new ArrayList<KhachHang>();
 		Connection conN = ConnectDB.getInstance().getConnection();
 		Statement stm = null;

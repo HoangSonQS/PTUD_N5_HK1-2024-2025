@@ -146,11 +146,9 @@ public class HoaDon {
 
 	public double thanhTien() {
 		PhieuThuePhong_DAO ptdao = new PhieuThuePhong_DAO();
-	    List<PhieuThuePhong> listPhieuThue = ptdao.layPhieuThueTheoMaKH(khachHang.getIdKhachHang());
-
+		ArrayList<PhieuThuePhong> listPhieuThue = ptdao.layPhieuThueTheoMaHD(idHoaDon);
 	    double tongTien = 0;
 	    int soNgayThue = 0;
-
 	    if (listPhieuThue != null) {
 	        for (PhieuThuePhong phieuThue : listPhieuThue) {
 	            if (phieuThue != null){
@@ -170,10 +168,10 @@ public class HoaDon {
 			}else{
 				System.out.println("No valid reservation found.");
 			}
-	    } else {
+	    }else {
 	        System.out.println("Không tìm thấy hóa đơn thuê phòng.");
 	    }
-		return soNgayThue;
+		return 0;
 	}
 	
 	public static String autoIdHoaDon() {
