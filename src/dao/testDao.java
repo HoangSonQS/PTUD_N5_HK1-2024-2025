@@ -103,9 +103,10 @@ public class testDao {
 	//done
 	public static void testHoaDon() {
 	    HoaDon_DAO hddao = new HoaDon_DAO();
-	    LocalDate a = LocalDate.of(2024, 10, 12);
-	    System.out.printf("%d,%d,%d\n",a.getYear(),a.getMonthValue(),a.getDayOfMonth());
-	    System.out.println(hddao.TheoNgayob(a));
+	    System.out.println(hddao.demHDTheoThang(10, 2024));
+//	    LocalDate a = LocalDate.of(2024, 10, 12);
+//	    System.out.printf("%d,%d,%d\n",a.getYear(),a.getMonthValue(),a.getDayOfMonth());
+//	    System.out.println(hddao.TheoNgayob(a));
 //	    HoaDon hd = hddao.layHoaDonTheoMaHoaDon("HD24100301");
 //	    System.out.println(hd.tongTien());
 	    

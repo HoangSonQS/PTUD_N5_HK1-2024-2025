@@ -104,7 +104,7 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="lb_SoHD" layoutX="675.0" layoutY="100.0" text="Tổng số hóa đơn trong ngày:  ">
+            <Label fx:id="lb_SoHD" layoutX="675.0" layoutY="100.0" text="Tổng số hóa đơn:  ">
                <font>
                   <Font size="18.0" />
                </font>
@@ -114,7 +114,7 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="lb_DT" layoutX="675.0" layoutY="135.0" text="Tổng doanh thu trong ngày:  ">
+            <Label fx:id="lb_DT" layoutX="675.0" layoutY="135.0" text="Tổng doanh thu:  ">
                <font>
                   <Font size="18.0" />
                </font>
@@ -133,7 +133,7 @@
                </yAxis>
             </BarChart>
             <ComboBox fx:id="cbbLoai" layoutX="180.0" layoutY="75.0" prefWidth="200.0" style="-fx-background-color: #ffffff; -fx-border-color: gray;" />
-            <Label fx:id="lb_DTSS" layoutX="675.0" layoutY="170.0" text="Doanh thu so với ngày trước:">
+            <Label fx:id="lb_DTSS" layoutX="675.0" layoutY="170.0" text="Doanh thu so với kỳ trước:">
                <font>
                   <Font size="18.0" />
                </font>
@@ -172,6 +172,7 @@
                   <Font size="22.0" />
                </font>
             </Button>
+            <Label fx:id="note" layoutX="15.0" layoutY="260.0" prefHeight="17.0" prefWidth="365.0" textFill="RED" />
          </children>
       </Pane>
       <Pane prefHeight="70.0" prefWidth="1554.0" style="-fx-background-color: #004AAD;">
