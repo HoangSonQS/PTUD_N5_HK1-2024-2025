@@ -14,12 +14,15 @@ import dao.Phong_DAO;
 import entity.PhieuThuePhong;
 import entity.Phong;
 import entity.TrangThaiPhong;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 
 import javafx.scene.control.TextField;
@@ -35,6 +38,8 @@ import main.App;
 
 
 public class GD_DoiPhong_Controller implements Initializable{
+	public static String maPhongHienTai; // để đổi phòng
+
 	@FXML
     private ImageView avt;
 
@@ -110,52 +115,158 @@ public class GD_DoiPhong_Controller implements Initializable{
     @FXML
     private TextField txt_MaPhong;
     
+    @FXML
+    private ComboBox<String> cbbLoaiPhong;
+
+    @FXML
+    private ComboBox<String> cbbTieuChi;
+    
     public String maPhongDoi;
     public ArrayList<PhieuThuePhong> list;
     public PhieuThuePhong[] pthople;
     public String maphong;
-	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) {
-		lb_maPhong.setText("");
-		lb_tenKH.setText("");
-		lb_SDT.setText("");
-		lb_NgayNhan.setText("");
-		lb_Ngaytra.setText("");
-		Phong_DAO dsP = new Phong_DAO();
-		renderArrayPhong(dsP.getPhongTheoTrangThaiDanhSach(2));
-		
-		btnTim.setOnAction(even -> {
-		    maphong = txt_MaPhong.getText();
+    
+    @Override
+    public void initialize(URL arg0, ResourceBundle arg1) {
+        // Reset các label
+        lb_maPhong.setText("");
+        lb_tenKH.setText("");
+        lb_SDT.setText("");
+        lb_NgayNhan.setText("");
+        lb_Ngaytra.setText("");
 
-		    PhieuThuePhong_DAO dsPT = new PhieuThuePhong_DAO();
-//		    Phong_DAO dsp = new Phong_DAO();
-		    pthople = new PhieuThuePhong[1];
-		    LocalDate gioHienTai = LocalDate.now();
-		    list = dsPT.layPhieuThueTheoMaPhong(maphong);
+        if (maPhongHienTai != null && !maPhongHienTai.isEmpty()) {
+            try {
+                // Tự động điền mã phòng và tìm kiếm
+//                txt_MaPhong.setText(maPhongHienTai);
+                
+                // Gọi phương thức tìm kiếm phiếu thuê
+                timKiemPhieuThue(maPhongHienTai);
+            } catch (Exception e) {
+                e.printStackTrace();
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Đã xảy ra lỗi: " + e.getMessage());
+                alert.showAndWait();
+            } finally {
+                // Luôn reset giá trị static
+                maPhongHienTai = null;
+            }
+        }
 
-		    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-		    list.forEach(phieuThue -> {
-		        LocalDate thoiGianNhan = phieuThue.getThoiGianNhanPhong();
-		        LocalDate thoiGianTra = phieuThue.getThoiHanGiaoPhong();
+        Phong_DAO dsP = new Phong_DAO();
+        renderArrayPhong(dsP.getPhongTheoTrangThaiDanhSach(2));
+        
+        // Cài đặt sự kiện tìm kiếm
+        btnTim.setOnAction(even -> timKiemPhieuThue(txt_MaPhong.getText()));
+        
+        // Thiết lập ComboBox
+        ObservableList<String> list = FXCollections.observableArrayList("Tất cả", "Phòng đơn", "Phòng đôi","Phòng gia đình");
+        cbbLoaiPhong.setItems(list);
+        cbbLoaiPhong.setValue("Tất cả");
+        
+        ObservableList<String> list1 = FXCollections.observableArrayList("Tất cả", "View biển", "View thành phố","");
+        cbbTieuChi.setItems(list1);
+        cbbTieuChi.setValue("Tất cả");
+        
+        // Thêm sự kiện lọc
+        cbbLoaiPhong.setOnAction(event -> locDanhSachPhong());
+        cbbTieuChi.setOnAction(event -> locDanhSachPhong());
+    }
 
-		        if (gioHienTai.isBefore(thoiGianTra) && gioHienTai.isAfter(thoiGianNhan)) {
-		            pthople[0] = phieuThue;
-		        }
-		    });
+    private void timKiemPhieuThue(String maPhong) {
+        if (maPhong == null || maPhong.isEmpty()) {
+            new Alert(Alert.AlertType.WARNING, "Vui lòng nhập mã phòng.").showAndWait();
+            return;
+        }
 
-		    if (pthople[0] != null) {
-		        lb_maPhong.setText(pthople[0].getPhong().getIdPhong());
-		        lb_tieuChi.setText(pthople[0].getPhong().getTieuChi());
-		        lb_tenKH.setText(pthople[0].getKhachHang().getTenKhachHang());
-		        lb_SDT.setText(pthople[0].getKhachHang().getSoDienThoai());
-		        lb_NgayNhan.setText(pthople[0].getThoiGianNhanPhong().format(formatter));
-		        lb_Ngaytra.setText(pthople[0].getThoiHanGiaoPhong().format(formatter));
-		    } else {
-		        new Alert(Alert.AlertType.WARNING, "Không tìm thấy phiếu thuê hợp lệ.").showAndWait();
-		    }
-		});
-		
+        PhieuThuePhong_DAO dsPT = new PhieuThuePhong_DAO();
+        LocalDate gioHienTai = LocalDate.now();
+        
+        // Lấy danh sách phiếu thuê của phòng
+        ArrayList<PhieuThuePhong> danhSachPhieuThue = dsPT.layPhieuThueTheoMaPhong(maPhong);
+        
+        // Định dạng ngày
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
+        // Tìm phiếu thuê đang hiệu lực
+        PhieuThuePhong phieuHienTai = null;
+        for (PhieuThuePhong phieuThue : danhSachPhieuThue) {
+            LocalDate thoiGianNhan = phieuThue.getThoiGianNhanPhong();
+            LocalDate thoiGianTra = phieuThue.getThoiHanGiaoPhong();
+
+            if (gioHienTai.isBefore(thoiGianTra) && gioHienTai.isAfter(thoiGianNhan)) {
+                phieuHienTai = phieuThue;
+                break;
+            }
+        }
+
+        // Nếu tìm thấy phiếu thuê
+        if (phieuHienTai != null) {
+            lb_maPhong.setText(phieuHienTai.getPhong().getIdPhong());
+            lb_tieuChi.setText(phieuHienTai.getPhong().getTieuChi());
+            lb_tenKH.setText(phieuHienTai.getKhachHang().getTenKhachHang());
+            lb_SDT.setText(phieuHienTai.getKhachHang().getSoDienThoai());
+            lb_NgayNhan.setText(phieuHienTai.getThoiGianNhanPhong().format(formatter));
+            lb_Ngaytra.setText(phieuHienTai.getThoiHanGiaoPhong().format(formatter));
+
+            // Lưu phiếu thuê hiện tại vào mảng
+            pthople = new PhieuThuePhong[1];
+            pthople[0] = phieuHienTai;
+        } else {
+            // Hiển thị cảnh báo nếu không tìm thấy phiếu thuê
+            new Alert(Alert.AlertType.WARNING, "Không tìm thấy phiếu thuê hợp lệ cho phòng này.").showAndWait();
+            
+            // Reset các label
+            lb_maPhong.setText("");
+            lb_tieuChi.setText("");
+            lb_tenKH.setText("");
+            lb_SDT.setText("");
+            lb_NgayNhan.setText("");
+            lb_Ngaytra.setText("");
+        }
+    }
+
+	private void locDanhSachPhong() {
+	    Phong_DAO dsP = new Phong_DAO();
+	    String loaiPhong = cbbLoaiPhong.getValue();
+	    String tieuChi = cbbTieuChi.getValue();
+
+	    // Lấy danh sách phòng ban đầu
+	    ArrayList<Phong> danhSachPhong = dsP.getPhongTheoTrangThaiDanhSach(2);
+
+	    // Lọc theo loại phòng
+	    if (!loaiPhong.equals("Tất cả")) {
+	        danhSachPhong = filterByLoaiPhong(danhSachPhong, loaiPhong);
+	    }
+
+	    // Lọc theo tiêu chí
+	    if (!tieuChi.equals("Tất cả")) {
+	        danhSachPhong = filterByTieuChi(danhSachPhong, tieuChi);
+	    }
+
+	    // Render lại danh sách phòng
+	    renderArrayPhong(danhSachPhong);
+	}
+
+	private ArrayList<Phong> filterByLoaiPhong(ArrayList<Phong> danhSachPhong, String loaiPhong) {
+	    ArrayList<Phong> filteredList = new ArrayList<>();
+	    for (Phong phong : danhSachPhong) {
+	        if (phong.getLoaiPhong().toString().equals(loaiPhong)) {
+	            filteredList.add(phong);
+	        }
+	    }
+	    return filteredList;
+	}
+
+	private ArrayList<Phong> filterByTieuChi(ArrayList<Phong> danhSachPhong, String tieuChi) {
+	    ArrayList<Phong> filteredList = new ArrayList<>();
+	    for (Phong phong : danhSachPhong) {
+	        if (phong.getTieuChi().toString().equals(tieuChi)) {
+	            filteredList.add(phong);
+	        }
+	    }
+	    return filteredList;
 	}
 	public void renderArrayPhong(ArrayList<Phong> dsPhong) {
 	    if (scrollPane_GDDOi instanceof GridPane) {
@@ -250,7 +361,7 @@ public class GD_DoiPhong_Controller implements Initializable{
 	        
 	        // Lấy mã phòng khi click
 	        maPhongDoi = phong.getIdPhong();
-	        txt_MaPhong.setText(maPhongDoi);
+//	        txt_MaPhong.setText(maPhongDoi);
 	    });
 	    
 
