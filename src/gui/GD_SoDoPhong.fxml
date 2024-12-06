@@ -186,7 +186,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="btn_SapCheckOut" layoutX="630.0" layoutY="160.0" minHeight="30.0" minWidth="140.0" mnemonicParsing="false" text="Sắp Check-out" textAlignment="CENTER">
+                  <Button fx:id="btn_SapCheckOut" layoutX="640.0" layoutY="160.0" minHeight="30.0" minWidth="140.0" mnemonicParsing="false" text="Sắp Check-out" textAlignment="CENTER">
                      <font>
                         <Font name="Segoe UI" size="14.0" />
                      </font>
