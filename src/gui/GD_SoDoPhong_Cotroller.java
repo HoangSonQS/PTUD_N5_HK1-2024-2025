@@ -34,7 +34,6 @@ import javafx.scene.layout.HBox;
 
 
 public class GD_SoDoPhong_Cotroller implements Initializable {
-
 	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 	Phong_DAO dsp = new Phong_DAO();
 
@@ -357,6 +356,14 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 		case TRONG:
 			btnLeft.setStyle("-fx-background-color: #edbf6d; -fx-text-fill: #fff; -fx-font-size: 16");
 			btnLeft.setOnAction(((event) -> {
+				if (phong.getTrangThai() == TrangThaiPhong.DANGTHUE) {
+			        roomID = phong.getIdPhong(); // Lưu mã phòng
+			        try {
+			            moGDDoiPhong();
+			        } catch (IOException e) {
+			            e.printStackTrace();
+			        }
+			    }
 				try {
 					String maChon = phong.getIdPhong();
 					if (!GD_DatPhongChoController.dsMaPhong.contains(maChon)) {
@@ -414,15 +421,16 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 			});
 			break;
 		case DANGTHUE:
-			btnLeft.setStyle("-fx-background-color: #edbf6d; -fx-text-fill: #fff; -fx-font-size: 16");
-			btnLeft.setOnAction(((event) -> {
+            btnLeft.setStyle("-fx-background-color: #edbf6d; -fx-text-fill: #fff; -fx-font-size: 16");
+            btnLeft.setOnAction(((event) -> {
+                // Lưu mã phòng vào biến static
+                roomID = phong.getIdPhong(); 
                 try {
-					moGDDoiPhong();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}));
+                    moGDDoiPhong();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }));
 			btnRight.setOnAction((event) -> {
 				try {
 					phong.setTrangThai(TrangThaiPhong.TRONG);
@@ -473,10 +481,16 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 		return roomItem;
 		
 	}
+	
 	@FXML
 	private void moGDDoiPhong() throws IOException {
-		App.setRoot("GD_DoiPhong");
+	    // Truyền mã phòng hiện tại sang giao diện đổi phòng
+	    if (roomID != null && !roomID.isEmpty()) {
+	        GD_DoiPhong_Controller.maPhongHienTai = roomID;
+	    }
+	    App.setRoot("GD_DoiPhong");
 	}
+
 
 	@FXML
 	private void moGDDatPhong() throws IOException {
