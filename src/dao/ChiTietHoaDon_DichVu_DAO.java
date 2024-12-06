@@ -11,10 +11,7 @@ import connectDB.ConnectDB;
 import entity.ChiTietHD_DichVu;
 import entity.DichVu;
 import entity.HoaDon;
-<<<<<<< HEAD
-=======
 
->>>>>>> d647ed70c9549cdca0f60a27fc838a983de02d53
 
 
 public class ChiTietHoaDon_DichVu_DAO {
