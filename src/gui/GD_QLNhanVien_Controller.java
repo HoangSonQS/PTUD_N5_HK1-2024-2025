@@ -389,7 +389,11 @@ public class GD_QLNhanVien_Controller implements Initializable{
 	    
 
 	    @FXML
-	    void themNV(MouseEvent event) {
+	    void themNV(MouseEvent event) throws Exception {
+	    	
+	    	if(!kiemTraDuLieu()) {
+	        	return ;
+	        }
 	        // Kiểm tra các trường bắt buộc
 	        if (txtTenNV.getText().trim().isEmpty() || 
 	            txtSDT.getText().trim().isEmpty() || 
@@ -407,6 +411,8 @@ public class GD_QLNhanVien_Controller implements Initializable{
 	            alert.showAndWait();
 	            return;
 	        }
+	        
+	        
 
 	        // Lấy thông tin từ các trường
 	        String tenNV = txtTenNV.getText();
@@ -545,7 +551,66 @@ public class GD_QLNhanVien_Controller implements Initializable{
 	        cbbGioiTinh.setValue(null);
 	        cbbChucVu.setValue(null);
 	    }
-	    
-	    
+	    private void showAlert(String title, String message) {
+	        Alert alert = new Alert(Alert.AlertType.INFORMATION, message, ButtonType.OK);
+	        alert.setTitle(title);
+	        alert.showAndWait();
+	    }
+	    private void showAlertLoi(String title, String message) {
+	        Alert alert = new Alert(Alert.AlertType.ERROR, message, ButtonType.OK);
+	        alert.setTitle(title);
+	        alert.showAndWait();
+	    }
+	    public boolean isNameFormatValid(String name) {
+	        String[] words = name.split("\\s+");
+	        for (String word : words) {
+	            if (!word.matches("\\p{Lu}\\p{Ll}*")) {
+	                return false;
+	            }
+	        }
+	        return true;
+	    }
+	    public boolean kiemTraDuLieu() throws Exception{
+	    	if (txtTenNV.getText().equals("")) {
+	            showAlertLoi("Lỗi nhập dữ liệu", "Họ tên nhân viên không được rỗng");
+	            return false;
+	        }
+	    	if (!isNameFormatValid(txtTenNV.getText())) {
+	            showAlertLoi("Lỗi nhập dữ liệu", "Họ tên nhân viên phải in hoa ký tự đầu");
+	            return false;
+	        }
+	    	if (!txtSDT.getText().matches("0[23789]\\d{8}")) {
+	            showAlertLoi("Lỗi nhập dữ liệu", "Số điện thoại nhân viên là dãy gồm 10 ký số. 2 ký số đầu là {02, 03, 05, 07, 08, 09}");
+	            return false;
+	        }
+	    	if (txtNgaySinh.getValue() == null) {
+	            showAlert("Lỗi nhập dữ liệu", "Ngày sinh không được rỗng");
+	            return false;
+	        }
+
+	        if ((LocalDate.now().getYear() - txtNgaySinh.getValue().getYear()) < 18) {
+	            showAlertLoi("Lỗi nhập dữ liệu", "Khách hàng phải từ 18 trở lên");
+	            return false;
+	        }
+	     
+	        
+	        if (cbbGioiTinh.getValue().equals("")) {
+	            showAlertLoi("Lỗi nhập dữ liệu", "Giới tính nhân viên không được rỗng");
+	            return false;
+	        }
+	    	if (!txtCCCD.getText().matches("\\d{12}")) {
+	            showAlertLoi("Lỗi nhập dữ liệu", "CCCD là một dãy gồm 12 số");
+	            return false;
+	        }
+	        if (txtCCCD.getText().equals("")) {
+	            showAlertLoi("Lỗi nhập dữ liệu", "CCCD nhân viên không được rỗng");
+	            return false;
+	        }
+	        if (cbbChucVu.getValue().equals("")) {
+	            showAlertLoi("Lỗi nhập dữ liệu", "Chức vụ nhân viên không được rỗng");
+	            return false;
+	        }
+			return true;
+	    }  
 	    
 }
