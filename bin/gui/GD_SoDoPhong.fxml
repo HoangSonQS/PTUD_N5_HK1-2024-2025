@@ -198,6 +198,12 @@
                         </ImageView>
                      </graphic>
                   </Button>
+                  <Text layoutX="250.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Trạng thái: ">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Text>
+                  <ComboBox fx:id="cbb_TrangThai" layoutX="250.0" layoutY="80.0" onAction="#loadTrangThaiPhong_CBB" prefHeight="30.0" prefWidth="200.0" />
                </children>
             </Pane>
          </children>

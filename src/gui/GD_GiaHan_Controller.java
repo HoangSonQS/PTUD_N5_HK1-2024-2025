@@ -115,25 +115,28 @@ public class GD_GiaHan_Controller implements Initializable{
 		lbCCCD.setText("");
 		lbNgayNhan.setText("");
 		dpTra.setValue(null);
+		giaodienGiaHan();
+//		btnGiaHan.setOnAction(event ->{
+//			PhieuThuePhong PthueMoi = pthople[0];
+//			PhieuThuePhong_DAO dsPT = new PhieuThuePhong_DAO();
+//			LocalDate thoiGianNhanMoi = dpTra.getValue();
+//			PthueMoi.setThoiHanGiaoPhong(thoiGianNhanMoi);
+//			dsPT.suaPhieuThue(PthueMoi);
+//			new Alert(Alert.AlertType.CONFIRMATION, "Gia hạn thành công!").showAndWait();
+//			renderArrayPhong(dsFull);
+//			lb_maPhong.setText("");
+//			lb_tenKH.setText("");
+//			lbSDT.setText("");
+//			lbCCCD.setText("");
+//			lbNgayNhan.setText("");
+//			dpTra.setValue(null);
+//		});
+	}
+	public void giaodienGiaHan() {
 		Phong_DAO dsP = new Phong_DAO();
-		ArrayList<Phong> dsFull = dsP.getPhongTheoTrangThaiDanhSach(2);
+		ArrayList<Phong> dsFull = dsP.getPhongTheoTrangThaiDanhSach(1);
 		dsFull.addAll(dsP.getPhongTheoTrangThaiDanhSach(4));
 		renderArrayPhong(dsFull);
-		btnGiaHan.setOnAction(event ->{
-			PhieuThuePhong PthueMoi = pthople[0];
-			PhieuThuePhong_DAO dsPT = new PhieuThuePhong_DAO();
-			LocalDate thoiGianNhanMoi = dpTra.getValue();
-			PthueMoi.setThoiHanGiaoPhong(thoiGianNhanMoi);
-			dsPT.suaPhieuThue(PthueMoi);
-			new Alert(Alert.AlertType.CONFIRMATION, "Gia hạn thành công!").showAndWait();
-			renderArrayPhong(dsFull);
-			lb_maPhong.setText("");
-			lb_tenKH.setText("");
-			lbSDT.setText("");
-			lbCCCD.setText("");
-			lbNgayNhan.setText("");
-			dpTra.setValue(null);
-		});
 	}
 	
 	public Pane taoGiaoDienPhong(Phong phong) {
@@ -143,10 +146,10 @@ public class GD_GiaHan_Controller implements Initializable{
 	    roomItem.setPrefWidth(250);
 	    switch (phong.getTrangThai()) {
 		case DANGTHUE:
-			roomItem.setStyle("-fx-background-color: #ff3131; -fx-border-color: #000000; -fx-border-width: 1");
+			roomItem.setStyle("-fx-background-color: #2972d3; -fx-border-color: #000000; -fx-border-width: 1");
 			break;
 		case SAPCHECKOUT:
-			roomItem.setStyle("-fx-background-color: #2972d3; -fx-border-color: #000000; -fx-border-width: 1");
+			roomItem.setStyle("-fx-background-color: #ff3131; -fx-border-color: #000000; -fx-border-width: 1");
 			break;
 		default:
 			break;
@@ -165,7 +168,7 @@ public class GD_GiaHan_Controller implements Initializable{
 	    	phong.getTrangThai() == TrangThaiPhong.DANGTHUE ? "Chọn Phòng":"Chọn Phòng";
 
 	    Button btnLeft = new Button(strBtnLeft);
-	    btnLeft.setStyle("-fx-background-color: #ff3131; -fx-font-size: 16");
+	    btnLeft.setStyle("-fx-background-color: #31c57e; -fx-font-size: 16");
 	    btnLeft.setOnAction((event) -> {
 	    	String maPhong = phong.getIdPhong();
 	    	
@@ -219,8 +222,8 @@ public class GD_GiaHan_Controller implements Initializable{
 	    if (GridPane_GiaHan instanceof GridPane) {
 	        GridPane grid = (GridPane) GridPane_GiaHan;
 	        grid.getChildren().clear(); // Xóa hết các phần tử trước đó
-	        grid.setHgap(20); // Khoảng cách giữa các cột
-	        grid.setVgap(20); // Khoảng cách giữa các hàng
+	        grid.setHgap(10); // Khoảng cách giữa các cột
+	        grid.setVgap(10); // Khoảng cách giữa các hàng
 
 	        for (int i = 0; i < dsPhong.size(); i++) {
 	            Phong phong = dsPhong.get(i);

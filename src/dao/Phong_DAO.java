@@ -58,7 +58,6 @@ public class Phong_DAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 		return dsPhong;
 		
 	}
@@ -68,7 +67,7 @@ public class Phong_DAO {
 		PreparedStatement pstm = null;
 		int n = 0;
 		con = ConnectDB.getInstance().getConnection();
-		String sql = "INSERT INTO Phong (IDPhong, LoaiPhong, DonGia, TrangThai)values(?,?,?,?)";
+		String sql = "INSERT INTO Phong (IDPhong, LoaiPhong, DonGia, TrangThai, TieuChi)values(?,?,?,?,?)";
 		try {
 			pstm = con.prepareStatement(sql);
 			pstm.setString(1, phong.getIdPhong());
@@ -93,6 +92,7 @@ public class Phong_DAO {
 				tt = 4;
 			}
 			pstm.setInt(4, tt);
+			pstm.setString(5, phong.getTieuChi());
 			n = pstm.executeUpdate();
 			System.out.println("Thêm thành công");
 		}catch(Exception e) {
