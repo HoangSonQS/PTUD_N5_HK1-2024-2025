@@ -1,5 +1,6 @@
 package gui;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.time.format.DateTimeFormatter;
@@ -7,6 +8,9 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
 import dao.PhieuThuePhong_DAO;
 import dao.Phong_DAO;
@@ -22,8 +26,11 @@ import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -44,6 +51,9 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 
 	@FXML
 	private ComboBox<String> cbb;
+	
+	@FXML
+	private ComboBox<String> cbb_TrangThai;
 
 	@FXML
 	private ImageView icon_QuanLy;
@@ -120,7 +130,11 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
     	renderArrayPhong(new Phong_DAO().getAllPhong());
 		cbb.setItems(list);
 		cbb.setValue("Tất cả");
+		ObservableList<String> list_TrangThai = FXCollections.observableArrayList("Tất cả","Phòng trống", "Đang ở", "Sắp Check-in","Sắp Check-out");
+		cbb_TrangThai.setItems(list_TrangThai);
+		cbb_TrangThai.setValue("Tất cả");
 		loadLoaiPhong();
+		loadTrangThaiPhong_CBB();
 		loadTrangThaiPhong();
 		LoadSoPhongTheoLoai();
 	}
@@ -129,12 +143,12 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 		renderArrayPhong(new Phong_DAO().getAllPhong());
 		cbb.setOnAction(event -> {
 			gridPane.getChildren().clear(); // Xóa các thành phần trong GridPane trước khi thêm mới
-		    ArrayList<Phong> dsP = kiemTraLoaiPhong(); // Khởi tạo danh sách phòng
+		    ArrayList<Phong> dsP = kiemTraLoaiPhong();
+		    cbb_TrangThai.setValue("Tất cả");// Khởi tạo danh sách phòng
 		    renderArrayPhong(dsP);
 		    LoadSoPhongTheoLoai();
 		});
 	}
-	
 
 	public void LoadSoPhongTheoLoai(){
 	    String selectedItem = (String) cbb.getSelectionModel().getSelectedItem();
@@ -179,6 +193,7 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
         btn_SapCheckOut.setText("Sắp Check-out (" + KiemtraTrung(dsP_TheoLoai,4).size()+ ")");
         btn_TatCa.setText("Tất cả (" + dsP_TheoLoai.size()	 + ")");
 	}
+	
 	public ArrayList<Phong> kiemTraLoaiPhong() {
 		String selectedItem = (String) cbb.getSelectionModel().getSelectedItem();
 		
@@ -195,62 +210,56 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 	    }
 	    return dsP;
 	}
-	public void loadTrangThaiPhong() {
-		btn_PhongTrong.setOnAction(event ->{
-			gridPane.getChildren().clear();
+	
+	public ArrayList<Phong> LocPhong2TieuChi(int maso ){
+		gridPane.getChildren().clear();
+		ArrayList<Phong> dsPKiemTra =  kiemTraLoaiPhong();
+		ArrayList<Phong> dsKiemTraTT = new Phong_DAO().getPhongTheoTrangThaiDanhSach(maso);
+		ArrayList<Phong> dsHoanCHinh = new ArrayList<Phong>();
+		for (Phong phongTT : dsPKiemTra) {
+		    // Kiểm tra nếu dsPKiemTra chứa phần tử này
+		    if (dsKiemTraTT.contains(phongTT)) {
+		        // Thêm phần tử vào dsHoanCHinh
+		        dsHoanCHinh.add(phongTT);
+		    }
+		}
+		return dsHoanCHinh;
+	}
+	
+	public void loadTrangThaiPhong_CBB() {
+		String selectedItemTT = (String) cbb_TrangThai.getSelectionModel().getSelectedItem();	    
+	    if (selectedItemTT.equals("Phòng trống")) {
+	    	
+	    	renderArrayPhong(LocPhong2TieuChi(2));
+	    } else if (selectedItemTT.equals("Đang ở")) {
+	    	
+	    	renderArrayPhong(LocPhong2TieuChi(1));
+	    } else if (selectedItemTT.equals("Sắp Check-in")) {
+	    	
+	    	renderArrayPhong(LocPhong2TieuChi(3));
+	    } else if (selectedItemTT.equals("Sắp Check-out")) {
+	    	
+	    	renderArrayPhong(LocPhong2TieuChi(4));
+	    }else if(selectedItemTT.equals("Tất cả")) {
+	    	gridPane.getChildren().clear();
 			ArrayList<Phong> dsPKiemTra =  kiemTraLoaiPhong();
-			ArrayList<Phong> dsKiemTraTT = new Phong_DAO().getPhongTheoTrangThaiDanhSach(2);
-			ArrayList<Phong> dsHoanCHinh = new ArrayList<Phong>();
-			for (Phong phongTT : dsPKiemTra) {
-			    // Kiểm tra nếu dsPKiemTra chứa phần tử này
-			    if (dsKiemTraTT.contains(phongTT)) {
-			        // Thêm phần tử vào dsHoanCHinh
-			        dsHoanCHinh.add(phongTT);
-			    }
-			}
-			renderArrayPhong(dsHoanCHinh);
+			renderArrayPhong(dsPKiemTra);
+	    }
+	}
+	
+	public void loadTrangThaiPhong() {
+		
+		btn_PhongTrong.setOnAction(event ->{
+			renderArrayPhong(LocPhong2TieuChi(2));
 		});
 		btn_DangO.setOnAction(event ->{
-			gridPane.getChildren().clear();
-			ArrayList<Phong> dsPKiemTra =  kiemTraLoaiPhong();
-			ArrayList<Phong> dsKiemTraTT = new Phong_DAO().getPhongTheoTrangThaiDanhSach(1);
-			ArrayList<Phong> dsHoanCHinh = new ArrayList<Phong>();
-			for (Phong phongTT : dsKiemTraTT) {
-			    // Kiểm tra nếu dsPKiemTra chứa phần tử này
-			    if (dsPKiemTra.contains(phongTT)) {
-			        // Thêm phần tử vào dsHoanCHinh
-			        dsHoanCHinh.add(phongTT);
-			    }
-			}
-			renderArrayPhong(dsHoanCHinh);
+			renderArrayPhong(LocPhong2TieuChi(1));
 		});
 		btn_SapCheckIn.setOnAction(event ->{
-			gridPane.getChildren().clear();
-			ArrayList<Phong> dsPKiemTra =  kiemTraLoaiPhong();
-			ArrayList<Phong> dsKiemTraTT = new Phong_DAO().getPhongTheoTrangThaiDanhSach(3);
-			ArrayList<Phong> dsHoanCHinh = new ArrayList<Phong>();
-			for (Phong phongTT : dsKiemTraTT) {
-			    // Kiểm tra nếu dsPKiemTra chứa phần tử này
-			    if (dsPKiemTra.contains(phongTT)) {
-			        // Thêm phần tử vào dsHoanCHinh
-			        dsHoanCHinh.add(phongTT);
-			    }
-			}
-			renderArrayPhong(dsHoanCHinh);
+			renderArrayPhong(LocPhong2TieuChi(3));
 		});
 		btn_SapCheckOut.setOnAction(event ->{
-			gridPane.getChildren().clear();
-			ArrayList<Phong> dsPKiemTra =  kiemTraLoaiPhong();
-			ArrayList<Phong> dsKiemTraTT = new Phong_DAO().getPhongTheoTrangThaiDanhSach(4);
-			ArrayList<Phong> dsHoanCHinh = new ArrayList<Phong>();
-			for (Phong phongTT : dsKiemTraTT) {
-			    // Kiểm tra nếu dsPKiemTra chứa phần tử này
-			    if (dsPKiemTra.contains(phongTT)) {
-			        // Thêm phần tử vào dsHoanCHinh
-			        dsHoanCHinh.add(phongTT);
-			    }
-			}
-			renderArrayPhong(dsHoanCHinh);
+			renderArrayPhong(LocPhong2TieuChi(4));
 		});
 		btn_TatCa.setOnAction(event->{
 			gridPane.getChildren().clear();
@@ -279,25 +288,56 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 			String thongTinPhong = "Mã phòng: " + phong.getIdPhong() + "\n"
 		            + "Loại phòng: " + phong.getLoaiPhong() + "\n"
 		            + "Đơn giá: " + phong.getDonGia() + " VND\n"
-		            + "Trạng thái: " + phong.getTrangThai();
-		    
-		    if (phong.getTrangThai() == TrangThaiPhong.SAPCHECKIN) {
-		        try {
-		            PhieuThuePhong phieu = new PhieuThuePhong_DAO().layPhieuThueTheoMa(phong.getIdPhong());
-		            if (phieu != null) {
-		                thongTinPhong += "\nGiờ nhận: " + dtf.format(phieu.getThoiGianNhanPhong());
-		            }
-		        } catch (Exception ex) {
-		            Logger.getLogger(GD_SoDoPhong_Cotroller.class.getName()).log(Level.SEVERE, null, ex);
-		        }
-		    }
-		    
-		    // Hiển thị Alert với thông tin phòng
-		    Alert alert = new Alert(Alert.AlertType.INFORMATION);
-		    alert.setTitle("Thông tin phòng");
-		    alert.setHeaderText("Chi tiết phòng: " + phong.getIdPhong());
-		    alert.setContentText(thongTinPhong);
-		    alert.showAndWait();
+		            + "Trạng thái: " + phong.getTrangThai()+"\n"
+		            + "Tiêu chí:" + phong.getTieuChi();
+
+			File imageFile = null;
+			String imagePath = "";
+
+			if (phong.getLoaiPhong().toString().equalsIgnoreCase("Phòng đôi")) {
+			    imagePath = "data/pic/phongdoi.jpg";
+			} else if (phong.getLoaiPhong().toString().equalsIgnoreCase("Phòng đơn")) {
+			    imagePath = "data/pic/phongdon.jpg";
+			} else {
+			    imagePath = "data/pic/phonggiadinh.jpg";
+			}
+
+			// Đảm bảo bạn đang trỏ đúng đường dẫn tới thư mục ngoài src
+			imageFile = new File(imagePath);
+
+			if (imageFile.exists()) {
+			    Image image = new Image(imageFile.toURI().toString());
+			    ImageView imageView = new ImageView(image);
+			    imageView.setFitWidth(600);
+			    imageView.setFitHeight(600); // Đặt kích thước hình ảnh
+			    imageView.setPreserveRatio(true); // Đảm bảo tỷ lệ
+
+			    Label thongTinLabel = new Label(thongTinPhong);
+			    thongTinLabel.setStyle("-fx-font-size: 16px;");
+
+			    Dialog<Void> dialog = new Dialog<>();
+			    dialog.setTitle("Thông tin phòng");
+			    dialog.setHeaderText("Chi tiết phòng: " + phong.getIdPhong());
+
+			    VBox content = new VBox(10);
+			    content.getChildren().addAll(imageView, thongTinLabel);
+			    content.setAlignment(Pos.TOP_LEFT);
+
+			    dialog.getDialogPane().setContent(content);
+			    dialog.getDialogPane().getButtonTypes().add(ButtonType.OK);
+
+			    // Hiển thị Dialog
+			    dialog.showAndWait();
+			} else {
+			    System.out.println("Hình ảnh không tìm thấy! Đường dẫn: " + imagePath);
+
+			    // Hiển thị Alert thông thường
+			    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+			    alert.setTitle("Thông tin phòng");
+			    alert.setHeaderText("Chi tiết phòng: " + phong.getIdPhong());
+			    alert.setContentText(thongTinPhong);
+			    alert.showAndWait();
+			}
 		});
 		switch (phong.getTrangThai()) {
 		case TRONG:
