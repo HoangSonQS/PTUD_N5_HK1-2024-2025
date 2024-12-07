@@ -7,11 +7,17 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 import connectDB.ConnectDB;
-
+import entity.HoaDon;
 import entity.KhachHang;
-
+import entity.KhuyenMai;
+import entity.LoaiPhong;
 import entity.NhanVien;
 import entity.PhieuThuePhong;
 import entity.Phong;
@@ -293,5 +299,162 @@ public class PhieuThuePhong_DAO {
 			e.printStackTrace();
 		}
 		return dsPT;
+	}
+	
+	//thongke
+	
+	public ArrayList<Map<LocalDate, Integer>> thongKeTheoNgay(LocalDate dateA, LocalDate dateB){
+		ArrayList<Map<LocalDate, Integer>> kq = new ArrayList<Map<LocalDate, Integer>>();
+		Connection conN = ConnectDB.getInstance().getConnection();
+		Statement stm = null;
+
+		try {
+			stm = conN.createStatement();
+			String sql = String.format("SELECT CAST(ThoiGianNhanPhong AS DATE) AS Ngay "
+					+ "FROM PhieuThuePhong "
+					+ "WHERE CAST(ThoiGianNhanPhong AS DATE) BETWEEN '%s' AND '%s' and IDHoaDon IS NOT NULL "
+					+ "GROUP BY CAST(ThoiGianNhanPhong AS DATE)",
+					dateA.format(DateTimeFormatter.ISO_DATE), 
+					dateB.format(DateTimeFormatter.ISO_DATE));
+			System.out.println(sql);
+			ResultSet rs = stm.executeQuery(sql);
+			while (rs.next()) {
+				int dem = 0;
+				Map<LocalDate, Integer> map = new HashMap<LocalDate, Integer>();
+				LocalDate ngayLap = rs.getDate("Ngay").toLocalDate();
+				dem += layPhieuThueTheoNgay(ngayLap);
+				map.put(ngayLap, dem);
+				System.out.println(map);
+				kq.add(map);
+			}
+		}catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return kq;
+	}
+	public int layPhieuThueTheoNgay(LocalDate date){
+		Connection conN = ConnectDB.getInstance().getConnection();
+		PreparedStatement stm = null;
+		int dem = 0;
+		try {
+			String sql = "select IDPhong from PhieuThuePhong where CAST(ThoiGianNhanPhong AS DATE) = ? and IDHoaDon IS NOT NULL";
+			stm = conN.prepareStatement(sql);
+			stm.setDate(1, Date.valueOf(date));
+			ResultSet rs = stm.executeQuery();
+			while (rs.next()) {
+	            String idphong = rs.getString("IDPhong");
+	            Phong p = new Phong_DAO().getPhongTheoMa(idphong);
+	            if (p.getLoaiPhong() == LoaiPhong.PHONGDON || p.getLoaiPhong() == LoaiPhong.PHONGDOI) {
+	            	dem += 2;
+	            } else if (p.getLoaiPhong() == LoaiPhong.PHONGGIADINH) {
+	            	dem += 4;
+	            }
+			}
+		}catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return dem;
+	}
+	public ArrayList<Map<Integer, Integer>> thongKeTheoThang(int month, int year){
+		ArrayList<Map<Integer, Integer>> kq = new ArrayList<Map<Integer, Integer>>();
+		Connection conN = ConnectDB.getInstance().getConnection();
+		Statement stm = null;
+
+		try {
+			stm = conN.createStatement();
+			String sql = String.format("SELECT MONTH(ThoiGianNhanPhong) AS Month "
+					+ "FROM PhieuThuePhong "
+					+ "WHERE YEAR(ThoiGianNhanPhong) = '%d' and IDHoaDon IS NOT NULL "
+					+ "GROUP BY MONTH(ThoiGianNhanPhong)", year);
+			System.out.println(sql);
+			ResultSet rs = stm.executeQuery(sql);
+			while (rs.next()) {
+				int dem = 0;
+				Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+				int thang = rs.getInt("Month");
+				dem += layPhieuThueTheoThang(thang);
+				map.put(thang, dem);
+				System.out.println(map);
+				kq.add(map);
+			}
+		}catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return kq;
+	}
+	public int layPhieuThueTheoThang(int thang){
+		Connection conN = ConnectDB.getInstance().getConnection();
+		PreparedStatement stm = null;
+		int dem = 0;
+		try {
+			String sql = "select IDPhong from PhieuThuePhong where MONTH(ThoiGianNhanPhong) = ? and IDHoaDon IS NOT NULL";
+			stm = conN.prepareStatement(sql);
+			stm.setInt(1, thang);
+			ResultSet rs = stm.executeQuery();
+			while (rs.next()) {
+	            String idphong = rs.getString("IDPhong");
+	            Phong p = new Phong_DAO().getPhongTheoMa(idphong);
+	            if (p.getLoaiPhong() == LoaiPhong.PHONGDON || p.getLoaiPhong() == LoaiPhong.PHONGDOI) {
+	            	dem += 2;
+	            } else if (p.getLoaiPhong() == LoaiPhong.PHONGGIADINH) {
+	            	dem += 4;
+	            }
+			}
+		}catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return dem;
+	}
+	public ArrayList<Map<Integer, Integer>> thongKeTheoNam(int year){
+		ArrayList<Map<Integer, Integer>> kq = new ArrayList<Map<Integer, Integer>>();
+		Connection conN = ConnectDB.getInstance().getConnection();
+		Statement stm = null;
+		try {
+			stm = conN.createStatement();
+			String sql = String.format("SELECT Year(ThoiGianNhanPhong) AS Year FROM PhieuThuePhong WHERE Year(ThoiGianNhanPhong) BETWEEN %d AND %d GROUP BY Year(ThoiGianNhanPhong)",year - 2, year + 2);
+			System.out.println(sql);
+			ResultSet rs = stm.executeQuery(sql);
+			while (rs.next()) {
+				int dem = 0;
+				Map<Integer, Integer> map = new HashMap<Integer, Integer>();
+				int nam = rs.getInt("Year");
+				dem += layPhieuThueTheoNam(nam);
+				map.put(nam, dem);
+				System.out.println(map);
+				kq.add(map);
+			}
+		}catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return kq;
+	}
+	public int layPhieuThueTheoNam(int nam){
+		Connection conN = ConnectDB.getInstance().getConnection();
+		PreparedStatement stm = null;
+		int dem = 0;
+		try {
+			String sql = "select IDPhong from PhieuThuePhong where Year(ThoiGianNhanPhong) = ? and IDHoaDon IS NOT NULL";
+			stm = conN.prepareStatement(sql);
+			stm.setInt(1, nam);
+			ResultSet rs = stm.executeQuery();
+			while (rs.next()) {
+	            String idphong = rs.getString("IDPhong");
+	            Phong p = new Phong_DAO().getPhongTheoMa(idphong);
+	            if (p.getLoaiPhong() == LoaiPhong.PHONGDON || p.getLoaiPhong() == LoaiPhong.PHONGDOI) {
+	            	dem += 2;
+	            } else if (p.getLoaiPhong() == LoaiPhong.PHONGGIADINH) {
+	            	dem += 4;
+	            }
+			}
+		}catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return dem;
 	}
 }

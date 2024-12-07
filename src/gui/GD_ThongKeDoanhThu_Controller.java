@@ -380,12 +380,7 @@ public class GD_ThongKeDoanhThu_Controller implements Initializable{
 
 	    @FXML
 	    void moGDTKKH(MouseEvent event) throws IOException {
-	    	App.setRoot("GD_ThongKeKhachHang");
-	    }
-
-	    @FXML
-	    void moGDTKSP(MouseEvent event) throws IOException {
-			 App.setRoot("GD_ThongKeSanPham");
+	    	App.setRoot("GD_ThongKeSoKhachHang");
 	    }
 
 	    @FXML
