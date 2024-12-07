@@ -213,10 +213,18 @@ public class GD_QLPhong_Controller implements Initializable{
 	    }
 	    
 	    @FXML
-	    void themPhong(MouseEvent event) {
+	    void themPhong(MouseEvent event) throws Exception {
+	    	if(!kiemTraDuLieu()) {
+	    		return;
+	    	}
+	    	
 	        // Kiểm tra các trường bắt buộc
 	        if (txt_Phong1.getText().trim().isEmpty() || 
-	            txt_GiaPhong.getText().trim().isEmpty()
+	        	cbb.getValue() == null ||
+	        	txt_GiaPhong.getText().trim().isEmpty() ||
+	        	cbb2.getValue() == null ||
+	            txt_GiaPhong.getText().trim().isEmpty()||
+	            txt_TieuChi.getText().trim().isEmpty()
 	            ) {
 	            
 	            Alert alert = new Alert(AlertType.WARNING);
@@ -226,6 +234,7 @@ public class GD_QLPhong_Controller implements Initializable{
 	            alert.showAndWait();
 	            return;
 	        }
+	        
 
 	        // Lấy thông tin từ các trường
 	        String idPhong = txt_Phong1.getText();
@@ -364,4 +373,52 @@ public class GD_QLPhong_Controller implements Initializable{
 	    void xoaTrang(MouseEvent event) {
 	    	clearFields();
 	    }
+	    private void showAlert(String title, String message) {
+	        Alert alert = new Alert(Alert.AlertType.INFORMATION, message, ButtonType.OK);
+	        alert.setTitle(title);
+	        alert.showAndWait();
+	    }
+	    private void showAlertLoi(String title, String message) {
+	        Alert alert = new Alert(Alert.AlertType.ERROR, message, ButtonType.OK);
+	        alert.setTitle(title);
+	        alert.showAndWait();
+	    }
+	    public boolean isNameFormatValid(String name) {
+	        String[] words = name.split("\\s+");
+	        for (String word : words) {
+	            if (!word.matches("\\p{Lu}\\p{Ll}*")) {
+	                return false;
+	            }
+	        }
+	        return true;
+	    }
+	    public boolean kiemTraDuLieu() throws Exception{
+	    	if (txt_Phong1.getText().equals("")) {
+	            showAlertLoi("Lỗi nhập dữ liệu", "Mã phòng không được rỗng");
+	            return false;
+	        }
+	    	if (!txt_Phong1.getText().matches("^T\\d{2}P\\d{2}$")) {
+	            showAlertLoi("Lỗi nhập dữ liệu", "Mã phòng sai định dạng (TxxPyy: xx số tầng, yy số phòng)");
+	            return false;
+	        }
+	     
+	        
+	        if (cbb.getValue().equals("")) {
+	            showAlertLoi("Lỗi nhập dữ liệu", "Loại phòng không được rỗng");
+	            return false;
+	        }
+	        if (txt_GiaPhong.getText().equals("")) {
+	            showAlertLoi("Lỗi nhập dữ liệu", "Giá phòng không được rỗng");
+	            return false;
+	        }
+	        if (cbb2.getValue().equals("")) {
+	            showAlertLoi("Lỗi nhập dữ liệu", "Trạng thái không được rỗng");
+	            return false;
+	        }
+	        if (txt_TieuChi.getText().equals("")) {
+	            showAlertLoi("Lỗi nhập dữ liệu", "Tiêu chí không được rỗng");
+	            return false;
+	        }
+			return true;
+	    }  
 }
