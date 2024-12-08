@@ -16,7 +16,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="845.0" prefWidth="1554.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.GD_SoDoPhong_Cotroller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="845.0" prefWidth="1554.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.GD_SoDoPhong_Cotroller">
    <children>
       <Pane layoutY="70.0" prefHeight="775.0" prefWidth="1554.0">
          <children>
@@ -198,7 +198,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Text layoutX="250.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Trạng thái: ">
+                  <Text layoutX="250.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tiêu chí:">
                      <font>
                         <Font size="16.0" />
                      </font>
