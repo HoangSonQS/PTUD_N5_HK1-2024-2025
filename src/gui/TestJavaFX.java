@@ -14,10 +14,8 @@ public class TestJavaFX extends Application {
 		try {
 			connect();
 
+
 			Parent root = FXMLLoader.load(getClass().getResource("GD_GiaHanPhong.fxml"));
-
-//			Parent root = FXMLLoader.load(getClass().getResource("GD_ThongKeDoanhThu.fxml"));
-
 			Scene scene = new Scene(root);
 
 			primaryStage.setScene(scene);

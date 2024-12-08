@@ -130,7 +130,7 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
     	renderArrayPhong(new Phong_DAO().getAllPhong());
 		cbb.setItems(list);
 		cbb.setValue("Tất cả");
-		ObservableList<String> list_TrangThai = FXCollections.observableArrayList("Tất cả","Phòng trống", "Đang ở", "Sắp Check-in","Sắp Check-out");
+		ObservableList<String> list_TrangThai = FXCollections.observableArrayList("Tất cả","View biển", "View thành phố");
 		cbb_TrangThai.setItems(list_TrangThai);
 		cbb_TrangThai.setValue("Tất cả");
 		loadLoaiPhong();

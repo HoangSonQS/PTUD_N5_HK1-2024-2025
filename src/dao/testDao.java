@@ -4,6 +4,8 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Map;
 
 import connectDB.ConnectDB;
 import entity.ChiTietHD_Phong;
@@ -25,6 +27,7 @@ public class testDao {
 		connect();
 //		testTaiKhoan();
 //		testNhanVien();
+
 //		testPhieuThue();
 
 //		testKH();
@@ -32,6 +35,10 @@ public class testDao {
 		testPhong();
 
 		testKH();
+
+		testPhieuThue();
+//		testKH();
+
 //		testHoaDon();
 //		testPhong();
 	}
@@ -51,6 +58,8 @@ public class testDao {
 	//done
 	public static void testPhong() throws SQLException {
 		Phong_DAO pdao = new Phong_DAO();
+		
+		
 //		System.out.println(pdao.getAllPhong());
 
 //		Phong p = new Phong("T03P07", LoaiPhong.PHONGDOI, 200000, TrangThaiPhong.TRONG);
@@ -78,10 +87,13 @@ public class testDao {
 	}
 	public static void testPhieuThue() {
 		PhieuThuePhong_DAO dsPT = new PhieuThuePhong_DAO();
+		ArrayList<Map<Integer, Integer>> a = dsPT.thongKeTheoNam(2024);
+		System.out.println(a);
 		
-		KhachHang_DAO dsKH = new KhachHang_DAO();
-		KhachHang kh1 = dsKH.getKhachHangTheoMa("KH24100301");
-		System.out.println(dsPT.layPhieuThueTheoMaPhong("T01P02"));
+		
+//		KhachHang_DAO dsKH = new KhachHang_DAO();
+//		KhachHang kh1 = dsKH.getKhachHangTheoMa("KH24100301");
+//		System.out.println(dsPT.layPhieuThueTheoMaPhong("T01P02"));
 //		
 //		Phong_DAO dsP = new Phong_DAO();
 //		Phong p1 = dsP.getPhongTheoMa("T0P04");

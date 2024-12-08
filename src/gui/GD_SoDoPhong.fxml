@@ -198,7 +198,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Text layoutX="250.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Trạng thái: ">
+                  <Text layoutX="250.0" layoutY="70.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tiêu chí:">
                      <font>
                         <Font size="16.0" />
                      </font>

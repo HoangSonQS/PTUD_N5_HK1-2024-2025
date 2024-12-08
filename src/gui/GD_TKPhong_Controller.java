@@ -55,6 +55,9 @@ public class GD_TKPhong_Controller implements Initializable{
 
     @FXML
     private Label lb_trangThai;
+    
+    @FXML
+    private Label lb_TieuChi;
 
     @FXML
     private TableView<Phong> tablePhong;
@@ -78,6 +81,9 @@ public class GD_TKPhong_Controller implements Initializable{
 
     @FXML
     private TableColumn<Phong, String> clTT;
+    
+    @FXML
+    private TableColumn<Phong, String> clTC;
 
     @FXML
     private TextField txt_MaPhong;
@@ -239,6 +245,7 @@ public class GD_TKPhong_Controller implements Initializable{
         	TrangThaiPhong tt = cellData.getValue().getTrangThai();
         	return new ReadOnlyStringWrapper(tt.toString());
         });
+        clTC.setCellValueFactory(new PropertyValueFactory<>("tieuChi"));
         
         loadTableData();
         tablePhong.setOnMouseClicked(event -> {
@@ -248,6 +255,7 @@ public class GD_TKPhong_Controller implements Initializable{
         		lb_loaiPhong.setText(selectedPhong.getLoaiPhongString());
         		lb_donGia.setText(String.valueOf(selectedPhong.getDonGia()));
         		lb_trangThai.setText(selectedPhong.getTrangThaiString());
+        		lb_TieuChi.setText(selectedPhong.getTrangThaiString());
         	}
         });
 	}

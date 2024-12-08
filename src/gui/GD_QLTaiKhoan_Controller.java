@@ -197,6 +197,9 @@ public class GD_QLTaiKhoan_Controller implements Initializable{
     @FXML
     void themTK(MouseEvent event) {
         try {
+        	if(!kiemTraDuLieu()) {
+	    		return;
+	    	}
             // Kiểm tra dữ liệu nhập vào
             if(txtMatKhau.getText().trim().isEmpty() || lb_MaNV.getText().trim().isEmpty()) {
                 Alert alert = new Alert(AlertType.ERROR);
@@ -206,6 +209,7 @@ public class GD_QLTaiKhoan_Controller implements Initializable{
                 alert.showAndWait();
                 return;
             }
+            
 
             // Lấy thông tin nhân viên
             NhanVien_DAO nvDAO = new NhanVien_DAO();
@@ -487,4 +491,30 @@ public class GD_QLTaiKhoan_Controller implements Initializable{
         lb_TenNV.setText("");
         lb_ChucVu.setText("");
     }
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, message, ButtonType.OK);
+        alert.setTitle(title);
+        alert.showAndWait();
+    }
+    private void showAlertLoi(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR, message, ButtonType.OK);
+        alert.setTitle(title);
+        alert.showAndWait();
+    }
+    public boolean isNameFormatValid(String name) {
+        String[] words = name.split("\\s+");
+        for (String word : words) {
+            if (!word.matches("\\p{Lu}\\p{Ll}*")) {
+                return false;
+            }
+        }
+        return true;
+    }
+    public boolean kiemTraDuLieu() throws Exception{
+    	if (!txtMatKhau.getText().matches("^(?=.*[a-zA-Z]).{6,}$")) {
+            showAlertLoi("Lỗi nhập dữ liệu", "Không được rỗng, ít nhất 6 ký tự. Trong đó, có 1 ký tự chữ");
+            return false;
+        }
+		return true;
+    }  
 }

@@ -197,6 +197,7 @@ public class GD_QLUuDai_Controller implements Initializable{
     @FXML
     void themKM(MouseEvent event) {
         try {
+        	
             // Lấy dữ liệu từ các trường nhập
             String tenKM = txtTenKM.getText().trim();
             String chietKhauStr = txtCK.getText().trim();

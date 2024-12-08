@@ -266,7 +266,7 @@ public class GD_TKHoaDon_Controller implements Initializable{
         clTGT.setCellValueFactory(cellData -> {
             LocalDateTime ngayTao = cellData.getValue().getThoiGianTao();
             if (ngayTao != null) {
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy");
                 String ngayTaoFormatted = ngayTao.format(formatter);
                 return new ReadOnlyStringWrapper(ngayTaoFormatted);
             }
@@ -275,7 +275,7 @@ public class GD_TKHoaDon_Controller implements Initializable{
         clTHC.setCellValueFactory(cellData -> {
             LocalDateTime ngayCheckin = cellData.getValue().getThoiGianCheckin();
             if (ngayCheckin != null) {
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy");
                 String ngayCheckinFormatted = ngayCheckin.format(formatter);
                 return new ReadOnlyStringWrapper(ngayCheckinFormatted);
             }
@@ -289,7 +289,7 @@ public class GD_TKHoaDon_Controller implements Initializable{
         		lb_MaNV.setText(selectedHoaDon.getNhanVienLap().getIdNhanVien());
         		lb_MaKH.setText(selectedHoaDon.getKhachHang().getIdKhachHang());
         		lb_MaKM.setText(selectedHoaDon.getKhuyenmai().getIdKhuyenMai());
-        		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy");
         		lb_tgTao.setText(selectedHoaDon.getThoiGianTao().format(formatter));
         		lb_tgCheckin.setText(selectedHoaDon.getThoiGianCheckin().format(formatter));
         	}
