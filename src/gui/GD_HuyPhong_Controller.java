@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -91,122 +92,87 @@ public class GD_HuyPhong_Controller implements Initializable{
 	    lb_tenKH.setText("");
 	    lbSDT.setText("");
 	    lbCCCD.setText("");
-	    
+
 	    // Load rooms with status "sắp checkin" (status 3) on initialization
 	    Phong_DAO dsP = new Phong_DAO();
 	    ArrayList<Phong> availableRooms = dsP.getPhongTheoTrangThaiDanhSach(3);
-	    renderArrayPhong(availableRooms);
-
-	    btnTim.setOnAction(even -> {
-	        cccd = txt_CCCD.getText();
-	        KhachHang_DAO khdao = new KhachHang_DAO();
-	        KhachHang kh = khdao.getKhachHangTheoCCCD(cccd);
-	        
-	        if (cccd.isEmpty()) {
-	            renderArrayPhong(availableRooms);
-	            return;
+	    
+	    // Lấy danh sách phiếu thuê và sắp xếp theo ngày check-in gần nhất
+	    ArrayList<PhieuThuePhong> allPhieuThue = new ArrayList<>();
+	    for (Phong phong : availableRooms) {
+	        PhieuThuePhong_DAO phieuThueDAO = new PhieuThuePhong_DAO();
+	        ArrayList<PhieuThuePhong> dsPhieuThue = phieuThueDAO.layPhieuThueTheoMaPhong(phong.getIdPhong());
+	        if (!dsPhieuThue.isEmpty()) {
+	            allPhieuThue.add(dsPhieuThue.get(0)); // Lấy phiếu thuê gần nhất
 	        }
+	    }
 
-	        if (kh != null) {
-	            PhieuThuePhong_DAO dsPT = new PhieuThuePhong_DAO();
-	            ArrayList<PhieuThuePhong> phieuThueList = dsPT.layPhieuThueTheoMaKH(kh.getIdKhachHang());
-
-//	            System.out.println("Tìm kiếm với CCCD: " + cccd);
-//	            System.out.println("Số phiếu thuê tìm thấy: " + phieuThueList.size());
-
-	            // Filter the rooms that can be canceled before check-in
-	            ArrayList<Phong> filteredRooms = new ArrayList<>();
-	            LocalDate currentDate = LocalDate.now();
-
-	            for (PhieuThuePhong phieuThue : phieuThueList) {
-//	                System.out.println("Phiếu thuê: " + phieuThue.getIdPhieuThue());
-//	                System.out.println("Ngày hiện tại: " + currentDate);
-//	                System.out.println("Ngày nhận phòng: " + phieuThue.getThoiGianNhanPhong());
-
-	                // Điều kiện để hủy phòng:
-	                // 1. Ngày hiện tại phải trước ngày check-in
-	                // 2. Phòng phải ở trạng thái sắp check-in
-	                if (currentDate.isBefore(phieuThue.getThoiGianNhanPhong())) {
-	                    Phong phong = phieuThue.getPhong();
-	                    
-	                    // Kiểm tra trạng thái phòng (tuỳ thuộc vào enum của bạn)
-	                    // Ví dụ: if (phong.getTrangThai() == TrangThaiPhong.SAPCHECKINHOACDAT) 
-	                    filteredRooms.add(phong);
-	                    
-//	                    System.out.println("Thêm phòng có thể hủy: " + phong.getIdPhong());
-	                }
-	            }
-
-//	            System.out.println("Số phòng có thể hủy: " + filteredRooms.size());
-
-	            // Hiển thị kết quả
-	            if (!filteredRooms.isEmpty()) {
-	                // Hiển thị thông tin khách hàng
-	                lb_tenKH.setText(kh.getTenKhachHang());
-	                lbSDT.setText(kh.getSoDienThoai());
-	                lbCCCD.setText(kh.getCccd());
-
-	                renderArrayPhong(filteredRooms);
-	            } else {
-	                // Xóa thông tin khách hàng
-	                lb_tenKH.setText("");
-	                lbSDT.setText("");
-	                lbCCCD.setText("");
-
-	                new Alert(Alert.AlertType.INFORMATION, "Không có phòng nào có thể hủy.").showAndWait();
-	            }
-	        } else {
-	            // Xóa thông tin khách hàng
-	            lb_tenKH.setText("");
-	            lbSDT.setText("");
-	            lbCCCD.setText("");
-
-	            new Alert(Alert.AlertType.WARNING, "Không tìm thấy khách hàng với CCCD này.").showAndWait();
+	    // Sắp xếp danh sách phiếu thuê theo ngày check-in
+	    allPhieuThue.sort((pt1, pt2) -> pt1.getThoiGianNhanPhong().compareTo(pt2.getThoiGianNhanPhong()));
+	    
+	    ArrayList<PhieuThuePhong> allpt = new ArrayList<>();
+	    for (Phong phong : availableRooms) {
+	        PhieuThuePhong_DAO phieuThueDAO = new PhieuThuePhong_DAO();
+	        ArrayList<PhieuThuePhong> dsPhieuThue = phieuThueDAO.layPhieuThueTheoMaPhong(phong.getIdPhong());
+	        if (!dsPhieuThue.isEmpty()) {
+	            allpt.add(dsPhieuThue.get(0)); // Lấy phiếu thuê gần nhất
 	        }
+	    }
+
+	    // Thêm đoạn code sắp xếp ở đây
+	    LocalDate currentDate = LocalDate.now();
+	    allpt.sort((pt1, pt2) -> {
+	        long diff1 = Math.abs(ChronoUnit.DAYS.between(currentDate, pt1.getThoiGianNhanPhong()));
+	        long diff2 = Math.abs(ChronoUnit.DAYS.between(currentDate, pt2.getThoiGianNhanPhong()));
+	        return Long.compare(diff1, diff2);
 	    });
+
+	    // Render danh sách phòng đã sắp xếp
+	    renderArrayPhong(allPhieuThue);
 	}
 	
-	public void renderArrayPhong(ArrayList<Phong> dsPhong) {
-        if (scrollPane_GDHuy instanceof GridPane) {
-            GridPane grid = (GridPane) scrollPane_GDHuy;
-            grid.getChildren().clear();
-            
-            // Thiết lập khoảng cách giữa các ô
-            grid.setHgap(15);  
-            grid.setVgap(15); 
-            grid.setPadding(new Insets(15));
-            
-            // Lấy kích thước của ScrollPane
-            double availableWidth = scrollPane_GDHuy.getWidth() - 60;
-            double columnWidth = (availableWidth - 40) / 3;
-            
-            // Thêm ColumnConstraints để đặt khoảng cách giữa các cột
-            grid.getColumnConstraints().clear();
-            for (int i = 0; i < 3; i++) {
-                ColumnConstraints column = new ColumnConstraints();
-                column.setHgrow(Priority.SOMETIMES);
-                column.setMinWidth(columnWidth);
-                column.setPrefWidth(columnWidth);
-                grid.getColumnConstraints().add(column);
-            }
-            
-            // Số cột tối đa trong grid
-            int maxColumns = 3;
-            
-         // Render từng phòng
-	        for (int i = 0; i < dsPhong.size(); i++) {
-	            Phong phong = dsPhong.get(i);
-	            Pane phongPane = taoGiaoDienPhong(phong);
-	            
+	public void renderArrayPhong(ArrayList<PhieuThuePhong> dsPhieuThue) {
+	    if (scrollPane_GDHuy instanceof GridPane) {
+	        GridPane grid = (GridPane) scrollPane_GDHuy;
+	        grid.getChildren().clear();
+
+	        // Thiết lập khoảng cách giữa các ô
+	        grid.setHgap(15);
+	        grid.setVgap(15);
+	        grid.setPadding(new Insets(15));
+
+	        // Lấy kích thước của ScrollPane
+	        double availableWidth = scrollPane_GDHuy.getWidth() - 60;
+	        double columnWidth = (availableWidth - 40) / 3;
+
+	        // Thêm ColumnConstraints để đặt khoảng cách giữa các cột
+	        grid.getColumnConstraints().clear();
+	        for (int i = 0; i < 3; i++) {
+	            ColumnConstraints column = new ColumnConstraints();
+	            column.setHgrow(Priority.SOMETIMES);
+	            column.setMinWidth(columnWidth);
+	            column.setPrefWidth(columnWidth);
+	            grid.getColumnConstraints().add(column);
+	        }
+
+	        // Số cột tối đa trong grid
+	        int maxColumns = 3;
+
+	        // Render từng phòng
+	        for (int i = 0; i < dsPhieuThue.size(); i++) {
+	            PhieuThuePhong phieuThue = dsPhieuThue.get(i);
+	            Phong phong = phieuThue.getPhong(); // Lấy phòng từ phiếu thuê
+	            Pane phongPane = taoGiaoDienPhong(phong); // Gọi phương thức với đối tượng Phong
+
 	            // Tính toán vị trí của phòng trong grid
 	            int column = i % maxColumns;
 	            int row = i / maxColumns;
-	            
+
 	            // Thêm phòng vào grid tại vị trí tính toán
 	            grid.add(phongPane, column, row);
 	        }
-        }
-    }
+	    }
+	}
 	
 	private VBox selectedRoomItem = null;
 
@@ -300,24 +266,50 @@ public class GD_HuyPhong_Controller implements Initializable{
                             // Nếu không có CCCD, load lại danh sách phòng ban đầu
                             Phong_DAO dsP = new Phong_DAO();
                             ArrayList<Phong> availableRooms = dsP.getPhongTheoTrangThaiDanhSach(3);
-                            renderArrayPhong(availableRooms);
+                            
+                            // Lấy danh sách phiếu thuê
+                            ArrayList<PhieuThuePhong> allPhieuThue = new ArrayList<>();
+                            for (Phong phong1 : availableRooms) {
+                                PhieuThuePhong_DAO phieuThueDAO1 = new PhieuThuePhong_DAO();
+                                ArrayList<PhieuThuePhong> dsPhieuThue1 = phieuThueDAO1.layPhieuThueTheoMaPhong(phong1.getIdPhong());
+                                if (!dsPhieuThue1.isEmpty()) {
+                                    allPhieuThue.add(dsPhieuThue1.get(0)); // Lấy phiếu thuê gần nhất
+                                }
+                            }
+
+
+                            // Sắp xếp theo ngày gần nhất
+                            LocalDate currentDate = LocalDate.now();
+                            allPhieuThue.sort((pt1, pt2) -> {
+                                long diff1 = Math.abs(ChronoUnit.DAYS.between(currentDate, pt1.getThoiGianNhanPhong()));
+                                long diff2 = Math.abs(ChronoUnit.DAYS.between(currentDate, pt2.getThoiGianNhanPhong()));
+                                return Long.compare(diff1, diff2);
+                            });
+
+                            renderArrayPhong(allPhieuThue);
                         } else {
                             // Nếu có CCCD, load lại danh sách phòng của khách hàng
                             KhachHang kh = khachHangDAO.getKhachHangTheoCCCD(cccd);
                             PhieuThuePhong_DAO dsPT = new PhieuThuePhong_DAO();
                             ArrayList<PhieuThuePhong> phieuThueList = dsPT.layPhieuThueTheoMaKH(kh.getIdKhachHang());
 
-                            ArrayList<Phong> filteredRooms = new ArrayList<>();
+                            ArrayList<PhieuThuePhong> filteredPhieuThue = new ArrayList<>();
                             LocalDate currentDate = LocalDate.now();
 
                             for (PhieuThuePhong pt : phieuThueList) {
                                 if (currentDate.isBefore(pt.getThoiGianNhanPhong())) {
-                                    filteredRooms.add(pt.getPhong());
+                                    filteredPhieuThue.add(pt);
                                 }
                             }
-                            Phong_DAO dsP = new Phong_DAO();
-                            ArrayList<Phong> availableRooms = dsP.getPhongTheoTrangThaiDanhSach(3);
-                            renderArrayPhong(availableRooms);
+
+                            // Sắp xếp theo ngày gần nhất
+                            filteredPhieuThue.sort((pt1, pt2) -> {
+                                long diff1 = Math.abs(ChronoUnit.DAYS.between(currentDate, pt1.getThoiGianNhanPhong()));
+                                long diff2 = Math.abs(ChronoUnit.DAYS.between(currentDate, pt2.getThoiGianNhanPhong()));
+                                return Long.compare(diff1, diff2);
+                            });
+
+                            renderArrayPhong(filteredPhieuThue);
                         }
 
                         txt_CCCD.clear(); 
@@ -332,14 +324,27 @@ public class GD_HuyPhong_Controller implements Initializable{
             }
         });
             roomItem.getChildren().add(btnHuy);
-     // Sự kiện khi nhấn vào phòng
-        roomItem.setOnMouseClicked(e -> {
-            if (selectedRoomItem != null) {
-                selectedRoomItem.setStyle("-fx-background-color: #edbf6d; -fx-border-color: #000000; -fx-border-width: 1; -fx-padding: 10;");
-            }
-            selectedRoomItem = roomItem;
-            roomItem.setStyle("-fx-background-color: #d6a95c; -fx-border-color: #000000; -fx-border-width: 1; -fx-padding: 10;");
-        });
+            
+            roomItem.setOnMouseClicked(e -> {
+                if (selectedRoomItem != null) {
+                    selectedRoomItem.setStyle("-fx-background-color: #edbf6d; -fx-border-color: #000000; -fx-border-width: 1; -fx-padding: 10;");
+                }
+                selectedRoomItem = roomItem;
+                roomItem.setStyle("-fx-background-color: #d6a95c; -fx-border-color: #000000; -fx-border-width: 1; -fx-padding: 10;");
+
+                // Lấy phiếu thuê gần nhất của phòng
+                PhieuThuePhong_DAO ptdao = new PhieuThuePhong_DAO();
+                ArrayList<PhieuThuePhong> dspt = ptdao.layPhieuThueTheoMaPhong(phong.getIdPhong());
+
+                if (!dspt.isEmpty()) {
+                    PhieuThuePhong phieuThue = dspt.get(0);
+
+                    // Cập nhật thông tin phòng
+                    lb_tenKH.setText(phieuThue.getKhachHang().getTenKhachHang());
+                    lbSDT.setText(phieuThue.getKhachHang().getSoDienThoai());
+                    lbCCCD.setText(phieuThue.getKhachHang().getCccd());
+                }
+            });
 
         // Thêm hiệu ứng hover
         roomItem.setOnMouseEntered(e -> {

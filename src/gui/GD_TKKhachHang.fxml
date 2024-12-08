@@ -20,48 +20,48 @@
       <Pane layoutX="260.0" layoutY="70.0" prefHeight="775.0" prefWidth="1294.0">
          <children>
             <TextField fx:id="txt_tkKH" layoutX="669.0" layoutY="25.0" prefHeight="40.0" prefWidth="322.0" promptText="Nhập mã" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="50.0" layoutY="87.0" stroke="BLACK" strokeType="INSIDE" width="1294.0" />
-            <Text fill="WHITE" layoutX="515.0" layoutY="124.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Thông tin khách hàng" textAlignment="CENTER">
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="50.0" layoutY="83.0" stroke="BLACK" strokeType="INSIDE" width="1294.0" />
+            <Text fill="WHITE" layoutX="515.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Thông tin khách hàng" textAlignment="CENTER">
                <font>
                   <Font size="30.0" />
                </font>
             </Text>
-            <Label layoutX="10.0" layoutY="147.0" text="Chi tiết thông tin khách hàng:">
+            <Label layoutX="10.0" layoutY="143.0" text="Chi tiết thông tin khách hàng:">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
-            <Label layoutX="10.0" layoutY="192.0" text="Mã khách hàng: ">
+            <Label layoutX="10.0" layoutY="188.0" text="Mã khách hàng: ">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label fx:id="lb_MaKH" layoutX="160.0" layoutY="192.0" text="Trống">
+            <Label fx:id="lb_MaKH" layoutX="160.0" layoutY="188.0" text="Trống">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label layoutX="10.0" layoutY="242.0" text="Họ và tên: ">
+            <Label layoutX="10.0" layoutY="238.0" text="Họ và tên: ">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label layoutX="10.0" layoutY="292.0" text="SĐT:">
+            <Label layoutX="10.0" layoutY="288.0" text="SĐT:">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label layoutX="10.0" layoutY="342.0" text="Ngày sinh: ">
+            <Label layoutX="10.0" layoutY="338.0" text="Ngày sinh: ">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label layoutX="10.0" layoutY="392.0" text="Tích điểm">
+            <Label layoutX="10.0" layoutY="388.0" text="Tích điểm">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label layoutX="10.0" layoutY="442.0" text="CCCD:">
+            <Label layoutX="10.0" layoutY="438.0" text="CCCD:">
                <font>
                   <Font size="20.0" />
                </font>
@@ -71,37 +71,37 @@
                   <Image url="@../../data/pic/search.png" />
                </image>
             </ImageView>
-            <Label fx:id="lb_TenKH" layoutX="160.0" layoutY="242.0" text="Trống">
+            <Label fx:id="lb_TenKH" layoutX="160.0" layoutY="238.0" text="Trống">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label fx:id="lb_sdtKH" layoutX="160.0" layoutY="292.0" text="Trống">
+            <Label fx:id="lb_sdtKH" layoutX="160.0" layoutY="288.0" text="Trống">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label fx:id="lb_nsKH" layoutX="160.0" layoutY="342.0" text="Trống">
+            <Label fx:id="lb_nsKH" layoutX="160.0" layoutY="338.0" text="Trống">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label fx:id="lb_tichDiem" layoutX="160.0" layoutY="392.0" text="Trống">
+            <Label fx:id="lb_tichDiem" layoutX="160.0" layoutY="388.0" text="Trống">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label fx:id="lb_cccd" layoutX="160.0" layoutY="442.0" text="Trống">
+            <Label fx:id="lb_cccd" layoutX="160.0" layoutY="438.0" text="Trống">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label fx:id="lb_MaNV51" layoutX="160.0" layoutY="492.0">
+            <Label fx:id="lb_MaNV51" layoutX="160.0" layoutY="488.0">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <ImageView fitHeight="30.0" fitWidth="20.0" layoutX="127.0" layoutY="512.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="30.0" fitWidth="20.0" layoutX="127.0" layoutY="508.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../data/pic/x-mark.png" />
                </image>
@@ -117,7 +117,7 @@
                   <Font size="16.0" />
                </font>
             </Button>
-            <TableView fx:id="tbKhachHang" layoutX="369.0" layoutY="137.0" prefHeight="614.0" prefWidth="924.0">
+            <TableView fx:id="tbKhachHang" layoutX="369.0" layoutY="133.0" prefHeight="614.0" prefWidth="924.0">
               <columns>
                 <TableColumn fx:id="clSTT" prefWidth="75.0" text="STT" />
                 <TableColumn fx:id="clmaKH" prefWidth="130.4000244140625" text="Mã khách hàng" />
@@ -128,51 +128,11 @@
                   <TableColumn fx:id="clTichDiem" prefWidth="136.800048828125" text="Tích điểm" />
               </columns>
             </TableView>
-            <Button fx:id="btnQLKH" contentDisplay="RIGHT" layoutX="80.0" layoutY="492.0" mnemonicParsing="false" onMouseClicked="#denGDQLKH" prefHeight="40.0" prefWidth="161.0" style="-fx-background-color: #1e90ff;" text="Đến quản lý khách hàng" textAlignment="RIGHT" textFill="WHITE" textOverrun="CLIP">
+            <Button fx:id="btnQLKH" contentDisplay="RIGHT" layoutX="80.0" layoutY="488.0" mnemonicParsing="false" onMouseClicked="#denGDQLKH" prefHeight="40.0" prefWidth="161.0" style="-fx-background-color: #1e90ff;" text="Đến quản lý khách hàng" textAlignment="RIGHT" textFill="WHITE" textOverrun="CLIP">
                <font>
                   <Font size="16.0" />
                </font>
             </Button>
-         </children>
-      </Pane>
-      <Pane prefHeight="70.0" prefWidth="1554.0" style="-fx-background-color: #004AAD;">
-         <children>
-            <ImageView fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../data/pic/logoxanh.png" />
-               </image>
-            </ImageView>
-            <Label layoutX="85.0" layoutY="19.0" text="Flowers on the sea" textFill="WHITE">
-               <font>
-                  <Font name="System Italic" size="22.0" />
-               </font>
-            </Label>
-            <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="1463.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../data/pic/turn-off%20(1).png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="38.0" fitWidth="38.0" layoutX="1303.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../data/pic/question.png" />
-               </image>
-            </ImageView>
-            <Label layoutX="1047.0" layoutY="22.0" text="Điện thoại hỗ trợ: 0362356676" textFill="WHITE">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-            <ImageView fitHeight="38.0" fitWidth="38.0" layoutX="1004.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../data/pic/old-typical-phone.png" />
-               </image>
-            </ImageView>
-            <Circle fill="WHITE" layoutX="1406.0" layoutY="36.0" radius="26.0" stroke="BLACK" strokeType="INSIDE" />
-            <ImageView fx:id="avt" fitHeight="40.0" fitWidth="40.0" layoutX="1386.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../data/pic/user.png" />
-               </image>
-            </ImageView>
          </children>
       </Pane>
       <Pane layoutY="70.0" prefHeight="775.0" prefWidth="260.0" style="-fx-background-color: #D9D9D9;">
@@ -220,5 +180,50 @@
             </Label>
          </children>
       </Pane>
+      <Pane prefHeight="70.0" prefWidth="1554.0" style="-fx-background-color: #004AAD;">
+         <children>
+            <ImageView fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/pic/logoxanh.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="85.0" layoutY="19.0" text="Flowers on the sea" textFill="WHITE">
+               <font>
+                  <Font name="System Italic" size="22.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="1490.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/pic/turn-off%20(1).png" />
+               </image>
+            </ImageView>
+            <Circle fill="WHITE" layoutX="1433.0" layoutY="36.0" radius="26.0" stroke="BLACK" strokeType="INSIDE" />
+            <ImageView fx:id="avt" fitHeight="40.0" fitWidth="40.0" layoutX="1413.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/pic/user.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="maNV" layoutX="1295.0" layoutY="10.0" prefWidth="100.0" textAlignment="RIGHT" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="tenNV" layoutX="1245.0" layoutY="35.0" prefWidth="150.0" textAlignment="RIGHT" textFill="WHITE">
+               <font>
+                  <Font name="System Italic" size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="15.0" layoutY="650.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../data/pic/question.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="80.0" layoutY="660.0" onMouseClicked="#moGDTKe" text="Hướng dẫn">
+         <font>
+            <Font name="System Bold Italic" size="20.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
