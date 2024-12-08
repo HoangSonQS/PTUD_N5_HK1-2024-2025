@@ -108,46 +108,6 @@
             </Button>
          </children>
       </Pane>
-      <Pane prefHeight="70.0" prefWidth="1554.0" style="-fx-background-color: #004AAD;">
-         <children>
-            <ImageView fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../data/pic/logoxanh.png" />
-               </image>
-            </ImageView>
-            <Label layoutX="85.0" layoutY="19.0" text="Flowers on the sea" textFill="WHITE">
-               <font>
-                  <Font name="System Italic" size="22.0" />
-               </font>
-            </Label>
-            <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="1463.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../data/pic/turn-off%20(1).png" />
-               </image>
-            </ImageView>
-            <ImageView fitHeight="38.0" fitWidth="38.0" layoutX="1303.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../data/pic/question.png" />
-               </image>
-            </ImageView>
-            <Label layoutX="1047.0" layoutY="22.0" text="Điện thoại hỗ trợ: 0362356676" textFill="WHITE">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-            <ImageView fitHeight="38.0" fitWidth="38.0" layoutX="1004.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../data/pic/old-typical-phone.png" />
-               </image>
-            </ImageView>
-            <Circle fill="WHITE" layoutX="1406.0" layoutY="36.0" radius="26.0" stroke="BLACK" strokeType="INSIDE" />
-            <ImageView fx:id="avt" fitHeight="40.0" fitWidth="40.0" layoutX="1386.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../data/pic/user.png" />
-               </image>
-            </ImageView>
-         </children>
-      </Pane>
       <Pane layoutY="70.0" prefHeight="775.0" prefWidth="260.0" style="-fx-background-color: #D9D9D9;">
          <children>
             <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="15.0" layoutY="15.0" onMouseClicked="#moGiaoDienThuePhong" pickOnBounds="true" preserveRatio="true">
@@ -188,6 +148,51 @@
             <Label fx:id="lb_TimKiem" layoutX="59.0" layoutY="140.0" onMouseClicked="#moGiaoDienTimKiem" text="Tìm kiếm">
                <font>
                   <Font name="System Bold Italic" size="20.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="15.0" layoutY="650.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/pic/question.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="80.0" layoutY="660.0" text="Hướng dẫn">
+               <font>
+                  <Font name="System Bold Italic" size="20.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane prefHeight="70.0" prefWidth="1554.0" style="-fx-background-color: #004AAD;">
+         <children>
+            <ImageView fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/pic/logoxanh.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="85.0" layoutY="19.0" text="Flowers on the sea" textFill="WHITE">
+               <font>
+                  <Font name="System Italic" size="22.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="1490.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/pic/turn-off%20(1).png" />
+               </image>
+            </ImageView>
+            <Circle fill="WHITE" layoutX="1433.0" layoutY="36.0" radius="26.0" stroke="BLACK" strokeType="INSIDE" />
+            <ImageView fx:id="avt" fitHeight="40.0" fitWidth="40.0" layoutX="1413.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/pic/user.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="maNV" layoutX="1295.0" layoutY="10.0" prefWidth="100.0" textAlignment="RIGHT" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="tenNV" layoutX="1245.0" layoutY="35.0" prefWidth="150.0" textAlignment="RIGHT" textFill="WHITE">
+               <font>
+                  <Font name="System Italic" size="18.0" />
                </font>
             </Label>
          </children>

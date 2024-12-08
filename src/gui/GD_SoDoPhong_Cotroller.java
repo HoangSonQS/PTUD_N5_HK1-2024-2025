@@ -130,7 +130,7 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
     	renderArrayPhong(new Phong_DAO().getAllPhong());
 		cbb.setItems(list);
 		cbb.setValue("Tất cả");
-		ObservableList<String> list_TrangThai = FXCollections.observableArrayList("Tất cả","Phòng trống", "Đang ở", "Sắp Check-in","Sắp Check-out");
+		ObservableList<String> list_TrangThai = FXCollections.observableArrayList("Tất cả","View biển", "View thành phố");
 		cbb_TrangThai.setItems(list_TrangThai);
 		cbb_TrangThai.setValue("Tất cả");
 		loadLoaiPhong();
@@ -368,6 +368,12 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 		lbGiaPhong.setStyle("-fx-font-size: 18; -fx-font-weight: 700");
 		lbGiaPhong.setPadding(new Insets(0, 0, 8, 0));
 		roomItem.getChildren().add(lbGiaPhong);
+		
+		String TieuChi = String.valueOf(phong.getTieuChi());
+		Label lbTieuChi = new Label(TieuChi);
+		lbTieuChi.setStyle("-fx-font-size: 18; -fx-font-weight: 700");
+		lbTieuChi.setPadding(new Insets(0, 0, 8, 0));
+		roomItem.getChildren().add(lbTieuChi);
 
 		if (phong.getTrangThai() == TrangThaiPhong.SAPCHECKIN) {
 			try {
