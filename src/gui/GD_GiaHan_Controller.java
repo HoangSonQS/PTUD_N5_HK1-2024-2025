@@ -213,20 +213,18 @@ public class GD_GiaHan_Controller implements Initializable{
 	    lblLoaiPhong.setPadding(new Insets(0, 0, 8, 0));
 	    roomItem.getChildren().add(lblLoaiPhong);
 
-	    ArrayList<PhieuThuePhong> dsP = dsPT.layPhieuThueTheoHieuLuc(true);
-	    System.out.println(dsP);
-//	    PhieuThuePhong pt = dsP.
-//	    if((phong.getTrangThai() == TrangThaiPhong.DANGTHUE)||(phong.getTrangThai() == TrangThaiPhong.SAPCHECKOUT)) {
-//	    	Label lblNgayNhan = new Label(pt.getThoiGianNhanPhong().toString());
-//		    lblNgayNhan.setStyle("-fx-font-size: 18; -fx-font-weight: 600");
-//		    lblNgayNhan.setPadding(new Insets(0, 0, 8, 0));
-//		    roomItem.getChildren().add(lblNgayNhan);
-//		    
-//		    Label lblNgayTra = new Label(pt.getThoiHanGiaoPhong().toString());
-//		    lblNgayTra.setStyle("-fx-font-size: 18; -fx-font-weight: 600");
-//		    lblNgayTra.setPadding(new Insets(0, 0, 8, 0));
-//		    roomItem.getChildren().add(lblNgayTra);
-//	    }
+	    PhieuThuePhong pt = dsPT.layPhieuThueTheoMaPhong_1Phong(maphong);
+	    if((phong.getTrangThai() == TrangThaiPhong.DANGTHUE)||(phong.getTrangThai() == TrangThaiPhong.SAPCHECKOUT)) {
+	    	Label lblNgayNhan = new Label(pt.getThoiGianNhanPhong().toString());
+		    lblNgayNhan.setStyle("-fx-font-size: 18; -fx-font-weight: 600");
+		    lblNgayNhan.setPadding(new Insets(0, 0, 8, 0));
+		    roomItem.getChildren().add(lblNgayNhan);
+		    
+		    Label lblNgayTra = new Label(pt.getThoiHanGiaoPhong().toString());
+		    lblNgayTra.setStyle("-fx-font-size: 18; -fx-font-weight: 600");
+		    lblNgayTra.setPadding(new Insets(0, 0, 8, 0));
+		    roomItem.getChildren().add(lblNgayTra);
+	    }
 	    	
 	    
 	    String strBtnLeft = phong.getTrangThai() == TrangThaiPhong.SAPCHECKOUT ? "Chọn Phòng" :
