@@ -243,7 +243,7 @@
             <Image url="@../../data/pic/question.png" />
          </image>
       </ImageView>
-      <Label layoutX="80.0" layoutY="660.0" onMouseClicked="#moGDTKe" text="Hướng dẫn">
+      <Label layoutX="80.0" layoutY="660.0" text="Hướng dẫn">
          <font>
             <Font name="System Bold Italic" size="20.0" />
          </font>
