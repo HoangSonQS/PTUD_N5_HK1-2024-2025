@@ -15,12 +15,12 @@ public class ConnectDB {
 	public void connect() {
 		String url = "jdbc:sqlserver://localhost:1433;databasename=PTUD";
 		String username = "sa";
-<<<<<<< HEAD
-		String password = "sa1234";
-=======
+
+//		String password = "sa1234";
+
 		String password = "sa123";
 //		String password = "sa1234";
->>>>>>> c11e815c98e53996af5619ec7e17261f509bf131
+
 //		String password = "sapassword";
 //		String password = "Kkkkkkk@6";
 
