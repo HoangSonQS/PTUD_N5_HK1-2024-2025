@@ -10,11 +10,13 @@ import java.util.ResourceBundle;
 
 import dao.KhachHang_DAO;
 import dao.NhanVien_DAO;
+import dao.TaiKhoan_DAO;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import entity.KhachHang;
 import entity.NhanVien;
+import entity.TaiKhoan;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -90,7 +92,10 @@ public class GD_QLKhachHang_Controller implements Initializable{
 
     @FXML
     private TextField txtSDT;
-
+    @FXML
+    private Label maNV;
+    @FXML
+    private Label tenNV;
     @FXML
     private TextField txtTenKH;
     @Override
@@ -145,6 +150,8 @@ public class GD_QLKhachHang_Controller implements Initializable{
 
             }
         });
+        
+        addUserLogin();
     };
     
     private void loadTableData() {
@@ -402,4 +409,9 @@ public class GD_QLKhachHang_Controller implements Initializable{
     void moGiaoDienUuDai(MouseEvent event) throws IOException {
     	App.setRoot("GD_QLUuDai");
     }
+	private void addUserLogin() {
+		TaiKhoan tk = App.tk;
+		maNV.setText(String.valueOf(tk.getNhanVien().getIdNhanVien()));
+		tenNV.setText(String.valueOf(tk.getNhanVien().getTenNhanVien()));
+	}
 }

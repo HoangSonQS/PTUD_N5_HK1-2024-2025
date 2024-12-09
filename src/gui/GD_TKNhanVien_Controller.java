@@ -9,10 +9,12 @@ import java.util.ResourceBundle;
 
 import dao.NhanVien_DAO;
 import dao.Phong_DAO;
+import dao.TaiKhoan_DAO;
 import entity.ChucVu;
 import entity.LoaiPhong;
 import entity.NhanVien;
 import entity.Phong;
+import entity.TaiKhoan;
 import entity.TrangThaiPhong;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
@@ -38,7 +40,10 @@ public class GD_TKNhanVien_Controller implements Initializable{
 
     @FXML
     private ImageView avt;
-
+    @FXML
+    private Label maNV;
+    @FXML
+    private Label tenNV;
     @FXML
     private Button btnTraCuu;
 
@@ -298,6 +303,8 @@ public class GD_TKNhanVien_Controller implements Initializable{
         		lb_chucVu.setText(selectedNhanVien.getChucVuString());
         	}
         });
+        
+        addUserLogin();
 	}
     private void loadTableData() {
         try {
@@ -311,5 +318,9 @@ public class GD_TKNhanVien_Controller implements Initializable{
             e.printStackTrace();
         }
     }
-
+	private void addUserLogin() {
+		TaiKhoan tk = App.tk;
+		maNV.setText(String.valueOf(tk.getNhanVien().getIdNhanVien()));
+		tenNV.setText(String.valueOf(tk.getNhanVien().getTenNhanVien()));
+	}
 }

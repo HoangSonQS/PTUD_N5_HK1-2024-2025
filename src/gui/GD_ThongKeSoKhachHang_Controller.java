@@ -12,6 +12,8 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import dao.PhieuThuePhong_DAO;
+import dao.TaiKhoan_DAO;
+import entity.TaiKhoan;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -88,7 +90,7 @@ public class GD_ThongKeSoKhachHang_Controller implements Initializable{
 	private Label maNV;
 	@FXML
 	private Label tenNV;
-
+	
 
     @FXML
     void moGDQL(MouseEvent event) throws IOException {
@@ -187,6 +189,7 @@ public class GD_ThongKeSoKhachHang_Controller implements Initializable{
 		lb_soKhachSoSanh.setVisible(false);
 		lb_KHSS.setVisible(false);
 		createCBB();
+		addUserLogin();
 	}
 	
 	public void createCBB() {
@@ -400,4 +403,9 @@ public class GD_ThongKeSoKhachHang_Controller implements Initializable{
         }
         return Year.of(year).isLeap();
     }
+	private void addUserLogin() {
+		TaiKhoan tk = App.tk;
+		maNV.setText(String.valueOf(tk.getNhanVien().getIdNhanVien()));
+		tenNV.setText(String.valueOf(tk.getNhanVien().getTenNhanVien()));
+	}
 }

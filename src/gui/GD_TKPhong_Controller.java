@@ -6,8 +6,10 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import dao.Phong_DAO;
+import dao.TaiKhoan_DAO;
 import entity.LoaiPhong;
 import entity.Phong;
+import entity.TaiKhoan;
 import entity.TrangThaiPhong;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
@@ -31,7 +33,10 @@ public class GD_TKPhong_Controller implements Initializable{
 
     @FXML
     private ImageView avt;
-
+    @FXML
+    private Label maNV;
+    @FXML
+    private Label tenNV;
     @FXML
     private Button btnQLP;
 
@@ -258,6 +263,8 @@ public class GD_TKPhong_Controller implements Initializable{
         		lb_TieuChi.setText(selectedPhong.getTrangThaiString());
         	}
         });
+        
+        addUserLogin();
 	}
     private void loadTableData() {
         try {
@@ -270,5 +277,9 @@ public class GD_TKPhong_Controller implements Initializable{
             e.printStackTrace();
         }
     }
-
+	private void addUserLogin() {
+		TaiKhoan tk = App.tk;
+		maNV.setText(String.valueOf(tk.getNhanVien().getIdNhanVien()));
+		tenNV.setText(String.valueOf(tk.getNhanVien().getTenNhanVien()));
+	}
 }

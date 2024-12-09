@@ -9,9 +9,11 @@ import java.util.ResourceBundle;
 import dao.KhachHang_DAO;
 import dao.PhieuThuePhong_DAO;
 import dao.Phong_DAO;
+import dao.TaiKhoan_DAO;
 import entity.KhachHang;
 import entity.PhieuThuePhong;
 import entity.Phong;
+import entity.TaiKhoan;
 import entity.TrangThaiPhong;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -37,7 +39,6 @@ import main.App;
 public class GD_GiaHan_Controller implements Initializable{
 	@FXML
     private GridPane GridPane_GiaHan;
-
     @FXML
     private ImageView avt;
 
@@ -119,7 +120,7 @@ public class GD_GiaHan_Controller implements Initializable{
 		ObservableList<String> list_TrangThai = FXCollections.observableArrayList("Tất cả", "Phòng trống", "Đang ở","Sắp Check-out");
 		cbb_TrangThai.setItems(list_TrangThai);
 		cbb_TrangThai.setValue("Tất cả");
-	
+		addUserLogin();
 		loadLoaiPhong();
 		loadTrangThaiPhong_CBB();
 		suKienNutTK();
@@ -404,5 +405,10 @@ public class GD_GiaHan_Controller implements Initializable{
 	@FXML
 	private void moGDTKe() throws IOException {
 //		App.openModal("GD_ThongKe", 800, 684);
+	}
+	private void addUserLogin() {
+		TaiKhoan tk = App.tk;
+		maNV.setText(String.valueOf(tk.getNhanVien().getIdNhanVien()));
+		tenNV.setText(String.valueOf(tk.getNhanVien().getTenNhanVien()));
 	}
 }

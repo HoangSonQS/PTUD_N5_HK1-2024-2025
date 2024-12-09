@@ -7,6 +7,8 @@ import java.util.ResourceBundle;
 
 import javax.swing.plaf.RootPaneUI;
 
+import dao.TaiKhoan_DAO;
+import entity.TaiKhoan;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -27,33 +29,28 @@ public class GD_Chinh_Controller implements Initializable{
 
     @FXML
     private ImageView avt;
-
     @FXML
     private ImageView icon_QuanLy;
-
     @FXML
     private ImageView icon_ThongKe;
-
     @FXML
     private ImageView icon_ThuePhong;
-
     @FXML
     private ImageView icon_TimKiem;
-
     @FXML
     private Label lb_QuanLy;
-
     @FXML
     private Label lb_ThongKe;
-
     @FXML
     private Label lb_ThuePhong;
-
     @FXML
     private Label lb_TimKiem;
-
     @FXML
     private Pane pn_NoiDung;
+    @FXML
+    private Label maNV;
+    @FXML
+    private Label tenNV;
 
 	private Stage primaryScene;
 
@@ -82,6 +79,11 @@ public class GD_Chinh_Controller implements Initializable{
     }
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		addUserLogin();
 	}
-
+	private void addUserLogin() {
+		TaiKhoan tk = App.tk;
+		maNV.setText(String.valueOf(tk.getNhanVien().getIdNhanVien()));
+		tenNV.setText(String.valueOf(tk.getNhanVien().getTenNhanVien()));
+	}
 }

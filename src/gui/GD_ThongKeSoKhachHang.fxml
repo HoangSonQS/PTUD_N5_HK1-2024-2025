@@ -13,6 +13,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="845.0" prefWidth="1554.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.GD_ThongKeSoKhachHang_Controller">
@@ -89,6 +90,7 @@
                   <Font name="System Bold Italic" size="20.0" />
                </font>
             </Label>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="250.0" layoutY="245.0" stroke="WHITE" strokeType="INSIDE" width="10.0" />
          </children>
       </Pane>
       <Pane layoutX="260.0" layoutY="70.0" prefHeight="775.0" prefWidth="1294.0">
@@ -198,12 +200,12 @@
                   <Image url="@../../data/pic/user.png" />
                </image>
             </ImageView>
-            <Label fx:id="maNV" layoutX="1295.0" layoutY="10.0" prefWidth="100.0" textAlignment="RIGHT" textFill="WHITE">
+            <Label fx:id="maNV" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="1195.0" layoutY="10.0" prefWidth="200.0" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="tenNV" layoutX="1245.0" layoutY="35.0" prefWidth="150.0" textAlignment="RIGHT" textFill="WHITE">
+            <Label fx:id="tenNV" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="1145.0" layoutY="35.0" prefWidth="250.0" textFill="WHITE">
                <font>
                   <Font name="System Italic" size="18.0" />
                </font>

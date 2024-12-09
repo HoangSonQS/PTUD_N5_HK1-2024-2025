@@ -9,10 +9,12 @@ import java.util.ResourceBundle;
 
 import dao.KhachHang_DAO;
 import dao.Phong_DAO;
+import dao.TaiKhoan_DAO;
 import entity.ChucVu;
 import entity.KhachHang;
 import entity.NhanVien;
 import entity.Phong;
+import entity.TaiKhoan;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -34,7 +36,10 @@ public class GD_TKKhachHang_Controller implements Initializable{
 
     @FXML
     private ImageView avt;
-
+    @FXML
+    private Label maNV;
+    @FXML
+    private Label tenNV;
     @FXML
     private Button btnTraCuu;
 
@@ -277,6 +282,8 @@ public class GD_TKKhachHang_Controller implements Initializable{
         		lb_tichDiem.setText(String.valueOf(selectedKhachHang.getTichDiem()));
         	}
         });
+        
+        addUserLogin();
 	}
 	private void loadTableData() {
         try {
@@ -290,5 +297,9 @@ public class GD_TKKhachHang_Controller implements Initializable{
             e.printStackTrace();
         }
     }
-
+	private void addUserLogin() {
+		TaiKhoan tk = App.tk;
+		maNV.setText(String.valueOf(tk.getNhanVien().getIdNhanVien()));
+		tenNV.setText(String.valueOf(tk.getNhanVien().getTenNhanVien()));
+	}
 }

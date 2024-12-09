@@ -30,7 +30,10 @@ public class GD_TKUuDai_Controller implements Initializable{
 
     @FXML
     private ImageView avt;
-
+    @FXML
+    private Label maNV;
+    @FXML
+    private Label tenNV;
     @FXML
     private Button btnQLUD;
 
@@ -234,6 +237,8 @@ public class GD_TKUuDai_Controller implements Initializable{
 
         	}
         });
+        
+        addUserLogin();
 	}
     private void loadTableData() {
         try {
@@ -247,4 +252,10 @@ public class GD_TKUuDai_Controller implements Initializable{
             e.printStackTrace();
         }
     }
+    
+	private void addUserLogin() {
+		TaiKhoan tk = App.tk;
+		maNV.setText(String.valueOf(tk.getNhanVien().getIdNhanVien()));
+		tenNV.setText(String.valueOf(tk.getNhanVien().getTenNhanVien()));
+	}
 }

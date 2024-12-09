@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="845.0" prefWidth="1554.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.GD_TKKhachHang_Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="845.0" prefWidth="1554.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.GD_TKKhachHang_Controller">
    <children>
       <Pane layoutX="260.0" layoutY="70.0" prefHeight="775.0" prefWidth="1294.0">
          <children>
@@ -167,13 +167,23 @@
                   <Font name="System Bold Italic" size="20.0" />
                </font>
             </Label>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="241.0" layoutY="140.0" stroke="WHITE" strokeType="INSIDE" width="10.0" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="250.0" layoutY="135.0" stroke="WHITE" strokeType="INSIDE" width="10.0" />
             <ImageView fx:id="icon_TimKiem" fitHeight="40.0" fitWidth="40.0" layoutX="15.0" layoutY="135.0" onMouseClicked="#moGiaoDienTimKiem" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../data/pic/search.png" />
                </image>
             </ImageView>
             <Label fx:id="lb_TimKiem" layoutX="59.0" layoutY="140.0" onMouseClicked="#moGiaoDienTimKiem" text="Tìm kiếm">
+               <font>
+                  <Font name="System Bold Italic" size="20.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" x="15.0" y="650.0">
+               <image>
+                  <Image url="@../../data/pic/question.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="80.0" layoutY="660.0" text="Hướng dẫn">
                <font>
                   <Font name="System Bold Italic" size="20.0" />
                </font>
@@ -203,27 +213,17 @@
                   <Image url="@../../data/pic/user.png" />
                </image>
             </ImageView>
-            <Label fx:id="maNV" layoutX="1295.0" layoutY="10.0" prefWidth="100.0" textAlignment="RIGHT" textFill="WHITE">
+            <Label fx:id="maNV" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="1195.0" layoutY="10.0" prefWidth="200.0" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="tenNV" layoutX="1245.0" layoutY="35.0" prefWidth="150.0" textAlignment="RIGHT" textFill="WHITE">
+            <Label fx:id="tenNV" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="1145.0" layoutY="35.0" prefWidth="250.0" textFill="WHITE">
                <font>
                   <Font name="System Italic" size="18.0" />
                </font>
             </Label>
          </children>
       </Pane>
-      <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="15.0" layoutY="650.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../data/pic/question.png" />
-         </image>
-      </ImageView>
-      <Label layoutX="80.0" layoutY="660.0" text="Hướng dẫn">
-         <font>
-            <Font name="System Bold Italic" size="20.0" />
-         </font>
-      </Label>
    </children>
 </AnchorPane>
