@@ -2,8 +2,11 @@ package gui;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
+import java.time.Year;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -181,7 +184,8 @@ public class GD_ThongKeSoKhachHang_Controller implements Initializable{
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		y.setAnimated(false);
-		// TODO Auto-generated method stub
+		lb_soKhachSoSanh.setVisible(false);
+		lb_KHSS.setVisible(false);
 		createCBB();
 	}
 	
@@ -238,9 +242,17 @@ public class GD_ThongKeSoKhachHang_Controller implements Initializable{
         chart_DTTN.getData().clear();
         chart_DTTN.getData().add(chart1);
         chart_DTTN.setLegendVisible(false);
+        int soKhach = new PhieuThuePhong_DAO().tongKHAtoB(dateA, dateB);
+        lb_TongSoKhach.setText(String.valueOf(soKhach));
+        double daysDifference = ChronoUnit.DAYS.between(dateA, dateB);
+        double tb = (double) soKhach / daysDifference;
+        DecimalFormat df = new DecimalFormat("#.###");
+        lb_TBSoKhach.setText(String.valueOf(df.format(tb)));
 	}
 	public void thongKeTheoThang(int month, int year) {
 		setValue();
+		int khachTrongThangNay = 0;
+		int khachTrongThangTruoc = 0;
         XYChart.Series<String, Integer> chart1 = new XYChart.Series<>();
         
         String[] tenThang = {"Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"};
@@ -263,6 +275,8 @@ public class GD_ThongKeSoKhachHang_Controller implements Initializable{
             for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
                 int thang = entry.getKey();
                 int tongKhach = entry.getValue();
+                if (thang == month) khachTrongThangNay = tongKhach;
+                if (thang == month - 1) khachTrongThangTruoc = tongKhach;
                 int index = thang - 1; // Tính chỉ số trong mảng tenThang
 
                 if (index >= 0 && index < tenThang.length) { // Kiểm tra chỉ số hợp lệ
@@ -278,10 +292,26 @@ public class GD_ThongKeSoKhachHang_Controller implements Initializable{
 		chart_DTTN.getData().clear();
 		chart_DTTN.setLegendVisible(false);
 		chart_DTTN.getData().add(chart1);
-
+		
+		int soKhach = new PhieuThuePhong_DAO().tongKHThang(month, year);
+        lb_TongSoKhach.setText(String.valueOf(soKhach));
+        DecimalFormat df = new DecimalFormat("#.###");
+        if (month == 2) {
+        	lb_TBSoKhach.setText(String.valueOf(df.format((double) khachTrongThangNay / 29)));
+        } else if (month == 4 || month == 6 || month == 9 || month == 11) {
+        	lb_TBSoKhach.setText(String.valueOf(df.format((double) khachTrongThangNay / 30)));
+        } else {
+        	lb_TBSoKhach.setText(String.valueOf(df.format((double) khachTrongThangNay / 31)));
+        }
+        setVisible();
+        int sosanh = khachTrongThangNay - khachTrongThangTruoc;
+        if (sosanh > 0) lb_soKhachSoSanh.setText(String.valueOf(sosanh));
+        else if (sosanh < 0) lb_soKhachSoSanh.setText("Ít hơn " + String.valueOf(sosanh* (-1)));
     }
 	public void thongKeTheoNam(int year) {
 		setValue();
+		int soKhachNamNay = 0;
+		int soKhachNamTruoc = 0;
         XYChart.Series<String, Integer> chart1 = new XYChart.Series<>();
 
         for (int i = year - 2; i <= year + 2; i++) {
@@ -302,6 +332,8 @@ public class GD_ThongKeSoKhachHang_Controller implements Initializable{
             for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
                 int nam = entry.getKey();
                 int soKhach = entry.getValue();
+                if (nam == year) soKhachNamNay = soKhach;
+                if (nam == year - 1) soKhachNamTruoc = soKhach;
                 int index = nam; // Tính chỉ số trong mảng tenThang
 
                 if (index >= year - 2 && index <= year + 2) { // Kiểm tra chỉ số hợp lệ
@@ -319,11 +351,27 @@ public class GD_ThongKeSoKhachHang_Controller implements Initializable{
 		chart_DTTN.getData().clear();
 		chart_DTTN.setLegendVisible(false);
 		chart_DTTN.getData().add(chart1);
+		int soKhach = new PhieuThuePhong_DAO().tongKHTNam(year);
+		lb_TongSoKhach.setText(String.valueOf(soKhach));
+        boolean isLeap = isLeapYear(year);
+        DecimalFormat df = new DecimalFormat("#.###");
+        if (isLeap == true) {
+        	double tb = (double) soKhach / 366;
+        	lb_TBSoKhach.setText(String.valueOf(df.format(tb)));
+        } else {
+        	double tb = (double) soKhach / 365;
+        	lb_TBSoKhach.setText(String.valueOf(df.format(tb)));
+        }
+        setVisible();
+        int sosanh = soKhachNamNay - soKhachNamTruoc;
+        if (sosanh > 0) lb_soKhachSoSanh.setText(String.valueOf(sosanh));
+        else if (sosanh < 0) lb_soKhachSoSanh.setText("Ít hơn " + String.valueOf(sosanh* (-1)));
+
     }
     private void setValue() {
 		lb_TongSoKhach.setText("0");
 		lb_TBSoKhach.setText("0");
-		lb_soKhachSoSanh.setText("0 VND");
+		lb_soKhachSoSanh.setText("0");
 	}
     private int getThangInt(String thangString) {
         switch (thangString) {
@@ -341,5 +389,15 @@ public class GD_ThongKeSoKhachHang_Controller implements Initializable{
             case "Tháng 12": return 12;
             default: return -1; // Or throw an exception if needed
         }
+    }
+    private void setVisible() {
+		lb_KHSS.setVisible(true);
+		lb_soKhachSoSanh.setVisible(true);
+	}
+    private boolean isLeapYear(int year) {
+        if (year <= 0) {
+            throw new IllegalArgumentException("Năm phải lớn hơn 0.");
+        }
+        return Year.of(year).isLeap();
     }
 }
