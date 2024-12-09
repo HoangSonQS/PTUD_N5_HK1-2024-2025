@@ -11,6 +11,7 @@ import dao.KhachHang_DAO;
 import dao.PhieuThuePhong_DAO;
 import dao.Phong_DAO;
 import entity.KhachHang;
+import entity.NhanVien;
 import entity.PhieuThuePhong;
 import entity.Phong;
 import entity.TrangThaiPhong;
@@ -111,7 +112,7 @@ public class GD_GiaHan_Controller implements Initializable{
     public String maphong;
     LocalDate thoiGianNhan;
     LocalDate thoiGianTra;
-
+    private PhieuThuePhong_DAO dsPT = new PhieuThuePhong_DAO();
 	private ArrayList<String> dsMaPhong = new ArrayList<String>();
 	private ArrayList<String> dsMPhongDuocChon = new ArrayList<String>();
     
@@ -284,27 +285,39 @@ public class GD_GiaHan_Controller implements Initializable{
 	    }
 
 	    
-	    String strBtnLeft = phong.getTrangThai() == TrangThaiPhong.SAPCHECKOUT ? "Chọn Phòng" :
-	    	phong.getTrangThai() == TrangThaiPhong.DANGTHUE ? "Chọn Phòng":"Chọn Phòng";
-	    String strBtnRight = phong.getTrangThai() == TrangThaiPhong.TRONG ? "Đặt phòng"
-				: phong.getTrangThai() == TrangThaiPhong.SAPCHECKIN ? "Gia hạn phòng"
-						: phong.getTrangThai() == TrangThaiPhong.DANGTHUE ? "Gia hạn phòng" : "Gia hạn phòng";
+	    String strBtnLeft = phong.getTrangThai() == TrangThaiPhong.SAPCHECKOUT ? "Chọn Phòng" :"Chọn Phòng";
+	    String strBtnRight = phong.getTrangThai() == TrangThaiPhong.DANGTHUE ? "Gia hạn phòng" : "Gia hạn phòng";
 	    Button btnLeft = new Button(strBtnLeft);
 	    Button btnRight = new Button(strBtnRight);
 	    btnLeft.setStyle("-fx-background-color: #31c57e; -fx-font-size: 15");
 	    btnRight.setStyle("-fx-background-color: #31c57e; -fx-font-size: 15");
 	    
-	    switch (phong.getTrangThai()) {
-			case DANGTHUE:
-				btnLeft.setOnAction(((event) -> {
-					dsMPhongDuocChon.add(phong.getIdPhong());
-					txt_PhongDuocChon.appendText(phong.getIdPhong()+" ");
-				}));
-		default:
-			break;
-				
-	    }
-
+		btnLeft.setOnAction(((event) -> {
+			dsMPhongDuocChon.add(phong.getIdPhong());
+			txt_PhongDuocChon.appendText(phong.getIdPhong()+" ");
+		}));
+		btnRight.setOnAction((event) ->{
+			String sdt = txt_SDT.getText();
+			KhachHang_DAO dsKH = new KhachHang_DAO();
+			KhachHang kh = dsKH.getKhachHangTheoSDT(sdt);
+			LocalDate NgayNhan = txt_NgayNhan.getValue();
+		    LocalDate NgayTra = txt_NgayTra.getValue();
+			
+		    for (String MaP : dsMPhongDuocChon) {
+		    	Phong_DAO dsP = new Phong_DAO();
+		    	Phong p = dsP.getPhongTheoMa(MaP);
+		    	NhanVien nv = new NhanVien("NV24100301");
+		    	String idPT = PhieuThuePhong.autoIdPhieuThue();
+		    	PhieuThuePhong pt = new PhieuThuePhong(idPT, kh, p, nv, NgayNhan, NgayTra, true);
+		    	Boolean them = dsPT.themPhieuThue(pt);
+		    	if (them) {
+                    System.out.println("Thêm phiếu thuê thành công.");
+                    dsP.capNhatTrangThaiPhong(p); // Cập nhật trạng thái phòng vào hệ thống
+                } else {
+                    System.out.println("Lỗi khi thêm phiếu thuê cho phòng " + MaP);
+                }
+		    }
+		});
 	    HBox hbox = new HBox(btnLeft,btnRight);
 	    hbox.setPadding(new Insets(0, 0, 8, 0));
 	    hbox.setSpacing(10);
