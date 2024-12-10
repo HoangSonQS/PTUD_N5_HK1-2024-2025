@@ -50,7 +50,8 @@
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <ComboBox fx:id="cbb_TrangThai" layoutX="20.0" layoutY="5.0" onAction="#loadTrangThaiPhong_CBB" prefWidth="150.0" />
+                  
+
                         <Button fx:id="btn_Lọc" alignment="CENTER" layoutX="1180.0" minHeight="30.0" minWidth="90.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="Lọc">
                            <font>
                               <Font size="14.0" />
