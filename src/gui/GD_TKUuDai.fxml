@@ -27,10 +27,10 @@
             </Text>
             <TableView fx:id="tableKhuyenMai" layoutX="395.0" layoutY="133.0" prefHeight="618.0" prefWidth="900.0">
                <columns>
-                  <TableColumn fx:id="clSTT" prefWidth="55.20001220703125" text="STT" />
-                  <TableColumn fx:id="clmaKM" prefWidth="116.0" text="Mã khuyến mãi" />
-                  <TableColumn fx:id="cltenKM" prefWidth="141.5999755859375" text="Tên khuyến mãi" />
-                  <TableColumn fx:id="clCK" prefWidth="151.2000732421875" text="Chiết khấu" />
+                  <TableColumn fx:id="clSTT" prefWidth="100.0" text="STT" />
+                  <TableColumn fx:id="clmaKM" prefWidth="250.0" text="Mã khuyến mãi" />
+                  <TableColumn fx:id="cltenKM" prefWidth="250.0" text="Tên khuyến mãi" />
+                  <TableColumn fx:id="clCK" prefWidth="296.0" text="Chiết khấu" />
                </columns>
             </TableView>
             <Label layoutX="10.0" layoutY="143.0" text="Chi tiết thông tin tài khoản:">

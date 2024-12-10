@@ -153,6 +153,7 @@ public class GD_QLPhong_Controller implements Initializable{
 	            ArrayList<Phong> dsp = pdao.getAllPhong();
 
 	            ObservableList<Phong> observableList = FXCollections.observableArrayList(dsp);
+	            tablePhong.getItems().clear();
 	            tablePhong.setItems(observableList);
 	            
 	        } catch (Exception e) {
@@ -216,7 +217,68 @@ public class GD_QLPhong_Controller implements Initializable{
 	    }
 	    @FXML
 	    void suaPhong(MouseEvent event) {
+	    	if (txt_Phong1.getText().trim().isEmpty()) {
+	            Alert alert = new Alert(AlertType.WARNING);
+	            alert.setTitle("Cảnh báo");
+	            alert.setHeaderText(null);
+	            alert.setContentText("Vui lòng chọn phòng cần sửa!");
+	            alert.showAndWait();
+	            return;
+	    	}
+	    	if (txt_GiaPhong.getText().trim().isEmpty() ||
+	    			txt_TieuChi.getText().trim().isEmpty()) {
+	            Alert alert = new Alert(AlertType.WARNING);
+	            alert.setTitle("Cảnh báo");
+	            alert.setHeaderText(null);
+	            alert.setContentText("Vui lòng điền đầy đủ thông tin!");
+	            alert.showAndWait();
+	            return;
+	    	}
+	    	
+	    	String maPhong = txt_Phong1.getText();
+	        String loaiPhongString = cbb.getValue();
+	        LoaiPhong loaiPhong = null;
+	        if (loaiPhongString.equals("Phòng đơn")) {
+	            loaiPhong = LoaiPhong.PHONGDON;
+	        } else if (loaiPhongString.equals("Phòng đôi")) {
+	            loaiPhong = LoaiPhong.PHONGDOI;
+	        } else if (loaiPhongString.equals("Phòng gia đình")) {
+	            loaiPhong = LoaiPhong.PHONGGIADINH;
+	        }
+	        double donGia = Double.valueOf(txt_GiaPhong.getText());
+	        String trangThaiString = cbb2.getValue();
+	        TrangThaiPhong trangThai = null;
+	        if (trangThaiString.equals("Trống")) {
+	            trangThai = TrangThaiPhong.TRONG;
+	        } else if (trangThaiString.equals("Đang thuê")) {
+	            trangThai = TrangThaiPhong.DANGTHUE;
+	        } else if (trangThaiString.equals("Sắp checkin")) {
+	            trangThai = TrangThaiPhong.SAPCHECKIN;
+	        } else if (trangThaiString.equals("Sắp checkout")) {
+	            trangThai = TrangThaiPhong.SAPCHECKOUT;
+	        }
+	        String tieuChi = txt_TieuChi.getText();
+	        
+	        Phong p = new Phong(maPhong, loaiPhong, donGia, trangThai, tieuChi);
+	        boolean updated = new Phong_DAO().capNhatPhong(p);
+	        
+            if (updated) {
+                Alert successAlert = new Alert(AlertType.INFORMATION);
+                successAlert.setTitle("Thành công");
+                successAlert.setHeaderText(null);
+                successAlert.setContentText("Cập nhật thông tin nhân viên thành công!");
+                successAlert.showAndWait();
 
+                // Cập nhật lại TableView và xóa trắng form
+                loadTableData();
+                clearFields();
+                } else {
+                Alert errorAlert = new Alert(AlertType.ERROR);
+                errorAlert.setTitle("Lỗi");
+                errorAlert.setHeaderText(null);
+                errorAlert.setContentText("Không thể cập nhật thông tin khách hàng!");
+                errorAlert.showAndWait();
+            }
 	    }
 	    
 	    @FXML
@@ -371,7 +433,8 @@ public class GD_QLPhong_Controller implements Initializable{
 	    }
 	    private void clearFields() {
 	    	txt_GiaPhong.setText("");
-	    	txt_GiaPhong.setText("");
+	    	txt_Phong1.setText("");
+	    	txt_TieuChi.setText("");
 	    	cbb.setValue("Phòng đơn");
 	    	cbb2.setValue("Trống");
 	    }

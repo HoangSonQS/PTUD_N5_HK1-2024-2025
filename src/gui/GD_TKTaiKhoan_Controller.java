@@ -149,6 +149,9 @@ public class GD_TKTaiKhoan_Controller implements Initializable{
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		lb_MaNV.setText("");
+		lb_MaTK.setText("");
+		lb_TrangThai.setText("");
 		ObservableList<String> list = FXCollections.observableArrayList("Tài khoản", "Hoá đơn", "Phòng", "Nhân viên", "Khách hàng",
 				"Dịch vụ","Ưu đãi");
 		cbbGiaoDien.setItems(list);

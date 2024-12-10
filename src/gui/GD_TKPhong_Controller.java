@@ -155,6 +155,11 @@ public class GD_TKPhong_Controller implements Initializable{
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		lb_maPhong.setText("");
+		lb_loaiPhong.setText("");
+		lb_donGia.setText("");
+		lb_trangThai.setText("");
+		lb_TieuChi.setText("");
 		ObservableList<String> list = FXCollections.observableArrayList("Phòng", "Hoá đơn", "Nhân viên", "Khách hàng",
 				"Dịch vụ", "Tài khoản", "Ưu đãi");
 		cbbGiaoDien.setItems(list);
@@ -260,7 +265,7 @@ public class GD_TKPhong_Controller implements Initializable{
         		lb_loaiPhong.setText(selectedPhong.getLoaiPhongString());
         		lb_donGia.setText(String.valueOf(selectedPhong.getDonGia()));
         		lb_trangThai.setText(selectedPhong.getTrangThaiString());
-        		lb_TieuChi.setText(selectedPhong.getTrangThaiString());
+        		lb_TieuChi.setText(selectedPhong.getTieuChi());
         	}
         });
         
