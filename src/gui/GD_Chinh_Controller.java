@@ -52,15 +52,10 @@ public class GD_Chinh_Controller implements Initializable{
     @FXML
     private Label tenNV;
 
-	private Stage primaryScene;
-
-	private Stage primaryStage;
-
-	private Node pnNoiDung;
     
     @FXML
     void moGiaoDienQuanLy(MouseEvent event) throws IOException {
-    	App.setRoot("GD_QLNhanVien");
+    	App.setRoot("GD_QLPhong");
     }
 
     @FXML
