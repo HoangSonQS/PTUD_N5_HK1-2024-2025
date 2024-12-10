@@ -129,7 +129,7 @@ public class GD_TKNhanVien_Controller implements Initializable{
     }
 
     @FXML
-    void moGiaoDienTimKiem(MouseEvent event) {
+    void moGiaoDienTimKiem(MouseEvent event) throws IOException {
     	App.setRoot("GD_TKPhong");
     }
     

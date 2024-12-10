@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 
 import dao.DichVu_DAO;
 import dao.KhuyenMai_DAO;
+import dao.Phong_DAO;
 import entity.DichVu;
 import entity.HoaDon;
 import entity.KhuyenMai;
@@ -143,7 +144,7 @@ public class GD_QLDichVu_Controller implements Initializable{
     }
 
     @FXML
-    void moGiaoDienTimKiemUD(MouseEvent event) throws IOException {
+    void moGiaoDienTimKiemDV(MouseEvent event) throws IOException {
     	App.setRoot("GD_TKDichVu");
     }
 
@@ -154,7 +155,50 @@ public class GD_QLDichVu_Controller implements Initializable{
 
     @FXML
     void suaKM(MouseEvent event) {
+    	if (lbIDDV.getText().trim().isEmpty()) {
+            Alert alert = new Alert(AlertType.WARNING);
+            alert.setTitle("Cảnh báo");
+            alert.setHeaderText(null);
+            alert.setContentText("Vui lòng chọn dịch vụ cần sửa!");
+            alert.showAndWait();
+            return;
+    	}
+    	if (txtTenDichVu.getText().trim().isEmpty() ||
+    			txtDonGia.getText().trim().isEmpty() ||
+    			txtSoLuong.getText().trim().isEmpty()) {
+            Alert alert = new Alert(AlertType.WARNING);
+            alert.setTitle("Cảnh báo");
+            alert.setHeaderText(null);
+            alert.setContentText("Vui lòng điền đầy đủ thông tin!");
+            alert.showAndWait();
+            return;
+    	}
+    	String maDV = lbIDDV.getText();
+    	String tenDV = txtTenDichVu.getText();
+    	double dongia = Double.valueOf(txtDonGia.getText());
+    	int soLuong = Integer.valueOf(txtSoLuong.getText());
+    	
+    	DichVu dv = new DichVu(maDV, tenDV, soLuong, dongia);
+        boolean updated = new DichVu_DAO().suaDichVu(dv);
+        
+        if (updated) {
+            Alert successAlert = new Alert(AlertType.INFORMATION);
+            successAlert.setTitle("Thành công");
+            successAlert.setHeaderText(null);
+            successAlert.setContentText("Cập nhật thông tin dịch vụ thành công!");
+            successAlert.showAndWait();
 
+            // Cập nhật lại TableView và xóa trắng form
+            loadTableData();
+            clearFields();
+            } else {
+            Alert errorAlert = new Alert(AlertType.ERROR);
+            errorAlert.setTitle("Lỗi");
+            errorAlert.setHeaderText(null);
+            errorAlert.setContentText("Không thể cập nhật thông tin dịch vụ!");
+            errorAlert.showAndWait();
+        }
+    	
     }
 
     private String generateMaDV() {

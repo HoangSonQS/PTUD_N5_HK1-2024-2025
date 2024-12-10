@@ -274,4 +274,24 @@ public class GD_TKTaiKhoan_Controller implements Initializable{
 		maNV.setText(String.valueOf(tk.getNhanVien().getIdNhanVien()));
 		tenNV.setText(String.valueOf(tk.getNhanVien().getTenNhanVien()));
 	}
+
+    @FXML
+    void suaTK(MouseEvent event) {
+
+    }
+
+    @FXML
+    void themTK(MouseEvent event) {
+
+    }
+
+    @FXML
+    void xoaTK(MouseEvent event) {
+
+    }
+
+    @FXML
+    void xoaTrang(MouseEvent event) {
+
+    }
 }
