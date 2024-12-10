@@ -11,8 +11,10 @@ import java.util.ResourceBundle;
 import dao.Enum_TrangThaiPhong;
 import dao.PhieuThuePhong_DAO;
 import dao.Phong_DAO;
+import dao.TaiKhoan_DAO;
 import entity.PhieuThuePhong;
 import entity.Phong;
+import entity.TaiKhoan;
 import entity.TrangThaiPhong;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -42,7 +44,10 @@ public class GD_DoiPhong_Controller implements Initializable{
 
 	@FXML
     private ImageView avt;
-
+    @FXML
+    private Label maNV;
+    @FXML
+    private Label tenNV;
     @FXML
     private ImageView icon_TimKiem1;
 
@@ -172,6 +177,8 @@ public class GD_DoiPhong_Controller implements Initializable{
         // Thêm sự kiện lọc
         cbbLoaiPhong.setOnAction(event -> locDanhSachPhong());
         cbbTieuChi.setOnAction(event -> locDanhSachPhong());
+        
+        addUserLogin();
     }
 
     private void timKiemPhieuThue(String maPhong) {
@@ -472,5 +479,10 @@ public class GD_DoiPhong_Controller implements Initializable{
 	@FXML
 	private void moGDDatPhong() throws IOException {
 		App.openModal("GD_DatPhong", 800, 684);
+	}
+	private void addUserLogin() {
+		TaiKhoan tk = App.tk;
+		maNV.setText(String.valueOf(tk.getNhanVien().getIdNhanVien()));
+		tenNV.setText(String.valueOf(tk.getNhanVien().getTenNhanVien()));
 	}
 }

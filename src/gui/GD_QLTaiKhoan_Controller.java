@@ -36,7 +36,10 @@ public class GD_QLTaiKhoan_Controller implements Initializable{
 
     @FXML
     private ImageView avt;
-
+    @FXML
+    private Label maNV;
+    @FXML
+    private Label tenNV;
     @FXML
     private Button btnSua;
 
@@ -439,7 +442,7 @@ public class GD_QLTaiKhoan_Controller implements Initializable{
             new ReadOnlyStringWrapper(cellData.getValue().getNhanVien().getChucVu().getchucVu()));
         
         loadTableData();
-		
+		addUserLogin();
 	}
 	
 	private void loadTableData() {
@@ -517,4 +520,9 @@ public class GD_QLTaiKhoan_Controller implements Initializable{
         }
 		return true;
     }  
+	private void addUserLogin() {
+		TaiKhoan tk = App.tk;
+		maNV.setText(String.valueOf(tk.getNhanVien().getIdNhanVien()));
+		tenNV.setText(String.valueOf(tk.getNhanVien().getTenNhanVien()));
+	}
 }

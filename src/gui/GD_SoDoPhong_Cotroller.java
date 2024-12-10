@@ -14,8 +14,10 @@ import javax.swing.JLabel;
 
 import dao.PhieuThuePhong_DAO;
 import dao.Phong_DAO;
+import dao.TaiKhoan_DAO;
 import entity.PhieuThuePhong;
 import entity.Phong;
+import entity.TaiKhoan;
 import entity.TrangThaiPhong;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -48,7 +50,10 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 
 	@FXML
 	private ImageView avt;
-
+    @FXML
+    private Label maNV;
+    @FXML
+    private Label tenNV;
 	@FXML
 	private ComboBox<String> cbb;
 	
@@ -137,6 +142,7 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 		loadTrangThaiPhong_CBB();
 		loadTrangThaiPhong();
 		LoadSoPhongTheoLoai();
+		addUserLogin();
 	}
 	
 	public void loadLoaiPhong() {
@@ -399,7 +405,7 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 		Button btnRight = new Button(strBtnRight);
 
 		switch (phong.getTrangThai()) {
-		case TRONG:
+		case DANGTHUE:
 			btnLeft.setStyle("-fx-background-color: #edbf6d; -fx-text-fill: #fff; -fx-font-size: 16");
 			btnLeft.setOnAction(((event) -> {
 				if (phong.getTrangThai() == TrangThaiPhong.DANGTHUE) {
@@ -410,17 +416,6 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 			            e.printStackTrace();
 			        }
 			    }
-				try {
-					String maChon = phong.getIdPhong();
-					if (!GD_DatPhongChoController.dsMaPhong.contains(maChon)) {
-					    GD_DatPhongChoController.dsMaPhong.add(maChon);
-					}
-					
-				} catch (Exception e) {
-					// TODO: handle exception
-					e.printStackTrace();
-				}
-				
 			}));
 			btnRight.setOnAction((event) -> {
 				try {
@@ -445,7 +440,6 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 			btnLeft.setStyle("-fx-background-color: #ff3131; -fx-text-fill: #fff; -fx-font-size: 16");
 			btnLeft.setOnAction(((event) -> {
 				try {
-					
 					phong.setTrangThai(TrangThaiPhong.TRONG);
 					dsp.capNhatTrangThaiPhong(phong);
 					LoadSoPhongTheoLoai();
@@ -466,24 +460,37 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 				
 			});
 			break;
-		case DANGTHUE:
+		case TRONG:
             btnLeft.setStyle("-fx-background-color: #edbf6d; -fx-text-fill: #fff; -fx-font-size: 16");
             btnLeft.setOnAction(((event) -> {
                 // Lưu mã phòng vào biến static
-                roomID = phong.getIdPhong(); 
                 try {
-                    moGDDoiPhong();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+					String maChon = phong.getIdPhong();
+					if (!GD_DatPhongChoController.dsMaPhong.contains(maChon)) {
+					    GD_DatPhongChoController.dsMaPhong.add(maChon);
+					}
+					
+				} catch (Exception e) {
+					// TODO: handle exception
+					e.printStackTrace();
+				}
+                
             }));
 			btnRight.setOnAction((event) -> {
 				try {
-					phong.setTrangThai(TrangThaiPhong.TRONG);
-					dsp.capNhatTrangThaiPhong(phong);
+					String maChon = phong.getIdPhong();
+					if(GD_DatPhongChoController.dsMaPhong.isEmpty()) {
+						GD_DatPhongChoController.dsMaPhong.add(maChon);
+					}else {
+						if (!GD_DatPhongChoController.dsMaPhong.contains(maChon)) {
+						    GD_DatPhongChoController.dsMaPhong.add(maChon);
+						}
+					}
+					moGDDatPhong();
 					renderArrayPhong(new Phong_DAO().getAllPhong());
-				} catch (Exception e) {
-					// TODO: handle exception
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 			});
 			break;
@@ -542,5 +549,10 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 	private void moGDDatPhong() throws IOException {
 		App.openModal("GD_DatPhong", 800, 684);
 	}
-
+	
+	private void addUserLogin() {
+		TaiKhoan tk = App.tk;
+		maNV.setText(String.valueOf(tk.getNhanVien().getIdNhanVien()));
+		tenNV.setText(String.valueOf(tk.getNhanVien().getTenNhanVien()));
+	}
 }

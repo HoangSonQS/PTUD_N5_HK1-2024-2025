@@ -12,9 +12,11 @@ import java.util.ResourceBundle;
 import dao.KhachHang_DAO;
 import dao.PhieuThuePhong_DAO;
 import dao.Phong_DAO;
+import dao.TaiKhoan_DAO;
 import entity.KhachHang;
 import entity.PhieuThuePhong;
 import entity.Phong;
+import entity.TaiKhoan;
 import entity.TrangThaiPhong;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -79,7 +81,10 @@ public class GD_HuyPhong_Controller implements Initializable{
 
     @FXML
     private GridPane scrollPane_GDHuy;
-
+    @FXML
+    private Label maNV;
+    @FXML
+    private Label tenNV;
     @FXML
     private TextField txt_CCCD;
     
@@ -129,6 +134,7 @@ public class GD_HuyPhong_Controller implements Initializable{
 
 	    // Render danh sách phòng đã sắp xếp
 	    renderArrayPhong(allPhieuThue);
+	    addUserLogin();
 	}
 	
 	public void renderArrayPhong(ArrayList<PhieuThuePhong> dsPhieuThue) {
@@ -400,5 +406,10 @@ public class GD_HuyPhong_Controller implements Initializable{
 	@FXML
 	private void moGDDatPhong() throws IOException {
 		App.openModal("GD_DatPhong", 800, 684);
+	}
+	private void addUserLogin() {
+		TaiKhoan tk = App.tk;
+		maNV.setText(String.valueOf(tk.getNhanVien().getIdNhanVien()));
+		tenNV.setText(String.valueOf(tk.getNhanVien().getTenNhanVien()));
 	}
 }

@@ -11,8 +11,10 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import dao.Enum_ChucVu;
 import dao.NhanVien_DAO;
+import dao.TaiKhoan_DAO;
 import entity.ChucVu;
 import entity.NhanVien;
+import entity.TaiKhoan;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -101,7 +103,10 @@ public class GD_QLNhanVien_Controller implements Initializable{
 	    
 	    @FXML
 	    private TableColumn<NhanVien, String> clChucVu;
-	    
+	    @FXML
+	    private Label maNV;
+	    @FXML
+	    private Label tenNV;
 	    @Override
 	    public void initialize(URL arg0, ResourceBundle arg1) {
 	        // Set up ComboBox
@@ -172,6 +177,7 @@ public class GD_QLNhanVien_Controller implements Initializable{
 
 	        // Load dữ liệu
 	        loadTableData();
+	        addUserLogin();
 	    }
 	    
 	    private void loadTableData() {
@@ -612,5 +618,11 @@ public class GD_QLNhanVien_Controller implements Initializable{
 	        }
 			return true;
 	    }  
+	    
+		private void addUserLogin() {
+			TaiKhoan tk = App.tk;
+			maNV.setText(String.valueOf(tk.getNhanVien().getIdNhanVien()));
+			tenNV.setText(String.valueOf(tk.getNhanVien().getTenNhanVien()));
+		}
 	    
 }

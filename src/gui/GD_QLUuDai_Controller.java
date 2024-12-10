@@ -7,7 +7,9 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import dao.KhuyenMai_DAO;
+import dao.TaiKhoan_DAO;
 import entity.KhuyenMai;
+import entity.TaiKhoan;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -31,7 +33,10 @@ public class GD_QLUuDai_Controller implements Initializable{
 
 	@FXML
     private ImageView avt;
-
+    @FXML
+    private Label maNV;
+    @FXML
+    private Label tenNV;
     @FXML
     private Button btnSua;
 
@@ -490,6 +495,7 @@ public class GD_QLUuDai_Controller implements Initializable{
             }
         });
         loadTableData();
+        addUserLogin();
 	}
     
     private void loadTableData() {
@@ -531,4 +537,9 @@ public class GD_QLUuDai_Controller implements Initializable{
         txtTenKM.setText("");
         txtCK.setText("");
     }
+	private void addUserLogin() {
+		TaiKhoan tk = App.tk;
+		maNV.setText(String.valueOf(tk.getNhanVien().getIdNhanVien()));
+		tenNV.setText(String.valueOf(tk.getNhanVien().getTenNhanVien()));
+	}
 }

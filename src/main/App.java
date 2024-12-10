@@ -7,6 +7,7 @@ import java.util.Objects;
 
 import dao.PhieuThuePhong_DAO;
 import entity.PhieuThuePhong;
+import entity.TaiKhoan;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -20,6 +21,7 @@ public class App extends Application{
 	public static Scene primaryScene;
 	public static String user;
 	public static String ma;
+	public static TaiKhoan tk;
 	private Stage stage;
 	@Override
 	public void start(Stage arg0) throws Exception {
@@ -129,4 +131,6 @@ public class App extends Application{
 			}
 		}
 	}
+	
+	
 }

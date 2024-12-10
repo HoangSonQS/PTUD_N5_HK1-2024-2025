@@ -149,4 +149,5 @@ public class GD_DatPhongChoController implements Initializable{
 			dpTra.setValue(null);
 		});
 	}
+	
 }

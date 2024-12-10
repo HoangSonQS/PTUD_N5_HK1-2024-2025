@@ -55,7 +55,9 @@ public class DangNhap_Controller{
 		} else {
 			tkdao.capNhatDangNhap();
 			tkdao.capNhatTaiKhoan(new TaiKhoan(userName, password, "Đang đăng nhập", tk.getNhanVien()));
-			App.user = tk.getNhanVien().getIdNhanVien();
+			App.user = tk.getIdTaiKhoan();
+			App.ma = tk.getMatKhau();
+			App.tk = new TaiKhoan_DAO().getTaiKhoanTheoUserNameAndPassword(userName, password);
 			Stage stage = (Stage) ((Node) event.getTarget()).getScene().getWindow();
 			stage.close();
             App.openMainGUI(); // Mở màn hình chính
@@ -72,9 +74,6 @@ public class DangNhap_Controller{
 	static void connect() {
 		ConnectDB cn = new ConnectDB();
 		cn.getInstance().connect();
-	}
-	public static void main(String[] args) {
-		
 	}
 
 	

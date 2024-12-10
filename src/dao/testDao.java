@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -89,6 +90,15 @@ public class testDao {
 		PhieuThuePhong_DAO dsPT = new PhieuThuePhong_DAO();
 		ArrayList<Map<Integer, Integer>> a = dsPT.thongKeTheoNam(2024);
 		System.out.println(a);
+		
+        LocalDate dateA = LocalDate.of(2023, 10, 26);
+        LocalDate dateB = LocalDate.of(2023, 11, 20);
+
+        // Phương pháp 1 (dùng ChronoUnit): Hiệu quả và dễ đọc
+        double tong = dsPT.tongKHAtoB(LocalDate.of(2024, 10, 03), LocalDate.of(2024, 12, 03));
+        double daysDifference = (double) ChronoUnit.DAYS.between(dateA, dateB);
+        double tb =  tong / daysDifference;
+        System.out.println(tong + "         " + daysDifference + "                 " + tb);
 		
 		
 //		KhachHang_DAO dsKH = new KhachHang_DAO();

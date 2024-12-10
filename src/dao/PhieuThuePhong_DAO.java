@@ -539,4 +539,84 @@ public class PhieuThuePhong_DAO {
 		}
 		return dem;
 	}
+	public int tongKHAtoB(LocalDate dateA, LocalDate dateB) {
+		Connection conN = ConnectDB.getInstance().getConnection();
+		Statement stm = null;
+		int dem = 0;
+		try {
+			stm = conN.createStatement();
+			String sql = String.format("SELECT IDPhong FROM PhieuThuePhong "
+					+ "WHERE CAST(ThoiGianNhanPhong AS DATE) BETWEEN '%s' AND '%s' and IDHoaDon IS NOT NULL",
+					dateA.format(DateTimeFormatter.ISO_DATE), 
+					dateB.format(DateTimeFormatter.ISO_DATE));
+			System.out.println(sql);
+			ResultSet rs = stm.executeQuery(sql);
+			while (rs.next()) {
+	            String idphong = rs.getString("IDPhong");
+	            Phong p = new Phong_DAO().getPhongTheoMa(idphong);
+	            if (p.getLoaiPhong() == LoaiPhong.PHONGDON || p.getLoaiPhong() == LoaiPhong.PHONGDOI) {
+	            	dem += 2;
+	            } else if (p.getLoaiPhong() == LoaiPhong.PHONGGIADINH) {
+	            	dem += 4;
+	            }
+			}
+		}catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return dem;
+	}
+	public int tongKHThang(int month, int year) {
+		Connection conN = ConnectDB.getInstance().getConnection();
+		Statement stm = null;
+		int dem = 0;
+		try {
+			stm = conN.createStatement();
+			String sql = String.format("SELECT IDPhong FROM PhieuThuePhong "
+					+ "WHERE YEAR(ThoiGianNhanPhong) = %d AND MONTH(ThoiGianNhanPhong) = %d and IDHoaDon IS NOT NULL",
+					year, 
+					month);
+			System.out.println(sql);
+			ResultSet rs = stm.executeQuery(sql);
+			while (rs.next()) {
+	            String idphong = rs.getString("IDPhong");
+	            Phong p = new Phong_DAO().getPhongTheoMa(idphong);
+	            if (p.getLoaiPhong() == LoaiPhong.PHONGDON || p.getLoaiPhong() == LoaiPhong.PHONGDOI) {
+	            	dem += 2;
+	            } else if (p.getLoaiPhong() == LoaiPhong.PHONGGIADINH) {
+	            	dem += 4;
+	            }
+			}
+		}catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return dem;
+	}
+	public int tongKHTNam(int year) {
+		Connection conN = ConnectDB.getInstance().getConnection();
+		Statement stm = null;
+		int dem = 0;
+		try {
+			stm = conN.createStatement();
+			String sql = String.format("SELECT IDPhong FROM PhieuThuePhong "
+					+ "WHERE YEAR(ThoiGianNhanPhong) = %d and IDHoaDon IS NOT NULL",
+					year);
+			System.out.println(sql);
+			ResultSet rs = stm.executeQuery(sql);
+			while (rs.next()) {
+	            String idphong = rs.getString("IDPhong");
+	            Phong p = new Phong_DAO().getPhongTheoMa(idphong);
+	            if (p.getLoaiPhong() == LoaiPhong.PHONGDON || p.getLoaiPhong() == LoaiPhong.PHONGDOI) {
+	            	dem += 2;
+	            } else if (p.getLoaiPhong() == LoaiPhong.PHONGGIADINH) {
+	            	dem += 4;
+	            }
+			}
+		}catch (SQLException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return dem;
+	}
 }
