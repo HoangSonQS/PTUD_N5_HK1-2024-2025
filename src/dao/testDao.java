@@ -35,9 +35,9 @@ public class testDao {
 //		testHoaDon();
 		testPhong();
 
-		testKH();
-
-		testPhieuThue();
+//		testKH();
+//
+//		testPhieuThue();
 //		testKH();
 
 //		testHoaDon();
@@ -68,7 +68,7 @@ public class testDao {
 //		pdao.capNhatTrangThaiPhong(new Phong("T01P01", LoaiPhong.PHONGGIADINH, 2300000, TrangThaiPhong.TRONG));
 //		pdao.xoaPhong("T03P01");
 //		System.out.println(pdao.getPhongTheoLoai("Phòng đơn"));
-		System.out.println(pdao.getPhongTheoLoai(3));
+		System.out.println(pdao.getPhongTheoTieuChi("View biển"));
 	}
 //done
 	public static void testTaiKhoan() {

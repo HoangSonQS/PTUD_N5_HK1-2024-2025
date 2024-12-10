@@ -84,7 +84,7 @@
                   <Font size="16.0" />
                </font>
             </Button>
-            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="117.0" layoutY="313.0" onMouseClicked="#xoaKM" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="117.0" layoutY="386.0" onMouseClicked="#xoaKM" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../data/pic/recycle-bin.png" />
                </image>
@@ -103,12 +103,12 @@
                <font>
                   <Font size="14.0" />
                </font></TextField>
-            <Button fx:id="btnTimKiem" contentDisplay="RIGHT" layoutX="114.0" layoutY="446.0" mnemonicParsing="false" onMouseClicked="#moGiaoDienTimKiemUD" prefHeight="40.0" prefWidth="198.0" style="-fx-background-color: #2972d3;" text=" Tìm kiếm dịch vụ" textAlignment="RIGHT" textFill="WHITE" textOverrun="CLIP">
+            <Button fx:id="btnTimKiem" contentDisplay="RIGHT" layoutX="114.0" layoutY="446.0" mnemonicParsing="false" onMouseClicked="#moGiaoDienTimKiemDV" prefHeight="40.0" prefWidth="198.0" style="-fx-background-color: #2972d3;" text=" Tìm kiếm dịch vụ" textAlignment="RIGHT" textFill="WHITE" textOverrun="CLIP">
                <font>
                   <Font size="16.0" />
                </font>
             </Button>
-            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="120.0" layoutY="387.0" onMouseClicked="#moGiaoDienTimKiem" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="117.0" layoutY="451.0" onMouseClicked="#moGiaoDienTimKiem" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../data/pic/search3png.png" />
                </image>

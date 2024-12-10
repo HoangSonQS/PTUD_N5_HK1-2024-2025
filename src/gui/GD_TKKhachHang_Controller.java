@@ -165,6 +165,12 @@ public class GD_TKKhachHang_Controller implements Initializable{
     
     @Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+    	lb_MaKH.setText("");
+    	lb_TenKH.setText("");
+    	lb_sdtKH.setText("");
+    	lb_nsKH.setText("");
+    	lb_tichDiem.setText("");
+    	lb_cccd.setText("");
     	ObservableList<String> list = FXCollections.observableArrayList("Khách hàng", "Nhân viên", "Phòng", "Hoá đơn",
 				"Dịch vụ", "Tài khoản", "Ưu đãi");
 		cbbGiaoDien.setItems(list);
@@ -274,7 +280,7 @@ public class GD_TKKhachHang_Controller implements Initializable{
         	KhachHang selectedKhachHang = tbKhachHang.getSelectionModel().getSelectedItem();
         	if (selectedKhachHang != null) {
         		lb_MaKH.setText(selectedKhachHang.getIdKhachHang());
-        		lb_TenKH.setText(selectedKhachHang.getIdKhachHang());
+        		lb_TenKH.setText(selectedKhachHang.getTenKhachHang());
         		lb_sdtKH.setText(selectedKhachHang.getSoDienThoai());
         		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         		lb_nsKH.setText(selectedKhachHang.getNgaySinh().format(formatter));
