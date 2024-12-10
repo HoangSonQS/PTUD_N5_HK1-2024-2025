@@ -50,10 +50,8 @@
                               <Font size="18.0" />
                            </font>
                         </Label>
-<<<<<<< HEAD
-=======
-                        <ComboBox fx:id="cbb_TrangThai" layoutX="20.0" layoutY="5.0" onAction="#loadTrangThaiPhong_CBB" prefWidth="150.0" />
->>>>>>> edef534b6af6971d03a1717edddb3bcc03b25eae
+                  
+
                         <Button fx:id="btn_Lọc" alignment="CENTER" layoutX="1180.0" minHeight="30.0" minWidth="90.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="Lọc">
                            <font>
                               <Font size="14.0" />
@@ -160,7 +158,7 @@
                         <Font name="System Italic" size="18.0" />
                      </font>
                   </Label>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="250.0" layoutY="65.0" stroke="WHITE" strokeType="INSIDE" width="10.0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="250.0" layoutY="185.0" stroke="WHITE" strokeType="INSIDE" width="10.0" />
                   <ImageView fx:id="icon_QuanLy" fitHeight="40.0" fitWidth="40.0" layoutX="18.0" layoutY="235.0" onMouseClicked="#moGiaoDienQuanLy" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../data/pic/list.png" />

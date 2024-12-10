@@ -142,7 +142,7 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 		loadTrangThaiPhong_CBB();
 		loadTrangThaiPhong();
 		LoadSoPhongTheoLoai();
-		addUserLogin();
+//		addUserLogin();
 	}
 	
 	public void loadLoaiPhong() {

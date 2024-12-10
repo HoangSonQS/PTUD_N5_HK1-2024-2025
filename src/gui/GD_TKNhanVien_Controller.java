@@ -114,23 +114,23 @@ public class GD_TKNhanVien_Controller implements Initializable{
     private Button btnQLNV;
 
     @FXML
-    void moGiaoDienQuanLy(MouseEvent event) {
-
+    void moGiaoDienQuanLy(MouseEvent event) throws IOException {
+    	App.setRoot("GD_QLPhong");
     }
 
     @FXML
-    void moGiaoDienThongKe(MouseEvent event) {
-
+    void moGiaoDienThongKe(MouseEvent event) throws IOException {
+    	App.setRoot("GD_ThongKeDoanhThu");
     }
 
     @FXML
-    void moGiaoDienThuePhong(MouseEvent event) {
-
+    void moGiaoDienThuePhong(MouseEvent event) throws IOException {
+    	App.setRoot("GD_SoDoPhong");
     }
 
     @FXML
-    void moGiaoDienTimKiem(MouseEvent event) {
-
+    void moGiaoDienTimKiem(MouseEvent event) throws IOException {
+    	App.setRoot("GD_TKPhong");
     }
     
     @FXML

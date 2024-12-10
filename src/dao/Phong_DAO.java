@@ -241,6 +241,52 @@ public class Phong_DAO {
 			}
 			return dsPhong.size();
 		 }
+	 
+	 public ArrayList<Phong> getPhongTheoTieuChi(String tc) {
+		 ArrayList<Phong> dsPhong = new ArrayList<Phong>();
+		 Connection con = ConnectDB.getInstance().getConnection();
+		    PreparedStatement stmt = null;
+		    ResultSet rs = null;
+			
+			try {
+				String sql = "SELECT * FROM Phong WHERE TieuChi = ?";
+				stmt = con.prepareStatement(sql);
+		        stmt.setString(1, tc);
+		        rs = stmt.executeQuery();
+				while (rs.next()) {
+					String IDPhong = rs.getString("IDPhong");
+					int loaiPhong = rs.getInt("LoaiPhong");
+					LoaiPhong lphong = null;
+					if(loaiPhong == 1) {
+						lphong = LoaiPhong.PHONGDOI;
+					} else if(loaiPhong == 2) {
+						lphong = LoaiPhong.PHONGDON;
+					} else{
+						lphong = LoaiPhong.PHONGGIADINH;
+					}
+					Double donGia = rs.getDouble("DonGia");
+					int trangThai = rs.getInt("TrangThai");
+					TrangThaiPhong tt = null;
+					if(trangThai == 1) {
+						tt = TrangThaiPhong.DANGTHUE;
+					} else if(trangThai == 2) {
+						tt = TrangThaiPhong.TRONG;
+					} else if(trangThai == 3) {
+						tt = TrangThaiPhong.SAPCHECKIN;
+					} else {
+						tt = TrangThaiPhong.SAPCHECKOUT;
+					}
+				
+					Phong phong = new Phong(IDPhong, lphong, donGia, tt, tc);
+					dsPhong.add(phong);
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return dsPhong;
+		 }
+	 
 	 public ArrayList<Phong> getPhongTheoTrangThaiDanhSach(int trangthai) {
 		 ArrayList<Phong> dsPhong = new ArrayList<Phong>();
 		 Connection con = ConnectDB.getInstance().getConnection();

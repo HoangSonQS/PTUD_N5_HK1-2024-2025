@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
-
+import java.util.Iterator;
 import java.util.ResourceBundle;
 
 import dao.KhachHang_DAO;
@@ -12,6 +12,7 @@ import dao.PhieuThuePhong_DAO;
 import dao.Phong_DAO;
 
 import entity.KhachHang;
+import entity.LoaiPhong;
 import entity.NhanVien;
 import entity.PhieuThuePhong;
 import entity.Phong;
@@ -119,17 +120,15 @@ public class GD_GiaHan_Controller implements Initializable{
 		ObservableList<String> list_LoaiPhong = FXCollections.observableArrayList("Tất cả", "Phòng đơn", "Phòng đôi","Phòng gia đình");
 		cbb_LoaiPhong.setItems(list_LoaiPhong);
 		cbb_LoaiPhong.setValue("Tất cả");
-		addUserLogin();
+		txt_HoTen.setEditable(false);
+		txt_PhongDuocChon.setEditable(false);
+		txt_PhongThue.setEditable(false);
+//		addUserLogin();
 
-	
-		ArrayList<Phong> dsPChon = new Phong_DAO().getPhongTheoTrangThaiDanhSach(1);
-		dsPChon.addAll(new Phong_DAO().getPhongTheoTrangThaiDanhSach(4));
-		renderArrayPhong(dsPChon);
-
-		loadLoaiPhong();
 		suKienNutTK();
 		suKienNutKiemTra();
 		suKienNutLoc();
+//		suKienComBoBox();
 	}
 	
 	public void suKienNutTK() {
@@ -159,86 +158,12 @@ public class GD_GiaHan_Controller implements Initializable{
 					}
 					renderArrayPhong(dsP);
 					dsMaPhong.removeAll(dsMaPhong);
+					new Alert(Alert.AlertType.INFORMATION, "Thông tin phòng của khách hàng được hiển thị bên dưới!").showAndWait();
 				}
 			}
 			
 		}));
 	}
-	public void suKienNutKiemTra() {
-		btn_KiemTra.setOnAction((event -> {
-		    LocalDate NgayNhan = txt_NgayNhan.getValue();
-		    LocalDate NgayTra = txt_NgayTra.getValue();
-		    
-		    if (NgayNhan == null || NgayTra == null) {
-		        new Alert(Alert.AlertType.ERROR, "Vui lòng chọn ngày nhận và ngày trả!").showAndWait();
-		        return;
-		    }
-
-		    ArrayList<String> maPhongDaCoNguoiDat = new ArrayList<>();
-		    for (String ma : dsMPhongDuocChon) {
-		        ArrayList<PhieuThuePhong> dsPhieuThue = new PhieuThuePhong_DAO().layPhieuThueTheoMaPhong(ma);
-		        for (PhieuThuePhong pt : dsPhieuThue) {
-		        	if ((NgayNhan.isAfter(pt.getThoiGianNhanPhong())&& NgayNhan.isBefore(pt.getThoiHanGiaoPhong()))||
-	                		(NgayTra.isAfter(pt.getThoiGianNhanPhong())&& NgayTra.isBefore(pt.getThoiHanGiaoPhong()))) {
-	                	maPhongDaCoNguoiDat.add(ma);
-	                    break;
-	                }
-		        }
-		        dsPhieuThue.removeAll(dsPhieuThue);
-		    }
-
-		    // Hiển thị kết quả kiểm tra
-		    if (maPhongDaCoNguoiDat.isEmpty()) {
-		        new Alert(Alert.AlertType.INFORMATION, "Các phòng có thể gia hạn được!").showAndWait();
-		    } else {
-		        new Alert(Alert.AlertType.ERROR, "Phòng " + maPhongDaCoNguoiDat + " đã có người đặt! Vui lòng chọn phòng khác!").showAndWait();
-		    }
-
-		    // Cập nhật danh sách: Loại bỏ phòng đã có người đặt
-		    dsMPhongDuocChon.removeAll(maPhongDaCoNguoiDat);
-		    for(String maPhong: dsMPhongDuocChon) {
-		    	txt_PhongDuocChon.appendText(maPhong + " ");
-		    }
-		    
-		}));
-
-
-	}
-	
-	public void suKienNutLoc() {
-		btn_Lọc.setOnAction((event ->{
-			 LocalDate NgayNhan = txt_NgayNhan.getValue();
-			 LocalDate NgayTra = txt_NgayTra.getValue();
-			 if (NgayNhan == null || NgayTra == null) {
-			        new Alert(Alert.AlertType.ERROR, "Vui lòng chọn ngày nhận và ngày trả!").showAndWait();
-			        return;
-			 }
-			 ArrayList<Phong> dsP = new ArrayList<Phong>();
-			 dsP= new Phong_DAO().getAllPhong();
-			 ArrayList<String> dsMPhongTrong = new ArrayList<String>();
-			 for(Phong p : dsP) {
-				 dsMPhongTrong.add(p.getIdPhong());
-			 }
-			 ArrayList<String> maPhongDaCoNguoiDat = new ArrayList<>();
-			 for(String ma: dsMPhongTrong) {
-				 ArrayList<PhieuThuePhong> dsPhieuThue = new PhieuThuePhong_DAO().layPhieuThueTheoMaPhong(ma);
-			        for (PhieuThuePhong pt : dsPhieuThue) {
-			        	if (NgayNhan.equals(pt.getThoiGianNhanPhong())&& NgayTra.equals(pt.getThoiHanGiaoPhong())) {
-		                	maPhongDaCoNguoiDat.add(ma);
-		                    break;
-		                }
-			        }
-			 }
-			 dsMPhongTrong.removeAll(maPhongDaCoNguoiDat);
-			 ArrayList<Phong> dsPhongHoanChinh = new ArrayList<Phong>();
-			 for (String ma : dsMPhongTrong) {
-				Phong p = new Phong_DAO().getPhongTheoMa(ma);
-				dsPhongHoanChinh.add(p);
-			 }
-			 renderArrayPhong2(dsPhongHoanChinh);
-		}));
-	}
-	
 	public Pane taoGiaoDienPhong(Phong phong) {
 	    VBox roomItem = new VBox();
 	    roomItem.setCursor(Cursor.HAND);
@@ -352,6 +277,117 @@ public class GD_GiaHan_Controller implements Initializable{
 	        System.out.println("scrollPane_GDDOi không phải là GridPane.");
 	    }
 	}
+	public void suKienNutKiemTra() {
+		btn_KiemTra.setOnAction((event -> {
+		    LocalDate NgayNhan = txt_NgayNhan.getValue();
+		    LocalDate NgayTra = txt_NgayTra.getValue();
+		    LocalDate ngayhomnay = LocalDate.now();
+		    
+		    if (NgayNhan == null && NgayTra == null) {
+		        new Alert(Alert.AlertType.ERROR, "Vui lòng chọn ngày nhận và ngày trả phòng mới!").showAndWait();
+		        return;
+		    }else {
+		    	if(NgayNhan.isBefore(ngayhomnay)&& NgayTra.isBefore(ngayhomnay)) {
+		    		new Alert(Alert.AlertType.ERROR, "Ngày nhận và ngày trả phòng mới phải sau ngày hiện tại!").showAndWait();
+		    	}
+		    	if(NgayNhan.isAfter(NgayTra)) {
+		    		new Alert(Alert.AlertType.ERROR, "Ngày nhận phải sau ngày trả phòng!").showAndWait();
+		    	}
+		    }
+
+		    ArrayList<String> maPhongDaCoNguoiDat = new ArrayList<>();
+		    for (String ma : dsMPhongDuocChon) {
+		        ArrayList<PhieuThuePhong> dsPhieuThue = new PhieuThuePhong_DAO().layPhieuThueTheoMaPhong(ma);
+		        for (PhieuThuePhong pt : dsPhieuThue) {
+		        	if ((NgayNhan.isAfter(pt.getThoiGianNhanPhong())&& NgayNhan.isBefore(pt.getThoiHanGiaoPhong()))||
+	                		(NgayTra.isAfter(pt.getThoiGianNhanPhong())&& NgayTra.isBefore(pt.getThoiHanGiaoPhong()))) {
+	                	maPhongDaCoNguoiDat.add(ma);
+	                    break;
+	                }
+		        }
+		        dsPhieuThue.removeAll(dsPhieuThue);
+		    }
+
+		    // Hiển thị kết quả kiểm tra
+		    if (maPhongDaCoNguoiDat.isEmpty()) {
+		        new Alert(Alert.AlertType.INFORMATION, "Các phòng có thể gia hạn được!").showAndWait();
+		    } else {
+		        new Alert(Alert.AlertType.ERROR, "Phòng " + maPhongDaCoNguoiDat + " đã có người đặt! Vui lòng chọn phòng khác!").showAndWait();
+		    }
+
+		    // Cập nhật danh sách: Loại bỏ phòng đã có người đặt
+		    dsMPhongDuocChon.removeAll(maPhongDaCoNguoiDat);
+		    for(String maPhong: dsMPhongDuocChon) {
+		    	txt_PhongDuocChon.appendText(maPhong + " ");
+		    }
+		    
+		}));
+
+
+	}
+	
+	public void suKienNutLoc() {
+		btn_Lọc.setOnAction((event ->{
+			 LocalDate NgayNhan = txt_NgayNhan.getValue();
+			 LocalDate NgayTra = txt_NgayTra.getValue();
+			 if (NgayNhan == null || NgayTra == null) {
+			        new Alert(Alert.AlertType.ERROR, "Vui lòng chọn ngày nhận và ngày trả!").showAndWait();
+			        return;
+			 }
+			 ArrayList<Phong> dsP = new ArrayList<Phong>();
+			 dsP= new Phong_DAO().getAllPhong();
+			 ArrayList<String> dsMPhongTrong = new ArrayList<String>();
+			 for(Phong p : dsP) {
+				 dsMPhongTrong.add(p.getIdPhong());
+			 }
+			 ArrayList<String> maPhongDaCoNguoiDat = new ArrayList<>();
+			 for(String ma: dsMPhongTrong) {
+				 ArrayList<PhieuThuePhong> dsPhieuThue = new PhieuThuePhong_DAO().layPhieuThueTheoMaPhong(ma);
+			        for (PhieuThuePhong pt : dsPhieuThue) {
+			        	if (NgayNhan.equals(pt.getThoiGianNhanPhong())&& NgayTra.equals(pt.getThoiHanGiaoPhong())) {
+		                	maPhongDaCoNguoiDat.add(ma);
+		                    break;
+		                }
+			        }
+			 }
+			 dsMPhongTrong.removeAll(maPhongDaCoNguoiDat);
+			 ArrayList<Phong> dsPhongHoanChinh = new ArrayList<Phong>();
+			 for (String ma : dsMPhongTrong) {
+				Phong p = new Phong_DAO().getPhongTheoMa(ma);
+				dsPhongHoanChinh.add(p);
+			 }
+			 renderArrayPhong2(dsPhongHoanChinh);
+			 String GiaTri = cbb_LoaiPhong.getSelectionModel().getSelectedItem();
+			 if(GiaTri.equals("Tất cả")) {
+				 renderArrayPhong2(dsPhongHoanChinh);
+			 }else if(GiaTri.equals("Phòng đơn")) {
+				 ArrayList<Phong> dsTam = new ArrayList<Phong>(); 
+				 for(Phong p : dsPhongHoanChinh) {
+					 if(p.getLoaiPhongString().equals("Phòng đơn")) {
+						 dsTam.add(p);
+					 }
+				 }
+				 renderArrayPhong2(dsTam);
+			 }else if(GiaTri.equals("Phòng đôi")) {
+				 ArrayList<Phong> dsTam = new ArrayList<Phong>(); 
+				 for(Phong p : dsPhongHoanChinh) {
+					 if(p.getLoaiPhongString().equals("Phòng đôi")) {
+						 dsTam.add(p);
+					 }
+				 }
+				 renderArrayPhong2(dsTam);
+			 }else if(GiaTri.equals("Phòng gia đình")) {
+				 ArrayList<Phong> dsTam = new ArrayList<Phong>(); 
+				 for(Phong p : dsPhongHoanChinh) {
+					 if(p.getLoaiPhongString().equals("Phòng gia đình")) {
+						 dsTam.add(p);
+					 }
+				 }
+				 renderArrayPhong2(dsTam);
+			 }
+		}));
+	}
+	
 	
 	public void renderArrayPhong2(ArrayList<Phong> dsPhong) {
 	    // Kiểm tra xem scrollPane_GDDOi có phải là GridPane không
@@ -460,53 +496,7 @@ public class GD_GiaHan_Controller implements Initializable{
 
 	    return roomItem;
 	}
-	
-	public void loadLoaiPhong() {
-		cbb_LoaiPhong.setOnAction(event -> {
-			GridPane_GiaHan.getChildren().clear(); // Xóa các thành phần trong GridPane trước khi thêm mới
-		    ArrayList<Phong> dsP = kiemTraLoaiPhong();
-		    renderArrayPhong(dsP);
-		});
-	}
-	
-	public ArrayList<Phong> kiemTraLoaiPhong() {
-		String selectedItem = (String) cbb_LoaiPhong.getSelectionModel().getSelectedItem();
-		
-	    ArrayList<Phong> dsP = new ArrayList<Phong>(); // Khởi tạo danh sách phòng
-	    ArrayList<Phong> dsP_gop = new ArrayList<>();
-	    if (selectedItem.equals("Phòng đơn")) {
-	        dsP = new Phong_DAO().getPhongTheoLoai(2);
-	        ArrayList<Phong> dsP_chonTheoTT = new Phong_DAO().getPhongTheoTrangThaiDanhSach(1);
-	        dsP_chonTheoTT.addAll(new Phong_DAO().getPhongTheoTrangThaiDanhSach(4)) ;
-	        for(Phong p: dsP_chonTheoTT) {
-	        	if(dsP.contains(p)) {
-	        		dsP_gop.add(p);
-	        	}
-	        }
-	    } else if (selectedItem.equals("Phòng đôi")) {
-	        dsP = new Phong_DAO().getPhongTheoLoai(1);
-	        ArrayList<Phong> dsP_chonTheoTT = new Phong_DAO().getPhongTheoTrangThaiDanhSach(1);
-	        dsP_chonTheoTT.addAll(new Phong_DAO().getPhongTheoTrangThaiDanhSach(4)) ;
-	        for(Phong p: dsP_chonTheoTT) {
-	        	if(dsP.contains(p)) {
-	        		dsP_gop.add(p);
-	        	}
-	        }
-	    } else if (selectedItem.equals("Phòng gia đình")) {
-	        dsP = new Phong_DAO().getPhongTheoLoai(3);
-	        ArrayList<Phong> dsP_chonTheoTT = new Phong_DAO().getPhongTheoTrangThaiDanhSach(1);
-	        dsP_chonTheoTT.addAll(new Phong_DAO().getPhongTheoTrangThaiDanhSach(4)) ;
-	        for(Phong p: dsP_chonTheoTT) {
-	        	if(dsP.contains(p)) {
-	        		dsP_gop.add(p);
-	        	}
-	        }
-	    } else if (selectedItem.equals("Tất cả")) {
-	        dsP_gop = new Phong_DAO().getPhongTheoTrangThaiDanhSach(1);// Lấy tất cả các phòng đang ở và sắp check out
-	        dsP_gop.addAll(new Phong_DAO().getPhongTheoTrangThaiDanhSach(4)); 
-	}
-	    return dsP_gop;
-	}
+
     @FXML
     void moGiaoDienGiaHanPhong(MouseEvent event) throws IOException {
 		App.setRoot("GD_GiaHanPhong");
@@ -550,9 +540,9 @@ public class GD_GiaHan_Controller implements Initializable{
 	private void moGDTKe() throws IOException {
 //		App.openModal("GD_ThongKe", 800, 684);
 	}
-	private void addUserLogin() {
-		TaiKhoan tk = App.tk;
-		maNV.setText(String.valueOf(tk.getNhanVien().getIdNhanVien()));
-		tenNV.setText(String.valueOf(tk.getNhanVien().getTenNhanVien()));
-	}
+//	private void addUserLogin() {
+//		TaiKhoan tk = App.tk;
+//		maNV.setText(String.valueOf(tk.getNhanVien().getIdNhanVien()));
+//		tenNV.setText(String.valueOf(tk.getNhanVien().getTenNhanVien()));
+//	}
 }

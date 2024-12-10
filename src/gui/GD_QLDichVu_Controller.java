@@ -1,21 +1,27 @@
 package gui;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 import dao.DichVu_DAO;
 import dao.KhuyenMai_DAO;
 import entity.DichVu;
+import entity.HoaDon;
 import entity.KhuyenMai;
+import entity.TaiKhoan;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -23,6 +29,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import main.App;
 
 public class GD_QLDichVu_Controller implements Initializable{
 	@FXML
@@ -71,7 +78,7 @@ public class GD_QLDichVu_Controller implements Initializable{
     private Label maNV;
 
     @FXML
-    private TableView tableDichVu;
+    private TableView<DichVu> tableDichVu;
 
     @FXML
     private Label tenNV;
@@ -86,68 +93,63 @@ public class GD_QLDichVu_Controller implements Initializable{
     private TextField txtTenDichVu;
     
     @FXML
-    void chonUD(MouseEvent event) {
-
+    void moGiaoDienDichVu(MouseEvent event) throws IOException {
+    	App.setRoot("GD_QLDichVu");
     }
 
     @FXML
-    void moGiaoDienDichVu(MouseEvent event) {
-
+    void moGiaoDienHoaDon(MouseEvent event) throws IOException {
+    	App.setRoot("GD_QLHoaDon");
     }
 
     @FXML
-    void moGiaoDienHoaDon(MouseEvent event) {
-
+    void moGiaoDienKhachHang(MouseEvent event) throws IOException {
+    	App.setRoot("GD_QLKhachHang");
     }
 
     @FXML
-    void moGiaoDienKhachHang(MouseEvent event) {
-
+    void moGiaoDienPhong(MouseEvent event) throws IOException {
+    	App.setRoot("GD_QLPhong");
     }
 
     @FXML
-    void moGiaoDienPhong(MouseEvent event) {
-
+    void moGiaoDienQLNV(MouseEvent event) throws IOException {
+    	App.setRoot("GD_QLNhanVien");
     }
 
     @FXML
-    void moGiaoDienQLNV(MouseEvent event) {
-
+    void moGiaoDienQuanLy(MouseEvent event) throws IOException {
+    	App.setRoot("GD_QLPhong");
     }
 
     @FXML
-    void moGiaoDienQuanLy(MouseEvent event) {
-
+    void moGiaoDienTaiKhoan(MouseEvent event) throws IOException {
+    	App.setRoot("GD_QLTaiKhoan");
     }
 
     @FXML
-    void moGiaoDienTaiKhoan(MouseEvent event) {
-
+    void moGiaoDienThongKe(MouseEvent event) throws IOException {
+    	App.setRoot("GD_ThongKeDoanhThu");
     }
 
     @FXML
-    void moGiaoDienThongKe(MouseEvent event) {
-
+    void moGiaoDienThuePhong(MouseEvent event) throws IOException {
+    	App.setRoot("GD_SoDoPhong");
     }
 
     @FXML
-    void moGiaoDienThuePhong(MouseEvent event) {
-
+    void moGiaoDienTimKiem(MouseEvent event) throws IOException {
+    	App.setRoot("GD_TKPhong");
     }
 
     @FXML
-    void moGiaoDienTimKiem(MouseEvent event) {
-
+    void moGiaoDienTimKiemUD(MouseEvent event) throws IOException {
+    	App.setRoot("GD_TKDichVu");
     }
 
     @FXML
-    void moGiaoDienTimKiemUD(MouseEvent event) {
-
-    }
-
-    @FXML
-    void moGiaoDienUuDai(MouseEvent event) {
-
+    void moGiaoDienUuDai(MouseEvent event) throws IOException {
+    	App.setRoot("GD_QLUuDai");
     }
 
     @FXML
@@ -358,17 +360,107 @@ public class GD_QLDichVu_Controller implements Initializable{
     }
     @FXML
     void xoaKM(MouseEvent event) {
-
+    	DichVu selectedDichVu = tableDichVu.getSelectionModel().getSelectedItem();
+    	if (selectedDichVu == null) {
+            Alert alert = new Alert(AlertType.WARNING);
+            alert.setTitle("Cảnh báo");
+            alert.setHeaderText(null);
+            alert.setContentText("Vui lòng chọn dịch vụ cần xóa!");
+            alert.showAndWait();
+            return;
+    	}
+        Alert confirmAlert = new Alert(AlertType.CONFIRMATION);
+        confirmAlert.setTitle("Xác nhận xóa");
+        confirmAlert.setHeaderText(null);
+        confirmAlert.setContentText("Bạn có chắc chắn muốn xóa dịch vụ " + selectedDichVu.getTenSanPham() + "?");
+        Optional<ButtonType> result = confirmAlert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            try {
+                boolean deleted = new DichVu_DAO().xoaDichVu(selectedDichVu.getIdDichVu());
+                if (deleted) {
+                    Alert successAlert = new Alert(AlertType.INFORMATION);
+                    successAlert.setTitle("Thành công");
+                    successAlert.setHeaderText(null);
+                    successAlert.setContentText("Đã xóa dịch vụ thành công!");
+                    successAlert.showAndWait();
+                    
+                    // Cập nhật lại bảng
+                    loadTableData();
+                    clearFields();
+                } else {
+                    Alert errorAlert = new Alert(AlertType.ERROR);
+                    errorAlert.setTitle("Lỗi");
+                    errorAlert.setHeaderText(null);
+                    errorAlert.setContentText("Không thể xóa dịch vụ. Vui lòng thử lại!");
+                    errorAlert.showAndWait();
+                }
+            } catch (Exception e) {
+                Alert errorAlert = new Alert(AlertType.ERROR);
+                errorAlert.setTitle("Lỗi");
+                errorAlert.setHeaderText(null);
+                errorAlert.setContentText("Đã xảy ra lỗi trong quá trình xóa phòng!");
+                errorAlert.showAndWait();
+                e.printStackTrace();
+            }
+        }
     }
 
     @FXML
     void xoaTrang(MouseEvent event) {
-
+		lbIDDV.setText("");
+		txtTenDichVu.setText("");
+		txtTenDichVu.requestFocus();
+		txtSoLuong.setText("");
+		txtDonGia.setText("");
     }
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		generateMaDV();
+		setTable();
+		addUserLogin();
+		tableDichVu.setOnMouseClicked(event -> {
+			DichVu selectedDichVu = tableDichVu.getSelectionModel().getSelectedItem();
+			if (selectedDichVu != null) {
+				lbIDDV.setText(selectedDichVu.getIdDichVu());
+				txtTenDichVu.setText(selectedDichVu.getTenSanPham());
+				txtSoLuong.setText(String.valueOf(selectedDichVu.getSoLuong()));
+				txtDonGia.setText(String.valueOf(selectedDichVu.getDonGia()));
+			}
+		});
 		
+	}
+	
+	
+	private void setTable() {
+		clSTT.setCellFactory(col -> {
+			return new TableCell<DichVu, String>() {
+                @Override
+                protected void updateItem(String item, boolean empty) {
+                    super.updateItem(item, empty);
+                    if (empty) {
+                        setText(null);
+                    } else {
+                        // Số thứ tự = index + 1
+                        setText(String.valueOf(getIndex() + 1));
+                    }
+                }
+			};
+		});
+        clSTT.setStyle("-fx-alignment: CENTER;");
+        clSTT.setPrefWidth(70);
+        clSTT.setResizable(false);
+        clMaDichVu.setCellValueFactory(new PropertyValueFactory<>("idDichVu"));
+        clTenDV.setCellValueFactory(new PropertyValueFactory<>("tenSanPham"));
+        clSL.setCellValueFactory(new PropertyValueFactory<>("soLuong"));
+        clDonGia.setCellValueFactory(new PropertyValueFactory<>("donGia"));
+        
+        ObservableList<DichVu> observableList = FXCollections.observableArrayList(new DichVu_DAO().getAllDichVu());
+        tableDichVu.setItems(observableList);
+	}
+	
+	private void addUserLogin() {
+		TaiKhoan tk = App.tk;
+		maNV.setText(String.valueOf(tk.getNhanVien().getIdNhanVien()));
+		tenNV.setText(String.valueOf(tk.getNhanVien().getTenNhanVien()));
 	}
 }

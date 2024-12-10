@@ -12,7 +12,6 @@ import java.util.ResourceBundle;
 import dao.KhachHang_DAO;
 import dao.PhieuThuePhong_DAO;
 import dao.Phong_DAO;
-import dao.TaiKhoan_DAO;
 import entity.KhachHang;
 import entity.PhieuThuePhong;
 import entity.Phong;
@@ -22,7 +21,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Cursor;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
@@ -32,7 +30,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
@@ -40,6 +37,10 @@ import javafx.scene.layout.VBox;
 import main.App;
 
 public class GD_HuyPhong_Controller implements Initializable{
+    @FXML
+    private Label maNV;
+    @FXML
+    private Label tenNV;
 	@FXML
     private ImageView avt;
 
@@ -81,10 +82,7 @@ public class GD_HuyPhong_Controller implements Initializable{
 
     @FXML
     private GridPane scrollPane_GDHuy;
-    @FXML
-    private Label maNV;
-    @FXML
-    private Label tenNV;
+
     @FXML
     private TextField txt_CCCD;
     
@@ -131,7 +129,8 @@ public class GD_HuyPhong_Controller implements Initializable{
 	        long diff2 = Math.abs(ChronoUnit.DAYS.between(currentDate, pt2.getThoiGianNhanPhong()));
 	        return Long.compare(diff1, diff2);
 	    });
-
+	    
+	    btnTim.setOnAction(event -> timPhong(txt_CCCD.getText().trim()));
 	    // Render danh sách phòng đã sắp xếp
 	    renderArrayPhong(allPhieuThue);
 	    addUserLogin();
@@ -366,7 +365,52 @@ public class GD_HuyPhong_Controller implements Initializable{
         return roomItem;
     }
 	
+    private void timPhong(String cccd) {
+        // Kiểm tra xem người dùng đã nhập CCCD chưa
+        if (cccd.isEmpty()) {
+            new Alert(Alert.AlertType.WARNING, "Vui lòng nhập CCCD.").showAndWait();
+            return;
+        }
 
+        // Tìm kiếm khách hàng theo CCCD
+        KhachHang_DAO khachHangDAO = new KhachHang_DAO();
+        KhachHang khachHang = khachHangDAO.getKhachHangTheoCCCD(cccd);
+
+        // Kiểm tra xem khách hàng có tồn tại không
+        if (khachHang == null) {
+            new Alert(Alert.AlertType.WARNING, "Không tìm thấy khách hàng với CCCD này.").showAndWait();
+            return;
+        }
+
+        // Lấy danh sách phiếu thuê của khách hàng
+        PhieuThuePhong_DAO phieuThueDAO = new PhieuThuePhong_DAO();
+        ArrayList<PhieuThuePhong> phieuThueList = phieuThueDAO.layPhieuThueTheoMaKH(khachHang.getIdKhachHang());
+
+        // Lọc danh sách phiếu thuê còn hiệu lực
+        ArrayList<PhieuThuePhong> filteredPhieuThue = new ArrayList<>();
+        for (PhieuThuePhong pt : phieuThueList) {
+            if (pt.getHieuLuc()) {
+                filteredPhieuThue.add(pt);
+            }
+        }
+
+        // Kiểm tra xem khách hàng có phiếu thuê phòng nào không
+        if (filteredPhieuThue.isEmpty()) {
+            new Alert(Alert.AlertType.WARNING, "Khách hàng này chưa đặt phòng.").showAndWait();
+            return;
+        }
+
+        // Sắp xếp danh sách phiếu thuê theo ngày gần nhất
+        LocalDate currentDate = LocalDate.now();
+        filteredPhieuThue.sort((pt1, pt2) -> {
+            long diff1 = ChronoUnit.DAYS.between(currentDate, pt1.getThoiGianNhanPhong());
+            long diff2 = ChronoUnit.DAYS.between(currentDate, pt2.getThoiGianNhanPhong());
+            return Long.compare(diff1, diff2);
+        });
+
+        // Render danh sách phòng đã lọc
+        renderArrayPhong(filteredPhieuThue);
+    }
 	
 
     @FXML
@@ -407,6 +451,7 @@ public class GD_HuyPhong_Controller implements Initializable{
 	private void moGDDatPhong() throws IOException {
 		App.openModal("GD_DatPhong", 800, 684);
 	}
+	
 	private void addUserLogin() {
 		TaiKhoan tk = App.tk;
 		maNV.setText(String.valueOf(tk.getNhanVien().getIdNhanVien()));
