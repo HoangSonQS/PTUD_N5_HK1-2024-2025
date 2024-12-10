@@ -1,3 +1,4 @@
+
 package gui;
 
 import java.io.IOException;
@@ -508,3 +509,4 @@ public class GD_QLDichVu_Controller implements Initializable{
 		tenNV.setText(String.valueOf(tk.getNhanVien().getTenNhanVien()));
 	}
 }
+
