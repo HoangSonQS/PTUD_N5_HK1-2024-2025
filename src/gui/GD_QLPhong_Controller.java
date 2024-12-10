@@ -10,8 +10,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import dao.Phong_DAO;
+import dao.TaiKhoan_DAO;
 import entity.LoaiPhong;
 import entity.Phong;
+import entity.TaiKhoan;
 import entity.TrangThaiPhong;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
@@ -23,6 +25,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -52,7 +55,10 @@ public class GD_QLPhong_Controller implements Initializable{
 
 	    @FXML
 	    private Button btnXoaTrang;
-
+	    @FXML
+	    private Label maNV;
+	    @FXML
+	    private Label tenNV;
 	    @FXML
 	    private ComboBox<String> cbb;
 	    
@@ -139,6 +145,7 @@ public class GD_QLPhong_Controller implements Initializable{
 	        });
 	        
 	        loadTableData();
+	        addUserLogin();
 	    }
 	    private void loadTableData() {
 	        try {
@@ -421,4 +428,10 @@ public class GD_QLPhong_Controller implements Initializable{
 	        }
 			return true;
 	    }  
+	    
+		private void addUserLogin() {
+			TaiKhoan tk = App.tk;
+			maNV.setText(String.valueOf(tk.getNhanVien().getIdNhanVien()));
+			tenNV.setText(String.valueOf(tk.getNhanVien().getTenNhanVien()));
+		}
 }

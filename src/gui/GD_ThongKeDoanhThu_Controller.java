@@ -12,6 +12,8 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 import dao.HoaDon_DAO;
+import dao.TaiKhoan_DAO;
+import entity.TaiKhoan;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -46,6 +48,10 @@ public class GD_ThongKeDoanhThu_Controller implements Initializable{
     private Label chon;
     @FXML
     private Label chon1;
+    @FXML
+    private Label maNV;
+    @FXML
+    private Label tenNV;
     @FXML
     private Label chon2;
     @FXML
@@ -88,6 +94,7 @@ public class GD_ThongKeDoanhThu_Controller implements Initializable{
 		lb_DTSS.setVisible(false);
 		lb_Tienss.setVisible(false);
 		createCBB();
+		addUserLogin();
 //		thongKeTheoNgay(LocalDate.of(2024,10,12));
 //		thongKeTheoThang(10,2024);
 //		thongKeTheoNam(2023);
@@ -408,5 +415,10 @@ public class GD_ThongKeDoanhThu_Controller implements Initializable{
 			lb_SoHoaDon.setText("0");
 			lb_Tien.setText("0 VND");
 			lb_Tienss.setText("0 VND");
+		}
+		private void addUserLogin() {
+			TaiKhoan tk = App.tk;
+			maNV.setText(String.valueOf(tk.getNhanVien().getIdNhanVien()));
+			tenNV.setText(String.valueOf(tk.getNhanVien().getTenNhanVien()));
 		}
 }

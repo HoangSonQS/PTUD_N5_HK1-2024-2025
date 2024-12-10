@@ -14,8 +14,10 @@ import javax.swing.JLabel;
 
 import dao.PhieuThuePhong_DAO;
 import dao.Phong_DAO;
+import dao.TaiKhoan_DAO;
 import entity.PhieuThuePhong;
 import entity.Phong;
+import entity.TaiKhoan;
 import entity.TrangThaiPhong;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -48,7 +50,10 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 
 	@FXML
 	private ImageView avt;
-
+    @FXML
+    private Label maNV;
+    @FXML
+    private Label tenNV;
 	@FXML
 	private ComboBox<String> cbb;
 	
@@ -137,6 +142,7 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 		loadTrangThaiPhong_CBB();
 		loadTrangThaiPhong();
 		LoadSoPhongTheoLoai();
+		addUserLogin();
 	}
 	
 	public void loadLoaiPhong() {
@@ -543,5 +549,10 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 	private void moGDDatPhong() throws IOException {
 		App.openModal("GD_DatPhong", 800, 684);
 	}
-
+	
+	private void addUserLogin() {
+		TaiKhoan tk = App.tk;
+		maNV.setText(String.valueOf(tk.getNhanVien().getIdNhanVien()));
+		tenNV.setText(String.valueOf(tk.getNhanVien().getTenNhanVien()));
+	}
 }

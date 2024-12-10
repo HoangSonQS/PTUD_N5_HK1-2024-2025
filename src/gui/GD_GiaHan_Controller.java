@@ -4,16 +4,18 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Iterator;
+
 import java.util.ResourceBundle;
 
 import dao.KhachHang_DAO;
 import dao.PhieuThuePhong_DAO;
 import dao.Phong_DAO;
+
 import entity.KhachHang;
 import entity.NhanVien;
 import entity.PhieuThuePhong;
 import entity.Phong;
+import entity.TaiKhoan;
 import entity.TrangThaiPhong;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -39,7 +41,6 @@ import main.App;
 public class GD_GiaHan_Controller implements Initializable{
 	@FXML
     private GridPane GridPane_GiaHan;
-
     @FXML
     private ImageView avt;
 
@@ -118,11 +119,13 @@ public class GD_GiaHan_Controller implements Initializable{
 		ObservableList<String> list_LoaiPhong = FXCollections.observableArrayList("Tất cả", "Phòng đơn", "Phòng đôi","Phòng gia đình");
 		cbb_LoaiPhong.setItems(list_LoaiPhong);
 		cbb_LoaiPhong.setValue("Tất cả");
+		addUserLogin();
+
 	
 		ArrayList<Phong> dsPChon = new Phong_DAO().getPhongTheoTrangThaiDanhSach(1);
 		dsPChon.addAll(new Phong_DAO().getPhongTheoTrangThaiDanhSach(4));
 		renderArrayPhong(dsPChon);
-		
+
 		loadLoaiPhong();
 		suKienNutTK();
 		suKienNutKiemTra();
@@ -500,8 +503,8 @@ public class GD_GiaHan_Controller implements Initializable{
 	        }
 	    } else if (selectedItem.equals("Tất cả")) {
 	        dsP_gop = new Phong_DAO().getPhongTheoTrangThaiDanhSach(1);// Lấy tất cả các phòng đang ở và sắp check out
-	        dsP_gop.addAll(new Phong_DAO().getPhongTheoTrangThaiDanhSach(4));
-	    }
+	        dsP_gop.addAll(new Phong_DAO().getPhongTheoTrangThaiDanhSach(4)); 
+	}
 	    return dsP_gop;
 	}
     @FXML
@@ -546,5 +549,10 @@ public class GD_GiaHan_Controller implements Initializable{
 	@FXML
 	private void moGDTKe() throws IOException {
 //		App.openModal("GD_ThongKe", 800, 684);
+	}
+	private void addUserLogin() {
+		TaiKhoan tk = App.tk;
+		maNV.setText(String.valueOf(tk.getNhanVien().getIdNhanVien()));
+		tenNV.setText(String.valueOf(tk.getNhanVien().getTenNhanVien()));
 	}
 }

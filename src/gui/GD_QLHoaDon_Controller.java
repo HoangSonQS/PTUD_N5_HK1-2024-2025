@@ -13,8 +13,10 @@ import dao.HoaDon_DAO;
 import dao.KhachHang_DAO;
 import dao.KhuyenMai_DAO;
 import dao.NhanVien_DAO;
+import dao.TaiKhoan_DAO;
 import entity.HoaDon;
 import entity.NhanVien;
+import entity.TaiKhoan;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -94,7 +96,10 @@ public class GD_QLHoaDon_Controller implements Initializable{
 
     @FXML
     private TableView<HoaDon> tableNhanVien;
-
+    @FXML
+    private Label maNV;
+    @FXML
+    private Label tenNV;
     @FXML
     void moGiaoDienDichVu(MouseEvent event) throws IOException {
     	App.setRoot("GD_QLDichVu");
@@ -227,6 +232,9 @@ public class GD_QLHoaDon_Controller implements Initializable{
                 lb_TgCheckIn.setText(tgCK.format(formatter));
             }
         });
+        
+        
+        addUserLogin();
 	}
     private void loadTableData() {
         try {
@@ -279,5 +287,9 @@ public class GD_QLHoaDon_Controller implements Initializable{
     	lb_tgTao.setText("");
     	tableNhanVien.getSelectionModel().clearSelection();
     }
-     
+	private void addUserLogin() {
+		TaiKhoan tk = App.tk;
+		maNV.setText(String.valueOf(tk.getNhanVien().getIdNhanVien()));
+		tenNV.setText(String.valueOf(tk.getNhanVien().getTenNhanVien()));
+	}
 }

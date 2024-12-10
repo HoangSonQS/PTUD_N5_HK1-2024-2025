@@ -9,8 +9,10 @@ import java.util.ResourceBundle;
 
 import dao.DichVu_DAO;
 import dao.KhachHang_DAO;
+import dao.TaiKhoan_DAO;
 import entity.DichVu;
 import entity.KhachHang;
+import entity.TaiKhoan;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -29,7 +31,10 @@ import javafx.scene.input.MouseEvent;
 import main.App;
 
 public class GD_TKDichVu_Controller implements Initializable{
-
+    @FXML
+    private Label maNV;
+    @FXML
+    private Label tenNV;
     @FXML
     private ImageView avt;
 
@@ -241,6 +246,8 @@ public class GD_TKDichVu_Controller implements Initializable{
         		lb_giaDV.setText(String.valueOf(selectedDichVu.getDonGia()));
         	}
         });
+        
+        addUserLogin();
 	}
 	private void loadTableData() {
         try {
@@ -254,5 +261,9 @@ public class GD_TKDichVu_Controller implements Initializable{
             e.printStackTrace();
         }
     }
-
+	private void addUserLogin() {
+		TaiKhoan tk = App.tk;
+		maNV.setText(String.valueOf(tk.getNhanVien().getIdNhanVien()));
+		tenNV.setText(String.valueOf(tk.getNhanVien().getTenNhanVien()));
+	}
 }

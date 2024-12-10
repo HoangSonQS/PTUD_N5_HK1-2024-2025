@@ -36,8 +36,11 @@ import main.App;
 public class GD_TKTaiKhoan_Controller implements Initializable{
 	@FXML
 	private AnchorPane mainContainer; // Hoặc BorderPane nếu container chính là BorderPane
-
-
+	
+    @FXML
+    private Label maNV;
+    @FXML
+    private Label tenNV;
     @FXML
     private ImageView avt;
 
@@ -248,6 +251,8 @@ public class GD_TKTaiKhoan_Controller implements Initializable{
 
         	}
         });
+        
+        addUserLogin();
 	}
     
 
@@ -264,4 +269,9 @@ public class GD_TKTaiKhoan_Controller implements Initializable{
             e.printStackTrace();
         }
     }
+	private void addUserLogin() {
+		TaiKhoan tk = App.tk;
+		maNV.setText(String.valueOf(tk.getNhanVien().getIdNhanVien()));
+		tenNV.setText(String.valueOf(tk.getNhanVien().getTenNhanVien()));
+	}
 }
