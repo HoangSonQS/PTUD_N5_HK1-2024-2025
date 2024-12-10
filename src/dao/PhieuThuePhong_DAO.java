@@ -619,4 +619,42 @@ public class PhieuThuePhong_DAO {
 		}
 		return dem;
 	}
+	public LocalDateTime getThoiGianNhanPhong(String maPhieuThue) {
+		Connection conN = ConnectDB.getInstance().getConnection();
+		Statement stm = null;
+		LocalDateTime time = null;
+		try {
+			stm = conN.createStatement();
+			String sql = String.format("SELECT ThoiGianNhanPhong FROM PhieuThuePhong "
+					+ "WHERE IDPhieuThue = '%s'",
+					maPhieuThue);
+			System.out.println(sql);
+			ResultSet rs = stm.executeQuery(sql);
+			while (rs.next()) {
+				time = rs.getTimestamp("ThoiGianNhanPhong").toLocalDateTime();
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return time;
+	}
+	public LocalDateTime getThoiGianTraPhong(String maPhieuThue) {
+		Connection conN = ConnectDB.getInstance().getConnection();
+		Statement stm = null;
+		LocalDateTime time = null;
+		try {
+			stm = conN.createStatement();
+			String sql = String.format("SELECT ThoiHanGiaoPhong FROM PhieuThuePhong "
+					+ "WHERE IDPhieuThue = '%s'",
+					maPhieuThue);
+			System.out.println(sql);
+			ResultSet rs = stm.executeQuery(sql);
+			while (rs.next()) {
+				time = rs.getTimestamp("ThoiHanGiaoPhong").toLocalDateTime();
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return time;
+	}
 }
