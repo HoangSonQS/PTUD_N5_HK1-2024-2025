@@ -30,6 +30,15 @@
                   <Font size="30.0" />
                </font>
             </Text>
+<<<<<<< HEAD
+            <TableView fx:id="tableDichVu" layoutX="320.0" layoutY="98.0" onMouseClicked="#chonUD" prefHeight="670.0" prefWidth="974.0">
+               <columns>
+                  <TableColumn fx:id="clSTT" prefWidth="109.5999755859375" text="STT" />
+                  <TableColumn fx:id="clMaDichVu" prefWidth="227.20001220703125" text="Mã dịch vụ" />
+                  <TableColumn fx:id="clTenDV" prefWidth="255.20001220703125" text="Tên dịch vụ" />
+                  <TableColumn fx:id="clSL" minWidth="0.0" prefWidth="188.800048828125" text="Số lượng" />
+                  <TableColumn fx:id="clDonGia" maxWidth="215.2000732421875" minWidth="0.0" prefWidth="196.0" text="Đơn giá" />
+=======
             <TableView fx:id="tableDichVu" layoutX="320.0" layoutY="98.0" prefHeight="670.0" prefWidth="974.0">
                <columns>
                   <TableColumn fx:id="clSTT" prefWidth="100.0" text="STT" />
@@ -37,6 +46,7 @@
                   <TableColumn fx:id="clTenDV" prefWidth="260.0" text="Tên dịch vụ" />
                   <TableColumn fx:id="clSL" minWidth="0.0" prefWidth="188.800048828125" text="Số lượng" />
                   <TableColumn fx:id="clDonGia" maxWidth="215.2000732421875" minWidth="0.0" prefWidth="190.0" text="Đơn giá" />
+>>>>>>> beda7bdf5697f2a7656defc13f24aeaa696a4dca
                </columns>
             </TableView>
             <Label layoutX="10.0" layoutY="108.0" text="Chi tiết thông tin dịch vụ:">
@@ -74,7 +84,7 @@
                   <Font size="16.0" />
                </font>
             </Button>
-            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="117.0" layoutY="313.0" onMouseClicked="#xoaKM" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="117.0" layoutY="386.0" onMouseClicked="#xoaKM" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../data/pic/recycle-bin.png" />
                </image>
@@ -93,12 +103,12 @@
                <font>
                   <Font size="14.0" />
                </font></TextField>
-            <Button fx:id="btnTimKiem" contentDisplay="RIGHT" layoutX="114.0" layoutY="446.0" mnemonicParsing="false" onMouseClicked="#moGiaoDienTimKiemUD" prefHeight="40.0" prefWidth="198.0" style="-fx-background-color: #2972d3;" text=" Tìm kiếm dịch vụ" textAlignment="RIGHT" textFill="WHITE" textOverrun="CLIP">
+            <Button fx:id="btnTimKiem" contentDisplay="RIGHT" layoutX="114.0" layoutY="446.0" mnemonicParsing="false" onMouseClicked="#moGiaoDienTimKiemDV" prefHeight="40.0" prefWidth="198.0" style="-fx-background-color: #2972d3;" text=" Tìm kiếm dịch vụ" textAlignment="RIGHT" textFill="WHITE" textOverrun="CLIP">
                <font>
                   <Font size="16.0" />
                </font>
             </Button>
-            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="120.0" layoutY="387.0" onMouseClicked="#moGiaoDienTimKiem" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="117.0" layoutY="451.0" onMouseClicked="#moGiaoDienTimKiem" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../data/pic/search3png.png" />
                </image>
@@ -236,7 +246,11 @@
                   <Font name="System Bold Italic" size="20.0" />
                </font>
             </Label>
+<<<<<<< HEAD
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="250.0" layoutY="365.0" stroke="WHITE" strokeType="INSIDE" width="10.0" />
+=======
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="250.0" layoutY="285.0" stroke="WHITE" strokeType="INSIDE" width="10.0" />
+>>>>>>> beda7bdf5697f2a7656defc13f24aeaa696a4dca
             <ImageView fx:id="icon_TimKiem" fitHeight="40.0" fitWidth="40.0" layoutX="15.0" layoutY="410.0" onMouseClicked="#moGiaoDienTimKiem" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../data/pic/search.png" />

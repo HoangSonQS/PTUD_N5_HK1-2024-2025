@@ -1,5 +1,6 @@
 package gui;
 
+
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
@@ -11,7 +12,7 @@ import java.util.logging.Logger;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-
+import javafx.scene.control.TextField;
 import dao.PhieuThuePhong_DAO;
 import dao.Phong_DAO;
 import dao.TaiKhoan_DAO;
@@ -62,13 +63,15 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 
 	@FXML
 	private ImageView icon_QuanLy;
-
+	@FXML
+    private TextField txt_MaPhongCanTim;
 	@FXML
 	private ImageView icon_ThongKe;
 
 	@FXML
 	private ImageView icon_TimKiem;
-
+	@FXML
+    private Button btn_TimKiem;
 	@FXML
 	private Label l;
 
@@ -142,7 +145,19 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 		loadTrangThaiPhong_CBB();
 		loadTrangThaiPhong();
 		LoadSoPhongTheoLoai();
-		addUserLogin();
+		suKienNutTim();
+//		addUserLogin();
+	}
+	
+	public void suKienNutTim() {
+		btn_TimKiem.setOnAction((event ->{
+			String maPhong = txt_MaPhongCanTim.getText();
+			ArrayList<Phong>dsP = new ArrayList<Phong>();
+			Phong p = dsp.getPhongTheoMa(maPhong);
+			dsP.add(p);
+			gridPane.getChildren().clear();
+			renderArrayPhong(dsP);
+		}));
 	}
 	
 	public void loadLoaiPhong() {
@@ -234,18 +249,10 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 	
 	public void loadTrangThaiPhong_CBB() {
 		String selectedItemTT = (String) cbb_TrangThai.getSelectionModel().getSelectedItem();	    
-	    if (selectedItemTT.equals("Phòng trống")) {
-	    	
-	    	renderArrayPhong(LocPhong2TieuChi(2));
-	    } else if (selectedItemTT.equals("Đang ở")) {
-	    	
-	    	renderArrayPhong(LocPhong2TieuChi(1));
-	    } else if (selectedItemTT.equals("Sắp Check-in")) {
-	    	
-	    	renderArrayPhong(LocPhong2TieuChi(3));
-	    } else if (selectedItemTT.equals("Sắp Check-out")) {
-	    	
-	    	renderArrayPhong(LocPhong2TieuChi(4));
+	    if (selectedItemTT.equals("View biển")) {
+	    	renderArrayPhong(LocPhong2TieuChi2("View biển"));
+	    } else if (selectedItemTT.equals("View thành phố")) {
+	    	renderArrayPhong(LocPhong2TieuChi2("View thành phố"));
 	    }else if(selectedItemTT.equals("Tất cả")) {
 	    	gridPane.getChildren().clear();
 			ArrayList<Phong> dsPKiemTra =  kiemTraLoaiPhong();
@@ -253,6 +260,21 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 	    }
 	}
 	
+	private ArrayList<Phong> LocPhong2TieuChi2(String a) {
+		gridPane.getChildren().clear();
+		ArrayList<Phong> dsPKiemTra =  kiemTraLoaiPhong();
+		ArrayList<Phong> dsKiemTraTT = new Phong_DAO().getPhongTheoTieuChi(a);
+		ArrayList<Phong> dsHoanCHinh = new ArrayList<Phong>();
+		for (Phong phongTT : dsPKiemTra) {
+		    // Kiểm tra nếu dsPKiemTra chứa phần tử này
+		    if (dsKiemTraTT.contains(phongTT)) {
+		        // Thêm phần tử vào dsHoanCHinh
+		        dsHoanCHinh.add(phongTT);
+		    }
+		}
+		return dsHoanCHinh;
+	}
+
 	public void loadTrangThaiPhong() {
 		
 		btn_PhongTrong.setOnAction(event ->{

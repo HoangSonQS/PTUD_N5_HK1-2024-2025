@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="845.0" prefWidth="1554.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.GD_TKPhong_Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="845.0" prefWidth="1554.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.GD_TKPhong_Controller">
    <children>
       <Pane layoutY="70.0" prefHeight="775.0" prefWidth="260.0" style="-fx-background-color: #D9D9D9;">
          <children>
@@ -100,7 +100,7 @@
                   <Font size="24.0" />
                </font>
             </Label>
-            <Label layoutX="10.0" layoutY="188.0" text="Mã phòng">
+            <Label layoutX="10.0" layoutY="188.0" text="Mã phòng:">
                <font>
                   <Font size="20.0" />
                </font>
@@ -115,13 +115,13 @@
                   <Font size="16.0" />
                </font>
             </Button>
-            <TextField fx:id="txt_MaPhong" layoutX="669.0" layoutY="25.0" prefHeight="40.0" prefWidth="322.0" promptText="Nhập mã" />
+            <TextField fx:id="txt_MaPhong" layoutX="669.0" layoutY="25.0" prefHeight="40.0" prefWidth="322.0" promptText="Nhập mã phòng" />
             <ImageView fitHeight="40.0" fitWidth="20.0" layoutX="958.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../data/pic/search.png" />
                </image>
             </ImageView>
-            <Label layoutX="10.0" layoutY="238.0" text="Loại phòng">
+            <Label layoutX="10.0" layoutY="238.0" text="Loại phòng:">
                <font>
                   <Font size="20.0" />
                </font>
@@ -131,7 +131,7 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label layoutX="10.0" layoutY="288.0" text="Đơn giá">
+            <Label layoutX="10.0" layoutY="288.0" text="Đơn giá:">
                <font>
                   <Font size="20.0" />
                </font>
@@ -141,7 +141,7 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label layoutX="10.0" layoutY="338.0" text="Trạng thái">
+            <Label layoutX="10.0" layoutY="338.0" text="Trạng thái:">
                <font>
                   <Font size="20.0" />
                </font>
@@ -157,7 +157,7 @@
                   <Font size="16.0" />
                </font>
             </Button>
-            <Label layoutX="10.0" layoutY="388.0" text="Tiêu chí">
+            <Label layoutX="10.0" layoutY="388.0" text="Tiêu chí:">
                <font>
                   <Font size="20.0" />
                </font>

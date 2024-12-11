@@ -144,6 +144,10 @@ public class GD_TKDichVu_Controller implements Initializable{
     }
     @Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+    	lb_MaDV.setText("");
+    	lb_tenDV.setText("");
+    	lb_soLuong.setText("");
+    	lb_giaDV.setText("");
 		ObservableList<String> list = FXCollections.observableArrayList("Dịch vụ", "Hoá đơn", "Phòng", "Nhân viên", "Khách hàng", 
 				"Tài khoản", "Ưu đãi");
 		cbbGiaoDien.setItems(list);

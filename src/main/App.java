@@ -2,12 +2,16 @@ package main;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Objects;
 
 import dao.PhieuThuePhong_DAO;
+import dao.Phong_DAO;
 import entity.PhieuThuePhong;
+import entity.Phong;
 import entity.TaiKhoan;
+import entity.TrangThaiPhong;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -29,7 +33,7 @@ public class App extends Application{
 		this.primaryStage = arg0;
 		checkPhong();
 		openDangNhapWindow();
-
+		checkTrangThai();
 	}
 
 	@Override
@@ -133,4 +137,23 @@ public class App extends Application{
 	}
 	
 	
+	private void checkTrangThai() {
+		ArrayList<PhieuThuePhong> dspt = new PhieuThuePhong_DAO().layPhieuThueTheoHieuLuc(true);
+		System.out.println(dspt);
+		LocalDateTime now = LocalDateTime.now();
+		for (PhieuThuePhong pt : dspt) {
+			LocalDateTime tgnp = new PhieuThuePhong_DAO().getThoiGianNhanPhong(pt.getIdPhieuThue());
+			LocalDateTime tggp = new PhieuThuePhong_DAO().getThoiGianTraPhong(pt.getIdPhieuThue());
+			if (now.isBefore(tgnp) && now.isAfter(tgnp.minusDays(1))) {
+				Phong p = new Phong_DAO().getPhongTheoMa(pt.getPhong().getIdPhong());
+				p.setTrangThai(TrangThaiPhong.SAPCHECKIN);
+				new Phong_DAO().capNhatTrangThaiPhong(p);
+			}
+			if (now.isBefore(tggp) && now.isAfter(tggp.minusHours(2))) {
+				Phong p = new Phong_DAO().getPhongTheoMa(pt.getPhong().getIdPhong());
+				p.setTrangThai(TrangThaiPhong.SAPCHECKOUT);
+				new Phong_DAO().capNhatTrangThaiPhong(p);
+			}
+		}
+	}
 }
