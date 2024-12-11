@@ -138,22 +138,31 @@ public class App extends Application{
 	
 	
 	private void checkTrangThai() {
-		ArrayList<PhieuThuePhong> dspt = new PhieuThuePhong_DAO().layPhieuThueTheoHieuLuc(true);
-		System.out.println(dspt);
-		LocalDateTime now = LocalDateTime.now();
-		for (PhieuThuePhong pt : dspt) {
-			LocalDateTime tgnp = new PhieuThuePhong_DAO().getThoiGianNhanPhong(pt.getIdPhieuThue());
-			LocalDateTime tggp = new PhieuThuePhong_DAO().getThoiGianTraPhong(pt.getIdPhieuThue());
-			if (now.isBefore(tgnp) && now.isAfter(tgnp.minusDays(1))) {
-				Phong p = new Phong_DAO().getPhongTheoMa(pt.getPhong().getIdPhong());
-				p.setTrangThai(TrangThaiPhong.SAPCHECKIN);
-				new Phong_DAO().capNhatTrangThaiPhong(p);
-			}
-			if (now.isBefore(tggp) && now.isAfter(tggp.minusHours(2))) {
-				Phong p = new Phong_DAO().getPhongTheoMa(pt.getPhong().getIdPhong());
-				p.setTrangThai(TrangThaiPhong.SAPCHECKOUT);
-				new Phong_DAO().capNhatTrangThaiPhong(p);
-			}
-		}
+	    ArrayList<PhieuThuePhong> dspt = new PhieuThuePhong_DAO().layPhieuThueTheoHieuLuc(true);
+	    System.out.println(dspt);
+	    
+	    LocalDateTime now = LocalDateTime.now();
+	    
+	    for (PhieuThuePhong pt : dspt) {
+	        LocalDateTime tgnp = new PhieuThuePhong_DAO().getThoiGianNhanPhong(pt.getIdPhieuThue());
+	        LocalDateTime tggp = new PhieuThuePhong_DAO().getThoiGianTraPhong(pt.getIdPhieuThue());
+	        
+	        Phong p = new Phong_DAO().getPhongTheoMa(pt.getPhong().getIdPhong());
+	        
+	        // Kiểm tra trạng thái nhận phòng
+	        if (now.isAfter(tgnp.minusDays(1)) && now.isBefore(tgnp)) {
+	            p.setTrangThai(TrangThaiPhong.SAPCHECKIN);
+	            new Phong_DAO().capNhatTrangThaiPhong(p);
+	        } else if (now.isBefore(tgnp.minusDays(1))) {
+	            p.setTrangThai(TrangThaiPhong.TRONG);
+	            new Phong_DAO().capNhatTrangThaiPhong(p);
+	        }
+	        
+	        // Kiểm tra trạng thái trả phòng
+	        if (now.isAfter(tggp.minusHours(2)) && now.isBefore(tggp)) {
+	            p.setTrangThai(TrangThaiPhong.SAPCHECKOUT);
+	            new Phong_DAO().capNhatTrangThaiPhong(p);
+	        }
+	    }
 	}
 }
