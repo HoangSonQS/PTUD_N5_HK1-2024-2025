@@ -33,11 +33,11 @@ public class testDao {
 
 //		testKH();
 //		testHoaDon();
-		testPhong();
+//		testPhong();
 
 //		testKH();
 //
-//		testPhieuThue();
+		testPhieuThue();
 //		testKH();
 
 //		testHoaDon();
@@ -88,19 +88,18 @@ public class testDao {
 	}
 	public static void testPhieuThue() {
 		PhieuThuePhong_DAO dsPT = new PhieuThuePhong_DAO();
-		ArrayList<Map<Integer, Integer>> a = dsPT.thongKeTheoNam(2024);
-		System.out.println(a);
+//		ArrayList<Map<Integer, Integer>> a = dsPT.thongKeTheoNam(2024);
+//		System.out.println(a);
 		
-        LocalDate dateA = LocalDate.of(2023, 10, 26);
-        LocalDate dateB = LocalDate.of(2023, 11, 20);
+//        LocalDate dateA = LocalDate.of(2023, 10, 26);
+//        LocalDate dateB = LocalDate.of(2023, 11, 20);
 
         // Phương pháp 1 (dùng ChronoUnit): Hiệu quả và dễ đọc
-        double tong = dsPT.tongKHAtoB(LocalDate.of(2024, 10, 03), LocalDate.of(2024, 12, 03));
-        double daysDifference = (double) ChronoUnit.DAYS.between(dateA, dateB);
-        double tb =  tong / daysDifference;
-        System.out.println(tong + "         " + daysDifference + "                 " + tb);
-		
-		
+//        double tong = dsPT.tongKHAtoB(LocalDate.of(2024, 10, 03), LocalDate.of(2024, 12, 03));
+//        double daysDifference = (double) ChronoUnit.DAYS.between(dateA, dateB);
+//        double tb =  tong / daysDifference;
+//        System.out.println(tong + "         " + daysDifference + "                 " + tb);
+		System.out.println(dsPT.suaPhieuThue_ThemIDHoaDon("HD24101202", "PT241215014"));
 //		KhachHang_DAO dsKH = new KhachHang_DAO();
 //		KhachHang kh1 = dsKH.getKhachHangTheoMa("KH24100301");
 //		System.out.println(dsPT.layPhieuThueTheoMaPhong("T01P02"));

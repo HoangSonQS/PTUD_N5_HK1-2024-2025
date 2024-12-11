@@ -74,11 +74,11 @@ public class GD_Chinh_Controller implements Initializable{
     }
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		addUserLogin();
+//		addUserLogin();
 	}
-	private void addUserLogin() {
-		TaiKhoan tk = App.tk;
-		maNV.setText(String.valueOf(tk.getNhanVien().getIdNhanVien()));
-		tenNV.setText(String.valueOf(tk.getNhanVien().getTenNhanVien()));
-	}
+//	private void addUserLogin() {
+//		TaiKhoan tk = App.tk;
+//		maNV.setText(String.valueOf(tk.getNhanVien().getIdNhanVien()));
+//		tenNV.setText(String.valueOf(tk.getNhanVien().getTenNhanVien()));
+//	}
 }

@@ -86,6 +86,34 @@ public class PhieuThuePhong_DAO {
 		}
 		return n > 0;
 	}
+	
+	public boolean suaPhieuThue_ThemIDHoaDon(String id,String maphieuthue) {
+		int n = 0;
+		ConnectDB.getInstance();
+		Connection conN = ConnectDB.getInstance().getConnection();
+		PreparedStatement pstm = null;
+		String sql = "update PhieuThuePhong set IDHoaDon=? where IDPhieuThue=? ";
+		try {
+			
+			pstm = conN.prepareStatement(sql);
+			
+			pstm.setString(1, id);
+			pstm.setString(2, maphieuthue);
+			n = pstm.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				pstm.close();
+			} catch (Exception e2) {
+				// TODO: handle exception
+				e2.printStackTrace();
+			}
+		}
+		return n > 0;
+	}
+	
 	public boolean xoaPhieuThue(String idPhieuThue) {
 		ConnectDB.getInstance();
 		Connection conn = ConnectDB.getInstance().getConnection();
