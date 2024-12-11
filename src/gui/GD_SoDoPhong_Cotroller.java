@@ -525,7 +525,36 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 
 			});
 			btnRight.setOnAction((event) -> {
-//                moGDNhanPhongCho();
+				String maHD = HoaDon.autoIdHoaDon();
+				GD_ThanhToanController.maHD = maHD;
+				String maP = phong.getIdPhong();
+				ArrayList<PhieuThuePhong>dsPThue_Tam = new ArrayList<PhieuThuePhong>();
+				dsPThue_Tam = new PhieuThuePhong_DAO().layPhieuThueTheoMaPhong(maP);
+				ArrayList<PhieuThuePhong>dsPThue = new ArrayList<PhieuThuePhong>();
+				dsPThue = new PhieuThuePhong_DAO().getAllPhieuThue();
+				
+				ArrayList<PhieuThuePhong>dsPThueThanhToan = new ArrayList<PhieuThuePhong>();
+				String maKH = null;
+				for(PhieuThuePhong pt: dsPThue_Tam) {
+					if(pt.getHieuLuc()== true) {
+						maKH = pt.getKhachHang().getIdKhachHang();
+						for(PhieuThuePhong pt1 : dsPThue) {
+							if(pt1.getKhachHang().getIdKhachHang().equals(maKH) && pt1.getHieuLuc() == true) {
+								dsPThueThanhToan.add(pt1);
+							}
+						}
+					}
+				}
+				PhieuThuePhong_DAO dsPt = new PhieuThuePhong_DAO(); 
+				for(PhieuThuePhong pt : dsPThueThanhToan) {
+					dsPt.suaPhieuThue_ThemIDHoaDon(maHD, pt.getIdPhieuThue());
+				}
+				try {
+					moGDThanhToan();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			});
 //             {
 //                try {
