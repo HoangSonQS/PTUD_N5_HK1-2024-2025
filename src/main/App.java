@@ -1,5 +1,6 @@
 package main;
 
+import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -17,6 +18,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -29,7 +31,6 @@ public class App extends Application{
 	private Stage stage;
 	@Override
 	public void start(Stage arg0) throws Exception {
-		// TODO Auto-generated method stub
 		this.primaryStage = arg0;
 		checkPhong();
 		openDangNhapWindow();
@@ -124,36 +125,63 @@ public class App extends Application{
 	}
 	
 	
-	private void checkPhong() {
-		PhieuThuePhong_DAO ptdao = new PhieuThuePhong_DAO();
-		ArrayList<PhieuThuePhong> listAll = ptdao.getAllPhieuThue();
-		LocalDate now = LocalDate.now();
-		for (PhieuThuePhong pt : listAll) {
-			if (pt.getThoiHanGiaoPhong().isBefore(now)) {
-				pt.setHieuLuc(Boolean.FALSE);
-				ptdao.suaPhieuThue(pt);
-			}
-		}
-	}
-	
-	
 	private void checkTrangThai() {
-		ArrayList<PhieuThuePhong> dspt = new PhieuThuePhong_DAO().layPhieuThueTheoHieuLuc(true);
-		System.out.println(dspt);
-		LocalDateTime now = LocalDateTime.now();
-		for (PhieuThuePhong pt : dspt) {
-			LocalDateTime tgnp = new PhieuThuePhong_DAO().getThoiGianNhanPhong(pt.getIdPhieuThue());
-			LocalDateTime tggp = new PhieuThuePhong_DAO().getThoiGianTraPhong(pt.getIdPhieuThue());
-			if (now.isBefore(tgnp) && now.isAfter(tgnp.minusDays(1))) {
-				Phong p = new Phong_DAO().getPhongTheoMa(pt.getPhong().getIdPhong());
-				p.setTrangThai(TrangThaiPhong.SAPCHECKIN);
-				new Phong_DAO().capNhatTrangThaiPhong(p);
-			}
-			if (now.isBefore(tggp) && now.isAfter(tggp.minusHours(2))) {
-				Phong p = new Phong_DAO().getPhongTheoMa(pt.getPhong().getIdPhong());
-				p.setTrangThai(TrangThaiPhong.SAPCHECKOUT);
-				new Phong_DAO().capNhatTrangThaiPhong(p);
-			}
-		}
+	    ArrayList<PhieuThuePhong> dspt = new PhieuThuePhong_DAO().layPhieuThueTheoHieuLuc(true);
+	    LocalDateTime now = LocalDateTime.now();
+
+	    for (PhieuThuePhong pt : dspt) {
+	        LocalDateTime tgnp = new PhieuThuePhong_DAO().getThoiGianNhanPhong(pt.getIdPhieuThue());
+	        LocalDateTime tggp = new PhieuThuePhong_DAO().getThoiGianTraPhong(pt.getIdPhieuThue());
+
+	        Phong p = new Phong_DAO().getPhongTheoMa(pt.getPhong().getIdPhong());
+
+	        // Kiểm tra trạng thái sắp nhận phòng (SẮP CHECKIN)
+	        if (!now.isAfter(tgnp) && !now.isBefore(tgnp.minusHours(24))) {
+	            p.setTrangThai(TrangThaiPhong.SAPCHECKIN);
+	            new Phong_DAO().capNhatTrangThaiPhong(p);
+	        } 
+	        // Trạng thái trống nếu thời gian nhận phòng còn trên 24 giờ
+	        else if (now.isBefore(tgnp.minusHours(24))) {
+	            p.setTrangThai(TrangThaiPhong.TRONG);
+	            new Phong_DAO().capNhatTrangThaiPhong(p);
+	        }
+
+	        // Kiểm tra trạng thái đang thuê (DANGTHUE)
+	        if (now.isAfter(tgnp) && now.isBefore(tggp.minusHours(2))) {
+	            p.setTrangThai(TrangThaiPhong.DANGTHUE);
+	            new Phong_DAO().capNhatTrangThaiPhong(p);
+	        }
+
+	        // Kiểm tra trạng thái sắp trả phòng (SẮP CHECKOUT)
+	        if (!now.isAfter(tggp) && !now.isBefore(tggp.minusHours(2))) {
+	            p.setTrangThai(TrangThaiPhong.SAPCHECKOUT);
+	            new Phong_DAO().capNhatTrangThaiPhong(p);
+	        }
+
+	        // Kiểm tra trạng thái sau khi trả phòng (TRỐNG)
+	        if (now.isAfter(tggp)) {
+	            p.setTrangThai(TrangThaiPhong.TRONG);
+	            new Phong_DAO().capNhatTrangThaiPhong(p);
+	            pt.setHieuLuc(Boolean.FALSE);
+	            new PhieuThuePhong_DAO().suaPhieuThue(pt);
+	        }
+	    }
+	}
+
+
+
+	private void checkPhong() {
+	    PhieuThuePhong_DAO ptdao = new PhieuThuePhong_DAO();
+	    ArrayList<PhieuThuePhong> listAll = ptdao.getAllPhieuThue();
+	    LocalDateTime now = LocalDateTime.now();
+	    
+	    for (PhieuThuePhong pt : listAll) {
+	        LocalDateTime tggp = new PhieuThuePhong_DAO().getThoiGianTraPhong(pt.getIdPhieuThue());
+	        
+	        if (now.isAfter(tggp)) {
+	            pt.setHieuLuc(Boolean.FALSE);
+	            ptdao.suaPhieuThue(pt);
+	        }
+	    }
 	}
 }

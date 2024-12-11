@@ -398,7 +398,6 @@ public class PhieuThuePhong_DAO {
 					+ "GROUP BY CAST(ThoiGianNhanPhong AS DATE)",
 					dateA.format(DateTimeFormatter.ISO_DATE), 
 					dateB.format(DateTimeFormatter.ISO_DATE));
-			System.out.println(sql);
 			ResultSet rs = stm.executeQuery(sql);
 			while (rs.next()) {
 				int dem = 0;
@@ -406,7 +405,6 @@ public class PhieuThuePhong_DAO {
 				LocalDate ngayLap = rs.getDate("Ngay").toLocalDate();
 				dem += layPhieuThueTheoNgay(ngayLap);
 				map.put(ngayLap, dem);
-				System.out.println(map);
 				kq.add(map);
 			}
 		}catch (SQLException e) {
@@ -450,7 +448,6 @@ public class PhieuThuePhong_DAO {
 					+ "FROM PhieuThuePhong "
 					+ "WHERE YEAR(ThoiGianNhanPhong) = '%d' and IDHoaDon IS NOT NULL "
 					+ "GROUP BY MONTH(ThoiGianNhanPhong)", year);
-			System.out.println(sql);
 			ResultSet rs = stm.executeQuery(sql);
 			while (rs.next()) {
 				int dem = 0;
@@ -458,7 +455,6 @@ public class PhieuThuePhong_DAO {
 				int thang = rs.getInt("Month");
 				dem += layPhieuThueTheoThang(thang);
 				map.put(thang, dem);
-				System.out.println(map);
 				kq.add(map);
 			}
 		}catch (SQLException e) {
@@ -498,7 +494,7 @@ public class PhieuThuePhong_DAO {
 		try {
 			stm = conN.createStatement();
 			String sql = String.format("SELECT Year(ThoiGianNhanPhong) AS Year FROM PhieuThuePhong WHERE Year(ThoiGianNhanPhong) BETWEEN %d AND %d GROUP BY Year(ThoiGianNhanPhong)",year - 2, year + 2);
-			System.out.println(sql);
+			
 			ResultSet rs = stm.executeQuery(sql);
 			while (rs.next()) {
 				int dem = 0;
@@ -549,7 +545,7 @@ public class PhieuThuePhong_DAO {
 					+ "WHERE CAST(ThoiGianNhanPhong AS DATE) BETWEEN '%s' AND '%s' and IDHoaDon IS NOT NULL",
 					dateA.format(DateTimeFormatter.ISO_DATE), 
 					dateB.format(DateTimeFormatter.ISO_DATE));
-			System.out.println(sql);
+			
 			ResultSet rs = stm.executeQuery(sql);
 			while (rs.next()) {
 	            String idphong = rs.getString("IDPhong");
@@ -576,7 +572,7 @@ public class PhieuThuePhong_DAO {
 					+ "WHERE YEAR(ThoiGianNhanPhong) = %d AND MONTH(ThoiGianNhanPhong) = %d and IDHoaDon IS NOT NULL",
 					year, 
 					month);
-			System.out.println(sql);
+			
 			ResultSet rs = stm.executeQuery(sql);
 			while (rs.next()) {
 	            String idphong = rs.getString("IDPhong");
@@ -602,7 +598,7 @@ public class PhieuThuePhong_DAO {
 			String sql = String.format("SELECT IDPhong FROM PhieuThuePhong "
 					+ "WHERE YEAR(ThoiGianNhanPhong) = %d and IDHoaDon IS NOT NULL",
 					year);
-			System.out.println(sql);
+			
 			ResultSet rs = stm.executeQuery(sql);
 			while (rs.next()) {
 	            String idphong = rs.getString("IDPhong");
@@ -628,7 +624,7 @@ public class PhieuThuePhong_DAO {
 			String sql = String.format("SELECT ThoiGianNhanPhong FROM PhieuThuePhong "
 					+ "WHERE IDPhieuThue = '%s'",
 					maPhieuThue);
-			System.out.println(sql);
+			
 			ResultSet rs = stm.executeQuery(sql);
 			while (rs.next()) {
 				time = rs.getTimestamp("ThoiGianNhanPhong").toLocalDateTime();
@@ -647,7 +643,7 @@ public class PhieuThuePhong_DAO {
 			String sql = String.format("SELECT ThoiHanGiaoPhong FROM PhieuThuePhong "
 					+ "WHERE IDPhieuThue = '%s'",
 					maPhieuThue);
-			System.out.println(sql);
+			
 			ResultSet rs = stm.executeQuery(sql);
 			while (rs.next()) {
 				time = rs.getTimestamp("ThoiHanGiaoPhong").toLocalDateTime();

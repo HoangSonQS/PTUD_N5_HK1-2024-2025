@@ -1,27 +1,19 @@
 package gui;
 
+import java.awt.Desktop;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Objects;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ResourceBundle;
-
-import javax.swing.plaf.RootPaneUI;
-
-import dao.TaiKhoan_DAO;
 import entity.TaiKhoan;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.TreeView;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 import main.App;
 
 
@@ -76,6 +68,19 @@ public class GD_Chinh_Controller implements Initializable{
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		addUserLogin();
 	}
+    @FXML
+    void moHuongDan(MouseEvent event) {
+		String initial = "data\\TaiLieu\\5_7_ApplicationDevelopment_UserManual-trang.html";
+		Path initialDirectory = Paths.get(initial).toAbsolutePath();
+		File file = new File(initial);
+
+        try {
+            Desktop desktop = Desktop.getDesktop();
+            desktop.open(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 	private void addUserLogin() {
 		TaiKhoan tk = App.tk;
 		maNV.setText(String.valueOf(tk.getNhanVien().getIdNhanVien()));

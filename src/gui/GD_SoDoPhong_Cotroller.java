@@ -1,9 +1,12 @@
 package gui;
 
 
+import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -146,7 +149,7 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 		loadTrangThaiPhong();
 		LoadSoPhongTheoLoai();
 		suKienNutTim();
-//		addUserLogin();
+		addUserLogin();
 	}
 	
 	public void suKienNutTim() {
@@ -571,7 +574,19 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 	private void moGDDatPhong() throws IOException {
 		App.openModal("GD_DatPhong", 800, 684);
 	}
-	
+    @FXML
+    void moHuongDan(MouseEvent event) {
+		String initial = "data\\TaiLieu\\5_7_ApplicationDevelopment_UserManual-trang.html";
+		Path initialDirectory = Paths.get(initial).toAbsolutePath();
+		File file = new File(initial);
+
+        try {
+            Desktop desktop = Desktop.getDesktop();
+            desktop.open(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 	private void addUserLogin() {
 		TaiKhoan tk = App.tk;
 		maNV.setText(String.valueOf(tk.getNhanVien().getIdNhanVien()));

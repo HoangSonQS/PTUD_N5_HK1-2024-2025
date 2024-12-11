@@ -1,17 +1,18 @@
 package gui;
 
 
+import java.awt.Desktop;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-
-import dao.Enum_TrangThaiPhong;
 import dao.PhieuThuePhong_DAO;
 import dao.Phong_DAO;
-import dao.TaiKhoan_DAO;
 import entity.PhieuThuePhong;
 import entity.Phong;
 import entity.TaiKhoan;
@@ -383,11 +384,14 @@ public class GD_DoiPhong_Controller implements Initializable{
 	                Phong pCu = pthople[0].getPhong(); // Lấy phòng cũ từ phiếu thuê ban đầu
 	                
 	                // Thực hiện đổi phòng
-	                // Cập nhật phiếu thuê với phòng mới
+	             // Cập nhật phiếu thuê với phòng mới
 	                PhieuThuePhong pthuemoi = pthople[0];
-	                pthuemoi.setPhong(phongMoi);
+	                pthuemoi.setPhong(phongMoi); // Đảm bảo rằng bạn đã cập nhật phòng mới
 	                boolean suaPhieuThue = new PhieuThuePhong_DAO().suaPhieuThue(pthuemoi);
-	                System.out.println("Sửa phiếu thuê: " + suaPhieuThue);
+	                if (!suaPhieuThue) {
+	                    new Alert(Alert.AlertType.ERROR, "Không thể cập nhật phiếu thuê.").showAndWait();
+	                    return;
+	                }
 
 	                // Cập nhật trạng thái phòng mới
 	                phongMoi.setTrangThai(TrangThaiPhong.DANGTHUE);
@@ -480,6 +484,19 @@ public class GD_DoiPhong_Controller implements Initializable{
 	private void moGDDatPhong() throws IOException {
 		App.openModal("GD_DatPhong", 800, 684);
 	}
+    @FXML
+    void moHuongDan(MouseEvent event) {
+		String initial = "data\\TaiLieu\\5_7_ApplicationDevelopment_UserManual-trang.html";
+		Path initialDirectory = Paths.get(initial).toAbsolutePath();
+		File file = new File(initial);
+
+        try {
+            Desktop desktop = Desktop.getDesktop();
+            desktop.open(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 	private void addUserLogin() {
 		TaiKhoan tk = App.tk;
 		maNV.setText(String.valueOf(tk.getNhanVien().getIdNhanVien()));

@@ -1,7 +1,11 @@
 package gui;
 
+import java.awt.Desktop;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.Year;
@@ -402,6 +406,19 @@ public class GD_ThongKeSoKhachHang_Controller implements Initializable{
             throw new IllegalArgumentException("Năm phải lớn hơn 0.");
         }
         return Year.of(year).isLeap();
+    }
+    @FXML
+    void moHuongDan(MouseEvent event) {
+		String initial = "data\\TaiLieu\\5_7_ApplicationDevelopment_UserManual-trang.html";
+		Path initialDirectory = Paths.get(initial).toAbsolutePath();
+		File file = new File(initial);
+
+        try {
+            Desktop desktop = Desktop.getDesktop();
+            desktop.open(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 	private void addUserLogin() {
 		TaiKhoan tk = App.tk;
