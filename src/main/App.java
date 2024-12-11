@@ -134,16 +134,17 @@ public class App extends Application{
 
 	        Phong p = new Phong_DAO().getPhongTheoMa(pt.getPhong().getIdPhong());
 
-	        // Kiểm tra trạng thái sắp nhận phòng (SẮP CHECKIN)
+	     // Kiểm tra trạng thái sắp nhận phòng (SẮP CHECKIN)
 	        if (!now.isAfter(tgnp) && !now.isBefore(tgnp.minusHours(24))) {
 	            p.setTrangThai(TrangThaiPhong.SAPCHECKIN);
 	            new Phong_DAO().capNhatTrangThaiPhong(p);
-	        } 
-	        // Trạng thái trống nếu thời gian nhận phòng còn trên 24 giờ
+	        }
+	        // Trạng thái trống nếu thời gian nhận phòng còn trên 12 giờ
 	        else if (now.isBefore(tgnp.minusHours(24))) {
 	            p.setTrangThai(TrangThaiPhong.TRONG);
 	            new Phong_DAO().capNhatTrangThaiPhong(p);
 	        }
+
 
 	        // Kiểm tra trạng thái đang thuê (DANGTHUE)
 	        if (now.isAfter(tgnp) && now.isBefore(tggp.minusHours(2))) {

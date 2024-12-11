@@ -4,6 +4,7 @@ package gui;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -188,21 +189,20 @@ public class GD_DoiPhong_Controller implements Initializable{
         }
 
         PhieuThuePhong_DAO dsPT = new PhieuThuePhong_DAO();
-        LocalDate gioHienTai = LocalDate.now();
+        LocalDateTime gioHienTai = LocalDateTime.now();
         
-        // Lấy danh sách phiếu thuê của phòng
         ArrayList<PhieuThuePhong> danhSachPhieuThue = dsPT.layPhieuThueTheoMaPhong(maPhong);
-        
-        // Định dạng ngày
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-        // Tìm phiếu thuê đang hiệu lực
         PhieuThuePhong phieuHienTai = null;
         for (PhieuThuePhong phieuThue : danhSachPhieuThue) {
-            LocalDate thoiGianNhan = phieuThue.getThoiGianNhanPhong();
-            LocalDate thoiGianTra = phieuThue.getThoiHanGiaoPhong();
+            LocalDateTime thoiGianNhan = phieuThue.getThoiGianNhanPhong().atStartOfDay();
+            LocalDateTime thoiGianTra = phieuThue.getThoiHanGiaoPhong().atStartOfDay();
 
-            if (gioHienTai.isBefore(thoiGianTra) && gioHienTai.isAfter(thoiGianNhan)) {
+            // Thêm điều kiện kiểm tra TrangThai == true
+            if (!gioHienTai.isAfter(thoiGianTra) && 
+                !gioHienTai.isBefore(thoiGianNhan) && 
+                phieuThue.getHieuLuc() == true) {  // Thêm điều kiện này
                 phieuHienTai = phieuThue;
                 break;
             }
@@ -217,14 +217,11 @@ public class GD_DoiPhong_Controller implements Initializable{
             lb_NgayNhan.setText(phieuHienTai.getThoiGianNhanPhong().format(formatter));
             lb_Ngaytra.setText(phieuHienTai.getThoiHanGiaoPhong().format(formatter));
 
-            // Lưu phiếu thuê hiện tại vào mảng
             pthople = new PhieuThuePhong[1];
             pthople[0] = phieuHienTai;
         } else {
-            // Hiển thị cảnh báo nếu không tìm thấy phiếu thuê
             new Alert(Alert.AlertType.WARNING, "Không tìm thấy phiếu thuê hợp lệ cho phòng này.").showAndWait();
             
-            // Reset các label
             lb_maPhong.setText("");
             lb_tieuChi.setText("");
             lb_tenKH.setText("");
