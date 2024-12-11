@@ -38,6 +38,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import main.App;
 
 public class GD_QLPhong_Controller implements Initializable{
@@ -513,4 +514,11 @@ public class GD_QLPhong_Controller implements Initializable{
 			maNV.setText(String.valueOf(tk.getNhanVien().getIdNhanVien()));
 			tenNV.setText(String.valueOf(tk.getNhanVien().getTenNhanVien()));
 		}
+	    @FXML
+	    void dongUngDung(MouseEvent event) throws IOException {
+			App.user = "";
+			Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+			stage.close();
+			App.openModal("GD_DangNhap");
+	    }
 }

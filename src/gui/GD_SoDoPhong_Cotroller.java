@@ -41,6 +41,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import main.App;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -592,4 +593,11 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 		maNV.setText(String.valueOf(tk.getNhanVien().getIdNhanVien()));
 		tenNV.setText(String.valueOf(tk.getNhanVien().getTenNhanVien()));
 	}
+    @FXML
+    void dongUngDung(MouseEvent event) throws IOException {
+		App.user = "";
+		Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+		stage.close();
+		App.openModal("GD_DangNhap");
+    }
 }

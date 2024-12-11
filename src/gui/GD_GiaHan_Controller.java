@@ -41,6 +41,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import main.App;
 
 public class GD_GiaHan_Controller implements Initializable{
@@ -561,5 +562,12 @@ public class GD_GiaHan_Controller implements Initializable{
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    @FXML
+    void dongUngDung(MouseEvent event) throws IOException {
+		App.user = "";
+		Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+		stage.close();
+		App.openModal("GD_DangNhap");
     }
 }

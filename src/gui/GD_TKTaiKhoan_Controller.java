@@ -35,6 +35,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 import main.App;
 
 public class GD_TKTaiKhoan_Controller implements Initializable{
@@ -312,5 +313,12 @@ public class GD_TKTaiKhoan_Controller implements Initializable{
     @FXML
     void xoaTrang(MouseEvent event) {
 
+    }
+    @FXML
+    void dongUngDung(MouseEvent event) throws IOException {
+		App.user = "";
+		Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+		stage.close();
+		App.openModal("GD_DangNhap");
     }
 }
