@@ -383,11 +383,14 @@ public class GD_DoiPhong_Controller implements Initializable{
 	                Phong pCu = pthople[0].getPhong(); // Lấy phòng cũ từ phiếu thuê ban đầu
 	                
 	                // Thực hiện đổi phòng
-	                // Cập nhật phiếu thuê với phòng mới
+	             // Cập nhật phiếu thuê với phòng mới
 	                PhieuThuePhong pthuemoi = pthople[0];
-	                pthuemoi.setPhong(phongMoi);
+	                pthuemoi.setPhong(phongMoi); // Đảm bảo rằng bạn đã cập nhật phòng mới
 	                boolean suaPhieuThue = new PhieuThuePhong_DAO().suaPhieuThue(pthuemoi);
-	                System.out.println("Sửa phiếu thuê: " + suaPhieuThue);
+	                if (!suaPhieuThue) {
+	                    new Alert(Alert.AlertType.ERROR, "Không thể cập nhật phiếu thuê.").showAndWait();
+	                    return;
+	                }
 
 	                // Cập nhật trạng thái phòng mới
 	                phongMoi.setTrangThai(TrangThaiPhong.DANGTHUE);
