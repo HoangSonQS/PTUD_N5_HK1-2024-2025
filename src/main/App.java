@@ -144,7 +144,7 @@ public class App extends Application{
 	private void checkTrangThai() {
 	    ArrayList<PhieuThuePhong> dspt = new PhieuThuePhong_DAO().layPhieuThueTheoHieuLuc(true);
 	    LocalDateTime now = LocalDateTime.now();
-
+	    
 	    for (PhieuThuePhong pt : dspt) {
 	        LocalDateTime tgnp = new PhieuThuePhong_DAO().getThoiGianNhanPhong(pt.getIdPhieuThue());
 	        LocalDateTime tggp = new PhieuThuePhong_DAO().getThoiGianTraPhong(pt.getIdPhieuThue());
