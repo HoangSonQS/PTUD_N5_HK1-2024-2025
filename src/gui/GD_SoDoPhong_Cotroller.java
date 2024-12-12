@@ -97,8 +97,9 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 
 	    @FXML
 	    private Button btn_TatCa;
-	@FXML
-	private GridPane gridPane;
+	    
+		@FXML
+		private GridPane gridPane;
 
 	    @FXML
 	    void moGiaoDienGiaHanPhong(MouseEvent event) throws IOException {
