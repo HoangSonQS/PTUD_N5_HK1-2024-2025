@@ -288,10 +288,7 @@ public class GD_QLPhong_Controller implements Initializable{
 	    
 	    @FXML
 	    void themPhong(MouseEvent event) throws Exception {
-	    	if(!kiemTraDuLieu()) {
-	    		return;
-	    	}
-	    	
+	    
 	        // Kiểm tra các trường bắt buộc
 	        if (txt_Phong1.getText().trim().isEmpty() || 
 	        	cbb.getValue() == null ||
@@ -309,7 +306,10 @@ public class GD_QLPhong_Controller implements Initializable{
 	            return;
 	        }
 	        
-
+	        if(!kiemTraDuLieu()) {
+	    		return;
+	    	}
+	    	
 	        // Lấy thông tin từ các trường
 	        String idPhong = txt_Phong1.getText();
 	        String loaiPhongString = cbb.getValue();
