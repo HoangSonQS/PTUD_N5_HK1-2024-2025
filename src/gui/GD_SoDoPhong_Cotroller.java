@@ -118,6 +118,7 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 
 	    @FXML
 	    void moGiaoDienSoDoPhong(MouseEvent event) throws IOException {
+	    	checkTrangThai();
 			App.setRoot("GD_SoDoPhong");
 	    }
 
@@ -629,7 +630,7 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 	        }
 
 
-	        // Kiểm tra trạng thái đang thuê (DANGTHUE)
+//	         Kiểm tra trạng thái đang thuê (DANGTHUE)
 	        if (now.isAfter(tgnp) && now.isBefore(tggp.minusHours(2))) {
 	            p.setTrangThai(TrangThaiPhong.DANGTHUE);
 	            new Phong_DAO().capNhatTrangThaiPhong(p);

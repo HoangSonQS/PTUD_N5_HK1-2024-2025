@@ -122,6 +122,7 @@ public class GD_DatPhongChoController implements Initializable{
 			                    p.setTrangThai(TrangThaiPhong.SAPCHECKIN); // Cập nhật trạng thái phòng
 			                    dsP.capNhatTrangThaiPhong(p); // Cập nhật trạng thái phòng vào hệ thống
 			                    new Alert(Alert.AlertType.CONFIRMATION, "Đặt phòng thành công").showAndWait();
+			                    checkTrangThai();
 			                } else {
 			                    System.out.println("Lỗi khi thêm phiếu thuê cho phòng " + MaPhong);
 			                }
@@ -150,7 +151,6 @@ public class GD_DatPhongChoController implements Initializable{
 		        ex.printStackTrace();
 		        System.err.println("Có lỗi xảy ra: " + ex.getMessage());
 		    }
-		    checkTrangThai();
 		});
 
 		btn_TimCCCD.setOnAction(event -> {
