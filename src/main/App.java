@@ -146,7 +146,7 @@ public class App extends Application{
 	    LocalDateTime now = LocalDateTime.now();
 	    
 	    for (PhieuThuePhong pt : dspt) {
-	        LocalDateTime tgnp = new PhieuThuePhong_DAO().getThoiGianNhanPhong(pt.getIdPhieuThue());
+	        LocalDateTime tgnp = new PhieuThuePhong_DAO().getThoiGianNhanPhong1(pt.getIdPhieuThue());
 	        LocalDateTime tggp = new PhieuThuePhong_DAO().getThoiGianTraPhong(pt.getIdPhieuThue());
 
 	        Phong p = new Phong_DAO().getPhongTheoMa(pt.getPhong().getIdPhong());

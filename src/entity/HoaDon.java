@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import dao.ChiTietHoaDon_DichVu_DAO;
 import dao.HoaDon_DAO;
 import dao.PhieuThuePhong_DAO;
 
@@ -173,7 +174,7 @@ public class HoaDon {
 	    }
 		return 0;
 	}
-	
+
 	public static String autoIdHoaDon() {
         HoaDon_DAO hoaDonDAO = new HoaDon_DAO(); // Đối tượng DAO để truy xuất dữ liệu từ database
         ArrayList<HoaDon> hoaDonList = null;

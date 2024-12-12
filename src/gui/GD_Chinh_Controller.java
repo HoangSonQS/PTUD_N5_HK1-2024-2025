@@ -69,6 +69,7 @@ public class GD_Chinh_Controller implements Initializable{
     }
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+
 		addUserLogin();
 	}
     @FXML
@@ -88,6 +89,7 @@ public class GD_Chinh_Controller implements Initializable{
 		TaiKhoan tk = App.tk;
 		maNV.setText(String.valueOf(tk.getNhanVien().getIdNhanVien()));
 		tenNV.setText(String.valueOf(tk.getNhanVien().getTenNhanVien()));
+
 	}
     @FXML
     void dongUngDung(MouseEvent event) throws IOException {
