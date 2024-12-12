@@ -60,32 +60,41 @@ public class App extends Application{
 	        throw ex; 
 	    }
 	}
+	public static void openQuenMK() throws IOException {
+		try {
+			 FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/gui/GD_QuenMK.fxml")); //Đường dẫn chính xác
+	            Parent root = fxmlLoader.load();
+	            primaryScene = new Scene(root, 600, 400);
+	            primaryStage.setScene(primaryScene);
+	            primaryStage.show();
+	    } catch (NullPointerException ex) {
+	        System.err.println("Không tìm thấy file GD_DangNhap.fxml: " + ex.getMessage());
+	        ex.printStackTrace();
+	        throw ex; 
+	    }
+	}
 	public static void openModal(String fxml) throws IOException {
-		Scene sceneModal = new Scene(loadFXML(fxml));
-		Stage stageModal = new Stage();
-		stageModal.setMaximized(true);
-		stageModal.setScene(sceneModal);
-		if (fxml.equals("GD_DangNhap")) {
-			stageModal.setOnCloseRequest(event -> {
-				Platform.exit();
-				System.exit(0);
-			});
-		}
-		stageModal.showAndWait();
+	    Parent root = loadFXML(fxml);  // Load the FXML into a Parent
+	    if (root == null) {
+	        throw new IllegalArgumentException("Failed to load FXML root for " + fxml);
+	    }
+	    Stage stage = new Stage();
+	    Scene scene = new Scene(root);
+	    stage.setScene(scene);
+	    stage.initModality(Modality.APPLICATION_MODAL);
+	    stage.setMaximized(true);
+	    stage.showAndWait();
 	}
 	public static void openModal(String fxml, int width, int height) throws IOException {
-		Scene sceneModal = new Scene(loadFXML(fxml), width, height);
-		Stage stageModal = new Stage();
-		stageModal.setResizable(false);
-		stageModal.initModality(Modality.APPLICATION_MODAL);
-		stageModal.setScene(sceneModal);
-		if (fxml.equals("GD_DangNhap")) {
-			stageModal.setOnCloseRequest(event -> {
-				Platform.exit();
-				System.exit(0);
-			});
-		}
-		stageModal.showAndWait();
+	    Parent root = loadFXML(fxml);  // Load the FXML into a Parent
+	    if (root == null) {
+	        throw new IllegalArgumentException("Failed to load FXML root for " + fxml);
+	    }
+	    Stage stage = new Stage();
+	    Scene scene = new Scene(root, width, height);
+	    stage.setScene(scene);
+	    stage.initModality(Modality.APPLICATION_MODAL);
+	    stage.showAndWait();
 	}
 	public static void setRoot(String fxml) throws IOException {
 		
@@ -137,7 +146,7 @@ public class App extends Application{
 	    LocalDateTime now = LocalDateTime.now();
 
 	    for (PhieuThuePhong pt : dspt) {
-	        LocalDateTime tgnp = new PhieuThuePhong().getThoiGianNhanPhong(pt.getIdPhieuThue());
+	        LocalDateTime tgnp = new PhieuThuePhong_DAO().getThoiGianNhanPhong1(pt.getIdPhieuThue());
 	        LocalDateTime tggp = new PhieuThuePhong_DAO().getThoiGianTraPhong(pt.getIdPhieuThue());
 
 	        Phong p = new Phong_DAO().getPhongTheoMa(pt.getPhong().getIdPhong());

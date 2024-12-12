@@ -37,10 +37,10 @@ public class testDao {
 
 //		testKH();
 //
-		testPhieuThue();
+//		testPhieuThue();
 //		testKH();
 
-//		testHoaDon();
+		testHoaDon();
 //		testPhong();
 	}
 	
@@ -129,7 +129,7 @@ public class testDao {
 	//done
 	public static void testHoaDon() {
 	    HoaDon_DAO hddao = new HoaDon_DAO();
-	    System.out.println(hddao.demHDTheoThang(10, 2024));
+	    System.out.println(hddao.layHoaDonTheoMaHoaDon("HD24101201"));
 //	    LocalDate a = LocalDate.of(2024, 10, 12);
 //	    System.out.printf("%d,%d,%d\n",a.getYear(),a.getMonthValue(),a.getDayOfMonth());
 //	    System.out.println(hddao.TheoNgayob(a));

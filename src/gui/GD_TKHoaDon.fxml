@@ -197,7 +197,7 @@
                   <Font name="System Italic" size="22.0" />
                </font>
             </Label>
-            <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="1490.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="1490.0" layoutY="15.0" onMouseClicked="#dongUngDung" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../data/pic/turn-off%20(1).png" />
                </image>

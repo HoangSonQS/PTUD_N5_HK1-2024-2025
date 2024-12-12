@@ -353,4 +353,52 @@ public class NhanVien_DAO {
 		}
 		 return nv;
 	 }
+	public NhanVien quenMatKhau(String ten, String sdt, String cccd) {
+		Connection con = ConnectDB.getInstance().getConnection();
+		Statement stmt = null;
+		NhanVien nv = null;
+		try {
+			stmt = con.createStatement();
+			String sql = String.format("SELECT * FROM NhanVien WHERE TenNhanVien = N'%s' AND SoDienThoai = '%s' AND CCCD = '%s'", ten, sdt, cccd);
+			System.out.println(sql);
+			ResultSet rs = stmt.executeQuery(sql);
+			while (rs.next()) {
+				String maNhanVien = rs.getString("IDNhanVien");
+				String tenNhanVien = rs.getString("TenNhanVien");
+				String soDienThoai = rs.getString("SoDienThoai");
+				LocalDate ngaySinh = rs.getDate("NgaySinh").toLocalDate();
+				boolean gioiTinh = rs.getBoolean("GioiTinh");
+//				String chucVu = rs.getString("ChucVu");
+//				ChucVu cv = null;
+//				if(chucVu.equalsIgnoreCase(ChucVu.NHANVIENLETAN.toString())) {
+//					cv = ChucVu.NHANVIENLETAN;
+//					
+//				} else if(chucVu.equalsIgnoreCase(ChucVu.NGUOIQUANLY.toString())) {
+//					cv = ChucVu.NGUOIQUANLY;
+//				}
+				int chucVu = rs.getInt("ChucVu");
+				ChucVu cv = null;
+				
+				if(chucVu == 1) {
+					cv = ChucVu.NHANVIENLETAN;
+				} else if (chucVu == 2) {
+					cv = ChucVu.NGUOIQUANLY;
+				}
+				
+				//NhanVien nv = new NhanVien(idNhanVien, tenNhanVien, soDienThoai, gioiTinh, cccd, cv);
+				nv = new NhanVien(maNhanVien, tenNhanVien, soDienThoai, ngaySinh, gioiTinh, cccd, cv);
+				}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				stmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		 return nv;
+	 }
 }

@@ -42,6 +42,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import main.App;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -446,22 +447,26 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 			btnRight.setOnAction((event) -> {
 				String maHD = HoaDon.autoIdHoaDon();
 				GD_ThanhToanController.maHD = maHD;
+				System.out.println(maHD);
 				String maP = phong.getIdPhong();
 				ArrayList<PhieuThuePhong>dsPThue_Tam = new ArrayList<PhieuThuePhong>();
 				dsPThue_Tam = new PhieuThuePhong_DAO().layPhieuThueTheoMaPhong(maP);
+				System.out.println(dsPThue_Tam);
 				ArrayList<PhieuThuePhong>dsPThue = new ArrayList<PhieuThuePhong>();
 				dsPThue = new PhieuThuePhong_DAO().getAllPhieuThue();
 				
 				ArrayList<PhieuThuePhong>dsPThueThanhToan = new ArrayList<PhieuThuePhong>();
-				String maKH = null;
+				
 				for(PhieuThuePhong pt: dsPThue_Tam) {
 					if(pt.getHieuLuc()== true) {
-						maKH = pt.getKhachHang().getIdKhachHang();
+						System.out.println();
+						String maKH = pt.getKhachHang().getIdKhachHang();
 						for(PhieuThuePhong pt1 : dsPThue) {
 							if(pt1.getKhachHang().getIdKhachHang().equals(maKH) && pt1.getHieuLuc() == true) {
 								dsPThueThanhToan.add(pt1);
 							}
 						}
+						break;
 					}
 				}
 				PhieuThuePhong_DAO dsPt = new PhieuThuePhong_DAO(); 
@@ -475,7 +480,6 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 					e.printStackTrace();
 				}
 			});
-			
 			break;
 		case SAPCHECKIN:
 			btnLeft.setStyle("-fx-background-color: #ff3131; -fx-text-fill: #fff; -fx-font-size: 16");
@@ -565,12 +569,6 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 				for(PhieuThuePhong pt : dsPThueThanhToan) {
 					dsPt.suaPhieuThue_ThemIDHoaDon(maHD, pt.getIdPhieuThue());
 				}
-				try {
-					moGDThanhToan();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
 			});
 //             {
 //                try {
@@ -643,4 +641,12 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 		maNV.setText(String.valueOf(tk.getNhanVien().getIdNhanVien()));
 		tenNV.setText(String.valueOf(tk.getNhanVien().getTenNhanVien()));
 	}
+    @FXML
+    void dongUngDung(MouseEvent event) throws IOException {
+		App.user = "";
+		Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+		stage.close();
+		App.openModal("GD_DangNhap");
+    }
 }
+
