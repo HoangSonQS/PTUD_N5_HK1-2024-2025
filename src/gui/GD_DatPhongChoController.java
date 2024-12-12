@@ -11,6 +11,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 import dao.KhachHang_DAO;
+import dao.NhanVien_DAO;
 import dao.PhieuThuePhong_DAO;
 import dao.Phong_DAO;
 import entity.KhachHang;
@@ -23,6 +24,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
+import main.App;
 
 public class GD_DatPhongChoController implements Initializable{
 	@FXML
@@ -108,7 +110,7 @@ public class GD_DatPhongChoController implements Initializable{
 		            Phong p = dsP.getPhongTheoMa(MaPhong);
 		            
 		            if (p != null && p.getTrangThai() != TrangThaiPhong.SAPCHECKIN) { // Kiểm tra trạng thái phòng
-		                NhanVien nv = new NhanVien("NV24100301"); // Cần cải thiện cách lấy thông tin nhân viên
+		            	NhanVien nv = App.tk.getNhanVien();
 		                String idPT = PhieuThuePhong.autoIdPhieuThue(); // Tạo mã phiếu thuê tự động
 		                PhieuThuePhong pt = new PhieuThuePhong(idPT, dsKH.getKhachHangTheoCCCD(CCCD), p, nv, ngayNhan, ngayTra, true);
 		                PhieuThuePhong_DAO ptdao = new PhieuThuePhong_DAO();
