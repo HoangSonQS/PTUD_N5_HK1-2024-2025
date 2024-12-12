@@ -39,6 +39,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import main.App;
 
 public class GD_HuyPhong_Controller implements Initializable{
@@ -127,7 +128,6 @@ public class GD_HuyPhong_Controller implements Initializable{
 	        }
 	    }
 
-	    // Thêm đoạn code sắp xếp ở đây
 	    LocalDate currentDate = LocalDate.now();
 	    allpt.sort((pt1, pt2) -> {
 	        long diff1 = Math.abs(ChronoUnit.DAYS.between(currentDate, pt1.getThoiGianNhanPhong()));
@@ -240,12 +240,6 @@ public class GD_HuyPhong_Controller implements Initializable{
         
         // Sự kiện cho nút hủy phòng
         btnHuy.setOnAction(event -> {
-            // Kiểm tra xem đã chọn khách hàng chưa
-//            if (lb_tenKH.getText().isEmpty()) {
-//                new Alert(Alert.AlertType.WARNING, "Vui lòng chọn khách hàng trước khi hủy phòng.").showAndWait();
-//                return;
-//            }
-
             // Hiển thị hộp thoại xác nhận
             Alert confirmDialog = new Alert(Alert.AlertType.CONFIRMATION, 
                 "Bạn có chắc chắn muốn hủy phòng " + phong.getIdPhong() + "?");
@@ -522,4 +516,11 @@ public class GD_HuyPhong_Controller implements Initializable{
 		maNV.setText(String.valueOf(tk.getNhanVien().getIdNhanVien()));
 		tenNV.setText(String.valueOf(tk.getNhanVien().getTenNhanVien()));
 	}
+    @FXML
+    void dongUngDung(MouseEvent event) throws IOException {
+		App.user = "";
+		Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+		stage.close();
+		App.openModal("GD_DangNhap");
+    }
 }

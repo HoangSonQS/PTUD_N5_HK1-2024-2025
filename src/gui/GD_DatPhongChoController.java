@@ -111,17 +111,23 @@ public class GD_DatPhongChoController implements Initializable{
 		                NhanVien nv = new NhanVien("NV24100301"); // Cần cải thiện cách lấy thông tin nhân viên
 		                String idPT = PhieuThuePhong.autoIdPhieuThue(); // Tạo mã phiếu thuê tự động
 		                PhieuThuePhong pt = new PhieuThuePhong(idPT, dsKH.getKhachHangTheoCCCD(CCCD), p, nv, ngayNhan, ngayTra, true);
-		                Boolean them = dsPT.themPhieuThue(pt); // Thêm phiếu thuê vào danh sách
-
-		                if (them) {
-		                    System.out.println("Thêm phiếu thuê thành công.");
-		                    p.setTrangThai(TrangThaiPhong.SAPCHECKIN); // Cập nhật trạng thái phòng
-		                    dsP.capNhatTrangThaiPhong(p); // Cập nhật trạng thái phòng vào hệ thống
-		                } else {
-		                    System.out.println("Lỗi khi thêm phiếu thuê cho phòng " + MaPhong);
+		                PhieuThuePhong_DAO ptdao = new PhieuThuePhong_DAO();
+		                ArrayList<PhieuThuePhong> dsPhong = ptdao.getPhieuThueTheoMaPhong(MaPhong, ngayNhan, ngayTra);
+		                if(dsPhong.isEmpty()) {
+		                	Boolean them = dsPT.themPhieuThue(pt); // Thêm phiếu thuê vào danh sách
+			                if (them) {
+			                    System.out.println("Thêm phiếu thuê thành công.");
+			                    p.setTrangThai(TrangThaiPhong.SAPCHECKIN); // Cập nhật trạng thái phòng
+			                    dsP.capNhatTrangThaiPhong(p); // Cập nhật trạng thái phòng vào hệ thống
+			                    new Alert(Alert.AlertType.CONFIRMATION, "Đặt phòng thành công").showAndWait();
+			                } else {
+			                    System.out.println("Lỗi khi thêm phiếu thuê cho phòng " + MaPhong);
+			                }
+		                }else {
+		                	new Alert(Alert.AlertType.CONFIRMATION, "Phòng " + MaPhong + " đã được đặt vào ngày " + ngayNhan).showAndWait();
 		                }
 		            } else {
-		                System.out.println("Phòng " + MaPhong + " không hợp lệ hoặc đã được đặt.");
+	                	new Alert(Alert.AlertType.CONFIRMATION, "Phòng " + MaPhong + " không hợp lệ hoặc đã được đặt.").showAndWait();
 		            }
 		        }
 

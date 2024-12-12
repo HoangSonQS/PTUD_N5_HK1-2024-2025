@@ -5,24 +5,19 @@ import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-<<<<<<< HEAD
 import java.time.LocalDateTime;
-=======
 import java.nio.file.Path;
 import java.nio.file.Paths;
->>>>>>> 6a1a21b08900df2df721db72d754f37ab16ef31a
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javafx.scene.control.TextField;
 import dao.PhieuThuePhong_DAO;
 import dao.Phong_DAO;
-import dao.TaiKhoan_DAO;
+import entity.HoaDon;
 import entity.PhieuThuePhong;
 import entity.Phong;
 import entity.TaiKhoan;
@@ -45,6 +40,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import main.App;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -154,10 +150,7 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 		LoadSoPhongTheoLoai();
 		suKienNutTim();
 		addUserLogin();
-<<<<<<< HEAD
 		checkTrangThai();
-=======
->>>>>>> 6a1a21b08900df2df721db72d754f37ab16ef31a
 	}
 	
 	public void suKienNutTim() {
@@ -474,6 +467,10 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 			btnLeft.setOnAction(((event) -> {
 				try {
 					phong.setTrangThai(TrangThaiPhong.TRONG);
+					PhieuThuePhong_DAO ptdao = new PhieuThuePhong_DAO();
+					PhieuThuePhong pt = ptdao.layPhieuThueTheoMaPhong_1Phong(phong.getIdPhong());
+					pt.setHieuLuc(false);
+					ptdao.suaPhieuThue(pt);
 					dsp.capNhatTrangThaiPhong(phong);
 					LoadSoPhongTheoLoai();
 					renderArrayPhong(new Phong_DAO().getAllPhong());
@@ -557,12 +554,12 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 				for(PhieuThuePhong pt : dsPThueThanhToan) {
 					dsPt.suaPhieuThue_ThemIDHoaDon(maHD, pt.getIdPhieuThue());
 				}
-				try {
-					moGDThanhToan();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+//				try {
+//					moGDThanhToan();
+//				} catch (IOException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
 			});
 //             {
 //                try {
@@ -673,4 +670,12 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 		maNV.setText(String.valueOf(tk.getNhanVien().getIdNhanVien()));
 		tenNV.setText(String.valueOf(tk.getNhanVien().getTenNhanVien()));
 	}
+    @FXML
+    void dongUngDung(MouseEvent event) throws IOException {
+		App.user = "";
+		Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+		stage.close();
+		App.openModal("GD_DangNhap");
+    }
 }
+

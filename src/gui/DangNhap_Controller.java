@@ -6,26 +6,20 @@ import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import main.App;
-
-import java.awt.event.MouseEvent;
 import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import connectDB.ConnectDB;
-import dao.NhanVien_DAO;
 import dao.TaiKhoan_DAO;
 import entity.TaiKhoan;
-import javafx.application.Application;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 
 public class DangNhap_Controller{
 	@FXML
@@ -36,6 +30,8 @@ public class DangNhap_Controller{
 	private Button btn_LogIn;
 	@FXML
     private ImageView avt;
+	@FXML
+	private Label lb_quenMK;
 	
 	// Event Listener on Button[#btn_LogIn].onAction
 	@FXML
@@ -75,7 +71,11 @@ public class DangNhap_Controller{
 		ConnectDB cn = new ConnectDB();
 		cn.getInstance().connect();
 	}
-
-	
-
+    @FXML
+    void quenMK(MouseEvent event) throws IOException {
+//		Stage stage = (Stage) ((Node) event.getTarget()).getScene().getWindow();
+//		stage.close();
+//		App.openQuenMK();
+    	App.openModal("GD_QuenMK", 600, 400);
+    }
 }
