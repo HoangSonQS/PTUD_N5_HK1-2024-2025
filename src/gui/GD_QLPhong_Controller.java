@@ -271,7 +271,7 @@ public class GD_QLPhong_Controller implements Initializable{
                 Alert successAlert = new Alert(AlertType.INFORMATION);
                 successAlert.setTitle("Thành công");
                 successAlert.setHeaderText(null);
-                successAlert.setContentText("Cập nhật thông tin nhân viên thành công!");
+                successAlert.setContentText("Cập nhật thông tin phòng thành công!");
                 successAlert.showAndWait();
 
                 // Cập nhật lại TableView và xóa trắng form
@@ -281,7 +281,7 @@ public class GD_QLPhong_Controller implements Initializable{
                 Alert errorAlert = new Alert(AlertType.ERROR);
                 errorAlert.setTitle("Lỗi");
                 errorAlert.setHeaderText(null);
-                errorAlert.setContentText("Không thể cập nhật thông tin khách hàng!");
+                errorAlert.setContentText("Không thể cập nhật thông tin phòng!");
                 errorAlert.showAndWait();
             }
 	    }

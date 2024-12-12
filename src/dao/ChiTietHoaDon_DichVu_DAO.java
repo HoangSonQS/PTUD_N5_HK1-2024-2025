@@ -46,13 +46,83 @@ public class ChiTietHoaDon_DichVu_DAO {
         }
         return n > 0;
     }
-	public List<ChiTietHD_DichVu>  layChiTietHoaDonTheoMaHoaDon(String maHoaDon) {
+	public boolean SuaChiTietHoaDon(String chiTietHoaDon, String idHoaDonCu) {
+	    int n = 0;
+	    ConnectDB.getInstance();
+	    Connection conN = ConnectDB.getInstance().getConnection();
+	    PreparedStatement preparedStatement = null;
+	    String sql = "UPDATE ChiTietHD_DichVu SET IDHoaDon=? WHERE IDHoaDon=?";
+	    try {
+	        preparedStatement = conN.prepareStatement(sql);
+	        preparedStatement.setString(1, chiTietHoaDon);
+	        preparedStatement.setString(2, idHoaDonCu);
+	        
+	        n = preparedStatement.executeUpdate();
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if (preparedStatement != null) {
+	                preparedStatement.close();
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	    return n > 0;
+	}
+	public ArrayList<ChiTietHD_DichVu>  getAll() {
+        ArrayList<ChiTietHD_DichVu> danhSachChiTietHoaDon = new ArrayList<>();
+        Connection connection = ConnectDB.getInstance().getConnection();
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            String sql = "SELECT * FROM ChiTietHD_DichVu";
+            preparedStatement = connection.prepareStatement(sql);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+            	String IdHD = resultSet.getString("IDHoaDon");
+                String IdDichVu = resultSet.getString("IDDichVu");
+                int soLuongSP = resultSet.getInt("SoLuong");
+                // Lấy thông tin của sản phẩm từ cơ sở dữ liệu
+                DichVu dichvu = null;
+                HoaDon_DAO dshd = new HoaDon_DAO();
+                dshd.getAllHoaDon();
+                HoaDon hd = dshd.layHoaDonTheoMaHoaDon(IdHD);
+				try {
+					DichVu_DAO dsDV = new DichVu_DAO();
+					dichvu = dsDV.layDichVuTheoMa(IdDichVu);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+                // Tạo đối tượng ChiTietHoaDon
+                ChiTietHD_DichVu chiTietHoaDon = new ChiTietHD_DichVu(hd, dichvu, soLuongSP);
+                danhSachChiTietHoaDon.add(chiTietHoaDon);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return danhSachChiTietHoaDon;
+    }
+	public List<ChiTietHD_DichVu> layChiTietHoaDonTheoMaHoaDon(String maHoaDon) {
         List<ChiTietHD_DichVu> danhSachChiTietHoaDon = new ArrayList<>();
         Connection connection = ConnectDB.getInstance().getConnection();
         PreparedStatement preparedStatement = null;
         ResultSet resultSet = null;
         try {
-            String sql = "SELECT * FROM ChiTietHD_DichVu WHERE MaHD = ?";
+            String sql = "SELECT * FROM ChiTietHD_DichVu WHERE IDHoaDon = ?";
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, maHoaDon);
             resultSet = preparedStatement.executeQuery();
