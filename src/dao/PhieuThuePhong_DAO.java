@@ -837,40 +837,105 @@ public class PhieuThuePhong_DAO {
 	}
 	
 	public ArrayList<PhieuThuePhong> getPhieuThueTheoMaPhong(String maPhong, LocalDate nhan, LocalDate tra) {
-		ArrayList<PhieuThuePhong> dsPT = new ArrayList<PhieuThuePhong>();
-		Connection conN = ConnectDB.getInstance().getConnection();
-		Statement stm = null;
-		try {
-			stm = conN.createStatement();
-			String sql = String.format("select * from PhieuThuePhong where IDPhong = '%s' and ThoiGianNhanPhong = '%s' and ThoiHanGiaoPhong = '%s'", maPhong, nhan.format(DateTimeFormatter.ISO_DATE), tra.format(DateTimeFormatter.ISO_DATE));
-			System.out.println(sql);
-			ResultSet rs = stm.executeQuery(sql);
-			while (rs.next()) {
-				String idphieuthu = rs.getString("IDPhieuThue");
-				String idkhachhang = rs.getString("IDKhachHang");
+	    ArrayList<PhieuThuePhong> dsPT = new ArrayList<>();
+	    Connection conn = null;
+	    PreparedStatement pstm = null;
+	    ResultSet rs = null;
+	    
+	    try {
+	        conn = ConnectDB.getInstance().getConnection();
+	        // Truy vấn kiểm tra trùng lặp thời gian thuê
+	        String sql = "SELECT * FROM PhieuThuePhong WHERE IDPhong = ? " +
+	                     "AND HieuLuc = 1 " +
+	                     "AND NOT (ThoiHanGiaoPhong <= ? OR ThoiGianNhanPhong >= ?)";
+	        
+	        pstm = conn.prepareStatement(sql);
+	        pstm.setString(1, maPhong);
+	        pstm.setDate(2, Date.valueOf(nhan));  // Ngày trả của phòng mới
+	        pstm.setDate(3, Date.valueOf(tra));   // Ngày nhận của phòng mới
+	        
+	        rs = pstm.executeQuery();
+	        
+	        while (rs.next()) {
+	            String idphieuthu = rs.getString("IDPhieuThue");
+	            String idkhachhang = rs.getString("IDKhachHang");
 	            String idphong = rs.getString("IDPhong");
 	            String idnhanvien = rs.getString("IDNhanVien");
 	            LocalDate thoigiancheckin = rs.getDate("ThoiGianNhanPhong").toLocalDate();
 	            LocalDate thoigiancheckout = rs.getDate("ThoiHanGiaoPhong").toLocalDate();
-	            NhanVien_DAO dsnv = new NhanVien_DAO();
-	            dsnv.getAllNhanVien();
-	            NhanVien nv = dsnv.getNhanVienTheoMa(idnhanvien);
-	            KhachHang_DAO dskh = new KhachHang_DAO();
-	            dskh.getAllKhachHang();
-	            KhachHang kh = dskh.getKhachHangTheoMa(idkhachhang);
-	            Phong_DAO dsp = new Phong_DAO();
-	            dsp.getAllPhong();
-	            Phong p = dsp.getPhongTheoMa(idphong);
+
+	            // Lấy thông tin liên quan
+	            NhanVien nv = new NhanVien_DAO().getNhanVienTheoMa(idnhanvien);
+	            KhachHang kh = new KhachHang_DAO().getKhachHangTheoMa(idkhachhang);
+	            Phong p = new Phong_DAO().getPhongTheoMa(idphong);
+
 	            Boolean hieuLuc = rs.getBoolean("HieuLuc");
 	            PhieuThuePhong pt = new PhieuThuePhong(idphieuthu, kh, p, nv, thoigiancheckin, thoigiancheckout, hieuLuc);
 	            dsPT.add(pt);
-			}
-		}catch (SQLException e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
-		return dsPT;
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if (rs != null) rs.close();
+	            if (pstm != null) pstm.close();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	    return dsPT;
 	}
+
+
+
+
+	
+//	public ArrayList<PhieuThuePhong> getPhieuThueTheoMaPhong(String maPhong, LocalDate nhan, LocalDate tra) {
+//	    ArrayList<PhieuThuePhong> dsPT = new ArrayList<PhieuThuePhong>();
+//	    Connection conN = ConnectDB.getInstance().getConnection();
+//	    Statement stm = null;
+//	    try {
+//	        stm = conN.createStatement();
+//	        String sql = String.format("SELECT * FROM PhieuThuePhong WHERE IDPhong = '%s' AND ThoiGianNhanPhong = '%s' AND ThoiHanGiaoPhong = '%s' AND HieuLuc = 1", 
+//	                                    maPhong, 
+//	                                    nhan.format(DateTimeFormatter.ISO_DATE), 
+//	                                    tra.format(DateTimeFormatter.ISO_DATE));
+//	        System.out.println(sql);
+//	        ResultSet rs = stm.executeQuery(sql);
+//	        while (rs.next()) {
+//	            String idphieuthu = rs.getString("IDPhieuThue");
+//	            String idkhachhang = rs.getString("IDKhachHang");
+//	            String idphong = rs.getString("IDPhong");
+//	            String idnhanvien = rs.getString("IDNhanVien");
+//	            LocalDate thoigiancheckin = rs.getDate("ThoiGianNhanPhong").toLocalDate();
+//	            LocalDate thoigiancheckout = rs.getDate("ThoiHanGiaoPhong").toLocalDate();
+//	            NhanVien_DAO dsnv = new NhanVien_DAO();
+//	            dsnv.getAllNhanVien();
+//	            NhanVien nv = dsnv.getNhanVienTheoMa(idnhanvien);
+//	            KhachHang_DAO dskh = new KhachHang_DAO();
+//	            dskh.getAllKhachHang();
+//	            KhachHang kh = dskh.getKhachHangTheoMa(idkhachhang);
+//	            Phong_DAO dsp = new Phong_DAO();
+//	            dsp.getAllPhong();
+//	            Phong p = dsp.getPhongTheoMa(idphong);
+//	            Boolean hieuLuc = rs.getBoolean("HieuLuc");
+//	            PhieuThuePhong pt = new PhieuThuePhong(idphieuthu, kh, p, nv, thoigiancheckin, thoigiancheckout, hieuLuc);
+//	            dsPT.add(pt);
+//	        }
+//	    } catch (SQLException e) {
+//	        e.printStackTrace();
+//	    } finally {
+//	        // Đảm bảo đóng kết nối và statement
+//	        try {
+//	            if (stm != null) stm.close();
+//	            if (conN != null) conN.close();
+//	        } catch (SQLException e) {
+//	            e.printStackTrace();
+//	        }
+//	    }
+//	    return dsPT;
+//	}
+
     private String formatDateTime(LocalDateTime dateTime) {
         return dateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")); 
     }
