@@ -1,8 +1,12 @@
 package gui;
 
+import java.awt.Desktop;
+import java.io.File;
 import java.io.IOException;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -618,7 +622,19 @@ public class GD_QLNhanVien_Controller implements Initializable{
 	        }
 			return true;
 	    }  
-	    
+	    @FXML
+	    void moHuongDan(MouseEvent event) {
+			String initial = "data\\TaiLieu\\5_7_ApplicationDevelopment_UserManual-trang.html";
+			Path initialDirectory = Paths.get(initial).toAbsolutePath();
+			File file = new File(initial);
+
+	        try {
+	            Desktop desktop = Desktop.getDesktop();
+	            desktop.open(file);
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	    }
 		private void addUserLogin() {
 			TaiKhoan tk = App.tk;
 			maNV.setText(String.valueOf(tk.getNhanVien().getIdNhanVien()));

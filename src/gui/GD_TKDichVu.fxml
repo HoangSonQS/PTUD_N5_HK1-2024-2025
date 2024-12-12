@@ -150,12 +150,12 @@
                   <Font name="System Bold Italic" size="20.0" />
                </font>
             </Label>
-            <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="15.0" layoutY="650.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="15.0" layoutY="650.0" onMouseClicked="#moHuongDan" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../data/pic/question.png" />
                </image>
             </ImageView>
-            <Label layoutX="80.0" layoutY="660.0" text="Hướng dẫn">
+            <Label layoutX="80.0" layoutY="660.0" onMouseClicked="#moHuongDan" text="Hướng dẫn">
                <font>
                   <Font name="System Bold Italic" size="20.0" />
                </font>
