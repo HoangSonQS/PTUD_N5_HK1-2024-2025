@@ -58,7 +58,34 @@ public class HoaDon_DAO {
 	    }
 	    return n > 0;
 	}
+    public boolean suaHoaDon(HoaDon hoadon) {
+        int n = 0;
+        Connection conN = ConnectDB.getInstance().getConnection();
+        PreparedStatement pstm = null;
+        String sql = "UPDATE HoaDon SET IDNhanVien = ?, IDKhachHang = ?, IDKhuyenMai = ?, ThoiGianTao = ?, ThoiGianCheckin = ? WHERE IDHoaDon = ?";
+        try {
+            pstm = conN.prepareStatement(sql);
 
+            pstm.setString(1, hoadon.getNhanVienLap().getIdNhanVien());
+            pstm.setString(2, hoadon.getKhachHang().getIdKhachHang());
+            pstm.setString(3, hoadon.getKhuyenmai().getIdKhuyenMai());
+            pstm.setTimestamp(4, Timestamp.valueOf(hoadon.getThoiGianTao()));
+            pstm.setTimestamp(5, Timestamp.valueOf(hoadon.getThoiGianCheckin()));
+            pstm.setString(6, hoadon.getIdHoaDon()); // Important: Set the ID to update
+
+            n = pstm.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false; // Important: Return false on error
+        } finally {
+            try {
+                if (pstm != null) pstm.close(); // Close resources
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return n > 0;
+    }
 	public HoaDon layHoaDonTheoMaHoaDon(String idHoaDon) {
 	    HoaDon hd = null;
 	    Connection con = ConnectDB.getInstance().getConnection();

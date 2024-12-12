@@ -97,8 +97,9 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 
 	    @FXML
 	    private Button btn_TatCa;
-	@FXML
-	private GridPane gridPane;
+	    
+		@FXML
+		private GridPane gridPane;
 
 	    @FXML
 	    void moGiaoDienGiaHanPhong(MouseEvent event) throws IOException {
@@ -446,30 +447,11 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 			btnRight.setOnAction((event) -> {
 				String maHD = HoaDon.autoIdHoaDon();
 				GD_ThanhToanController.maHD = maHD;
-				System.out.println(maHD);
 				String maP = phong.getIdPhong();
 				ArrayList<PhieuThuePhong>dsPThue_Tam = new ArrayList<PhieuThuePhong>();
 				dsPThue_Tam = new PhieuThuePhong_DAO().layPhieuThueTheoMaPhong(maP);
-				System.out.println(dsPThue_Tam);
-				ArrayList<PhieuThuePhong>dsPThue = new ArrayList<PhieuThuePhong>();
-				dsPThue = new PhieuThuePhong_DAO().getAllPhieuThue();
-				
-				ArrayList<PhieuThuePhong>dsPThueThanhToan = new ArrayList<PhieuThuePhong>();
-				
-				for(PhieuThuePhong pt: dsPThue_Tam) {
-					if(pt.getHieuLuc()== true) {
-						System.out.println();
-						String maKH = pt.getKhachHang().getIdKhachHang();
-						for(PhieuThuePhong pt1 : dsPThue) {
-							if(pt1.getKhachHang().getIdKhachHang().equals(maKH) && pt1.getHieuLuc() == true) {
-								dsPThueThanhToan.add(pt1);
-							}
-						}
-						break;
-					}
-				}
 				PhieuThuePhong_DAO dsPt = new PhieuThuePhong_DAO(); 
-				for(PhieuThuePhong pt : dsPThueThanhToan) {
+				for(PhieuThuePhong pt : dsPThue_Tam) {
 					dsPt.suaPhieuThue_ThemIDHoaDon(maHD, pt.getIdPhieuThue());
 				}
 				try {

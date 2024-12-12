@@ -86,6 +86,34 @@ public class DichVu_DAO {
 		}
 		return n > 0;
 	}
+	public boolean capNhatDichVu(DichVu dichvu, int a) {
+		int n = 0;
+		ConnectDB.getInstance();
+		Connection conN = ConnectDB.getInstance().getConnection();
+		PreparedStatement pstm = null;
+		String sql = "update DichVu set TenSanPham=?, SoLuong=?, DonGia=? where IDDichVu=? ";
+		try {
+			pstm = conN.prepareStatement(sql);
+			
+			pstm.setString(1, dichvu.getTenSanPham());
+			pstm.setInt(2, a);
+			pstm.setDouble(3, dichvu.getDonGia());
+			pstm.setString(4, dichvu.getIdDichVu());
+			
+			n = pstm.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				pstm.close();
+			} catch (Exception e2) {
+				// TODO: handle exception
+				e2.printStackTrace();
+			}
+		}
+		return n > 0;
+	}
 	public boolean xoaDichVu(String idDichVu) {
 		ConnectDB.getInstance();
 		Connection conn = ConnectDB.getInstance().getConnection();

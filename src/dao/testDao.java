@@ -39,7 +39,7 @@ public class testDao {
 		testCTHD_DV();
 //		testKH();
 //
-		testPhieuThue();
+//		testPhieuThue();
 //		testKH();
 
 //		testHoaDon();
@@ -48,8 +48,9 @@ public class testDao {
 	
 	private static void testCTHD_DV() {
 		ChiTietHoaDon_DichVu_DAO cth = new ChiTietHoaDon_DichVu_DAO();
-		List<ChiTietHD_DichVu> ct = cth.layChiTietHoaDonTheoMaHoaDon("HD24121206");
-		System.out.println(ct);
+//		List<ChiTietHD_DichVu> ct = cth.layChiTietHoaDonTheoMaHoaDon("HD24121206");
+		ChiTietHD_DichVu ct = new ChiTietHD_DichVu(new HoaDon_DAO().layHoaDonTheoMaHoaDon("HD00"), new DichVu_DAO().layDichVuTheoMa("SP002"), 1);
+		System.out.println(cth.themChiTietHoaDon(ct));
 	}
 
 	private static void testCTHD_Phong() {

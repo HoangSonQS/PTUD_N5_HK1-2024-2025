@@ -250,6 +250,49 @@ public class PhieuThuePhong_DAO {
 	    }
 	    return pt;
 	}
+	public PhieuThuePhong layPhieuThueTheoMaPhongTrue(String idPhong) {
+		PhieuThuePhong pt = new PhieuThuePhong();
+	    Connection con = ConnectDB.getInstance().getConnection();
+	    PreparedStatement stmt = null;
+	    ResultSet rs = null;
+	    try {
+	        String sql = "SELECT * FROM PhieuThuePhong WHERE IDPhong = ? AND HieuLuc = 'True'";
+	        stmt = con.prepareStatement(sql);
+	        stmt.setString(1, idPhong);
+	        rs = stmt.executeQuery();
+	        while (rs.next()) {
+	        	String idphieuthue = rs.getString("IDPhieuThue");
+	        	String idkhachhang = rs.getString("IDKhachHang");
+	            String idnhanvien = rs.getString("IDNhanVien");
+	            LocalDate thoigiancheckin = rs.getDate("ThoiGianNhanPhong").toLocalDate();
+	            LocalDate thoigiancheckout = rs.getDate("ThoiHanGiaoPhong").toLocalDate();
+	            NhanVien_DAO dsnv = new NhanVien_DAO();
+	            dsnv.getAllNhanVien();
+	            NhanVien nv = dsnv.getNhanVienTheoMa(idnhanvien);
+	            KhachHang_DAO dskh = new KhachHang_DAO();
+	            dskh.getAllKhachHang();
+	            KhachHang kh = dskh.getKhachHangTheoMa(idkhachhang);
+	            Phong_DAO dsp = new Phong_DAO();
+	            Phong p = dsp.getPhongTheoMa(idPhong);
+	            Boolean hieuLuc = rs.getBoolean("HieuLuc");
+	            pt = new PhieuThuePhong(idphieuthue, kh, p, nv, thoigiancheckin, thoigiancheckout, hieuLuc);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    } finally {
+	        try {
+	            if (rs != null) {
+	                rs.close();
+	            }
+	            if (stmt != null) {
+	                stmt.close();
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	    return pt;
+	}
 	
 	public ArrayList<PhieuThuePhong> layPhieuThueTheoMaPhong(String idPhong) {
 		ArrayList<PhieuThuePhong> dsPT = new ArrayList<PhieuThuePhong>();
@@ -257,7 +300,7 @@ public class PhieuThuePhong_DAO {
 	    PreparedStatement stmt = null;
 	    ResultSet rs = null;
 	    try {
-	        String sql = "SELECT * FROM PhieuThuePhong WHERE IDPhong = ?";
+	        String sql = "SELECT * FROM PhieuThuePhong WHERE IDPhong = ? and HieuLuc = 'True'";
 	        stmt = con.prepareStatement(sql);
 	        stmt.setString(1, idPhong);
 	        rs = stmt.executeQuery();
@@ -445,6 +488,7 @@ public class PhieuThuePhong_DAO {
 		return pt;
 	}
 	
+	
 	//lay Phieu thue theo hieu luc 
 	public ArrayList<PhieuThuePhong> layPhieuThueTheoHieuLuc(boolean a){
 		ArrayList<PhieuThuePhong> dsPT = new ArrayList<PhieuThuePhong>();
@@ -452,7 +496,7 @@ public class PhieuThuePhong_DAO {
 	    PreparedStatement stmt = null;
 	    ResultSet rs = null;
 		try {
-			String sql = "select * from PhieuThuePhong where HieuLuc = ?";
+			String sql = "select * from PhieuThuePhong where HieuLuc = ? ";
 			stmt = con.prepareStatement(sql);
 			stmt.setBoolean(1, a);
 			rs = stmt.executeQuery();
@@ -746,7 +790,6 @@ public class PhieuThuePhong_DAO {
 			String sql = String.format("SELECT ThoiHanGiaoPhong FROM PhieuThuePhong "
 					+ "WHERE IDPhieuThue = '%s'",
 					maPhieuThue);
-			System.out.println(sql);
 			ResultSet rs = stm.executeQuery(sql);
 			while (rs.next()) {
 				time = rs.getTimestamp("ThoiHanGiaoPhong").toLocalDateTime();

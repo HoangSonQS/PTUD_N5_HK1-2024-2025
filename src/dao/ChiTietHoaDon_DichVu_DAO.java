@@ -161,6 +161,52 @@ public class ChiTietHoaDon_DichVu_DAO {
         }
         return danhSachChiTietHoaDon;
     }
+	public List<ChiTietHD_DichVu> layChiTietHoaDonTheoMaHoaDonMaSP(String maHoaDon,String maSP) {
+        List<ChiTietHD_DichVu> danhSachChiTietHoaDon = new ArrayList<>();
+        Connection connection = ConnectDB.getInstance().getConnection();
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            String sql = "SELECT * FROM ChiTietHD_DichVu WHERE IDHoaDon = ? and IDDichVu = ?";
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, maHoaDon);
+            preparedStatement.setString(2, maSP);
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                String IdDichVu = resultSet.getString("IDDichVu");
+                int soLuongSP = resultSet.getInt("SoLuong");
+                // Lấy thông tin của sản phẩm từ cơ sở dữ liệu
+                DichVu dichvu = null;
+                HoaDon_DAO dshd = new HoaDon_DAO();
+                dshd.getAllHoaDon();
+                HoaDon hd = dshd.layHoaDonTheoMaHoaDon(maHoaDon);
+				try {
+					DichVu_DAO dsDV = new DichVu_DAO();
+					dichvu = dsDV.layDichVuTheoMa(IdDichVu);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+                // Tạo đối tượng ChiTietHoaDon
+                ChiTietHD_DichVu chiTietHoaDon = new ChiTietHD_DichVu(hd, dichvu, soLuongSP);
+                danhSachChiTietHoaDon.add(chiTietHoaDon);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return danhSachChiTietHoaDon;
+    }
 	public ChiTietHD_DichVu layChiTietHoaDonTheoMaHoaDon1(String maHoaDon) {
         Connection connection = ConnectDB.getInstance().getConnection();
         PreparedStatement preparedStatement = null;

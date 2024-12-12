@@ -202,6 +202,34 @@ public class KhachHang_DAO {
 		}
 		return n > 0;
 	}
+	public boolean capNhatKhachHangTheoMa1(KhachHang khachhang, int a) {
+		int n = 0;
+		ConnectDB.getInstance();
+		Connection conN = ConnectDB.getInstance().getConnection();
+		PreparedStatement pstm = null;
+		String sql = "update KhachHang set TenKhachHang=?, NgaySinh=?, CCCD=?, TichDiem=?, SoDienThoai=? where  IDKhachHang = ?";
+		try {
+			pstm = conN.prepareStatement(sql);
+			pstm.setString(6, khachhang.getIdKhachHang());
+			pstm.setString(1, khachhang.getTenKhachHang());
+			pstm.setDate(2, Date.valueOf(khachhang.getNgaySinh()));
+			pstm.setString(3, khachhang.getCccd());
+			pstm.setInt(4, a);
+			pstm.setString(5, khachhang.getSoDienThoai());
+			n = pstm.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				pstm.close();
+			} catch (Exception e2) {
+				// TODO: handle exception
+				e2.printStackTrace();
+			}
+		}
+		return n > 0;
+	}
 	public int getCountOfKhachHangInDay(LocalDate date) {
         Connection conn = ConnectDB.getInstance().getConnection();
         PreparedStatement pstm = null;

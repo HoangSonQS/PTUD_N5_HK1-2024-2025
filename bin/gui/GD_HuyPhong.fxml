@@ -2,13 +2,12 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Line?>
@@ -26,64 +25,54 @@
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Label>
-                  <Line endX="213.29998779296875" endY="565.0" layoutX="304.0" layoutY="210.0" startX="213.29998779296875" startY="-151.5" />
+                  <Line endX="213.29998779296875" endY="565.0" layoutX="174.0" layoutY="210.0" startX="213.29998779296875" startY="-151.5" />
                   <Line endX="1294.0" layoutX="7.0" layoutY="58.0" startX="-7.0" />
                   <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="20.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../data/pic/cancel.png" />
                      </image>
                   </ImageView>
-                  <Label layoutX="28.0" layoutY="173.0" text="Tên khách hàng:">
+                  <Label layoutX="28.0" layoutY="173.0" text="Loại phòng:">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lb_tenKH" layoutX="185.0" layoutY="173.0" text="2NG">
+                  <Label fx:id="lb_LoaiPhong" layoutX="185.0" layoutY="173.0" text="2NG">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </Label>
-                  <Label layoutX="28.0" layoutY="253.0" text="Số điện thoại:">
+                  <Label layoutX="28.0" layoutY="253.0" text="Đơn giá">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </Label>
-                  <Label layoutX="28.0" layoutY="213.0" text="CCCD:">
+                  <Label layoutX="28.0" layoutY="213.0" text="Tiêu chí:">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lbSDT" layoutX="185.0" layoutY="253.0" text="T1P1">
+                  <Label fx:id="lb_DonGia" layoutX="185.0" layoutY="253.0" text="T1P1">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lbCCCD" layoutX="185.0" layoutY="213.0" text="T1P1">
+                  <Label fx:id="lb_TieuChi" layoutX="185.0" layoutY="213.0" text="T1P1">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </Label>
-                  <Button fx:id="btnTim" contentDisplay="RIGHT" layoutX="369.0" layoutY="71.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="117.0" style="-fx-background-color: #2972d3;" text="Tìm" textAlignment="RIGHT" textFill="WHITE" textOverrun="CLIP">
+                  <Button fx:id="btnTim" contentDisplay="RIGHT" layoutX="310.0" layoutY="71.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="66.0" style="-fx-background-color: #2972d3;" text="Tìm" textAlignment="RIGHT" textFill="WHITE" textOverrun="CLIP">
                      <font>
                         <Font size="16.0" />
                      </font>
                   </Button>
-                  <Label layoutX="28.0" layoutY="126.0" text="Thông tin khách hàng:">
+                  <Label layoutX="28.0" layoutY="126.0" text="Thông tin phòng:">
                      <font>
                         <Font name="System Bold" size="24.0" />
                      </font>
                   </Label>
-                  <ScrollPane layoutX="525.0" layoutY="110.0" prefHeight="615.0" prefWidth="747.0">
-                     <content>
-                        <GridPane fx:id="scrollPane_GDHuy" prefHeight="676.0" prefWidth="742.0">
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                           </columnConstraints>
-                        </GridPane>
-                     </content>
-                  </ScrollPane>
-                  <Label layoutX="544.0" layoutY="71.0" text="Danh sách phòng sắp checkin:">
+                  <Label layoutX="395.0" layoutY="71.0" text="Danh sách phòng đã đặt:">
                      <font>
                         <Font name="System Bold" size="24.0" />
                      </font>
@@ -175,8 +164,8 @@
                   </Label>
                </children>
             </Pane>
-            <TextField fx:id="txt_CCCD" layoutX="288.0" layoutY="71.0" prefHeight="40.0" prefWidth="322.0" promptText="Nhập CCCD" />
-            <ImageView fx:id="icon_TimKiem1" fitHeight="40.0" fitWidth="20.0" layoutX="579.0" layoutY="81.0" pickOnBounds="true" preserveRatio="true">
+            <TextField fx:id="txt_CCCD" layoutX="273.0" layoutY="71.0" prefHeight="40.0" prefWidth="284.0" promptText="Nhập CCCD" />
+            <ImageView fx:id="icon_TimKiem1" fitHeight="40.0" fitWidth="20.0" layoutX="529.0" layoutY="81.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../data/pic/search.png" />
                </image>
@@ -191,6 +180,17 @@
                   <Font name="System Bold Italic" size="20.0" />
                </font>
             </Label>
+            <TableView fx:id="tbPhieuThue" layoutX="642.0" layoutY="108.0" prefHeight="614.0" prefWidth="911.0">
+               <columns>
+                  <TableColumn fx:id="clSTT" prefWidth="75.0" text="STT" />
+                  <TableColumn fx:id="clMaPhieuThue" prefWidth="130.4000244140625" text="Mã phiếu thuê" />
+                  <TableColumn fx:id="cltenKH" prefWidth="173.5999755859375" text="Tên khách hàng" />
+                  <TableColumn fx:id="clMaPhong" prefWidth="97.60003662109375" text="Mã phòng" />
+                  <TableColumn fx:id="clTGNP" prefWidth="155.466552734375" text="Thời gian nhận phòng" />
+                  <TableColumn fx:id="clTGTP" prefWidth="140.5333251953125" text="Thời gian trả phòng" />
+                  <TableColumn fx:id="clHuy" prefWidth="134.9998779296875" text="Huỷ phòng" />
+               </columns>
+            </TableView>
          </children>
       </Pane>
       <Pane prefHeight="70.0" prefWidth="1554.0" style="-fx-background-color: #004AAD;">
