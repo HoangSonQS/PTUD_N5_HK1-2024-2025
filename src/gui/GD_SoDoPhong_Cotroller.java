@@ -5,6 +5,7 @@ import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDateTime;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.format.DateTimeFormatter;
@@ -13,12 +14,9 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 import javafx.scene.control.TextField;
 import dao.PhieuThuePhong_DAO;
 import dao.Phong_DAO;
-import dao.TaiKhoan_DAO;
 import entity.HoaDon;
 import entity.PhieuThuePhong;
 import entity.Phong;
@@ -152,6 +150,7 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 		LoadSoPhongTheoLoai();
 		suKienNutTim();
 		addUserLogin();
+		checkTrangThai();
 	}
 	
 	public void suKienNutTim() {
@@ -486,6 +485,10 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 			btnLeft.setOnAction(((event) -> {
 				try {
 					phong.setTrangThai(TrangThaiPhong.TRONG);
+					PhieuThuePhong_DAO ptdao = new PhieuThuePhong_DAO();
+					PhieuThuePhong pt = ptdao.layPhieuThueTheoMaPhong_1Phong(phong.getIdPhong());
+					pt.setHieuLuc(false);
+					ptdao.suaPhieuThue(pt);
 					dsp.capNhatTrangThaiPhong(phong);
 					LoadSoPhongTheoLoai();
 					renderArrayPhong(new Phong_DAO().getAllPhong());
@@ -601,6 +604,50 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 
 		return roomItem;
 		
+	}
+	
+	private void checkTrangThai() {
+	    ArrayList<PhieuThuePhong> dspt = new PhieuThuePhong_DAO().layPhieuThueTheoHieuLuc(true);
+	    LocalDateTime now = LocalDateTime.now();
+
+	    for (PhieuThuePhong pt : dspt) {
+	        LocalDateTime tgnp = new PhieuThuePhong_DAO().getThoiGianNhanPhong(pt.getIdPhieuThue());
+	        LocalDateTime tggp = new PhieuThuePhong_DAO().getThoiGianTraPhong(pt.getIdPhieuThue());
+
+	        Phong p = new Phong_DAO().getPhongTheoMa(pt.getPhong().getIdPhong());
+
+	     // Kiểm tra trạng thái sắp nhận phòng (SẮP CHECKIN)
+	        if (!now.isAfter(tgnp) && !now.isBefore(tgnp.minusHours(24))) {
+	            p.setTrangThai(TrangThaiPhong.SAPCHECKIN);
+	            new Phong_DAO().capNhatTrangThaiPhong(p);
+	        }
+	        // Trạng thái trống nếu thời gian nhận phòng còn trên 12 giờ
+	        else if (now.isBefore(tgnp.minusHours(24))) {
+	            p.setTrangThai(TrangThaiPhong.TRONG);
+	            new Phong_DAO().capNhatTrangThaiPhong(p);
+	        }
+
+
+	        // Kiểm tra trạng thái đang thuê (DANGTHUE)
+	        if (now.isAfter(tgnp) && now.isBefore(tggp.minusHours(2))) {
+	            p.setTrangThai(TrangThaiPhong.DANGTHUE);
+	            new Phong_DAO().capNhatTrangThaiPhong(p);
+	        }
+
+	        // Kiểm tra trạng thái sắp trả phòng (SẮP CHECKOUT)
+	        if (!now.isAfter(tggp) && !now.isBefore(tggp.minusHours(2))) {
+	            p.setTrangThai(TrangThaiPhong.SAPCHECKOUT);
+	            new Phong_DAO().capNhatTrangThaiPhong(p);
+	        }
+
+	        // Kiểm tra trạng thái sau khi trả phòng (TRỐNG)
+	        if (now.isAfter(tggp)) {
+	            p.setTrangThai(TrangThaiPhong.TRONG);
+	            new Phong_DAO().capNhatTrangThaiPhong(p);
+	            pt.setHieuLuc(Boolean.FALSE);
+	            new PhieuThuePhong_DAO().suaPhieuThue(pt);
+	        }
+	    }
 	}
 	
 	@FXML

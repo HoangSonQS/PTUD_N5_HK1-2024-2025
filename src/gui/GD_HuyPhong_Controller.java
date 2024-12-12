@@ -7,6 +7,7 @@ import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -127,7 +128,6 @@ public class GD_HuyPhong_Controller implements Initializable{
 	        }
 	    }
 
-	    // Thêm đoạn code sắp xếp ở đây
 	    LocalDate currentDate = LocalDate.now();
 	    allpt.sort((pt1, pt2) -> {
 	        long diff1 = Math.abs(ChronoUnit.DAYS.between(currentDate, pt1.getThoiGianNhanPhong()));
@@ -139,6 +139,7 @@ public class GD_HuyPhong_Controller implements Initializable{
 	    // Render danh sách phòng đã sắp xếp
 	    renderArrayPhong(allPhieuThue);
 	    addUserLogin();
+	    checkTrangThai();
 	}
 	
 	public void renderArrayPhong(ArrayList<PhieuThuePhong> dsPhieuThue) {
@@ -177,9 +178,11 @@ public class GD_HuyPhong_Controller implements Initializable{
 	            // Tính toán vị trí của phòng trong grid
 	            int column = i % maxColumns;
 	            int row = i / maxColumns;
-
-	            // Thêm phòng vào grid tại vị trí tính toán
-	            grid.add(phongPane, column, row);
+	            
+	            if(phieuThue.getHieuLuc()) {
+	            	// Thêm phòng vào grid tại vị trí tính toán
+		            grid.add(phongPane, column, row);
+	            }
 	        }
 	    }
 	}
@@ -237,12 +240,6 @@ public class GD_HuyPhong_Controller implements Initializable{
         
         // Sự kiện cho nút hủy phòng
         btnHuy.setOnAction(event -> {
-            // Kiểm tra xem đã chọn khách hàng chưa
-//            if (lb_tenKH.getText().isEmpty()) {
-//                new Alert(Alert.AlertType.WARNING, "Vui lòng chọn khách hàng trước khi hủy phòng.").showAndWait();
-//                return;
-//            }
-
             // Hiển thị hộp thoại xác nhận
             Alert confirmDialog = new Alert(Alert.AlertType.CONFIRMATION, 
                 "Bạn có chắc chắn muốn hủy phòng " + phong.getIdPhong() + "?");
@@ -416,6 +413,49 @@ public class GD_HuyPhong_Controller implements Initializable{
         // Render danh sách phòng đã lọc
         renderArrayPhong(filteredPhieuThue);
     }
+    private void checkTrangThai() {
+	    ArrayList<PhieuThuePhong> dspt = new PhieuThuePhong_DAO().layPhieuThueTheoHieuLuc(true);
+	    LocalDateTime now = LocalDateTime.now();
+
+	    for (PhieuThuePhong pt : dspt) {
+	        LocalDateTime tgnp = new PhieuThuePhong_DAO().getThoiGianNhanPhong(pt.getIdPhieuThue());
+	        LocalDateTime tggp = new PhieuThuePhong_DAO().getThoiGianTraPhong(pt.getIdPhieuThue());
+
+	        Phong p = new Phong_DAO().getPhongTheoMa(pt.getPhong().getIdPhong());
+
+	     // Kiểm tra trạng thái sắp nhận phòng (SẮP CHECKIN)
+	        if (!now.isAfter(tgnp) && !now.isBefore(tgnp.minusHours(24))) {
+	            p.setTrangThai(TrangThaiPhong.SAPCHECKIN);
+	            new Phong_DAO().capNhatTrangThaiPhong(p);
+	        }
+	        // Trạng thái trống nếu thời gian nhận phòng còn trên 12 giờ
+	        else if (now.isBefore(tgnp.minusHours(24))) {
+	            p.setTrangThai(TrangThaiPhong.TRONG);
+	            new Phong_DAO().capNhatTrangThaiPhong(p);
+	        }
+
+
+	        // Kiểm tra trạng thái đang thuê (DANGTHUE)
+	        if (now.isAfter(tgnp) && now.isBefore(tggp.minusHours(2))) {
+	            p.setTrangThai(TrangThaiPhong.DANGTHUE);
+	            new Phong_DAO().capNhatTrangThaiPhong(p);
+	        }
+
+	        // Kiểm tra trạng thái sắp trả phòng (SẮP CHECKOUT)
+	        if (!now.isAfter(tggp) && !now.isBefore(tggp.minusHours(2))) {
+	            p.setTrangThai(TrangThaiPhong.SAPCHECKOUT);
+	            new Phong_DAO().capNhatTrangThaiPhong(p);
+	        }
+
+	        // Kiểm tra trạng thái sau khi trả phòng (TRỐNG)
+	        if (now.isAfter(tggp)) {
+	            p.setTrangThai(TrangThaiPhong.TRONG);
+	            new Phong_DAO().capNhatTrangThaiPhong(p);
+	            pt.setHieuLuc(Boolean.FALSE);
+	            new PhieuThuePhong_DAO().suaPhieuThue(pt);
+	        }
+	    }
+	}
 	
 
     @FXML

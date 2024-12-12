@@ -4,12 +4,14 @@ package gui;
 
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 import dao.KhachHang_DAO;
+import dao.NhanVien_DAO;
 import dao.PhieuThuePhong_DAO;
 import dao.Phong_DAO;
 import entity.KhachHang;
@@ -22,6 +24,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
+import main.App;
 
 public class GD_DatPhongChoController implements Initializable{
 	@FXML
@@ -107,20 +110,26 @@ public class GD_DatPhongChoController implements Initializable{
 		            Phong p = dsP.getPhongTheoMa(MaPhong);
 		            
 		            if (p != null && p.getTrangThai() != TrangThaiPhong.SAPCHECKIN) { // Kiểm tra trạng thái phòng
-		                NhanVien nv = new NhanVien("NV24100301"); // Cần cải thiện cách lấy thông tin nhân viên
+		            	NhanVien nv = App.tk.getNhanVien();
 		                String idPT = PhieuThuePhong.autoIdPhieuThue(); // Tạo mã phiếu thuê tự động
 		                PhieuThuePhong pt = new PhieuThuePhong(idPT, dsKH.getKhachHangTheoCCCD(CCCD), p, nv, ngayNhan, ngayTra, true);
-		                Boolean them = dsPT.themPhieuThue(pt); // Thêm phiếu thuê vào danh sách
-
-		                if (them) {
-		                    System.out.println("Thêm phiếu thuê thành công.");
-		                    p.setTrangThai(TrangThaiPhong.SAPCHECKIN); // Cập nhật trạng thái phòng
-		                    dsP.capNhatTrangThaiPhong(p); // Cập nhật trạng thái phòng vào hệ thống
-		                } else {
-		                    System.out.println("Lỗi khi thêm phiếu thuê cho phòng " + MaPhong);
+		                PhieuThuePhong_DAO ptdao = new PhieuThuePhong_DAO();
+		                ArrayList<PhieuThuePhong> dsPhong = ptdao.getPhieuThueTheoMaPhong(MaPhong, ngayNhan, ngayTra);
+		                if(dsPhong.isEmpty()) {
+		                	Boolean them = dsPT.themPhieuThue(pt); // Thêm phiếu thuê vào danh sách
+			                if (them) {
+			                    System.out.println("Thêm phiếu thuê thành công.");
+			                    p.setTrangThai(TrangThaiPhong.SAPCHECKIN); // Cập nhật trạng thái phòng
+			                    dsP.capNhatTrangThaiPhong(p); // Cập nhật trạng thái phòng vào hệ thống
+			                    new Alert(Alert.AlertType.CONFIRMATION, "Đặt phòng thành công").showAndWait();
+			                } else {
+			                    System.out.println("Lỗi khi thêm phiếu thuê cho phòng " + MaPhong);
+			                }
+		                }else {
+		                	new Alert(Alert.AlertType.CONFIRMATION, "Phòng " + MaPhong + " đã được đặt vào ngày " + ngayNhan).showAndWait();
 		                }
 		            } else {
-		                System.out.println("Phòng " + MaPhong + " không hợp lệ hoặc đã được đặt.");
+	                	new Alert(Alert.AlertType.CONFIRMATION, "Phòng " + MaPhong + " không hợp lệ hoặc đã được đặt.").showAndWait();
 		            }
 		        }
 
@@ -141,6 +150,7 @@ public class GD_DatPhongChoController implements Initializable{
 		        ex.printStackTrace();
 		        System.err.println("Có lỗi xảy ra: " + ex.getMessage());
 		    }
+		    checkTrangThai();
 		});
 
 		btn_TimCCCD.setOnAction(event -> {
@@ -152,7 +162,7 @@ public class GD_DatPhongChoController implements Initializable{
 					txtSDT.setText(khachHangTonTai.getSoDienThoai());
 					dpNgaySinh.setValue(khachHangTonTai.getNgaySinh());
 				} else {
-					new Alert(Alert.AlertType.CONFIRMATION, "Khách hàng không tồn tại").showAndWait();
+					new Alert(Alert.AlertType.CONFIRMATION, "Khách hàng không tồn tại trong hệ thống").showAndWait();
 				}
 			} catch (Exception e) {
 			}
@@ -171,6 +181,51 @@ public class GD_DatPhongChoController implements Initializable{
 			dpTra.setValue(null);
 		});
 	}
+	
+	private void checkTrangThai() {
+	    ArrayList<PhieuThuePhong> dspt = new PhieuThuePhong_DAO().layPhieuThueTheoHieuLuc(true);
+	    LocalDateTime now = LocalDateTime.now();
+
+	    for (PhieuThuePhong pt : dspt) {
+	        LocalDateTime tgnp = new PhieuThuePhong_DAO().getThoiGianNhanPhong(pt.getIdPhieuThue());
+	        LocalDateTime tggp = new PhieuThuePhong_DAO().getThoiGianTraPhong(pt.getIdPhieuThue());
+
+	        Phong p = new Phong_DAO().getPhongTheoMa(pt.getPhong().getIdPhong());
+
+	     // Kiểm tra trạng thái sắp nhận phòng (SẮP CHECKIN)
+	        if (!now.isAfter(tgnp) && !now.isBefore(tgnp.minusHours(24))) {
+	            p.setTrangThai(TrangThaiPhong.SAPCHECKIN);
+	            new Phong_DAO().capNhatTrangThaiPhong(p);
+	        }
+	        // Trạng thái trống nếu thời gian nhận phòng còn trên 12 giờ
+	        else if (now.isBefore(tgnp.minusHours(24))) {
+	            p.setTrangThai(TrangThaiPhong.TRONG);
+	            new Phong_DAO().capNhatTrangThaiPhong(p);
+	        }
+
+
+	        // Kiểm tra trạng thái đang thuê (DANGTHUE)
+	        if (now.isAfter(tgnp) && now.isBefore(tggp.minusHours(2))) {
+	            p.setTrangThai(TrangThaiPhong.DANGTHUE);
+	            new Phong_DAO().capNhatTrangThaiPhong(p);
+	        }
+
+	        // Kiểm tra trạng thái sắp trả phòng (SẮP CHECKOUT)
+	        if (!now.isAfter(tggp) && !now.isBefore(tggp.minusHours(2))) {
+	            p.setTrangThai(TrangThaiPhong.SAPCHECKOUT);
+	            new Phong_DAO().capNhatTrangThaiPhong(p);
+	        }
+
+	        // Kiểm tra trạng thái sau khi trả phòng (TRỐNG)
+	        if (now.isAfter(tggp)) {
+	            p.setTrangThai(TrangThaiPhong.TRONG);
+	            new Phong_DAO().capNhatTrangThaiPhong(p);
+	            pt.setHieuLuc(Boolean.FALSE);
+	            new PhieuThuePhong_DAO().suaPhieuThue(pt);
+	        }
+	    }
+	}
+	
 	
 	private void showAlert(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, message, ButtonType.OK);
@@ -233,6 +288,5 @@ public class GD_DatPhongChoController implements Initializable{
         	return false;
         }
 		return true;
-    }  
-	
+    }  	
 }
