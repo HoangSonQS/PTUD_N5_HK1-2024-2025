@@ -158,6 +158,7 @@ public class GD_ThanhToanController implements Initializable{
 		handleEventInInput();
 		handleEventInBtn();
 	}
+	//load dữ liệu lên bảng
 	private void loadTableData() {
 		maPhongCol.setCellValueFactory(cellData -> 
         new ReadOnlyStringWrapper(cellData.getValue().getPhong().getIdPhong()));
@@ -200,6 +201,7 @@ public class GD_ThanhToanController implements Initializable{
 		
 	    
 	}
+	//lưu hóa đơn vào database
 	private void luuHoaDon() {
 		PhieuThuePhong pThuePhong = new PhieuThuePhong_DAO().layPhieuThueTheoMaHD_1PT(maHD);
 		KhuyenMai km = new KhuyenMai_DAO().layKhuyenMaiTheoMa("KM241001");
@@ -211,6 +213,7 @@ public class GD_ThanhToanController implements Initializable{
 		HoaDon_DAO dsHDao = new HoaDon_DAO();
 		dsHDao.themHoaDon(hd);
 	}
+	//hiển thị dữ liệu lên các txt
 	private void loadThongTin() {
 		txtMaHoaDon.setText(maHD);
 		txtNhanVien.setText(tk.getNhanVien().getTenNhanVien());
@@ -251,7 +254,7 @@ public class GD_ThanhToanController implements Initializable{
 		tongtien = hd.tongTien()+tong;
 		txtTongTien.setText(df.format(tongtien) + " VND");
 	}
-
+	//sự kiện xảy ra khi nhập tiền + khuyến mãi
 	public void handleEventInInput() {
 		txtTienNhan.setOnKeyReleased(evt -> {
 			if (txtTienNhan.getText().trim().isEmpty()) {
@@ -310,6 +313,7 @@ public class GD_ThanhToanController implements Initializable{
 			
 		});
 	}
+	//sự kiện nút lưu
 	public void handleEventInBtn() {
 		btnThanhToan.setOnAction(evt -> {
 			
