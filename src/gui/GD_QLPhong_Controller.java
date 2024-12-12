@@ -348,7 +348,7 @@ public class GD_QLPhong_Controller implements Initializable{
 	                Alert successAlert = new Alert(AlertType.INFORMATION);
 	                successAlert.setTitle("Thành công");
 	                successAlert.setHeaderText(null);
-	                successAlert.setContentText("Thêm nhân viên mới thành công!\nPhòng: " + idPhong);
+	                successAlert.setContentText("Thêm phòng mới thành công!\nPhòng: " + idPhong);
 	                successAlert.showAndWait();
 
 	                // Cập nhật TableView
