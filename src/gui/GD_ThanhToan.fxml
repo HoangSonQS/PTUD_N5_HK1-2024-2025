@@ -28,11 +28,11 @@
             <content>
                 <TableView fx:id="tablePhong" prefHeight="253.0" prefWidth="708.0">
                     <columns>
-                        <TableColumn fx:id="maPhongCol" prefWidth="75.99996339082736" text="Mã" />
-                        <TableColumn fx:id="loaiPhongCol" prefWidth="96.800048828125" text="Loại phòng" />
-                        <TableColumn fx:id="gioVaoCol" prefWidth="108.80000305175781" text="Ngày nhận" />
-                        <TableColumn fx:id="gioRaCol" prefWidth="108.79998779296875" text="Ngày trả phòng" />
-                        <TableColumn fx:id="donGiaCol" text="Đơn giá" />
+                        <TableColumn fx:id="maPhongCol" prefWidth="112.79998170137424" text="Mã" />
+                        <TableColumn fx:id="loaiPhongCol" prefWidth="123.20001220703125" text="Loại phòng" />
+                        <TableColumn fx:id="gioVaoCol" prefWidth="160.8000030517578" text="Ngày nhận" />
+                        <TableColumn fx:id="gioRaCol" prefWidth="151.20004272460938" text="Ngày trả phòng" />
+                        <TableColumn fx:id="donGiaCol" prefWidth="164.0" text="Đơn giá" />
                     </columns>
                 </TableView>
             </content>

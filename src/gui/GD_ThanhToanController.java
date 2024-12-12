@@ -11,6 +11,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,6 +20,7 @@ import java.util.regex.Pattern;
 
 import entity.ChiTietHD_DichVu;
 import dao.ChiTietHoaDon_DichVu_DAO;
+import dao.DichVu_DAO;
 import dao.HoaDon_DAO;
 import dao.KhuyenMai_DAO;
 import dao.PhieuThuePhong_DAO;
@@ -151,11 +153,12 @@ public class GD_ThanhToanController implements Initializable{
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		ArrayList<PhieuThuePhong> dsPT = new ArrayList<PhieuThuePhong>();
 		dsPT = new PhieuThuePhong_DAO().layPhieuThueTheoMaHD(maHD);
-		loadTableData();
 		loadThongTin();
-//		handleEventInInput();
-//		handleEventInBtn();
+		loadTableData();
+		handleEventInInput();
+		handleEventInBtn();
 	}
+	//load dữ liệu lên bảng
 	private void loadTableData() {
 		maPhongCol.setCellValueFactory(cellData -> 
         new ReadOnlyStringWrapper(cellData.getValue().getPhong().getIdPhong()));
@@ -167,12 +170,13 @@ public class GD_ThanhToanController implements Initializable{
 		donGiaCol.setCellValueFactory(cellData -> 
         new ReadOnlyObjectWrapper<>(String.valueOf(cellData.getValue().getPhong().getDonGia())));
 		
-//		tenDichVuCol.setCellValueFactory(cellData ->
-//		new ReadOnlyStringWrapper(cellData.getValue().getDichVu().getTenSanPham()));
-//		soLuongCol.setCellValueFactory(cellData ->
-//		new ReadOnlyStringWrapper(String.valueOf(cellData.getValue().getSoLuong())));
-//		thanhTienDVCol.setCellValueFactory(cellData ->
-//		new ReadOnlyStringWrapper(String.valueOf(cellData.getValue().getDichVu().getDonGia())));
+		
+		tenDichVuCol.setCellValueFactory(cellData ->
+		new ReadOnlyStringWrapper(cellData.getValue().getDichVu().getTenSanPham()));
+		soLuongCol.setCellValueFactory(cellData ->
+		new ReadOnlyStringWrapper(String.valueOf(cellData.getValue().getSoLuong())));
+		thanhTienDVCol.setCellValueFactory(cellData ->
+		new ReadOnlyStringWrapper(String.valueOf(cellData.getValue().getDichVu().getDonGia())));
 		
 		try {
 	        PhieuThuePhong_DAO dao = new PhieuThuePhong_DAO();
@@ -184,50 +188,73 @@ public class GD_ThanhToanController implements Initializable{
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
-//		try {
-//			ChiTietHoaDon_DichVu_DAO dsct = new ChiTietHoaDon_DichVu_DAO();
-//			List<ChiTietHD_DichVu> dsCT = dsct.layChiTietHoaDonTheoMaHoaDon(maHD);
-//	        ObservableList<ChiTietHD_DichVu> observableList = FXCollections.observableList(dsCT);
-//
-//	        // Gán danh sách vào TableView
-//	        tableDichVu.setItems(observableList);
-//	    } catch (Exception e) {
-//	        e.printStackTrace();
-//	    }
+		try {
+			ChiTietHoaDon_DichVu_DAO ds = new ChiTietHoaDon_DichVu_DAO();
+			List<ChiTietHD_DichVu> dsChitiet = ds.layChiTietHoaDonTheoMaHoaDon(maHD);
+	        ObservableList<ChiTietHD_DichVu> observableList = FXCollections.observableList(dsChitiet);
+
+	        // Gán danh sách vào TableView
+	        tableDichVu.setItems(observableList);
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
 		
 	    
 	}
-//	private void luuHoaDon() {
-//		PhieuThuePhong pThuePhong = new PhieuThuePhong_DAO().layPhieuThueTheoMaHD_1PT(maHD);
-//		String khuyenmai = txtMaKhuyenMai.getText();
-//		KhuyenMai km = new KhuyenMai_DAO().layKhuyenMaiTheoMa(khuyenmai);
-//		LocalDate thoiHanNhanPhong = pThuePhong.getThoiGianNhanPhong(); // Lấy giá trị LocalDate
-//		LocalDateTime thoiGianNhanPhongLocalDateTime = thoiHanNhanPhong.atTime(12, 00);
-//		LocalDate thoiHan = pThuePhong.getThoiHanGiaoPhong(); // Lấy giá trị LocalDate
-//		LocalDateTime thoiHanLocalDateTime = thoiHan.atTime(12, 00);
-//		HoaDon hd = new HoaDon(maHD, tk.getNhanVien(),pThuePhong.getKhachHang(),km,thoiHanLocalDateTime,thoiGianNhanPhongLocalDateTime);
-//		HoaDon_DAO dsHDao = new HoaDon_DAO();
-//		dsHDao.themHoaDon(hd);
-//	}
+	//lưu hóa đơn vào database
+	private void luuHoaDon() {
+		PhieuThuePhong pThuePhong = new PhieuThuePhong_DAO().layPhieuThueTheoMaHD_1PT(maHD);
+		KhuyenMai km = new KhuyenMai_DAO().layKhuyenMaiTheoMa("KM241001");
+		LocalDate thoiHanNhanPhong = pThuePhong.getThoiGianNhanPhong(); // Lấy giá trị LocalDate
+		LocalDateTime thoiGianNhanPhongLocalDateTime = thoiHanNhanPhong.atTime(12, 00);
+		LocalDate thoiHan = pThuePhong.getThoiHanGiaoPhong(); // Lấy giá trị LocalDate
+		LocalDateTime thoiHanLocalDateTime = thoiHan.atTime(12, 00);
+		HoaDon hd = new HoaDon(maHD, tk.getNhanVien(),pThuePhong.getKhachHang(),km,thoiHanLocalDateTime,thoiGianNhanPhongLocalDateTime);
+		HoaDon_DAO dsHDao = new HoaDon_DAO();
+		dsHDao.themHoaDon(hd);
+	}
+	//hiển thị dữ liệu lên các txt
 	private void loadThongTin() {
 		txtMaHoaDon.setText(maHD);
 		txtNhanVien.setText(tk.getNhanVien().getTenNhanVien());
 		PhieuThuePhong pThuePhong = new PhieuThuePhong_DAO().layPhieuThueTheoMaHD_1PT(maHD);
 		txtKhachHang.setText(pThuePhong.getKhachHang().getTenKhachHang());
 		txtNgayLap.setText(LocalDate.now().toString());
-		System.out.println(maHD);
+		luuHoaDon();
 		HoaDon_DAO dsHD = new HoaDon_DAO();
 		HoaDon hd = dsHD.layHoaDonTheoMaHoaDon(maHD) ;
-		System.out.println(hd);
-//		txtTienPhong.setText(String.valueOf(hd.thanhTien()));
-//		txtTienThue.setText(String.valueOf(hd.tinhThue()));
-//		ChiTietHoaDon_DichVu_DAO dsct = new ChiTietHoaDon_DichVu_DAO();
-//		ChiTietHD_DichVu ct = dsct.layChiTietHoaDonTheoMaHoaDon1(maHD);
-//		txtTienDichVu.setText(String.valueOf(ct.tongtien_DV()));
-//		tongtien = hd.tongTien()+ct.tongtien_DV();
-//		txtTongTien.setText(df.format(tongtien) + " VND");
+		txtTienPhong.setText(String.valueOf(hd.thanhTien()));
+		System.out.println(hd.thanhTien());
+		txtTienThue.setText(String.valueOf(hd.tinhThue()));
+		
+		HoaDon hd1 = new HoaDon_DAO().layHoaDonTheoMaHoaDon(maHD);
+		DichVu dv1 = new DichVu_DAO().layDichVuTheoMa("SP001");
+		DichVu dv2 = new DichVu_DAO().layDichVuTheoMa("SP002");
+		Random random = new Random();
+        int randomNumber = random.nextInt(5) + 1;
+		ChiTietHD_DichVu ct1 = new ChiTietHD_DichVu(hd1,dv1, randomNumber);
+		ChiTietHD_DichVu ct2 = new ChiTietHD_DichVu(hd1,dv2, randomNumber);
+		ChiTietHoaDon_DichVu_DAO dsChiTiet = new ChiTietHoaDon_DichVu_DAO();
+		dsChiTiet.themChiTietHoaDon(ct1);
+		dsChiTiet.themChiTietHoaDon(ct2);
+		
+		
+		ChiTietHoaDon_DichVu_DAO dsCT = new ChiTietHoaDon_DichVu_DAO();
+		List<ChiTietHD_DichVu> danhSachChiTiet = dsCT.layChiTietHoaDonTheoMaHoaDon(maHD);
+		double tong = 0;
+		DichVu_DAO dsdv = new DichVu_DAO();
+		for (ChiTietHD_DichVu ct : danhSachChiTiet) {
+			DichVu dv = dsdv.layDichVuTheoMa(ct.getDichVu().getIdDichVu());
+			double tien = dv.getDonGia(); 
+		    int soluong = ct.getSoLuong();
+		    tong+=(tien*soluong);
+		}
+		
+		txtTienDichVu.setText(String.valueOf(tong));
+		tongtien = hd.tongTien()+tong;
+		txtTongTien.setText(df.format(tongtien) + " VND");
 	}
-
+	//sự kiện xảy ra khi nhập tiền + khuyến mãi
 	public void handleEventInInput() {
 		txtTienNhan.setOnKeyReleased(evt -> {
 			if (txtTienNhan.getText().trim().isEmpty()) {
@@ -238,15 +265,24 @@ public class GD_ThanhToanController implements Initializable{
 				txtTienNhan.positionCaret(txtTienNhan.getText().length());
 			}
 			try {
-				tienNhan = Long.parseLong(txtTienNhan.getText().trim());
+				tienNhan = Double.parseDouble(txtTienNhan.getText().trim());
 			} catch (NumberFormatException nf) {
 				try {
-					tienNhan = df.parse(txtTienNhan.getText().trim()).longValue();
+					tienNhan = df.parse(txtTienNhan.getText().trim()).doubleValue();
 				} catch (ParseException ex) {
 					Logger.getLogger(GD_ThanhToanController.class.getName()).log(Level.SEVERE, null, ex);
 				}
 			}
-			double tienThua = tienNhan - tongtien;
+			String tong = txtTongTien.getText();
+			String tong1 = tong.substring(0, tong.length() - 4);
+			tong1 = tong1.replace(",", "");
+			double tien = Double.valueOf(tong1);
+			
+			String Giamgia = txtTienDaGiam.getText();
+			Giamgia = Giamgia.substring(0, Giamgia.length() - 4);
+			Giamgia = Giamgia.replace(",", "");
+			double tiengiam = Double.valueOf(Giamgia);
+			double tienThua = tienNhan - tien - tiengiam;
 			if (tienThua > 0) {
 				btnThanhToan.setDisable(false);
 				txtTienThua.setText(df.format(tienThua) + " VND");
@@ -255,71 +291,59 @@ public class GD_ThanhToanController implements Initializable{
 				txtTienThua.setText("0 VND");
 			}
 		});
-//		txtMaKhuyenMai.setOnKeyReleased((evt) -> {
-//			CT_KhuyenMai ctkm = CT_KhuyenMai.getCT_KhuyenMaiTheoMaKM(txtMaKhuyenMai.getText().trim());
-//			long tienDV = 0;
-//			long tienPhong = 0;
-//			for (ChiTietHD_DichVu ct : tableDichVu.getItems()) {
-//				tienDV += ct.getThanhTien();
-//			}
-//			for (ChiTietHD_Phong ct : tablePhong.getItems()) {
-//				tienPhong += ct.tinhThanhTien();
-//			}
-//			long tong = tienPhong + tienDV;
-//			long tienVAT = (long) (tong * (App.VAT / 100.0));
-//			tong += tienVAT;
-//			tongTien = tong;
-//			if (checkUseVoucher(ctkm)) {
-//				tienGiam = tong * ctkm.getChietKhau() / 100;
-//				txtTienDaGiam.setText(df.format(tienGiam) + " VND");
-//				imgCheckKM.setImage(new Image("file:src/main/resources/image/check.png"));
-//				tongTien = tong - tienGiam;
-//			} else {
-//				imgCheckKM.setImage(new Image("file:src/main/resources/image/check_false.png"));
-//				txtTienDaGiam.setText(0 + " VND");
-//			}
+		txtMaKhuyenMai.setOnKeyReleased((evt) -> {
+			String maKM = txtMaKhuyenMai.getText();
+			String tongtien = txtTongTien.getText();
+			tongtien = tongtien.substring(0, tongtien.length() - 4);
+			tongtien = tongtien.replace(",", "");
+			double a = Double.valueOf(tongtien);
+			KhuyenMai_DAO dsk = new KhuyenMai_DAO();
+			ArrayList<KhuyenMai> dsKM = dsk.getAllKhuyenMai();
+			boolean co = true;
+			for (KhuyenMai km: dsKM) {
+				if(!(km.getIdKhuyenMai().equals(maKM))) {
+					Alert alert = new Alert(Alert.AlertType.ERROR, "Vui lòng kiểm tra lại mã khuyến mãi!", ButtonType.OK);
+					co = false;
+				}
+			}
+			if(co == true) {
+				double b = a*0.01;
+				txtTienDaGiam.setText(String.valueOf(a - b));
+			}
 			
-		}
+		});
+	}
+	//sự kiện nút lưu
 	public void handleEventInBtn() {
 		btnThanhToan.setOnAction(evt -> {
-			try {
-				if (txtTienThua.getText().equals("0")) {
-					Alert alert = new Alert(Alert.AlertType.ERROR, "Vui lòng kiểm tra lại tiền nhận!", ButtonType.OK);
-					alert.getDialogPane().setStyle("-fx-font-family: 'sans-serif';");
-					alert.setTitle("Lỗi");
-					alert.setHeaderText("Tiền nhận không phù hợp");
-					alert.showAndWait();
-					return;
-				}
-				KhuyenMai km = new KhuyenMai_DAO().layKhuyenMaiTheoMa(txtMaKhuyenMai.getText().toUpperCase());
-				PhieuThuePhong_DAO dsPhieu = new PhieuThuePhong_DAO();
-				ArrayList<PhieuThuePhong> dsPT = new ArrayList<PhieuThuePhong>();
-				dsPT = new PhieuThuePhong_DAO().layPhieuThueTheoMaHD(maHD);
-				for(PhieuThuePhong pt: dsPT) {
-					pt.setHieuLuc(false);
-					dsPhieu.suaPhieuThue(pt);
-					Phong_DAO dsP = new Phong_DAO();
-					Phong p = dsP.getPhongTheoMa(pt.getPhong().getIdPhong());
-					p.setTrangThai(TrangThaiPhong.TRONG);
-					dsP.capNhatTrangThaiPhong(p);
-				}
-//				luuHoaDon();
-				Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "", ButtonType.OK);
+			
+			if (txtTienThua.getText().equals("0")) {
+				Alert alert = new Alert(Alert.AlertType.ERROR, "Vui lòng kiểm tra lại tiền nhận!", ButtonType.OK);
 				alert.getDialogPane().setStyle("-fx-font-family: 'sans-serif';");
-				alert.setTitle("Thanh toán phòng thành công");
-				alert.setHeaderText("Bạn đã thanh toán phòng thành công!");
+				alert.setTitle("Lỗi");
+				alert.setHeaderText("Tiền nhận không phù hợp");
 				alert.showAndWait();
-
-//				Xuat hoa don
-				if (checkBoxInHD.isSelected()) {
-					moGDBill();
-				}
-
-				App.setRoot("GD_QLKinhDoanhPhong");
-			} catch (IOException | IllegalArgumentException ex) {
-				Logger.getLogger(GD_ThanhToanController.class.getName()).log(Level.SEVERE, null, ex);
+				return;
 			}
-		});
+			PhieuThuePhong_DAO dsPhieu = new PhieuThuePhong_DAO();
+			ArrayList<PhieuThuePhong> dsPT = new ArrayList<PhieuThuePhong>();
+			dsPT = new PhieuThuePhong_DAO().layPhieuThueTheoMaHD(maHD);
+			for(PhieuThuePhong pt: dsPT) {
+				pt.setHieuLuc(false);
+				dsPhieu.suaPhieuThue(pt);
+				Phong_DAO dsP = new Phong_DAO();
+				Phong p = dsP.getPhongTheoMa(pt.getPhong().getIdPhong());
+				p.setTrangThai(TrangThaiPhong.TRONG);
+				dsP.capNhatTrangThaiPhong(p);
+			}
+//			luuHoaDon();
+			Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "", ButtonType.OK);
+			alert.getDialogPane().setStyle("-fx-font-family: 'sans-serif';");
+			alert.setTitle("Thanh toán phòng thành công");
+			alert.setHeaderText("Bạn đã thanh toán phòng thành công!");
+			alert.showAndWait();
+			
+			});
 //		btnBack.setOnAction(evt -> {
 //			try {
 //				App.setRoot("GD_QLKinhDoanhPhong");

@@ -56,18 +56,5 @@ public class ChiTietHD_DichVu {
 		ChiTietHD_DichVu other = (ChiTietHD_DichVu) obj;
 		return Objects.equals(dichVu, other.dichVu) && Objects.equals(hoaDon, other.hoaDon);
 	}
-	public double tongtien_DV() {
-		ChiTietHoaDon_DichVu_DAO dsCT = new ChiTietHoaDon_DichVu_DAO();
-		List<ChiTietHD_DichVu> danhSachChiTiet = dsCT.layChiTietHoaDonTheoMaHoaDon(hoaDon.getIdHoaDon());
-		double tong = 0;
-		DichVu_DAO dsdv = new DichVu_DAO();
-		for (ChiTietHD_DichVu ct : danhSachChiTiet) {
-			DichVu dv = dsdv.layDichVuTheoMa(ct.dichVu.getIdDichVu());
-			double tien = dv.getDonGia(); 
-		    int soluong = ct.getSoLuong();
-		    tong+=(tien*soluong);
-		}
-		return tong;
-	}
 	
 }

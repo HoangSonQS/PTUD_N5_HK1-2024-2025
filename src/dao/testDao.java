@@ -6,9 +6,11 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import connectDB.ConnectDB;
+import entity.ChiTietHD_DichVu;
 import entity.ChiTietHD_Phong;
 import entity.ChucVu;
 import entity.DichVu;
@@ -34,7 +36,7 @@ public class testDao {
 //		testKH();
 //		testHoaDon();
 //		testPhong();
-
+		testCTHD_DV();
 //		testKH();
 //
 		testPhieuThue();
@@ -44,6 +46,12 @@ public class testDao {
 //		testPhong();
 	}
 	
+	private static void testCTHD_DV() {
+		ChiTietHoaDon_DichVu_DAO cth = new ChiTietHoaDon_DichVu_DAO();
+		List<ChiTietHD_DichVu> ct = cth.layChiTietHoaDonTheoMaHoaDon("HD24121206");
+		System.out.println(ct);
+	}
+
 	private static void testCTHD_Phong() {
 		// TODO Auto-generated method stub
 		ChiTietHoaDon_Phong_DAO cthd = new ChiTietHoaDon_Phong_DAO();
