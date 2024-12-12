@@ -444,23 +444,41 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 			    }
 			}));
 			btnRight.setOnAction((event) -> {
-				try {
-					String maChon = phong.getIdPhong();
-					if(GD_DatPhongChoController.dsMaPhong.isEmpty()) {
-						GD_DatPhongChoController.dsMaPhong.add(maChon);
-					}else {
-						if (!GD_DatPhongChoController.dsMaPhong.contains(maChon)) {
-						    GD_DatPhongChoController.dsMaPhong.add(maChon);
+				String maHD = HoaDon.autoIdHoaDon();
+				GD_ThanhToanController.maHD = maHD;
+				System.out.println(maHD);
+				String maP = phong.getIdPhong();
+				ArrayList<PhieuThuePhong>dsPThue_Tam = new ArrayList<PhieuThuePhong>();
+				dsPThue_Tam = new PhieuThuePhong_DAO().layPhieuThueTheoMaPhong(maP);
+				System.out.println(dsPThue_Tam);
+				ArrayList<PhieuThuePhong>dsPThue = new ArrayList<PhieuThuePhong>();
+				dsPThue = new PhieuThuePhong_DAO().getAllPhieuThue();
+				
+				ArrayList<PhieuThuePhong>dsPThueThanhToan = new ArrayList<PhieuThuePhong>();
+				
+				for(PhieuThuePhong pt: dsPThue_Tam) {
+					if(pt.getHieuLuc()== true) {
+						System.out.println();
+						String maKH = pt.getKhachHang().getIdKhachHang();
+						for(PhieuThuePhong pt1 : dsPThue) {
+							if(pt1.getKhachHang().getIdKhachHang().equals(maKH) && pt1.getHieuLuc() == true) {
+								dsPThueThanhToan.add(pt1);
+							}
 						}
+						break;
 					}
-					moGDDatPhong();
-					renderArrayPhong(new Phong_DAO().getAllPhong());
+				}
+				PhieuThuePhong_DAO dsPt = new PhieuThuePhong_DAO(); 
+				for(PhieuThuePhong pt : dsPThueThanhToan) {
+					dsPt.suaPhieuThue_ThemIDHoaDon(maHD, pt.getIdPhieuThue());
+				}
+				try {
+					moGDThanhToan();
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			});
-			
 			break;
 		case SAPCHECKIN:
 			btnLeft.setStyle("-fx-background-color: #ff3131; -fx-text-fill: #fff; -fx-font-size: 16");
@@ -554,12 +572,6 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 				for(PhieuThuePhong pt : dsPThueThanhToan) {
 					dsPt.suaPhieuThue_ThemIDHoaDon(maHD, pt.getIdPhieuThue());
 				}
-//				try {
-//					moGDThanhToan();
-//				} catch (IOException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
 			});
 //             {
 //                try {
@@ -652,6 +664,12 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 	private void moGDDatPhong() throws IOException {
 		App.openModal("GD_DatPhong", 800, 684);
 	}
+
+	@FXML
+	private void moGDThanhToan() throws IOException {
+		App.openModal("GD_ThanhToan", 1280, 740);
+	}
+
     @FXML
     void moHuongDan(MouseEvent event) {
 		String initial = "data\\TaiLieu\\5_7_ApplicationDevelopment_UserManual-trang.html";

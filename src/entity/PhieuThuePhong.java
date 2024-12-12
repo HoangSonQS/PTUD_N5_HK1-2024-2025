@@ -2,6 +2,7 @@ package entity;
 
 import java.text.DecimalFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -149,11 +150,10 @@ public class PhieuThuePhong {
 	            }
 	        }
 	    }
-
+	    
 	    int nextId = max + 1;
 	    String formattedNextId = new DecimalFormat("000").format(nextId); // Định dạng 3 số
 	    return "PT" + dateString + formattedNextId;
 	}
-
 	
 }
