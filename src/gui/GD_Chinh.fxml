@@ -8,7 +8,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="845.0" prefWidth="1554.0" style="-fx-background-color: #AFCDF5;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.GD_Chinh_Controller">
+<AnchorPane prefHeight="845.0" prefWidth="1554.0" style="-fx-background-color: #AFCDF5;" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.GD_Chinh_Controller">
    <children>
       <Pane fx:id="pn_NoiDung" layoutY="70.0" prefHeight="775.0" prefWidth="1554.0">
          <children>
@@ -65,12 +65,12 @@
                   </ImageView>
                </children>
             </Pane>
-            <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="15.0" layoutY="650.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="15.0" layoutY="650.0" onMouseClicked="#moHuongDan" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../data/pic/question.png" />
                </image>
             </ImageView>
-            <Label layoutX="80.0" layoutY="660.0" text="Hướng dẫn">
+            <Label layoutX="80.0" layoutY="660.0" onMouseClicked="#moHuongDan" text="Hướng dẫn">
                <font>
                   <Font name="System Bold Italic" size="20.0" />
                </font>

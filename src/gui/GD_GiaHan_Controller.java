@@ -1,7 +1,11 @@
 package gui;
 
+import java.awt.Desktop;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -123,8 +127,8 @@ public class GD_GiaHan_Controller implements Initializable{
 		txt_HoTen.setEditable(false);
 		txt_PhongDuocChon.setEditable(false);
 		txt_PhongThue.setEditable(false);
-//		addUserLogin();
-
+		
+		addUserLogin();
 		suKienNutTK();
 		suKienNutKiemTra();
 		suKienNutLoc();
@@ -538,11 +542,24 @@ public class GD_GiaHan_Controller implements Initializable{
 	
 	@FXML
 	private void moGDTKe() throws IOException {
-//		App.openModal("GD_ThongKe", 800, 684);
+		App.openModal("GD_ThongKeDoanhThu", 800, 684);
 	}
-//	private void addUserLogin() {
-//		TaiKhoan tk = App.tk;
-//		maNV.setText(String.valueOf(tk.getNhanVien().getIdNhanVien()));
-//		tenNV.setText(String.valueOf(tk.getNhanVien().getTenNhanVien()));
-//	}
+	private void addUserLogin() {
+		TaiKhoan tk = App.tk;
+		maNV.setText(String.valueOf(tk.getNhanVien().getIdNhanVien()));
+		tenNV.setText(String.valueOf(tk.getNhanVien().getTenNhanVien()));
+	}
+    @FXML
+    void moHuongDan(MouseEvent event) {
+		String initial = "data\\TaiLieu\\5_7_ApplicationDevelopment_UserManual-trang.html";
+		Path initialDirectory = Paths.get(initial).toAbsolutePath();
+		File file = new File(initial);
+
+        try {
+            Desktop desktop = Desktop.getDesktop();
+            desktop.open(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

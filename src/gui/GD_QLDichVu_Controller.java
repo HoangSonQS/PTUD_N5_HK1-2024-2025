@@ -1,19 +1,18 @@
 
 package gui;
 
+import java.awt.Desktop;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDateTime;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
 import dao.DichVu_DAO;
-import dao.KhuyenMai_DAO;
-import dao.Phong_DAO;
 import entity.DichVu;
-import entity.HoaDon;
-import entity.KhuyenMai;
 import entity.TaiKhoan;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -502,7 +501,19 @@ public class GD_QLDichVu_Controller implements Initializable{
         ObservableList<DichVu> observableList = FXCollections.observableArrayList(new DichVu_DAO().getAllDichVu());
         tableDichVu.setItems(observableList);
 	}
-	
+    @FXML
+    void moHuongDan(MouseEvent event) {
+		String initial = "data\\TaiLieu\\5_7_ApplicationDevelopment_UserManual-trang.html";
+		Path initialDirectory = Paths.get(initial).toAbsolutePath();
+		File file = new File(initial);
+
+        try {
+            Desktop desktop = Desktop.getDesktop();
+            desktop.open(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 	private void addUserLogin() {
 		TaiKhoan tk = App.tk;
 		maNV.setText(String.valueOf(tk.getNhanVien().getIdNhanVien()));

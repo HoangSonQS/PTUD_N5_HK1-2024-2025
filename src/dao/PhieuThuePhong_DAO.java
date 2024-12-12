@@ -86,6 +86,34 @@ public class PhieuThuePhong_DAO {
 		}
 		return n > 0;
 	}
+	
+	public boolean suaPhieuThue_ThemIDHoaDon(String id,String maphieuthue) {
+		int n = 0;
+		ConnectDB.getInstance();
+		Connection conN = ConnectDB.getInstance().getConnection();
+		PreparedStatement pstm = null;
+		String sql = "update PhieuThuePhong set IDHoaDon=? where IDPhieuThue=? ";
+		try {
+			
+			pstm = conN.prepareStatement(sql);
+			
+			pstm.setString(1, id);
+			pstm.setString(2, maphieuthue);
+			n = pstm.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				pstm.close();
+			} catch (Exception e2) {
+				// TODO: handle exception
+				e2.printStackTrace();
+			}
+		}
+		return n > 0;
+	}
+	
 	public boolean xoaPhieuThue(String idPhieuThue) {
 		ConnectDB.getInstance();
 		Connection conn = ConnectDB.getInstance().getConnection();
@@ -618,43 +646,5 @@ public class PhieuThuePhong_DAO {
 			e.printStackTrace();
 		}
 		return dem;
-	}
-	public LocalDateTime getThoiGianNhanPhong(String maPhieuThue) {
-		Connection conN = ConnectDB.getInstance().getConnection();
-		Statement stm = null;
-		LocalDateTime time = null;
-		try {
-			stm = conN.createStatement();
-			String sql = String.format("SELECT ThoiGianNhanPhong FROM PhieuThuePhong "
-					+ "WHERE IDPhieuThue = '%s'",
-					maPhieuThue);
-			System.out.println(sql);
-			ResultSet rs = stm.executeQuery(sql);
-			while (rs.next()) {
-				time = rs.getTimestamp("ThoiGianNhanPhong").toLocalDateTime();
-			}
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-		return time;
-	}
-	public LocalDateTime getThoiGianTraPhong(String maPhieuThue) {
-		Connection conN = ConnectDB.getInstance().getConnection();
-		Statement stm = null;
-		LocalDateTime time = null;
-		try {
-			stm = conN.createStatement();
-			String sql = String.format("SELECT ThoiHanGiaoPhong FROM PhieuThuePhong "
-					+ "WHERE IDPhieuThue = '%s'",
-					maPhieuThue);
-			System.out.println(sql);
-			ResultSet rs = stm.executeQuery(sql);
-			while (rs.next()) {
-				time = rs.getTimestamp("ThoiHanGiaoPhong").toLocalDateTime();
-			}
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-		return time;
 	}
 }

@@ -21,6 +21,7 @@ import entity.TrangThaiPhong;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
 import javafx.stage.Stage;
 
 public class GD_DatPhongChoController implements Initializable{
@@ -59,6 +60,27 @@ public class GD_DatPhongChoController implements Initializable{
 			txtMaPhong.appendText(maPhongDuocChon +" ");
 		}
 		btnBookWaitingRoom.setOnAction(event -> {
+			if (txtCCCD.getText().trim().isEmpty() ||
+					txtKH.getText().trim().isEmpty() ||
+					txtSDT.getText().trim().isEmpty() ||
+					dpNgaySinh.getValue() == null ||
+					dpNgayNhan.getValue() == null ||
+					dpTra.getValue() == null) {
+	            Alert alert = new Alert(AlertType.WARNING);
+	            alert.setTitle("Cảnh báo");
+	            alert.setHeaderText(null);
+	            alert.setContentText("Vui lòng nhập đầy đủ thông tin!");
+	            alert.showAndWait();
+	            return;
+	    	}
+			try {
+				if(!kiemTraDuLieu()) {
+					return ;
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		    String tenKH = txtKH.getText();
 		    String sdt = txtSDT.getText();
 		    LocalDate ngaysinh = dpNgaySinh.getValue();
@@ -196,4 +218,67 @@ public class GD_DatPhongChoController implements Initializable{
 	    }
 	}
 	
+	
+	private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, message, ButtonType.OK);
+        alert.setTitle(title);
+        alert.showAndWait();
+    }
+    private void showAlertLoi(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR, message, ButtonType.OK);
+        alert.setTitle(title);
+        alert.showAndWait();
+    }
+    public boolean isNameFormatValid(String name) {
+        String[] words = name.split("\\s+");
+        for (String word : words) {
+            if (!word.matches("\\p{Lu}\\p{Ll}*")) {
+                return false;
+            }
+        }
+        return true;
+    }
+    public boolean kiemTraDuLieu() throws Exception{
+    	if (!txtCCCD.getText().matches("\\d{12}")) {
+            showAlertLoi("Lỗi nhập dữ liệu", "CCCD là một dãy gồm 12 số");
+            return false;
+        }
+        if (txtCCCD.getText().equals("")) {
+            showAlertLoi("Lỗi nhập dữ liệu", "CCCD nhân viên không được rỗng");
+            return false;
+        }
+        
+    	if (txtKH.getText().equals("")) {
+            showAlertLoi("Lỗi nhập dữ liệu", "Họ tên không được rỗng");
+            return false;
+        }
+    	if (!isNameFormatValid(txtKH.getText())) {
+            showAlertLoi("Lỗi nhập dữ liệu", "Họ tên phải in hoa ký tự đầu");
+            return false;
+        }
+    	if (!txtSDT.getText().matches("0[23789]\\d{8}")) {
+            showAlertLoi("Lỗi nhập dữ liệu", "Số điện thoại nhân viên là dãy gồm 10 ký số. 2 ký số đầu là {02, 03, 05, 07, 08, 09}");
+            return false;
+        }
+    	if (dpNgaySinh.getValue() == null) {
+            showAlert("Lỗi nhập dữ liệu", "Ngày sinh không được rỗng");
+            return false;
+        }
+
+        if ((LocalDate.now().getYear() - dpNgaySinh.getValue().getYear()) < 18) {
+            showAlertLoi("Lỗi nhập dữ liệu", "Khách hàng phải từ 18 trở lên");
+            return false;
+        }
+     
+        if(dpNgayNhan.getValue().isBefore(LocalDate.now())) {
+        	showAlertLoi("Lỗi nhập dữ liệu","Ngày nhận không được trước ngày hiện tại");
+        	return false;
+        }
+        
+        if(dpTra.getValue().isBefore(dpNgayNhan.getValue())) {
+        	showAlertLoi("Lỗi nhập dữ liệu","Ngày trả không được trước ngày nhận");
+        	return false;
+        }
+		return true;
+    }  	
 }

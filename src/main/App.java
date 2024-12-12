@@ -1,11 +1,13 @@
 package main;
 
+import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import gui.SplashController;
 import dao.PhieuThuePhong_DAO;
 import dao.Phong_DAO;
 import entity.PhieuThuePhong;
@@ -17,10 +19,13 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 public class App extends Application{
+	public static final int widthModalLogin = 732;
+	public static final int heightModalLogin = 517;
 	public static Stage primaryStage;
 	public static Scene primaryScene;
 	public static String user;
@@ -29,15 +34,16 @@ public class App extends Application{
 	private Stage stage;
 	@Override
 	public void start(Stage arg0) throws Exception {
-		// TODO Auto-generated method stub
+
 		this.primaryStage = arg0;
 		checkPhong();
-		openDangNhapWindow();
 		checkTrangThai();
 	}
 
 	@Override
 	public void init() throws Exception {
+		gui.SplashController splash = new SplashController();
+		splash.checkFuntions();
 		connectDB.ConnectDB.getInstance().connect();
 	}
 	public static void openMainGUI() throws IOException {
@@ -46,12 +52,26 @@ public class App extends Application{
 	            Parent root = fxmlLoader.load();
 	            primaryScene = new Scene(root);
 	            primaryStage.setScene(primaryScene);
+	            primaryStage.setMaximized(true);
 	            primaryStage.show();
 	    } catch (NullPointerException ex) {
 	        System.err.println("Không tìm thấy file GD_Chinh.fxml: " + ex.getMessage());
 	        ex.printStackTrace();
 	        throw ex; 
 	    }
+	}
+	public static void openModal(String fxml) throws IOException {
+		Scene sceneModal = new Scene(loadFXML(fxml));
+		Stage stageModal = new Stage();
+		stageModal.setMaximized(true);
+		stageModal.setScene(sceneModal);
+		if (fxml.equals("GD_DangNhap")) {
+			stageModal.setOnCloseRequest(event -> {
+				Platform.exit();
+				System.exit(0);
+			});
+		}
+		stageModal.showAndWait();
 	}
 	public static void openModal(String fxml, int width, int height) throws IOException {
 		Scene sceneModal = new Scene(loadFXML(fxml), width, height);
@@ -67,19 +87,6 @@ public class App extends Application{
 		}
 		stageModal.showAndWait();
 	}
-	public static void openDangNhapWindow() throws IOException {
-		try {
-            Parent root = FXMLLoader.load(Objects.requireNonNull(App.class.getResource("/gui/GD_DangNhap.fxml"))); // THAY ĐỔI ĐƯỜNG DẪN NẾU CẦN
-            Scene scene = new Scene(root);
-            primaryStage.setMaximized(true);
-            primaryStage.setScene(scene);
-            primaryStage.show();
-        } catch (NullPointerException ex) {
-            System.err.println("Không tìm thấy file DangNhap.fxml: " + ex.getMessage());
-            ex.printStackTrace();
-            throw ex; // Ném ngoại lệ để xử lý ở cấp cao hơn nếu cần
-        }// Hiện màn hình đăng nhập
-    }
 	public static void setRoot(String fxml) throws IOException {
 		
         FXMLLoader loader = new FXMLLoader(App.class.getResource("/gui/" + fxml + ".fxml"));
@@ -120,6 +127,7 @@ public class App extends Application{
 		return fxmlFrame.load();
 	}
 	public static void main(String[] args) {
+		System.setProperty("javafx.preloader", AppPreloader.class.getName());
 		launch(App.class, args);
 	}
 	
