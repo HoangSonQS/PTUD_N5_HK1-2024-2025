@@ -15,9 +15,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javafx.scene.control.TextField;
+import dao.KhachHang_DAO;
 import dao.PhieuThuePhong_DAO;
 import dao.Phong_DAO;
 import entity.HoaDon;
+import entity.KhachHang;
 import entity.PhieuThuePhong;
 import entity.Phong;
 import entity.TaiKhoan;
@@ -49,7 +51,7 @@ import javafx.scene.layout.HBox;
 public class GD_SoDoPhong_Cotroller implements Initializable {
 	DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
 	Phong_DAO dsp = new Phong_DAO();
-
+	public static KhachHang kh;
 	public static String roomID;
 
 	@FXML
@@ -528,7 +530,21 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 		default:
 			btnLeft.setStyle("-fx-background-color: #edbf6d; -fx-text-fill: #fff; -fx-font-size: 16");
 			btnLeft.setOnAction((event) -> {
-
+				String maP = phong.getIdPhong();
+				ArrayList<PhieuThuePhong> dsP = new ArrayList<PhieuThuePhong>();
+				dsP = new PhieuThuePhong_DAO().layPhieuThueTheoMaPhong(maP);
+				for(PhieuThuePhong pt:  dsP) {
+					if(pt.getHieuLuc()== true) {
+						kh = new KhachHang_DAO().getKhachHangTheoMa(pt.getKhachHang().getIdKhachHang());
+						break;
+					}
+				}
+				try {
+					moGDGiaHan();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			});
 			btnRight.setOnAction((event) -> {
 				String maHD = HoaDon.autoIdHoaDon();
@@ -589,6 +605,8 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 		
 	}
 	
+	
+
 	private void checkTrangThai() {
 	    ArrayList<PhieuThuePhong> dspt = new PhieuThuePhong_DAO().layPhieuThueTheoHieuLuc(true);
 	    LocalDateTime now = LocalDateTime.now();
@@ -641,8 +659,10 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 	    }
 	    App.setRoot("GD_DoiPhong");
 	}
-
-
+	@FXML
+	private void moGDGiaHan() throws IOException {
+		App.setRoot("GD_GiaHanPhong");
+	}
 	@FXML
 	private void moGDDatPhong() throws IOException {
 		App.openModal("GD_DatPhong", 800, 684);

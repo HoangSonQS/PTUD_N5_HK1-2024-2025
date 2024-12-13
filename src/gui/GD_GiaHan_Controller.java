@@ -116,6 +116,7 @@ public class GD_GiaHan_Controller implements Initializable{
     public String maphong;
     LocalDate thoiGianNhan;
     LocalDate thoiGianTra;
+   
     private PhieuThuePhong_DAO dsPT = new PhieuThuePhong_DAO();
 	private ArrayList<String> dsMaPhong = new ArrayList<String>();
 	private ArrayList<String> dsMPhongDuocChon = new ArrayList<String>();
@@ -130,6 +131,11 @@ public class GD_GiaHan_Controller implements Initializable{
 		txt_PhongThue.setEditable(false);
 		
 		addUserLogin();
+		
+		if(GD_SoDoPhong_Cotroller.kh != null) {
+			txt_SDT.setText(GD_SoDoPhong_Cotroller.kh.getCccd());
+			btn_TimKiem.fire();
+		}
 		suKienNutTK();
 		suKienNutKiemTra();
 		suKienNutLoc();
@@ -143,7 +149,7 @@ public class GD_GiaHan_Controller implements Initializable{
 				new Alert(Alert.AlertType.ERROR, "Không được để trống ô tìm kiếm!").showAndWait();
 			}else {
 				KhachHang_DAO dsKH = new KhachHang_DAO();
-				KhachHang kh = dsKH.getKhachHangTheoSDT(sdt);
+				KhachHang kh = dsKH.getKhachHangTheoCCCD(sdt);
 				if(kh == null) {
 					new Alert(Alert.AlertType.ERROR, "Khách hàng không tồn tại!").showAndWait();
 				}else {
@@ -151,7 +157,7 @@ public class GD_GiaHan_Controller implements Initializable{
 					ArrayList<PhieuThuePhong> dsPT = new PhieuThuePhong_DAO().layPhieuThueTheoHieuLuc(true);
 					ArrayList<Phong> dsP = new ArrayList<Phong>();
 					for (PhieuThuePhong pt : dsPT) {
-						if(pt.getKhachHang().getSoDienThoai().equalsIgnoreCase(sdt)) {
+						if(pt.getKhachHang().getCccd().equalsIgnoreCase(sdt)) {
 							String maPhong = pt.getPhong().getIdPhong();
 							dsMaPhong.add(maPhong);
 							Phong p = new Phong_DAO().getPhongTheoMa(pt.getPhong().getIdPhong());
@@ -226,22 +232,25 @@ public class GD_GiaHan_Controller implements Initializable{
 		btnRight.setOnAction((event) ->{
 			String sdt = txt_SDT.getText();
 			KhachHang_DAO dsKH = new KhachHang_DAO();
-			KhachHang kh = dsKH.getKhachHangTheoSDT(sdt);
+			KhachHang kh = dsKH.getKhachHangTheoCCCD(sdt);
 			LocalDate NgayNhan = txt_NgayNhan.getValue();
 		    LocalDate NgayTra = txt_NgayTra.getValue();
 			
 		    for (String MaP : dsMPhongDuocChon) {
 		    	Phong_DAO dsP = new Phong_DAO();
 		    	Phong p = dsP.getPhongTheoMa(MaP);
-		    	NhanVien nv = new NhanVien("NV24100301");
+		    	TaiKhoan tk = App.tk;
+		    	NhanVien nv = tk.getNhanVien();
 		    	String idPT = PhieuThuePhong.autoIdPhieuThue();
 		    	PhieuThuePhong pt = new PhieuThuePhong(idPT, kh, p, nv, NgayNhan, NgayTra, true);
 		    	Boolean them = dsPT.themPhieuThue(pt);
 		    	if (them) {
-                    System.out.println("Thêm phiếu thuê thành công.");
-                    dsP.capNhatTrangThaiPhong(p); // Cập nhật trạng thái phòng vào hệ thống
+		    		new Alert(Alert.AlertType.INFORMATION, "Phòng của khách hàng đã được gia hạn thành công!").showAndWait();
+                    dsP.capNhatTrangThaiPhong(p);
+                    GridPane_GiaHan.getChildren().clear();
+                    txt_PhongDuocChon.setText("");// Cập nhật trạng thái phòng vào hệ thống
                 } else {
-                    System.out.println("Lỗi khi thêm phiếu thuê cho phòng " + MaP);
+                	new Alert(Alert.AlertType.ERROR, "Lỗi khi thêm phiếu thuê cho phòng " + MaP).showAndWait();
                 }
 		    }
 		});
@@ -313,17 +322,17 @@ public class GD_GiaHan_Controller implements Initializable{
 		        dsPhieuThue.removeAll(dsPhieuThue);
 		    }
 
-		    // Hiển thị kết quả kiểm tra
+		    
+		    
+
+		    // Cập nhật danh sách: Loại bỏ phòng đã có người đặt
+		    dsMPhongDuocChon.removeAll(maPhongDaCoNguoiDat);
+		    
+		 // Hiển thị kết quả kiểm tra
 		    if (maPhongDaCoNguoiDat.isEmpty()) {
 		        new Alert(Alert.AlertType.INFORMATION, "Các phòng có thể gia hạn được!").showAndWait();
 		    } else {
 		        new Alert(Alert.AlertType.ERROR, "Phòng " + maPhongDaCoNguoiDat + " đã có người đặt! Vui lòng chọn phòng khác!").showAndWait();
-		    }
-
-		    // Cập nhật danh sách: Loại bỏ phòng đã có người đặt
-		    dsMPhongDuocChon.removeAll(maPhongDaCoNguoiDat);
-		    for(String maPhong: dsMPhongDuocChon) {
-		    	txt_PhongDuocChon.appendText(maPhong + " ");
 		    }
 		    
 		}));
@@ -452,7 +461,6 @@ public class GD_GiaHan_Controller implements Initializable{
 	    Button btnRight = new Button(strBtnRight);
 	    btnLeft.setStyle("-fx-background-color: #31c57e; -fx-font-size: 15");
 	    btnRight.setStyle("-fx-background-color: #31c57e; -fx-font-size: 15");
-	    
 	    btnLeft.setOnAction((event->{
 	    	try {
 				String maChon = phong.getIdPhong();
