@@ -30,10 +30,10 @@ public class Phong_DAO {
 				int loaiPhong = rs.getInt("LoaiPhong");
 				LoaiPhong lp = null;
 				if(loaiPhong == 1) {
-					lp = LoaiPhong.PHONGDOI;
+					lp = LoaiPhong.PHONGDON;
 					
 				} else if(loaiPhong == 2) {
-					lp = LoaiPhong.PHONGDON;
+					lp = LoaiPhong.PHONGDOI;
 					
 				} else if(loaiPhong == 3) {
 					lp = LoaiPhong.PHONGGIADINH;
@@ -247,9 +247,9 @@ public class Phong_DAO {
 					LoaiPhong lphong = null;
 					int loai = rs.getInt("LoaiPhong");
 					if(loai == 1) {
-						lphong = LoaiPhong.PHONGDOI;
-					} else if(loai == 2) {
 						lphong = LoaiPhong.PHONGDON;
+					} else if(loai == 2) {
+						lphong = LoaiPhong.PHONGDOI;
 					} else{
 						lphong = LoaiPhong.PHONGGIADINH;
 					}

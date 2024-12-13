@@ -1,0 +1,1 @@
+java --module-path "C:\Users\user\AppData\Local\SceneBuilder\runtime\lib" --add-modules javafx.controls,javafx.fxml -jar QuanLyKhachSan.jar

@@ -23,7 +23,7 @@ public class PhieuThuePhong_DAO {
 		ConnectDB.getInstance();
 		Connection conN = ConnectDB.getInstance().getConnection();
 		PreparedStatement pstm = null;
-		System.out.println(0);
+		System.out.println(phieuthue);
 		
 		String sql = "INSERT INTO PhieuThuePhong ( IDPhieuThue, IDKhachHang, IDPhong, IDNhanVien, ThoiGianNhanPhong, ThoiHanGiaoPhong) VALUES (?,?,?,?,?,?)";
 		try {

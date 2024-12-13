@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 import dao.KhachHang_DAO;
+import dao.NhanVien_DAO;
 import dao.PhieuThuePhong_DAO;
 import dao.Phong_DAO;
 import entity.KhachHang;
@@ -53,25 +54,24 @@ public class GD_DatPhongChoController implements Initializable{
 			LocalDate ngaysinh = dpNgaySinh.getValue();
 			LocalDate ngayNhan = dpNgayNhan.getValue();
 			LocalDate ngayTra = dpTra.getValue();
-			String id = "KH24100320";
+			String id = "KH24100315";
 			String CCCD = txtCCCD.getText();
 			int tichdiem = 0;
-			
 			try {
 				if(dsKH.getKhachHangTheoMa(id)== null) {
 					KhachHang kh = new KhachHang(id, tenKH, sdt, ngaysinh, CCCD, tichdiem);
 					dsKH.themKhachHang(kh);
+					
 					Phong p = dsP.getPhongTheoMa(MaPhong);
 					p.setTrangThai(TrangThaiPhong.SAPCHECKIN);
 					dsP.capNhatTrangThaiPhong(p);
-					NhanVien nv = new NhanVien("NV24100301");
-					PhieuThuePhong pt = new PhieuThuePhong("PT241003014", kh, p,nv , ngayNhan, ngayTra);
-					dsPT.themPhieuThue(pt);
+					NhanVien nv = new NhanVien_DAO().getNhanVienTheoMa("NV24100301");
+					PhieuThuePhong pt = new PhieuThuePhong("PT241003002", kh, p,nv , ngayNhan, ngayTra);
+					System.out.println(dsPT.themPhieuThue(pt)+ "aaaaa");
 					new Alert(Alert.AlertType.CONFIRMATION, "Success").showAndWait();
 				}else {
 					new Alert(Alert.AlertType.ERROR, "Fail").showAndWait();
 				}
-                
             	txtKH.clear();
 				txtSDT.clear();
 				txtCCCD.clear();

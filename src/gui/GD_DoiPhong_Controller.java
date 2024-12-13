@@ -184,8 +184,8 @@ public class GD_DoiPhong_Controller implements Initializable{
 	public Pane taoGiaoDienPhong(Phong phong) {
 	    VBox roomItem = new VBox();
 	    roomItem.setCursor(Cursor.HAND);
-	    roomItem.setPrefHeight(250);
-	    roomItem.setPrefWidth(250);
+	    roomItem.setPrefHeight(200);
+	    roomItem.setPrefWidth(200);
 	    roomItem.setStyle("-fx-background-color: #31c57e; -fx-border-color: #000000; -fx-border-width: 1"); // Viền đen để dễ nhận diện
 
 	    Label lblMaPhong = new Label(phong.getIdPhong());
@@ -198,7 +198,7 @@ public class GD_DoiPhong_Controller implements Initializable{
 	    lblLoaiPhong.setPadding(new Insets(0, 0, 8, 0));
 	    roomItem.getChildren().add(lblLoaiPhong);
 
-	    String strBtnLeft = phong.getTrangThai() == TrangThaiPhong.SAPCHECKOUT ? "Chọn Phòng" : "";
+	    String strBtnLeft = phong.getTrangThai() == TrangThaiPhong.TRONG ? "Chọn Phòng" : "Chọn phòng";
 
 	    Button btnLeft = new Button(strBtnLeft);
 	    btnLeft.setStyle("-fx-background-color: #2972d3; -fx-font-size: 16");

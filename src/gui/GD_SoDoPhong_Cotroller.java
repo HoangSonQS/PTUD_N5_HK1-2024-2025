@@ -21,6 +21,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Cursor;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -161,6 +162,8 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 	public void renderArrayPhong(ArrayList<Phong> dsPhong) {
 		for (int i = 0; i < dsPhong.size(); i++) {
 			Phong phong = dsPhong.get(i);
+			gridPane.setHgap(20); // Khoảng cách giữa các cột
+	        gridPane.setVgap(20);
 			gridPane.add(taoGiaoDienPhong(phong), i % 5, i / 5);
 		}
 	}
@@ -194,20 +197,25 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 		lblLoaiPhong.setStyle("-fx-font-size: 18; -fx-font-weight: 600");
 		lblLoaiPhong.setPadding(new Insets(0, 0, 8, 0));
 		roomItem.getChildren().add(lblLoaiPhong);
+		
+		Label lblGiaLabel = new Label(String.valueOf(phong.getDonGia()) );
+		lblGiaLabel.setStyle("-fx-font-size: 18; -fx-font-weight: 600");
+		lblGiaLabel.setPadding(new Insets(0, 0, 8, 0));
+		roomItem.getChildren().add(lblGiaLabel);
 
-		if (phong.getTrangThai() == TrangThaiPhong.SAPCHECKIN) {
-			try {
-				PhieuThuePhong phieu = new PhieuThuePhong_DAO().layPhieuThueTheoMa(phong.getIdPhong());
-				if (phieu != null) {
-					Label lblGioNhan = new Label("Giờ nhận: " + dtf.format(phieu.getThoiGianNhanPhong()));
-					lblGioNhan.setStyle("-fx-font-size: 16; -fx-font-weight: 600");
-					lblGioNhan.setPadding(new Insets(0, 0, 8, 0));
-					roomItem.getChildren().add(lblGioNhan);
-				}
-			} catch (Exception ex) {
-				Logger.getLogger(GD_SoDoPhong_Cotroller.class.getName()).log(Level.SEVERE, null, ex);
-			}
-		}
+//		if (phong.getTrangThai() == TrangThaiPhong.SAPCHECKIN) {
+//			try {
+//				PhieuThuePhong phieu = new PhieuThuePhong_DAO().layPhieuThueTheoMa(phong.getIdPhong());
+//				if (phieu != null) {
+//					Label lblGioNhan = new Label("Giờ nhận: " + dtf.format(phieu.getThoiGianNhanPhong()));
+//					lblGioNhan.setStyle("-fx-font-size: 16; -fx-font-weight: 600");
+//					lblGioNhan.setPadding(new Insets(0, 0, 8, 0));
+//					roomItem.getChildren().add(lblGioNhan);
+//				}
+//			} catch (Exception ex) {
+//				Logger.getLogger(GD_SoDoPhong_Cotroller.class.getName()).log(Level.SEVERE, null, ex);
+//			}
+//		}
 		String strBtnLeft = phong.getTrangThai() == TrangThaiPhong.TRONG ? "Trả Phòng"
 				: phong.getTrangThai() == TrangThaiPhong.SAPCHECKIN ? "Hủy phòng"
 						: phong.getTrangThai() == TrangThaiPhong.DANGTHUE ? "Đổi phòng" : "Gia Hạn Phòng";
@@ -254,6 +262,7 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 					dsp.capNhatTrangThaiPhong(phong);
 					renderArrayPhong(new Phong_DAO().getAllPhong());
 					loadsoPhong();
+					new Alert(Alert.AlertType.CONFIRMATION, "Success").showAndWait();
 				} catch (Exception e) {
 					// TODO: handle exception
 				}
