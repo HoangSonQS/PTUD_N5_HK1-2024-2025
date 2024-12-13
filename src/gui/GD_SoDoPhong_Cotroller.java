@@ -320,6 +320,19 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 		roomItem.setPrefHeight(250);
 		roomItem.setPrefWidth(250);
 		
+		
+		String imagePath1 = "data/pic/bed.png";
+	    File imageFile1 = new File(imagePath1);
+	    if (imageFile1.exists()) {
+	        Image image = new Image(imageFile1.toURI().toString());
+	        ImageView imageView = new ImageView(image);
+	        imageView.setFitWidth(250);
+	        imageView.setFitHeight(150); // Kích thước hình ảnh trong giao diện chính
+	        imageView.setPreserveRatio(true);
+	        roomItem.getChildren().add(imageView);
+	    } else {
+	        System.out.println("Hình ảnh không tìm thấy! Đường dẫn: " + imagePath1);
+	    }
 		roomItem.setOnMouseClicked(event->{
 			String thongTinPhong = "Mã phòng: " + phong.getIdPhong() + "\n"
 		            + "Loại phòng: " + phong.getLoaiPhong() + "\n"
@@ -399,17 +412,17 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 		lblLoaiPhong.setPadding(new Insets(0, 0, 8, 0));
 		roomItem.getChildren().add(lblLoaiPhong);
 		
-		String dongia = String.valueOf(phong.getDonGia());
-		Label lbGiaPhong = new Label(dongia + " VND");
-		lbGiaPhong.setStyle("-fx-font-size: 18; -fx-font-weight: 700");
-		lbGiaPhong.setPadding(new Insets(0, 0, 8, 0));
-		roomItem.getChildren().add(lbGiaPhong);
-		
-		String TieuChi = String.valueOf(phong.getTieuChi());
-		Label lbTieuChi = new Label(TieuChi);
-		lbTieuChi.setStyle("-fx-font-size: 18; -fx-font-weight: 700");
-		lbTieuChi.setPadding(new Insets(0, 0, 8, 0));
-		roomItem.getChildren().add(lbTieuChi);
+//		String dongia = String.valueOf(phong.getDonGia());
+//		Label lbGiaPhong = new Label(dongia + " VND");
+//		lbGiaPhong.setStyle("-fx-font-size: 18; -fx-font-weight: 700");
+//		lbGiaPhong.setPadding(new Insets(0, 0, 8, 0));
+//		roomItem.getChildren().add(lbGiaPhong);
+//		
+//		String TieuChi = String.valueOf(phong.getTieuChi());
+//		Label lbTieuChi = new Label(TieuChi);
+//		lbTieuChi.setStyle("-fx-font-size: 18; -fx-font-weight: 700");
+//		lbTieuChi.setPadding(new Insets(0, 0, 8, 0));
+//		roomItem.getChildren().add(lbTieuChi);
 
 		if (phong.getTrangThai() == TrangThaiPhong.SAPCHECKIN) {
 			try {
@@ -455,7 +468,9 @@ public class GD_SoDoPhong_Cotroller implements Initializable {
 				dsPThue_Tam = new PhieuThuePhong_DAO().layPhieuThueTheoMaPhong(maP);
 				PhieuThuePhong_DAO dsPt = new PhieuThuePhong_DAO(); 
 				for(PhieuThuePhong pt : dsPThue_Tam) {
-					dsPt.suaPhieuThue_ThemIDHoaDon(maHD, pt.getIdPhieuThue());
+					if(pt.getHieuLuc()== true) {
+						dsPt.suaPhieuThue_ThemIDHoaDon(maHD, pt.getIdPhieuThue());
+					}
 				}
 				try {
 					moGDThanhToan();
