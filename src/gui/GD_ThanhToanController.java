@@ -81,7 +81,8 @@ public class GD_ThanhToanController implements Initializable{
     private Button btnXoaDichVu;
     @FXML
     private Button btnThanhToan;
-
+    @FXML
+    private ImageView imgIn;
     @FXML
     private CheckBox checkBoxInHD;
 
@@ -221,6 +222,7 @@ public class GD_ThanhToanController implements Initializable{
 	}
 	//hiển thị dữ liệu lên các txt
 	private void loadThongTin() {
+		imgIn.setVisible(true);
 		txtMaHoaDon.setText(maHD);
 		txtNhanVien.setText(tk.getNhanVien().getTenNhanVien());
 		PhieuThuePhong pThuePhong = new PhieuThuePhong_DAO().layPhieuThueTheoMaHD_1PT(maHD);
@@ -360,7 +362,7 @@ public class GD_ThanhToanController implements Initializable{
 
 	@FXML
 	private void moGDBill() throws IOException {
-		App.openModal("Bill", 1280, 740);
+		App.openModal("Bill", 760, 450);
 	}
     @FXML
     void themDichVu(ActionEvent event) {
@@ -452,10 +454,13 @@ public class GD_ThanhToanController implements Initializable{
     void open(ActionEvent event) {
     	if (checkBoxInHD.isSelected()) {
     		btnThanhToan.setDisable(false);
+    		 
+    	} else {
+    		btnThanhToan.setDisable(true);
     	}
     }
     @FXML
-    void xacNhanThanhToan(ActionEvent event) {
+    void xacNhanThanhToan(ActionEvent event) throws IOException {
     	PhieuThuePhong_DAO dsPhieu = new PhieuThuePhong_DAO();
 		ArrayList<PhieuThuePhong> dsPT = new ArrayList<PhieuThuePhong>();
 		dsPT = new PhieuThuePhong_DAO().layPhieuThueTheoMaHD(maHD);
@@ -475,6 +480,7 @@ public class GD_ThanhToanController implements Initializable{
 		alert.setTitle("Thanh toán phòng thành công");
 		alert.setHeaderText("Bạn đã thanh toán phòng thành công!");
 		alert.showAndWait();
+		moGDBill();
     }
 	//lưu hóa đơn vào database
 	private void luuHoaDon() {
@@ -518,5 +524,11 @@ public class GD_ThanhToanController implements Initializable{
 		int tich = (int) (tienPhong * 5 / 100);
 		new KhachHang_DAO().capNhatKhachHangTheoMa1(kh, tich);
 	}
+	
+    @FXML
+    void inHD(MouseEvent event) throws IOException {
+    	
+    	moGDBill();
+    }
     
 }

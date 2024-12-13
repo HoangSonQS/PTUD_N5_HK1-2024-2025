@@ -13,7 +13,7 @@ public class TestJavaFX extends Application {
 	public void start(Stage primaryStage) {
 		try {
 			connect();
-			Parent root = FXMLLoader.load(getClass().getResource("GD_SoDoPhong.fxml"));
+			Parent root = FXMLLoader.load(getClass().getResource("GD_ThanhToan.fxml"));
 			Scene scene = new Scene(root);
 
 			primaryStage.setScene(scene);

@@ -173,9 +173,9 @@
                             </font>
                         </Text>
                         <CheckBox fx:id="checkBoxInHD" layoutX="251.0" layoutY="547.0" mnemonicParsing="false" onAction="#open" />
-                        <ImageView fitHeight="25.0" fitWidth="25.0" layoutX="278.0" layoutY="543.0" preserveRatio="true">
+                        <ImageView fx:id="imgIn" fitHeight="25.0" fitWidth="25.0" layoutX="278.0" layoutY="543.0" onMouseClicked="#inHD" preserveRatio="true">
                             <image>
-                                <Image url="@../image/print.png" />
+                                <Image url="@../resource/pic/print.png" />
                             </image>
                         </ImageView>
                         <Button fx:id="btnThanhToan" disable="true" layoutX="324.0" layoutY="540.0" mnemonicParsing="false" onAction="#xacNhanThanhToan" prefHeight="30.0" prefWidth="139.0" style="-fx-background-color: LIGHTGREEN;" text="Xác nhận thanh toán" />

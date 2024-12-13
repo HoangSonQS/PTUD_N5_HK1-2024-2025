@@ -7,6 +7,8 @@ import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ResourceBundle;
+
+import entity.ChucVu;
 import entity.TaiKhoan;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -67,6 +69,7 @@ public class GD_Chinh_Controller implements Initializable{
     void moGiaoDienTimKiem(MouseEvent event) throws IOException {
     	App.setRoot("GD_TKPhong");
     }
+    
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 
@@ -98,4 +101,5 @@ public class GD_Chinh_Controller implements Initializable{
 		stage.close();
 		App.openModal("GD_DangNhap");
     }
+
 }

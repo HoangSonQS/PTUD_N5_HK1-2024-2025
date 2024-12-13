@@ -180,10 +180,9 @@
       </Text>
       <TableView layoutX="21.0" layoutY="399.0" prefHeight="124.0" prefWidth="416.0">
          <columns>
-            <TableColumn fx:id="phongCol1" editable="false" prefWidth="149.6000394821167" sortable="false" text="Tên" />
-            <TableColumn fx:id="gioPhongCol1" editable="false" prefWidth="61.5999755859375" sortable="false" text="Số lượng" />
-            <TableColumn fx:id="giaPhongCol1" editable="false" prefWidth="105.5999755859375" sortable="false" text="Đơn giá" />
-            <TableColumn fx:id="tienPhongCol1" editable="false" prefWidth="98.4000244140625" sortable="false" text="Thành tiền" />
+            <TableColumn fx:id="phongCol1" editable="false" prefWidth="170.39996910095215" sortable="false" text="Tên" />
+            <TableColumn fx:id="gioPhongCol1" editable="false" prefWidth="77.60003662109375" sortable="false" text="Số lượng" />
+            <TableColumn fx:id="tienPhongCol1" editable="false" prefWidth="168.0" sortable="false" text="Thành tiền" />
          </columns>
       </TableView>
    </children>
