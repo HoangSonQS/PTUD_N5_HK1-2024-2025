@@ -61,9 +61,6 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import main.App;
 
-
-
-
 public class GD_ThanhToanController implements Initializable{
 	@FXML
     private AnchorPane GD_ThanhToan;
@@ -160,20 +157,27 @@ public class GD_ThanhToanController implements Initializable{
     public static ArrayList<PhieuThuePhong> pt = null;
     public static double tienNhan = 0;
 	public static double tienGiam = 0;
-	private static ArrayList<ChiTietHD_DichVu> dsdv = new ArrayList<ChiTietHD_DichVu>();
-	private static double tienDV = 0;
-	private static double tienPhong = 0;
-	private static double tienThue = 0;
-	private static double chietKhau = 0;
-	private static double tienkm = 0;
-	private static double tong = 0;
+	public static ArrayList<ChiTietHD_DichVu> dsdv = new ArrayList<ChiTietHD_DichVu>();
+	public static double tienDV = 0;
+	public static double tienPhong = 0;
+	public static double tienThue = 0;
+	public static double chietKhau = 0;
+	public static double tienkm = 0;
+	public static double tienThua = 0;
+	public static ArrayList<ChiTietHD_DichVu> getDsdv() {
+		return dsdv;
+	}
+	public static void setDsdv(ArrayList<ChiTietHD_DichVu> dsdv) {
+		GD_ThanhToanController.dsdv = dsdv;
+	}
+
+	public static double tong = 0;
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		ArrayList<PhieuThuePhong> dsPT = new ArrayList<PhieuThuePhong>();
 		dsPT = new PhieuThuePhong_DAO().layPhieuThueTheoMaHD(maHD);
 		loadTableData();
 		loadThongTin();
-		handleEventInBtn();
 	}
 	//load dữ liệu lên bảng
 	private void loadTableData() {
@@ -266,65 +270,6 @@ public class GD_ThanhToanController implements Initializable{
 		
 		
 	}
-	//sự kiện xảy ra khi nhập tiền + khuyến mãi
-	public void handleEventInInput() {
-		txtTienNhan.setOnKeyReleased(evt -> {
-			if (txtTienNhan.getText().trim().isEmpty()) {
-				return;
-			}
-			if (!Pattern.matches("[\\d,]*", txtTienNhan.getText().trim())) {
-				txtTienNhan.setText(txtTienNhan.getText().trim().replaceAll("[^\\d,]", ""));
-				txtTienNhan.positionCaret(txtTienNhan.getText().length());
-			}
-			try {
-				tienNhan = Double.parseDouble(txtTienNhan.getText().trim());
-			} catch (NumberFormatException nf) {
-				try {
-					tienNhan = df.parse(txtTienNhan.getText().trim()).doubleValue();
-				} catch (ParseException ex) {
-					Logger.getLogger(GD_ThanhToanController.class.getName()).log(Level.SEVERE, null, ex);
-				}
-			}
-			String tong = txtTongTien.getText();
-			String tong1 = tong.substring(0, tong.length() - 4);
-			tong1 = tong1.replace(",", "");
-			double tien = Double.valueOf(tong1);
-			
-			String Giamgia = txtTienDaGiam.getText();
-			Giamgia = Giamgia.substring(0, Giamgia.length() - 4);
-			Giamgia = Giamgia.replace(",", "");
-			double tiengiam = Double.valueOf(Giamgia);
-			double tienThua = tienNhan - tien - tiengiam;
-			if (tienThua > 0) {
-				btnThanhToan.setDisable(false);
-				txtTienThua.setText(df.format(tienThua) + " VND");
-			} else {
-				btnThanhToan.setDisable(true);
-				txtTienThua.setText("0 VND");
-			}
-		});
-		txtMaKhuyenMai.setOnKeyReleased((evt) -> {
-			String maKM = txtMaKhuyenMai.getText();
-			String tongtien = txtTongTien.getText();
-			tongtien = tongtien.substring(0, tongtien.length() - 4);
-			tongtien = tongtien.replace(",", "");
-			double a = Double.valueOf(tongtien);
-			KhuyenMai_DAO dsk = new KhuyenMai_DAO();
-			ArrayList<KhuyenMai> dsKM = dsk.getAllKhuyenMai();
-			boolean co = true;
-			for (KhuyenMai km: dsKM) {
-				if(!(km.getIdKhuyenMai().equals(maKM))) {
-					Alert alert = new Alert(Alert.AlertType.ERROR, "Vui lòng kiểm tra lại mã khuyến mãi!", ButtonType.OK);
-					co = false;
-				}
-			}
-			if(co == true) {
-				double b = a*0.01;
-				txtTienDaGiam.setText(String.valueOf(a - b));
-			}
-			
-		});
-	}
 	// Sự kiện nút lưu
 	public void handleEventInBtn() {
 	    btnThanhToan.setOnAction(evt -> {
@@ -353,16 +298,21 @@ public class GD_ThanhToanController implements Initializable{
 	        alert.setTitle("Thanh toán phòng thành công");
 	        alert.setHeaderText("Bạn đã thanh toán phòng thành công!");
 	        alert.showAndWait();
-
+	        
 	        // Đóng giao diện sau khi hiển thị thông báo
-	        Stage currentStage = (Stage) btnThanhToan.getScene().getWindow();
-	        currentStage.close();
+	        try {
+	        	luuHoaDon();
+				moGDBill();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	    });
 	}
 
 	@FXML
 	private void moGDBill() throws IOException {
-		App.openModal("Bill", 760, 450);
+		App.openModal("Bill", 450, 760);
 	}
     @FXML
     void themDichVu(ActionEvent event) {
@@ -446,7 +396,7 @@ public class GD_ThanhToanController implements Initializable{
     	tinhTongTien();
     	tinhTong();
     	tienNhan = Double.valueOf(txtTienNhan.getText());
-    	double tienThua = tienNhan - tong;
+    	tienThua = tienNhan - tong;
     	txtTienThua.setText(String.valueOf(tienThua));
 
     }
@@ -461,6 +411,9 @@ public class GD_ThanhToanController implements Initializable{
     }
     @FXML
     void xacNhanThanhToan(ActionEvent event) throws IOException {
+    	tinhTienDV();
+    	tinhTongTien();
+    	tinhTong();
     	PhieuThuePhong_DAO dsPhieu = new PhieuThuePhong_DAO();
 		ArrayList<PhieuThuePhong> dsPT = new ArrayList<PhieuThuePhong>();
 		dsPT = new PhieuThuePhong_DAO().layPhieuThueTheoMaHD(maHD);

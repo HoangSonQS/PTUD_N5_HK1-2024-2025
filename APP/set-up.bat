@@ -1,1 +1,1 @@
-java --module-path "D:\Java\JavaFX\javafx-sdk-23\lib" --add-modules javafx.controls,javafx.fxml -jar QuanLyKhachSan.jar
+java --module-path "D:\Java\JavaFX\javafx-sdk-23\lib" --add-modules javafx.controls,javafx.fxml -jar QLKS.jar
