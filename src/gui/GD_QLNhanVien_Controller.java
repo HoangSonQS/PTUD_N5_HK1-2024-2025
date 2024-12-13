@@ -1,8 +1,12 @@
 package gui;
 
+import java.awt.Desktop;
+import java.io.File;
 import java.io.IOException;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -11,7 +15,10 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import dao.Enum_ChucVu;
 import dao.NhanVien_DAO;
+import dao.TaiKhoan_DAO;
+import entity.ChucVu;
 import entity.NhanVien;
+import entity.TaiKhoan;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -31,6 +38,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import main.App;
 
 public class GD_QLNhanVien_Controller implements Initializable{
@@ -100,7 +108,10 @@ public class GD_QLNhanVien_Controller implements Initializable{
 	    
 	    @FXML
 	    private TableColumn<NhanVien, String> clChucVu;
-	    
+	    @FXML
+	    private Label maNV;
+	    @FXML
+	    private Label tenNV;
 	    @Override
 	    public void initialize(URL arg0, ResourceBundle arg1) {
 	        // Set up ComboBox
@@ -164,13 +175,14 @@ public class GD_QLNhanVien_Controller implements Initializable{
 
 	        // Format chức vụ
 	        clChucVu.setCellValueFactory(cellData -> {
-	            Enum_ChucVu chucVu = cellData.getValue().getChucVu();
-	            String chucVuString = (chucVu != null) ? chucVu.getChucVu() : "";
+	            ChucVu chucVu = cellData.getValue().getChucVu();
+	            String chucVuString = (chucVu != null) ? chucVu.getchucVu() : "";
 	            return new ReadOnlyStringWrapper(chucVuString);
 	        });
 
 	        // Load dữ liệu
 	        loadTableData();
+	        addUserLogin();
 	    }
 	    
 	    private void loadTableData() {
@@ -209,9 +221,9 @@ public class GD_QLNhanVien_Controller implements Initializable{
 	            txtCCCD.setText(selectedNhanVien.getCccd());
 	            txtNgaySinh.setValue(selectedNhanVien.getNgaySinh());
 	            cbbGioiTinh.setValue(selectedNhanVien.isGioiTinh() ? "Nam" : "Nữ");
-	            Enum_ChucVu chucVu = selectedNhanVien.getChucVu();
+	            ChucVu chucVu = selectedNhanVien.getChucVu();
 	            if (chucVu != null) {
-	                cbbChucVu.setValue(chucVu.getChucVu());
+	                cbbChucVu.setValue(chucVu.getchucVu());
 	            } else {
 	                cbbChucVu.setValue(null);
 	            }
@@ -316,12 +328,12 @@ public class GD_QLNhanVien_Controller implements Initializable{
 
 	        // Xử lý chức vụ
 	        String chucVuString = cbbChucVu.getValue();
-	        Enum_ChucVu chucVu = null;
+	        ChucVu chucVu = null;
 	        
 	        if (chucVuString.equals("Nhân viên lễ tân")) {
-	            chucVu = Enum_ChucVu.NHANVIENLETAN;
+	            chucVu = ChucVu.NHANVIENLETAN;
 	        } else if (chucVuString.equals("Người quản lý")) {
-	            chucVu = Enum_ChucVu.NGUOIQUANLY;
+	            chucVu = ChucVu.NGUOIQUANLY;
 	        }
 
 	        // Tạo đối tượng NhanVien với thông tin đã sửa
@@ -388,7 +400,11 @@ public class GD_QLNhanVien_Controller implements Initializable{
 	    
 
 	    @FXML
-	    void themNV(MouseEvent event) {
+	    void themNV(MouseEvent event) throws Exception {
+	    	
+	    	if(!kiemTraDuLieu()) {
+	        	return ;
+	        }
 	        // Kiểm tra các trường bắt buộc
 	        if (txtTenNV.getText().trim().isEmpty() || 
 	            txtSDT.getText().trim().isEmpty() || 
@@ -406,6 +422,8 @@ public class GD_QLNhanVien_Controller implements Initializable{
 	            alert.showAndWait();
 	            return;
 	        }
+	        
+	        
 
 	        // Lấy thông tin từ các trường
 	        String tenNV = txtTenNV.getText();
@@ -416,11 +434,11 @@ public class GD_QLNhanVien_Controller implements Initializable{
 
 	        // Lấy giá trị chức vụ từ ComboBox và chuyển đổi
 	        String chucVuString = cbbChucVu.getValue();
-	        Enum_ChucVu chucVu = null;
+	        ChucVu chucVu = null;
 	        if (chucVuString.equals("Nhân viên lễ tân")) {
-	            chucVu = Enum_ChucVu.NHANVIENLETAN;
+	            chucVu = ChucVu.NHANVIENLETAN;
 	        } else if (chucVuString.equals("Người quản lý")) {
-	            chucVu = Enum_ChucVu.NGUOIQUANLY;
+	            chucVu = ChucVu.NGUOIQUANLY;
 	        }
 
 	        // Tạo mã nhân viên
@@ -544,7 +562,91 @@ public class GD_QLNhanVien_Controller implements Initializable{
 	        cbbGioiTinh.setValue(null);
 	        cbbChucVu.setValue(null);
 	    }
-	    
-	    
+	    private void showAlert(String title, String message) {
+	        Alert alert = new Alert(Alert.AlertType.INFORMATION, message, ButtonType.OK);
+	        alert.setTitle(title);
+	        alert.showAndWait();
+	    }
+	    private void showAlertLoi(String title, String message) {
+	        Alert alert = new Alert(Alert.AlertType.ERROR, message, ButtonType.OK);
+	        alert.setTitle(title);
+	        alert.showAndWait();
+	    }
+	    public boolean isNameFormatValid(String name) {
+	        String[] words = name.split("\\s+");
+	        for (String word : words) {
+	            if (!word.matches("\\p{Lu}\\p{Ll}*")) {
+	                return false;
+	            }
+	        }
+	        return true;
+	    }
+	    public boolean kiemTraDuLieu() throws Exception{
+	    	if (txtTenNV.getText().equals("")) {
+	            showAlertLoi("Lỗi nhập dữ liệu", "Họ tên nhân viên không được rỗng");
+	            return false;
+	        }
+	    	if (!isNameFormatValid(txtTenNV.getText())) {
+	            showAlertLoi("Lỗi nhập dữ liệu", "Họ tên nhân viên phải in hoa ký tự đầu");
+	            return false;
+	        }
+	    	if (!txtSDT.getText().matches("0[23789]\\d{8}")) {
+	            showAlertLoi("Lỗi nhập dữ liệu", "Số điện thoại nhân viên là dãy gồm 10 ký số. 2 ký số đầu là {02, 03, 05, 07, 08, 09}");
+	            return false;
+	        }
+	    	if (txtNgaySinh.getValue() == null) {
+	            showAlert("Lỗi nhập dữ liệu", "Ngày sinh không được rỗng");
+	            return false;
+	        }
+
+	        if ((LocalDate.now().getYear() - txtNgaySinh.getValue().getYear()) < 18) {
+	            showAlertLoi("Lỗi nhập dữ liệu", "Khách hàng phải từ 18 trở lên");
+	            return false;
+	        }
+	     
+	        
+	        if (cbbGioiTinh.getValue().equals("")) {
+	            showAlertLoi("Lỗi nhập dữ liệu", "Giới tính nhân viên không được rỗng");
+	            return false;
+	        }
+	    	if (!txtCCCD.getText().matches("\\d{12}")) {
+	            showAlertLoi("Lỗi nhập dữ liệu", "CCCD là một dãy gồm 12 số");
+	            return false;
+	        }
+	        if (txtCCCD.getText().equals("")) {
+	            showAlertLoi("Lỗi nhập dữ liệu", "CCCD nhân viên không được rỗng");
+	            return false;
+	        }
+	        if (cbbChucVu.getValue().equals("")) {
+	            showAlertLoi("Lỗi nhập dữ liệu", "Chức vụ nhân viên không được rỗng");
+	            return false;
+	        }
+			return true;
+	    }  
+	    @FXML
+	    void moHuongDan(MouseEvent event) {
+			String initial = "data\\TaiLieu\\5_7_ApplicationDevelopment_UserManual-trang.html";
+			Path initialDirectory = Paths.get(initial).toAbsolutePath();
+			File file = new File(initial);
+
+	        try {
+	            Desktop desktop = Desktop.getDesktop();
+	            desktop.open(file);
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	    }
+		private void addUserLogin() {
+			TaiKhoan tk = App.tk;
+			maNV.setText(String.valueOf(tk.getNhanVien().getIdNhanVien()));
+			tenNV.setText(String.valueOf(tk.getNhanVien().getTenNhanVien()));
+		}
+	    @FXML
+	    void dongUngDung(MouseEvent event) throws IOException {
+			App.user = "";
+			Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+			stage.close();
+			App.openModal("GD_DangNhap");
+	    }
 	    
 }

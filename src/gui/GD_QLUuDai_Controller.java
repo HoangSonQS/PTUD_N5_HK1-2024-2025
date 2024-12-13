@@ -1,13 +1,19 @@
 package gui;
 
+import java.awt.Desktop;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import dao.KhuyenMai_DAO;
+import dao.TaiKhoan_DAO;
 import entity.KhuyenMai;
+import entity.TaiKhoan;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -25,13 +31,17 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import main.App;
 
 public class GD_QLUuDai_Controller implements Initializable{
 
 	@FXML
     private ImageView avt;
-
+    @FXML
+    private Label maNV;
+    @FXML
+    private Label tenNV;
     @FXML
     private Button btnSua;
 
@@ -197,6 +207,7 @@ public class GD_QLUuDai_Controller implements Initializable{
     @FXML
     void themKM(MouseEvent event) {
         try {
+        	
             // Lấy dữ liệu từ các trường nhập
             String tenKM = txtTenKM.getText().trim();
             String chietKhauStr = txtCK.getText().trim();
@@ -489,6 +500,7 @@ public class GD_QLUuDai_Controller implements Initializable{
             }
         });
         loadTableData();
+        addUserLogin();
 	}
     
     private void loadTableData() {
@@ -529,5 +541,30 @@ public class GD_QLUuDai_Controller implements Initializable{
     	lbIDKM.setText("");
         txtTenKM.setText("");
         txtCK.setText("");
+    }
+    @FXML
+    void moHuongDan(MouseEvent event) {
+		String initial = "data\\TaiLieu\\5_7_ApplicationDevelopment_UserManual-trang.html";
+		Path initialDirectory = Paths.get(initial).toAbsolutePath();
+		File file = new File(initial);
+
+        try {
+            Desktop desktop = Desktop.getDesktop();
+            desktop.open(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+	private void addUserLogin() {
+		TaiKhoan tk = App.tk;
+		maNV.setText(String.valueOf(tk.getNhanVien().getIdNhanVien()));
+		tenNV.setText(String.valueOf(tk.getNhanVien().getTenNhanVien()));
+	}
+    @FXML
+    void dongUngDung(MouseEvent event) throws IOException {
+		App.user = "";
+		Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+		stage.close();
+		App.openModal("GD_DangNhap");
     }
 }

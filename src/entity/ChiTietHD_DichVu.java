@@ -1,6 +1,10 @@
 package entity;
 
+import java.util.List;
 import java.util.Objects;
+
+import dao.ChiTietHoaDon_DichVu_DAO;
+import dao.DichVu_DAO;
 
 public class ChiTietHD_DichVu {
 
@@ -14,6 +18,7 @@ public class ChiTietHD_DichVu {
 		this.dichVu = dichVu;
 		this.soLuong = soLuong;
 	}
+	
 	public HoaDon getHoaDon() {
 		return hoaDon;
 	}
@@ -51,6 +56,5 @@ public class ChiTietHD_DichVu {
 		ChiTietHD_DichVu other = (ChiTietHD_DichVu) obj;
 		return Objects.equals(dichVu, other.dichVu) && Objects.equals(hoaDon, other.hoaDon);
 	}
-
-
+	
 }

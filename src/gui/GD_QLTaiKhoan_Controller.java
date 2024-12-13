@@ -1,7 +1,11 @@
 package gui;
 
+import java.awt.Desktop;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -9,6 +13,7 @@ import java.util.ResourceBundle;
 import dao.Enum_ChucVu;
 import dao.NhanVien_DAO;
 import dao.TaiKhoan_DAO;
+import entity.ChucVu;
 import entity.NhanVien;
 import entity.TaiKhoan;
 import javafx.beans.property.ReadOnlyStringWrapper;
@@ -29,13 +34,17 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import main.App;
 
 public class GD_QLTaiKhoan_Controller implements Initializable{
 
     @FXML
     private ImageView avt;
-
+    @FXML
+    private Label maNV;
+    @FXML
+    private Label tenNV;
     @FXML
     private Button btnSua;
 
@@ -158,7 +167,7 @@ public class GD_QLTaiKhoan_Controller implements Initializable{
             String maNV = nv.getIdNhanVien();
             
             // Lấy chức vụ của nhân viên
-            Enum_ChucVu chucVu = nv.getChucVu();
+            ChucVu chucVu = nv.getChucVu();
             
             // Tiền tố mã tài khoản dựa vào chức vụ
             String prefix = "";
@@ -196,6 +205,9 @@ public class GD_QLTaiKhoan_Controller implements Initializable{
     @FXML
     void themTK(MouseEvent event) {
         try {
+        	if(!kiemTraDuLieu()) {
+	    		return;
+	    	}
             // Kiểm tra dữ liệu nhập vào
             if(txtMatKhau.getText().trim().isEmpty() || lb_MaNV.getText().trim().isEmpty()) {
                 Alert alert = new Alert(AlertType.ERROR);
@@ -205,6 +217,7 @@ public class GD_QLTaiKhoan_Controller implements Initializable{
                 alert.showAndWait();
                 return;
             }
+            
 
             // Lấy thông tin nhân viên
             NhanVien_DAO nvDAO = new NhanVien_DAO();
@@ -431,10 +444,10 @@ public class GD_QLTaiKhoan_Controller implements Initializable{
             new ReadOnlyStringWrapper(cellData.getValue().getNhanVien().getTenNhanVien()));
         
         clChucVu.setCellValueFactory(cellData -> 
-            new ReadOnlyStringWrapper(cellData.getValue().getNhanVien().getChucVu().getChucVu()));
+            new ReadOnlyStringWrapper(cellData.getValue().getNhanVien().getChucVu().getchucVu()));
         
         loadTableData();
-		
+		addUserLogin();
 	}
 	
 	private void loadTableData() {
@@ -469,7 +482,7 @@ public class GD_QLTaiKhoan_Controller implements Initializable{
 	        if (nv != null) {
 	            lb_MaNV.setText(nv.getIdNhanVien());
 	            lb_TenNV.setText(nv.getTenNhanVien());
-	            lb_ChucVu.setText(nv.getChucVu().getChucVu());
+	            lb_ChucVu.setText(nv.getChucVu().getchucVu());
 	        } else {
 	            // Xóa thông tin nếu không có nhân viên liên kết
 	            lb_MaNV.setText("");
@@ -485,5 +498,56 @@ public class GD_QLTaiKhoan_Controller implements Initializable{
         lb_MaNV.setText("");
         lb_TenNV.setText("");
         lb_ChucVu.setText("");
+    }
+    private void showAlert(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION, message, ButtonType.OK);
+        alert.setTitle(title);
+        alert.showAndWait();
+    }
+    private void showAlertLoi(String title, String message) {
+        Alert alert = new Alert(Alert.AlertType.ERROR, message, ButtonType.OK);
+        alert.setTitle(title);
+        alert.showAndWait();
+    }
+    public boolean isNameFormatValid(String name) {
+        String[] words = name.split("\\s+");
+        for (String word : words) {
+            if (!word.matches("\\p{Lu}\\p{Ll}*")) {
+                return false;
+            }
+        }
+        return true;
+    }
+    public boolean kiemTraDuLieu() throws Exception{
+    	if (!txtMatKhau.getText().matches("^(?=.*[a-zA-Z]).{6,}$")) {
+            showAlertLoi("Lỗi nhập dữ liệu", "Không được rỗng, ít nhất 6 ký tự. Trong đó, có 1 ký tự chữ");
+            return false;
+        }
+		return true;
+    }  
+    @FXML
+    void moHuongDan(MouseEvent event) {
+		String initial = "data\\TaiLieu\\5_7_ApplicationDevelopment_UserManual-trang.html";
+		Path initialDirectory = Paths.get(initial).toAbsolutePath();
+		File file = new File(initial);
+
+        try {
+            Desktop desktop = Desktop.getDesktop();
+            desktop.open(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+	private void addUserLogin() {
+		TaiKhoan tk = App.tk;
+		maNV.setText(String.valueOf(tk.getNhanVien().getIdNhanVien()));
+		tenNV.setText(String.valueOf(tk.getNhanVien().getTenNhanVien()));
+	}
+    @FXML
+    void dongUngDung(MouseEvent event) throws IOException {
+		App.user = "";
+		Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+		stage.close();
+		App.openModal("GD_DangNhap");
     }
 }

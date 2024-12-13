@@ -4,10 +4,14 @@ import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalField;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
+import dao.ChiTietHoaDon_DichVu_DAO;
 import dao.HoaDon_DAO;
+import dao.PhieuThuePhong_DAO;
 
 public class HoaDon {
 
@@ -19,7 +23,7 @@ public class HoaDon {
 	private LocalDateTime thoiGianCheckin;
 
 	
-
+	
 	public HoaDon(String idHoaDon, NhanVien nhanVienLap, KhachHang khachHang, KhuyenMai khuyenmai,
 			LocalDateTime thoiGianTao, LocalDateTime thoiGianCheckin) {
 		super();
@@ -53,6 +57,10 @@ public class HoaDon {
 	public void setNhanVienLap(NhanVien nhanVienLap) {
 		this.nhanVienLap = nhanVienLap;
 	}
+	
+	public String getNhanVienString() {
+		return getNhanVienLap() == null ? "" : getNhanVienLap().toString();
+	}
 
 	public KhachHang getKhachHang() {
 		return khachHang;
@@ -62,6 +70,9 @@ public class HoaDon {
 		this.khachHang = khachHang;
 	}
 
+	public String getKhachHangString() {
+		return getKhachHang() == null ? "" : getKhachHang().toString();
+	}
 	
 	public LocalDateTime getThoiGianTao() {
 		return thoiGianTao;
@@ -85,6 +96,10 @@ public class HoaDon {
 
 	public void setKhuyenmai(KhuyenMai khuyenmai) {
 		this.khuyenmai = khuyenmai;
+	}
+	
+	public String getKhuyenMaiString() {
+		return getKhuyenmai() == null ? "" : getKhuyenmai().toString();
 	}
 
 	@Override
@@ -116,21 +131,50 @@ public class HoaDon {
 		throw new UnsupportedOperationException();
 	}
 
-	public void tongTien() {
-		// TODO - implement HoaDon.tongTien
-		throw new UnsupportedOperationException();
+	public double tongTien() {
+		if (tinhThue() != 0) {
+			return tinhThue() + thanhTien();
+		}
+		return 0;
 	}
 
-	public void tinhThue() {
-		// TODO - implement HoaDon.tinhThue
-		throw new UnsupportedOperationException();
+	public double tinhThue() {
+		if (thanhTien() != 0) {
+			return thanhTien() * 0.1;
+		}
+		return 0;
 	}
 
-	public void thanhTien() {
-		// TODO - implement HoaDon.thanhTien
-		throw new UnsupportedOperationException();
+	public double thanhTien() {
+		PhieuThuePhong_DAO ptdao = new PhieuThuePhong_DAO();
+		ArrayList<PhieuThuePhong> listPhieuThue = ptdao.layPhieuThueTheoMaHD(idHoaDon);
+	    double tongTien = 0;
+	    int soNgayThue = 0;
+	    if (listPhieuThue != null) {
+	        for (PhieuThuePhong phieuThue : listPhieuThue) {
+	            if (phieuThue != null){
+	            	soNgayThue = phieuThue.getThoiHanGiaoPhong().getDayOfYear() - phieuThue.getThoiGianNhanPhong().getDayOfYear();
+	            		if(soNgayThue > 0 && phieuThue.getPhong().getDonGia() > 0){
+	            		    double thanhTienPhieu = soNgayThue * phieuThue.getPhong().getDonGia();
+	            			tongTien += thanhTienPhieu;
+	            		}else{
+
+	            		}
+	            }
+	        }
+
+			// Important step - handle potential null value before formatting
+			if(tongTien > 0){
+	        	return tongTien;
+			}else{
+				System.out.println("No valid reservation found.");
+			}
+	    }else {
+	        System.out.println("Không tìm thấy hóa đơn thuê phòng.");
+	    }
+		return 0;
 	}
-	
+
 	public static String autoIdHoaDon() {
         HoaDon_DAO hoaDonDAO = new HoaDon_DAO(); // Đối tượng DAO để truy xuất dữ liệu từ database
         ArrayList<HoaDon> hoaDonList = null;

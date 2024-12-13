@@ -1,7 +1,11 @@
 package gui;
 
+import java.awt.Desktop;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -13,22 +17,28 @@ import dao.HoaDon_DAO;
 import dao.KhachHang_DAO;
 import dao.KhuyenMai_DAO;
 import dao.NhanVien_DAO;
+import dao.TaiKhoan_DAO;
 import entity.HoaDon;
 import entity.NhanVien;
+import entity.TaiKhoan;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import main.App;
 
 public class GD_QLHoaDon_Controller implements Initializable{
@@ -91,7 +101,10 @@ public class GD_QLHoaDon_Controller implements Initializable{
 
     @FXML
     private TableView<HoaDon> tableNhanVien;
-
+    @FXML
+    private Label maNV;
+    @FXML
+    private Label tenNV;
     @FXML
     void moGiaoDienDichVu(MouseEvent event) throws IOException {
     	App.setRoot("GD_QLDichVu");
@@ -224,6 +237,9 @@ public class GD_QLHoaDon_Controller implements Initializable{
                 lb_TgCheckIn.setText(tgCK.format(formatter));
             }
         });
+        
+        
+        addUserLogin();
 	}
     private void loadTableData() {
         try {
@@ -241,6 +257,20 @@ public class GD_QLHoaDon_Controller implements Initializable{
     }
     @FXML
     void themHD(MouseEvent event) {
+    	if(lb_HD.getText().trim().isEmpty() ||
+    			lb_MaNV.getText().trim().isEmpty()||
+    			lb_MaKH.getText().trim().isEmpty()||
+    			lb_MaKM.getText().trim().isEmpty()||
+    			lb_tgTao.getText().trim().isEmpty()||
+    			lb_TgCheckIn.getText().trim().isEmpty()) {
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Thông báo");
+            alert.setHeaderText(null);
+            alert.setContentText("Vui lòng nhập đầy đủ thông tin!");
+            alert.showAndWait();
+            return;
+        }
+        
     	String maHD = lb_HD.getText();
     	String maNV = lb_MaNV.getText();
     	String maKH = lb_MaKH.getText();
@@ -262,5 +292,29 @@ public class GD_QLHoaDon_Controller implements Initializable{
     	lb_tgTao.setText("");
     	tableNhanVien.getSelectionModel().clearSelection();
     }
+    @FXML
+    void moHuongDan(MouseEvent event) {
+		String initial = "data\\TaiLieu\\5_7_ApplicationDevelopment_UserManual-trang.html";
+		Path initialDirectory = Paths.get(initial).toAbsolutePath();
+		File file = new File(initial);
 
+        try {
+            Desktop desktop = Desktop.getDesktop();
+            desktop.open(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+	private void addUserLogin() {
+		TaiKhoan tk = App.tk;
+		maNV.setText(String.valueOf(tk.getNhanVien().getIdNhanVien()));
+		tenNV.setText(String.valueOf(tk.getNhanVien().getTenNhanVien()));
+	}
+    @FXML
+    void dongUngDung(MouseEvent event) throws IOException {
+		App.user = "";
+		Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+		stage.close();
+		App.openModal("GD_DangNhap");
+    }
 }

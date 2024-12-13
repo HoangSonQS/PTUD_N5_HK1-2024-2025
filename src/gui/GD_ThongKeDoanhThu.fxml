@@ -3,19 +3,20 @@
 <?import javafx.scene.chart.BarChart?>
 <?import javafx.scene.chart.CategoryAxis?>
 <?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="845.0" prefWidth="1554.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="845.0" prefWidth="1554.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.GD_ThongKeDoanhThu_Controller">
    <children>
       <Pane layoutY="70.0" prefHeight="775.0" prefWidth="260.0" style="-fx-background-color: #D9D9D9;">
          <children>
@@ -39,56 +40,57 @@
                   <Font name="System Bold Italic" size="20.0" />
                </font>
             </Label>
-            <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="19.0" layoutY="195.0" onMouseClicked="#moGDTKe" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="15.0" layoutY="195.0" onMouseClicked="#moGDTKe" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../data/pic/pie-chart.png" />
                </image>
             </ImageView>
-            <Label layoutX="64.0" layoutY="200.0" onMouseClicked="#moGDTKe" text="Thống kê">
+            <Label layoutX="60.0" layoutY="200.0" onMouseClicked="#moGDTKe" text="Thống kê">
                <font>
                   <Font name="System Bold Italic" size="20.0" />
                </font>
             </Label>
-            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="39.0" layoutY="245.0" onMouseClicked="#moGDTKDT" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="35.0" layoutY="245.0" onMouseClicked="#moGDTKDT" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../data/pic/money-transfer.png" />
                </image>
             </ImageView>
-            <Label layoutX="89.0" layoutY="250.0" onMouseClicked="#moGDTKDT" text="Doanh thu">
+            <Label layoutX="85.0" layoutY="250.0" onMouseClicked="#moGDTKDT" text="Doanh thu">
                <font>
                   <Font name="System Italic" size="18.0" />
                </font>
             </Label>
-            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="39.0" layoutY="285.0" onMouseClicked="#moGDTKKH" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="35.0" layoutY="285.0" onMouseClicked="#moGDTKKH" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../data/pic/travel.png" />
                </image>
             </ImageView>
-            <Label layoutX="89.0" layoutY="290.0" onMouseClicked="#moGDTKKH" text="Khách hàng">
+            <Label layoutX="85.0" layoutY="290.0" onMouseClicked="#moGDTKKH" text="Khách hàng">
                <font>
                   <Font name="System Italic" size="18.0" />
                </font>
             </Label>
-            <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="39.0" layoutY="325.0" onMouseClicked="#moGDTKSP" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../data/pic/product-lifecycle.png" />
-               </image>
-            </ImageView>
-            <Label layoutX="89.0" layoutY="330.0" onMouseClicked="#moGDTKSP" text="Sản phẩm">
-               <font>
-                  <Font name="System Italic" size="18.0" />
-               </font>
-            </Label>
-            <ImageView fx:id="icon_TimKiem" fitHeight="40.0" fitWidth="40.0" layoutX="19.0" layoutY="135.0" onMouseClicked="#moGDTK" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="icon_TimKiem" fitHeight="40.0" fitWidth="40.0" layoutX="15.0" layoutY="135.0" onMouseClicked="#moGDTK" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../data/pic/search.png" />
                </image>
             </ImageView>
-            <Label fx:id="lb_TimKiem" layoutX="63.0" layoutY="140.0" onMouseClicked="#moGDTK" text="Tìm kiếm">
+            <Label fx:id="lb_TimKiem" layoutX="60.0" layoutY="140.0" onMouseClicked="#moGDTK" text="Tìm kiếm">
                <font>
                   <Font name="System Bold Italic" size="20.0" />
                </font>
             </Label>
+            <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="15.0" layoutY="650.0" onMouseClicked="#moHuongDan" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/pic/question.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="80.0" layoutY="660.0" onMouseClicked="#moHuongDan" text="Hướng dẫn">
+               <font>
+                  <Font name="System Bold Italic" size="20.0" />
+               </font>
+            </Label>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="250.0" layoutY="245.0" stroke="WHITE" strokeType="INSIDE" width="10.0" />
          </children>
       </Pane>
       <Pane layoutX="260.0" layoutY="70.0" prefHeight="775.0" prefWidth="1294.0">
@@ -98,41 +100,33 @@
                   <Font size="30.0" />
                </font>
             </Label>
-            <MenuBar layoutX="10.0" layoutY="60.0">
-               <menus>
-                  <Menu mnemonicParsing="false" text="Theo ngày" />
-                  <Menu mnemonicParsing="false" text="Theo tháng" />
-                  <Menu mnemonicParsing="false" text="Theo năm" />
-               </menus>
-            </MenuBar>
-            <Line endX="1194.0" layoutX="100.0" layoutY="85.0" startX="-100.0" />
-            <Label fx:id="lb_Ngay" layoutX="15.0" layoutY="105.0" text="Thống kê doanh thu theo ngày: ">
+            <Line endX="1294.0" layoutY="55.0" />
+            <Label fx:id="chon" layoutX="15.0" layoutY="75.0" text="Loại thống kê: ">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <DatePicker fx:id="datePicker" layoutX="330.0" layoutY="105.0" />
-            <Label fx:id="lb_HDNgay" layoutX="15.0" layoutY="140.0" text="Tổng số hóa đơn trong ngày:  ">
+            <Label fx:id="lb_SoHD" layoutX="675.0" layoutY="100.0" text="Tổng số hóa đơn:  ">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="lb_SoHoaDon" layoutX="330.0" layoutY="140.0" text="0">
+            <Label fx:id="lb_SoHoaDon" layoutX="990.0" layoutY="100.0" text="0">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="lb_HDNgay1" layoutX="15.0" layoutY="175.0" text="Tổng doanh thu trong ngày:  ">
+            <Label fx:id="lb_DT" layoutX="675.0" layoutY="135.0" text="Tổng doanh thu:  ">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="lb_Tien" layoutX="330.0" layoutY="175.0" text="0 VND">
+            <Label fx:id="lb_Tien" layoutX="990.0" layoutY="135.0" text="0 VND">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <BarChart fx:id="chart_DTTN" layoutX="20.0" layoutY="233.0" prefHeight="500.0" prefWidth="1254.0" title="Thống kê doanh thu theo ngày">
+            <BarChart fx:id="chart_DTTN" layoutX="20.0" layoutY="270.0" prefHeight="450.0" prefWidth="1254.0" title="Thống kê doanh thu theo ngày">
                <xAxis>
                   <CategoryAxis label="Ngày" side="BOTTOM" fx:id="x" />
                </xAxis>
@@ -140,6 +134,47 @@
                   <NumberAxis fx:id="y" label="Tổng tiền" side="LEFT" />
                </yAxis>
             </BarChart>
+            <ComboBox fx:id="cbbLoai" layoutX="180.0" layoutY="75.0" prefWidth="200.0" style="-fx-background-color: #ffffff; -fx-border-color: gray;" />
+            <Label fx:id="lb_DTSS" layoutX="675.0" layoutY="170.0" text="Doanh thu so với kỳ trước:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="lb_Tienss" layoutX="990.0" layoutY="170.0" text="0 VND">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="chon2" layoutX="15.0" layoutY="185.0" text="Chọn tháng: ">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="cbbThang" layoutX="180.0" layoutY="186.0" prefWidth="200.0" style="-fx-background-color: #ffffff; -fx-border-color: gray;" />
+            <Label fx:id="chon21" layoutX="15.0" layoutY="220.0" text="Chọn năm: ">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <ComboBox fx:id="cbbNam" layoutX="180.0" layoutY="220.0" prefWidth="200.0" style="-fx-background-color: #ffffff; -fx-border-color: gray;" />
+            <Label fx:id="chon11" layoutX="15.0" layoutY="115.0" text="Chọn ngày bắt đầu: ">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <DatePicker fx:id="datePickerNgaybd" layoutX="180.0" layoutY="115.0" prefWidth="200.0" style="-fx-border-color: gray;" />
+            <Label fx:id="chon111" layoutX="15.0" layoutY="150.0" text="Chọn ngày kết thúc: ">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <DatePicker fx:id="datePickerNgaykt" layoutX="180.0" layoutY="150.0" prefWidth="200.0" style="-fx-border-color: gray;" />
+            <Button fx:id="btnThongKe" layoutX="433.0" layoutY="115.0" mnemonicParsing="false" onMouseClicked="#thongKe" prefHeight="75.0" prefWidth="150.0" style="-fx-background-color: #004AAD;" text="Thống kê" textFill="WHITE">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Button>
+            <Label fx:id="note" layoutX="15.0" layoutY="260.0" prefHeight="17.0" prefWidth="365.0" textFill="RED" />
          </children>
       </Pane>
       <Pane prefHeight="70.0" prefWidth="1554.0" style="-fx-background-color: #004AAD;">
@@ -154,32 +189,27 @@
                   <Font name="System Italic" size="22.0" />
                </font>
             </Label>
-            <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="1463.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="1490.0" layoutY="15.0" onMouseClicked="#dongUngDung" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../data/pic/turn-off%20(1).png" />
                </image>
             </ImageView>
-            <ImageView fitHeight="38.0" fitWidth="38.0" layoutX="1303.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../data/pic/question.png" />
-               </image>
-            </ImageView>
-            <Label layoutX="1047.0" layoutY="22.0" text="Điện thoại hỗ trợ: 0362356676" textFill="WHITE">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-            <ImageView fitHeight="38.0" fitWidth="38.0" layoutX="1004.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../data/pic/old-typical-phone.png" />
-               </image>
-            </ImageView>
-            <Circle fill="WHITE" layoutX="1406.0" layoutY="36.0" radius="26.0" stroke="BLACK" strokeType="INSIDE" />
-            <ImageView fx:id="avt" fitHeight="40.0" fitWidth="40.0" layoutX="1386.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
+            <Circle fill="WHITE" layoutX="1433.0" layoutY="36.0" radius="26.0" stroke="BLACK" strokeType="INSIDE" />
+            <ImageView fx:id="avt" fitHeight="40.0" fitWidth="40.0" layoutX="1413.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../data/pic/user.png" />
                </image>
             </ImageView>
+            <Label fx:id="maNV" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="1195.0" layoutY="10.0" prefWidth="200.0" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="tenNV" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="1145.0" layoutY="35.0" prefWidth="250.0" textFill="WHITE">
+               <font>
+                  <Font name="System Italic" size="18.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
    </children>

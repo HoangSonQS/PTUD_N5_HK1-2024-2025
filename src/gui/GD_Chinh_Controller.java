@@ -1,21 +1,18 @@
 package gui;
 
+import java.awt.Desktop;
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.Objects;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ResourceBundle;
-
-import javax.swing.plaf.RootPaneUI;
-
-import javafx.event.ActionEvent;
+import entity.TaiKhoan;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.TreeView;
+import javafx.scene.control.MenuItem;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
@@ -27,43 +24,33 @@ public class GD_Chinh_Controller implements Initializable{
 
     @FXML
     private ImageView avt;
-
     @FXML
     private ImageView icon_QuanLy;
-
     @FXML
     private ImageView icon_ThongKe;
-
     @FXML
     private ImageView icon_ThuePhong;
-
     @FXML
     private ImageView icon_TimKiem;
-
     @FXML
     private Label lb_QuanLy;
-
     @FXML
     private Label lb_ThongKe;
-
     @FXML
     private Label lb_ThuePhong;
-
     @FXML
     private Label lb_TimKiem;
-
     @FXML
     private Pane pn_NoiDung;
+    @FXML
+    private Label maNV;
+    @FXML
+    private Label tenNV;
 
-	private Stage primaryScene;
-
-	private Stage primaryStage;
-
-	private Node pnNoiDung;
     
     @FXML
     void moGiaoDienQuanLy(MouseEvent event) throws IOException {
-    	App.setRoot("GD_QLNhanVien");
+    	App.setRoot("GD_QLPhong");
     }
 
     @FXML
@@ -78,10 +65,37 @@ public class GD_Chinh_Controller implements Initializable{
 
     @FXML
     void moGiaoDienTimKiem(MouseEvent event) throws IOException {
-    	App.setRoot("GD_ThongKeDoanhThu");
+    	App.setRoot("GD_TKPhong");
     }
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-	}
 
+		addUserLogin();
+	}
+    @FXML
+    void moHuongDan(MouseEvent event) {
+		String initial = "data\\TaiLieu\\5_7_ApplicationDevelopment_UserManual-trang.html";
+		Path initialDirectory = Paths.get(initial).toAbsolutePath();
+		File file = new File(initial);
+
+        try {
+            Desktop desktop = Desktop.getDesktop();
+            desktop.open(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+	private void addUserLogin() {
+		TaiKhoan tk = App.tk;
+		maNV.setText(String.valueOf(tk.getNhanVien().getIdNhanVien()));
+		tenNV.setText(String.valueOf(tk.getNhanVien().getTenNhanVien()));
+
+	}
+    @FXML
+    void dongUngDung(MouseEvent event) throws IOException {
+		App.user = "";
+		Stage stage = (Stage) ((javafx.scene.Node) event.getSource()).getScene().getWindow();
+		stage.close();
+		App.openModal("GD_DangNhap");
+    }
 }
