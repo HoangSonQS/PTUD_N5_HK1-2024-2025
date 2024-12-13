@@ -116,7 +116,7 @@ public class GD_GiaHan_Controller implements Initializable{
     public String maphong;
     LocalDate thoiGianNhan;
     LocalDate thoiGianTra;
-   
+    private ArrayList<Phong> dsPhongHoanChinh = new ArrayList<Phong>();
     private PhieuThuePhong_DAO dsPT = new PhieuThuePhong_DAO();
 	private ArrayList<String> dsMaPhong = new ArrayList<String>();
 	private ArrayList<String> dsMPhongDuocChon = new ArrayList<String>();
@@ -139,9 +139,44 @@ public class GD_GiaHan_Controller implements Initializable{
 		suKienNutTK();
 		suKienNutKiemTra();
 		suKienNutLoc();
-//		suKienComBoBox();
+		suKienComBoBox();
 	}
-	
+	public void suKienComBoBox() {
+		String giatri = cbb_LoaiPhong.getValue();
+		if(giatri == "Tất cả") {
+			renderArrayPhong2(dsPhongHoanChinh);
+		}else if(giatri =="Phòng đơn") {
+			ArrayList<Phong> dsP = new ArrayList<Phong>();
+			ArrayList<Phong> dsPCuoi = new ArrayList<Phong>();
+			dsP = new Phong_DAO().getPhongTheoLoai(2);
+			for(Phong p : dsPhongHoanChinh) {
+				if(dsP.contains(p)) {
+					dsPCuoi.add(p);
+				}
+			}
+			renderArrayPhong2(dsPCuoi);
+		}else if(giatri =="Phòng đôi") {
+			ArrayList<Phong> dsP = new ArrayList<Phong>();
+			ArrayList<Phong> dsPCuoi = new ArrayList<Phong>();
+			dsP = new Phong_DAO().getPhongTheoLoai(1);
+			for(Phong p : dsPhongHoanChinh) {
+				if(dsP.contains(p)) {
+					dsPCuoi.add(p);
+				}
+			}
+			renderArrayPhong2(dsPCuoi);
+		}else if(giatri =="Phòng gia đình") {
+			ArrayList<Phong> dsP = new ArrayList<Phong>();
+			ArrayList<Phong> dsPCuoi = new ArrayList<Phong>();
+			dsP = new Phong_DAO().getPhongTheoLoai(3);
+			for(Phong p : dsPhongHoanChinh) {
+				if(dsP.contains(p)) {
+					dsPCuoi.add(p);
+				}
+			}
+			renderArrayPhong2(dsPCuoi);
+		}
+	}
 	public void suKienNutTK() {
 		btn_TimKiem.setOnAction((event ->{
 			String sdt = txt_SDT.getText();
@@ -365,7 +400,7 @@ public class GD_GiaHan_Controller implements Initializable{
 			        }
 			 }
 			 dsMPhongTrong.removeAll(maPhongDaCoNguoiDat);
-			 ArrayList<Phong> dsPhongHoanChinh = new ArrayList<Phong>();
+			 dsPhongHoanChinh = new ArrayList<Phong>();
 			 for (String ma : dsMPhongTrong) {
 				Phong p = new Phong_DAO().getPhongTheoMa(ma);
 				dsPhongHoanChinh.add(p);
@@ -453,6 +488,16 @@ public class GD_GiaHan_Controller implements Initializable{
 	    lblLoaiPhong.setPadding(new Insets(0, 0, 8, 0));
 	    roomItem.getChildren().add(lblLoaiPhong);
 	    
+	    Label lbTieuchi = new Label(phong.getTieuChi().toString());
+	    lbTieuchi.setStyle("-fx-font-size: 18; -fx-font-weight: 600");
+	    lbTieuchi.setPadding(new Insets(0, 0, 8, 0));
+	    roomItem.getChildren().add(lbTieuchi);
+	    
+	    Label lbGiaPhong = new Label(String.valueOf(phong.getDonGia())+ "VND");
+	    lbGiaPhong.setStyle("-fx-font-size: 18; -fx-font-weight: 600");
+	    lbGiaPhong.setPadding(new Insets(0, 0, 8, 0));
+	    roomItem.getChildren().add(lbGiaPhong);
+	    
 	    String strBtnLeft = phong.getTrangThai() == TrangThaiPhong.SAPCHECKOUT ? "Chọn phòng" :
 	    	phong.getTrangThai() == TrangThaiPhong.DANGTHUE ? "Chọn phòng":phong.getTrangThai() == TrangThaiPhong.SAPCHECKIN ? "Chọn phòng":"Chọn phòng";
 	    String strBtnRight = phong.getTrangThai() == TrangThaiPhong.SAPCHECKOUT ? "Đặt Phòng" :
@@ -485,6 +530,7 @@ public class GD_GiaHan_Controller implements Initializable{
 					}
 				}
 				moGDDatPhong();
+				txt_PhongDuocChon.setText("");
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
