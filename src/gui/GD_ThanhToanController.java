@@ -55,6 +55,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -322,45 +323,41 @@ public class GD_ThanhToanController implements Initializable{
 			
 		});
 	}
-	//sự kiện nút lưu
+	// Sự kiện nút lưu
 	public void handleEventInBtn() {
-		btnThanhToan.setOnAction(evt -> {
-			
-			if (txtTienThua.getText().equals("0")) {
-				Alert alert = new Alert(Alert.AlertType.ERROR, "Vui lòng kiểm tra lại tiền nhận!", ButtonType.OK);
-				alert.getDialogPane().setStyle("-fx-font-family: 'sans-serif';");
-				alert.setTitle("Lỗi");
-				alert.setHeaderText("Tiền nhận không phù hợp");
-				alert.showAndWait();
-				return;
-			}
-			PhieuThuePhong_DAO dsPhieu = new PhieuThuePhong_DAO();
-			ArrayList<PhieuThuePhong> dsPT = new ArrayList<PhieuThuePhong>();
-			dsPT = new PhieuThuePhong_DAO().layPhieuThueTheoMaHD(maHD);
-			for(PhieuThuePhong pt: dsPT) {
-				pt.setHieuLuc(false);
-				dsPhieu.suaPhieuThue(pt);
-				Phong_DAO dsP = new Phong_DAO();
-				Phong p = dsP.getPhongTheoMa(pt.getPhong().getIdPhong());
-				p.setTrangThai(TrangThaiPhong.TRONG);
-				dsP.capNhatTrangThaiPhong(p);
-			}
-//			luuHoaDon();
-			Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "", ButtonType.OK);
-			alert.getDialogPane().setStyle("-fx-font-family: 'sans-serif';");
-			alert.setTitle("Thanh toán phòng thành công");
-			alert.setHeaderText("Bạn đã thanh toán phòng thành công!");
-			alert.showAndWait();
-			
-			});
-//		btnBack.setOnAction(evt -> {
-//			try {
-//				App.setRoot("GD_QLKinhDoanhPhong");
-//			} catch (IOException ex) {
-//				
-//			}
-//		});
+	    btnThanhToan.setOnAction(evt -> {
+	        if (txtTienThua.getText().equals("0")) {
+	            Alert alert = new Alert(Alert.AlertType.ERROR, "Vui lòng kiểm tra lại tiền nhận!", ButtonType.OK);
+	            alert.getDialogPane().setStyle("-fx-font-family: 'sans-serif';");
+	            alert.setTitle("Lỗi");
+	            alert.setHeaderText("Tiền nhận không phù hợp");
+	            alert.showAndWait();
+	            return;
+	        }
+	        PhieuThuePhong_DAO dsPhieu = new PhieuThuePhong_DAO();
+	        ArrayList<PhieuThuePhong> dsPT = new ArrayList<PhieuThuePhong>();
+	        dsPT = new PhieuThuePhong_DAO().layPhieuThueTheoMaHD(maHD);
+	        for (PhieuThuePhong pt : dsPT) {
+	            pt.setHieuLuc(false);
+	            dsPhieu.suaPhieuThue(pt);
+	            Phong_DAO dsP = new Phong_DAO();
+	            Phong p = dsP.getPhongTheoMa(pt.getPhong().getIdPhong());
+	            p.setTrangThai(TrangThaiPhong.TRONG);
+	            dsP.capNhatTrangThaiPhong(p);
+	        }
+	        
+	        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "", ButtonType.OK);
+	        alert.getDialogPane().setStyle("-fx-font-family: 'sans-serif';");
+	        alert.setTitle("Thanh toán phòng thành công");
+	        alert.setHeaderText("Bạn đã thanh toán phòng thành công!");
+	        alert.showAndWait();
+
+	        // Đóng giao diện sau khi hiển thị thông báo
+	        Stage currentStage = (Stage) btnThanhToan.getScene().getWindow();
+	        currentStage.close();
+	    });
 	}
+
 	@FXML
 	private void moGDBill() throws IOException {
 		App.openModal("Bill", 1280, 740);

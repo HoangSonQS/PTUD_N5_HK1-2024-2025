@@ -318,38 +318,6 @@ public class GD_DoiPhong_Controller implements Initializable{
 	private VBox selectedRoomItem = null;
 
 	public Pane taoGiaoDienPhong(Phong phong) {
-<<<<<<< HEAD
-	    VBox roomItem = new VBox();
-	    roomItem.setCursor(Cursor.HAND);
-	    roomItem.setPrefHeight(200);
-	    roomItem.setPrefWidth(200);
-	    roomItem.setStyle("-fx-background-color: #31c57e; -fx-border-color: #000000; -fx-border-width: 1"); // Viền đen để dễ nhận diện
-
-	    Label lblMaPhong = new Label(phong.getIdPhong());
-	    lblMaPhong.setStyle("-fx-font-size: 18; -fx-font-weight: 700");
-	    lblMaPhong.setPadding(new Insets(0, 0, 8, 0));
-	    roomItem.getChildren().add(lblMaPhong);
-
-	    Label lblLoaiPhong = new Label(phong.getLoaiPhong().toString());
-	    lblLoaiPhong.setStyle("-fx-font-size: 18; -fx-font-weight: 600");
-	    lblLoaiPhong.setPadding(new Insets(0, 0, 8, 0));
-	    roomItem.getChildren().add(lblLoaiPhong);
-
-	    String strBtnLeft = phong.getTrangThai() == TrangThaiPhong.TRONG ? "Chọn Phòng" : "Chọn phòng";
-
-	    Button btnLeft = new Button(strBtnLeft);
-	    btnLeft.setStyle("-fx-background-color: #2972d3; -fx-font-size: 16");
-	    btnLeft.setOnAction((event) -> {
-	    	maPhongDoi = phong.getIdPhong();
-	    });
-
-	    HBox hbox = new HBox(btnLeft);
-	    hbox.setPadding(new Insets(0, 0, 8, 0));
-	    hbox.setAlignment(Pos.CENTER);
-	    hbox.setVisible(false);
-	    roomItem.getChildren().add(hbox);
-
-=======
 	    // Tạo VBox chứa thông tin phòng với kích thước cố định
 	    VBox roomItem = new VBox(10);
 	    
@@ -360,7 +328,6 @@ public class GD_DoiPhong_Controller implements Initializable{
 	    roomItem.setMaxHeight(180);
 	    
 	    roomItem.setStyle("-fx-background-color: #31c57e; -fx-border-color: #000000; -fx-border-width: 1; -fx-padding: 10;");
->>>>>>> 49edcb73b38f87e92a219677e8764e01b8538158
 	    roomItem.setAlignment(Pos.CENTER);
 
 	    // Mã phòng

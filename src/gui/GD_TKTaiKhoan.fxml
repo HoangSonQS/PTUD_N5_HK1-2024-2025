@@ -61,7 +61,7 @@
             <TextField fx:id="txt_tkTK" layoutX="669.0" layoutY="25.0" prefHeight="40.0" prefWidth="322.0" promptText="Nhập mã nhân viên" />
             <ImageView fx:id="icon_TimKiem1" fitHeight="40.0" fitWidth="20.0" layoutX="958.0" layoutY="35.0" onMouseClicked="#moGiaoDienTimKiem" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../data/pic/search.png" />
+                  <Image url="@../resource/pic/search.png" />
                </image>
             </ImageView>
             <Label fx:id="lb_MaNV" layoutX="194.0" layoutY="238.0" text="xxxxxxxx">
@@ -76,7 +76,7 @@
             </Label>
             <ImageView fitHeight="30.0" fitWidth="20.0" layoutX="129.0" layoutY="502.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../data/pic/x-mark.png" />
+                  <Image url="@../resource/pic/x-mark.png" />
                </image>
             </ImageView>
             <Label layoutX="313.0" layoutY="31.0" text="Tra cứu theo:">
@@ -101,7 +101,7 @@
          <children>
             <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="15.0" layoutY="15.0" onMouseClicked="#moGiaoDienThuePhong" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../data/pic/apartment-building.png" />
+                  <Image url="@../resource/pic/apartment-building.png" />
                </image>
             </ImageView>
             <Label layoutX="60.0" layoutY="20.0" onMouseClicked="#moGiaoDienThuePhong" text="Quản lý thuê phòng">
@@ -111,7 +111,7 @@
             </Label>
             <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="15.0" layoutY="75.0" onMouseClicked="#moGiaoDienQuanLy" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../data/pic/list.png" />
+                  <Image url="@../resource/pic/list.png" />
                </image>
             </ImageView>
             <Label layoutX="60.0" layoutY="80.0" onMouseClicked="#moGiaoDienQuanLy" text="Quản lý">
@@ -121,7 +121,7 @@
             </Label>
             <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="15.0" layoutY="195.0" onMouseClicked="#moGiaoDienThongKe" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../data/pic/pie-chart.png" />
+                  <Image url="@../resource/pic/pie-chart.png" />
                </image>
             </ImageView>
             <Label layoutX="60.0" layoutY="200.0" onMouseClicked="#moGiaoDienThongKe" text="Thống kê">
@@ -132,7 +132,7 @@
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="250.0" layoutY="135.0" stroke="WHITE" strokeType="INSIDE" width="10.0" />
             <ImageView fx:id="icon_TimKiem" fitHeight="40.0" fitWidth="40.0" layoutX="15.0" layoutY="135.0" onMouseClicked="#moGiaoDienTimKiem" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../data/pic/search.png" />
+                  <Image url="@../resource/pic/search.png" />
                </image>
             </ImageView>
             <Label fx:id="lb_TimKiem" layoutX="59.0" layoutY="140.0" onMouseClicked="#moGiaoDienTimKiem" text="Tìm kiếm">
@@ -142,7 +142,7 @@
             </Label>
             <ImageView fitHeight="50.0" fitWidth="50.0" onMouseClicked="#moHuongDan" pickOnBounds="true" preserveRatio="true" x="15.0" y="650.0">
                <image>
-                  <Image url="@../../data/pic/question.png" />
+                  <Image url="@../resource/pic/question.png" />
                </image>
             </ImageView>
             <Label layoutX="80.0" layoutY="660.0" onMouseClicked="#moHuongDan" text="Hướng dẫn">
@@ -156,7 +156,7 @@
          <children>
             <ImageView fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../data/pic/logoxanh.png" />
+                  <Image url="@../resource/pic/logoxanh.png" />
                </image>
             </ImageView>
             <Label layoutX="85.0" layoutY="19.0" text="Flowers on the sea" textFill="WHITE">
@@ -166,13 +166,13 @@
             </Label>
             <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="1490.0" layoutY="15.0" onMouseClicked="#dongUngDung" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../data/pic/turn-off%20(1).png" />
+                  <Image url="@../resource/pic/turn-off%20(1).png" />
                </image>
             </ImageView>
             <Circle fill="WHITE" layoutX="1433.0" layoutY="36.0" radius="26.0" stroke="BLACK" strokeType="INSIDE" />
             <ImageView fx:id="avt" fitHeight="40.0" fitWidth="40.0" layoutX="1413.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../data/pic/user.png" />
+                  <Image url="@../resource/pic/user.png" />
                </image>
             </ImageView>
             <Label fx:id="maNV" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="1195.0" layoutY="10.0" prefWidth="200.0" textFill="WHITE">

@@ -32,49 +32,49 @@
                   <Pane fx:id="p_DSPT" layoutY="90.0" prefHeight="685.0" prefWidth="1294.0">
                      <children>
                         <Line endX="1294.0" layoutY="87.0" />
-                        <DatePicker fx:id="txt_NgayTra" layoutX="935.0" layoutY="-5.0" maxHeight="40.0" prefHeight="40.0" prefWidth="230.0" style="-fx-font-size: 20;" />
-                        <Label layoutX="295.0" layoutY="-15.0" text="Tên khách hàng:">
+                        <DatePicker fx:id="txt_NgayTra" layoutX="880.0" layoutY="-5.0" maxHeight="40.0" prefHeight="40.0" prefWidth="230.0" style="-fx-font-size: 20;" />
+                        <Label layoutX="240.0" layoutY="-15.0" text="Tên khách hàng:">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="txt_HoTen" layoutX="445.0" layoutY="-15.0" minHeight="30.0" minWidth="200.0" prefHeight="30.0" prefWidth="200.0" />
-                        <Label layoutX="295.0" layoutY="25.0" text="Phòng đang thuê: ">
+                        <TextField fx:id="txt_HoTen" layoutX="390.0" layoutY="-15.0" minHeight="30.0" minWidth="200.0" prefHeight="30.0" prefWidth="200.0" />
+                        <Label layoutX="240.0" layoutY="25.0" text="Phòng đang thuê: ">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="txt_PhongThue" layoutX="447.0" layoutY="25.0" minHeight="30.0" minWidth="200.0" />
-                        <Label layoutX="780.0" text="Ngày trả phòng:">
+                        <TextField fx:id="txt_PhongThue" layoutX="390.0" layoutY="25.0" minHeight="30.0" minWidth="200.0" />
+                        <Label layoutX="715.0" text="Ngày trả phòng:">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
                   
 
-                        <Button fx:id="btn_Lọc" alignment="CENTER" layoutX="1180.0" minHeight="30.0" minWidth="90.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="Lọc">
+                        <Button fx:id="btn_Lọc" alignment="CENTER" layoutX="1125.0" minHeight="30.0" minWidth="90.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="Lọc">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </Button>
-                        <Label layoutX="780.0" layoutY="50.0" text="Phòng đang chọn: ">
+                        <Label layoutX="715.0" layoutY="50.0" text="Phòng đang chọn: ">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="txt_PhongDuocChon" layoutX="935.0" layoutY="50.0" minHeight="30.0" minWidth="200.0" />
+                        <TextField fx:id="txt_PhongDuocChon" layoutX="880.0" layoutY="50.0" minHeight="30.0" minWidth="200.0" />
                      </children></Pane>
                   <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="20.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../data/pic/three-oclock.png" />
+                        <Image url="@../resource/pic/three-oclock.png" />
                      </image>
                   </ImageView>
-                  <Label layoutX="295.0" layoutY="35.0" text="Số điện thoại:">
+                  <Label layoutX="240.0" layoutY="35.0" text="CCCD:">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label layoutX="780.0" layoutY="35.0" text="Ngày nhận phòng:">
+                  <Label layoutX="715.0" layoutY="35.0" text="Ngày nhận phòng:">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -91,26 +91,26 @@
                         </GridPane>
                      </content>
                   </ScrollPane>
-                  <TextField fx:id="txt_SDT" layoutX="445.0" layoutY="35.0" minHeight="30.0" minWidth="200.0" />
-                  <Button fx:id="btn_TimKiem" alignment="CENTER" layoutX="655.0" layoutY="35.0" minHeight="30.0" minWidth="90.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="Tìm kiếm">
+                  <TextField fx:id="txt_SDT" layoutX="390.0" layoutY="35.0" minHeight="30.0" minWidth="200.0" />
+                  <Button fx:id="btn_TimKiem" alignment="CENTER" layoutX="600.0" layoutY="35.0" minHeight="30.0" minWidth="90.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="Tìm kiếm">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <DatePicker fx:id="txt_NgayNhan" layoutX="935.0" layoutY="30.0" maxHeight="40.0" prefHeight="40.0" prefWidth="230.0" style="-fx-font-size: 20;" />
-                  <Button fx:id="btn_KiemTra" alignment="CENTER" layoutX="1180.0" layoutY="35.0" minHeight="30.0" minWidth="90.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="Kiểm tra">
+                  <DatePicker fx:id="txt_NgayNhan" layoutX="880.0" layoutY="30.0" maxHeight="40.0" prefHeight="40.0" prefWidth="230.0" style="-fx-font-size: 20;" />
+                  <Button fx:id="btn_KiemTra" alignment="CENTER" layoutX="1125.0" layoutY="35.0" minHeight="30.0" minWidth="90.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" text="Kiểm tra">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Button>
-                  <ComboBox fx:id="cbb_LoaiPhong" layoutX="20.0" layoutY="55.0" prefWidth="150.0" />
+                  <ComboBox fx:id="cbb_LoaiPhong" layoutX="20.0" layoutY="55.0" onAction="#suKienComBoBox" prefWidth="150.0" />
                </children>
             </Pane>
             <Pane prefHeight="775.0" prefWidth="260.0" style="-fx-background-color: #D9D9D9;">
                <children>
                   <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="15.0" layoutY="15.0" onMouseClicked="#moGiaoDienSoDoPhong" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../data/pic/apartment-building.png" />
+                        <Image url="@../resource/pic/apartment-building.png" />
                      </image>
                   </ImageView>
                   <Label layoutX="60.0" layoutY="20.0" onMouseClicked="#moGiaoDienSoDoPhong" text="Quản lý phòng">
@@ -120,7 +120,7 @@
                   </Label>
                   <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="35.0" layoutY="65.0" onMouseClicked="#moGiaoDienSoDoPhong" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../data/pic/clipboard.png" />
+                        <Image url="@../resource/pic/clipboard.png" />
                      </image>
                   </ImageView>
                   <Label fx:id="l" layoutX="85.0" layoutY="70.0" onMouseClicked="#moGiaoDienSoDoPhong" text="Sơ đồ phòng">
@@ -130,7 +130,7 @@
                   </Label>
                   <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="35.0" layoutY="105.0" onMouseClicked="#moGDDoiPhong" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../data/pic/swap.png" />
+                        <Image url="@../resource/pic/swap.png" />
                      </image>
                   </ImageView>
                   <Label layoutX="85.0" layoutY="110.0" onMouseClicked="#moGDDoiPhong" text="Đổi phòng">
@@ -140,7 +140,7 @@
                   </Label>
                   <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="35.0" layoutY="145.0" onMouseClicked="#moGiaoDienHuyPhong" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../data/pic/cancel.png" />
+                        <Image url="@../resource/pic/cancel.png" />
                      </image>
                   </ImageView>
                   <Label layoutX="85.0" layoutY="150.0" onMouseClicked="#moGiaoDienHuyPhong" text="Hủy phòng">
@@ -150,7 +150,7 @@
                   </Label>
                   <ImageView fitHeight="30.0" fitWidth="30.0" layoutX="35.0" layoutY="185.0" onMouseClicked="#moGiaoDienGiaHanPhong" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../data/pic/three-oclock.png" />
+                        <Image url="@../resource/pic/three-oclock.png" />
                      </image>
                   </ImageView>
                   <Label layoutX="85.0" layoutY="190.0" onMouseClicked="#moGiaoDienGiaHanPhong" text="Gia hạn phòng">
@@ -161,7 +161,7 @@
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" layoutX="250.0" layoutY="185.0" stroke="WHITE" strokeType="INSIDE" width="10.0" />
                   <ImageView fx:id="icon_QuanLy" fitHeight="40.0" fitWidth="40.0" layoutX="18.0" layoutY="235.0" onMouseClicked="#moGiaoDienQuanLy" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../data/pic/list.png" />
+                        <Image url="@../resource/pic/list.png" />
                      </image>
                   </ImageView>
                   <Label fx:id="lb_QuanLy" layoutX="63.0" layoutY="240.0" onMouseClicked="#moGiaoDienQuanLy" text="Quản lý">
@@ -171,7 +171,7 @@
                   </Label>
                   <ImageView fx:id="icon_ThongKe" fitHeight="40.0" fitWidth="40.0" layoutX="18.0" layoutY="365.0" onMouseClicked="#moGiaoDienThongKe" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../data/pic/pie-chart.png" />
+                        <Image url="@../resource/pic/pie-chart.png" />
                      </image>
                   </ImageView>
                   <Label fx:id="lb_ThongKe" layoutX="63.0" layoutY="370.0" onMouseClicked="#moGiaoDienThongKe" text="Thống kê">
@@ -181,7 +181,7 @@
                   </Label>
                   <ImageView fx:id="icon_TimKiem" fitHeight="40.0" fitWidth="40.0" layoutX="18.0" layoutY="300.0" onMouseClicked="#moGiaoDienTimKiem" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../data/pic/search.png" />
+                        <Image url="@../resource/pic/search.png" />
                      </image>
                   </ImageView>
                   <Label fx:id="lb_TimKiem" layoutX="63.0" layoutY="305.0" onMouseClicked="#moGiaoDienTimKiem" text="Tìm kiếm">
@@ -193,7 +193,7 @@
             </Pane>
             <ImageView fitHeight="50.0" fitWidth="50.0" layoutX="15.0" layoutY="650.0" onMouseClicked="#moHuongDan" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../data/pic/question.png" />
+                  <Image url="@../resource/pic/question.png" />
                </image>
             </ImageView>
             <Label layoutX="80.0" layoutY="660.0" onMouseClicked="#moHuongDan" text="Hướng dẫn">
@@ -207,7 +207,7 @@
          <children>
             <ImageView fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../data/pic/logoxanh.png" />
+                  <Image url="@../resource/pic/logoxanh.png" />
                </image>
             </ImageView>
             <Label layoutX="85.0" layoutY="19.0" text="Flowers on the sea" textFill="WHITE">
@@ -217,13 +217,13 @@
             </Label>
             <ImageView fitHeight="40.0" fitWidth="40.0" layoutX="1490.0" layoutY="15.0" onMouseClicked="#dongUngDung" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../data/pic/turn-off%20(1).png" />
+                  <Image url="@../resource/pic/turn-off%20(1).png" />
                </image>
             </ImageView>
             <Circle fill="WHITE" layoutX="1433.0" layoutY="36.0" radius="26.0" stroke="BLACK" strokeType="INSIDE" />
             <ImageView fx:id="avt" fitHeight="40.0" fitWidth="40.0" layoutX="1413.0" layoutY="16.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../data/pic/user.png" />
+                  <Image url="@../resource/pic/user.png" />
                </image>
             </ImageView>
             <Label fx:id="maNV" alignment="CENTER_RIGHT" contentDisplay="RIGHT" layoutX="1195.0" layoutY="10.0" prefWidth="200.0" textFill="WHITE">

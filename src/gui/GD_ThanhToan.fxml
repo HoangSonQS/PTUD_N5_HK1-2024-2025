@@ -16,15 +16,15 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="GD_ThanhToan" cache="true" prefHeight="740.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.GD_ThanhToanController">
+<AnchorPane fx:id="GD_ThanhToan" cache="true" prefHeight="706.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.GD_ThanhToanController">
     <children>
-        <Text fill="#cc0000" layoutX="565.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="HÓA ĐƠN THANH TOÁN">
+        <Text fill="#cc0000" layoutX="484.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="HÓA ĐƠN THANH TOÁN">
             <font>
                 <Font name="System Bold" size="26.0" />
             </font>
         </Text>
-        <Line endX="1080.0" endY="-40.0" layoutX="198.0" layoutY="151.0" startX="-198.00001525878906" startY="-40.0" strokeWidth="2.0" />
-        <TitledPane collapsible="false" layoutY="120.0" prefHeight="253.0" prefWidth="708.0" text="Phòng">
+        <Line endX="1080.0" endY="-40.0" layoutX="191.0" layoutY="110.0" startX="-198.00001525878906" startY="-40.0" strokeWidth="2.0" />
+        <TitledPane collapsible="false" layoutX="-7.0" layoutY="79.0" prefHeight="253.0" prefWidth="708.0" text="Phòng">
             <content>
                 <TableView fx:id="tablePhong" prefHeight="253.0" prefWidth="708.0">
                     <columns>
@@ -37,7 +37,7 @@
                 </TableView>
             </content>
         </TitledPane>
-        <TitledPane collapsible="false" layoutY="390.0" prefHeight="350.0" prefWidth="454.0" text="Dịch vụ">
+        <TitledPane collapsible="false" layoutX="-7.0" layoutY="349.0" prefHeight="350.0" prefWidth="454.0" text="Dịch vụ">
             <content>
                 <TableView fx:id="tableDichVu" prefHeight="298.0" prefWidth="706.0">
                     <columns>
@@ -48,7 +48,7 @@
                 </TableView>
             </content>
         </TitledPane>
-        <TitledPane collapsible="false" layoutX="730.0" layoutY="120.0" prefHeight="620.0" prefWidth="550.0" text="Hóa đơn">
+        <TitledPane collapsible="false" layoutX="723.0" layoutY="79.0" prefHeight="620.0" prefWidth="550.0" text="Hóa đơn">
             <content>
                 <Pane prefHeight="555.0" prefWidth="548.0">
                     <children>
@@ -203,36 +203,27 @@
                 </Pane>
             </content>
         </TitledPane>
-      <Button fx:id="btnBack" layoutY="55.0" mnemonicParsing="false" styleClass="btnBack">
-         <graphic>
-            <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../image/arrow.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
-      <Label layoutX="460.0" layoutY="420.0" style="-fx-font-size: 16;" text="Mã dịch vụ: ">
+      <Label layoutX="453.0" layoutY="379.0" style="-fx-font-size: 16;" text="Mã dịch vụ: ">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <TextField fx:id="txtMaDichVu" layoutX="570.0" layoutY="410.0" prefHeight="30.0" prefWidth="130.0" style="-fx-font-size: 16;">
+      <TextField fx:id="txtMaDichVu" layoutX="563.0" layoutY="369.0" prefHeight="30.0" prefWidth="130.0" style="-fx-font-size: 16;">
          <font>
             <Font size="16.0" />
          </font>
       </TextField>
-      <Label layoutX="460.0" layoutY="470.0" style="-fx-font-size: 16;" text="Số lượng: ">
+      <Label layoutX="453.0" layoutY="429.0" style="-fx-font-size: 16;" text="Số lượng: ">
          <font>
             <Font size="16.0" />
          </font>
       </Label>
-      <TextField fx:id="txt_SoLuong" layoutX="570.0" layoutY="460.0" prefHeight="30.0" prefWidth="130.0" style="-fx-font-size: 16;">
+      <TextField fx:id="txt_SoLuong" layoutX="563.0" layoutY="419.0" prefHeight="30.0" prefWidth="130.0" style="-fx-font-size: 16;">
          <font>
             <Font size="16.0" />
          </font>
       </TextField>
-      <Button fx:id="btnThemDichVu" layoutX="570.0" layoutY="515.0" mnemonicParsing="false" onAction="#themDichVu" prefHeight="30.0" prefWidth="130.0" style="-fx-background-color: LIGHTGREEN;" text="Thêm dịch vụ" />
-      <Button fx:id="btnXoaDichVu" layoutX="466.0" layoutY="515.0" mnemonicParsing="false" onAction="#xoaDichVu" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #dc3535;" text="Xóa dịch vụ" textFill="WHITE" />
+      <Button fx:id="btnThemDichVu" layoutX="563.0" layoutY="474.0" mnemonicParsing="false" onAction="#themDichVu" prefHeight="30.0" prefWidth="130.0" style="-fx-background-color: LIGHTGREEN;" text="Thêm dịch vụ" />
+      <Button fx:id="btnXoaDichVu" layoutX="459.0" layoutY="474.0" mnemonicParsing="false" onAction="#xoaDichVu" prefHeight="30.0" prefWidth="100.0" style="-fx-background-color: #dc3535;" text="Xóa dịch vụ" textFill="WHITE" />
     </children>
 </AnchorPane>

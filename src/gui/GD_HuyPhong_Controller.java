@@ -127,7 +127,6 @@ public class GD_HuyPhong_Controller implements Initializable{
  
 	    loadDuLieu();
 	    
-	 // Thêm sự kiện cho TableView
 	    tbPhieuThue.setOnMouseClicked(event -> {
 	        if (event.getClickCount() == 1) { 
 	            Object[] selectedRow = tbPhieuThue.getSelectionModel().getSelectedItem();
@@ -153,19 +152,34 @@ public class GD_HuyPhong_Controller implements Initializable{
 
 	    // Lấy dữ liệu từ DAO
 	    PhieuThuePhong_DAO phieuThueDAO = new PhieuThuePhong_DAO();
+	    Phong_DAO phongDAO = new Phong_DAO(); // Thêm DAO để truy vấn trạng thái phòng
 	    ArrayList<PhieuThuePhong> dsPhieuThue = phieuThueDAO.layPhieuThueTheoHieuLuc(true);
 	    KhachHang_DAO khachHangDAO = new KhachHang_DAO();
 
 	    // Kết hợp dữ liệu từ hai bảng
 	    for (PhieuThuePhong pt : dsPhieuThue) {
-	        KhachHang kh = khachHangDAO.getKhachHangTheoMa(pt.getKhachHang().getIdKhachHang());
-	        data.add(new Object[]{
-	            pt.getIdPhieuThue(),
-	            kh.getTenKhachHang(),
-	            pt.getPhong().getIdPhong(),
-	            pt.getThoiGianNhanPhong(),
-	            pt.getThoiHanGiaoPhong()
-	        });
+	    	Phong phong = pt.getPhong();
+	        TrangThaiPhong trangThaiPhong = phong.getTrangThai();
+	        
+	        if (trangThaiPhong == TrangThaiPhong.SAPCHECKIN || trangThaiPhong == TrangThaiPhong.TRONG) {
+	            KhachHang kh = khachHangDAO.getKhachHangTheoMa(pt.getKhachHang().getIdKhachHang());
+	            data.add(new Object[]{
+	                pt.getIdPhieuThue(),
+	                kh.getTenKhachHang(),
+	                phong.getIdPhong(),
+	                pt.getThoiGianNhanPhong(),
+	                pt.getThoiHanGiaoPhong()
+	            });
+	        }
+	        
+//	        KhachHang kh = khachHangDAO.getKhachHangTheoMa(pt.getKhachHang().getIdKhachHang());
+//	        data.add(new Object[]{
+//	            pt.getIdPhieuThue(),
+//	            kh.getTenKhachHang(),
+//	            pt.getPhong().getIdPhong(),
+//	            pt.getThoiGianNhanPhong(),
+//	            pt.getThoiHanGiaoPhong()
+//	        });
 	    }
 
 	    // Gắn dữ liệu vào TableView

@@ -35,6 +35,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
@@ -216,6 +217,20 @@ public class GD_GiaHan_Controller implements Initializable{
 	    roomItem.setPrefHeight(250);
 	    roomItem.setPrefWidth(250);
 	    
+	    
+//	    String imagePath = "data/pic/bed.png";
+//	    File imageFile = new File(imagePath);
+//	    if (imageFile.exists()) {
+//	        Image image = new Image(imageFile.toURI().toString());
+//	        ImageView imageView = new ImageView(image);
+//	        imageView.setFitWidth(250);
+//	        imageView.setFitHeight(150); // Kích thước hình ảnh trong giao diện chính
+//	        imageView.setPreserveRatio(true);
+//	        roomItem.getChildren().add(imageView);
+//	    } else {
+//	        System.out.println("Hình ảnh không tìm thấy! Đường dẫn: " + imagePath);
+//	    }
+
 	    switch (phong.getTrangThai()) {
 		case DANGTHUE:
 			roomItem.setStyle("-fx-background-color: #2972d3; -fx-border-color: #000000; -fx-border-width: 1");
